@@ -1,6 +1,7 @@
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
+from shared.models import BookType
 
 
 def index(request):
-    return render_to_response('books/index.html', RequestContext(request))
+    book_list = BookType.objects.all()
+    return render(request, 'books/index.html', {'book_list': book_list})
