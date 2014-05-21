@@ -42,3 +42,9 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+# SQLite database
+db.sqlite3
+
+# PyCharm project
+.idea/
