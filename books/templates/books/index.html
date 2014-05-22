@@ -19,9 +19,16 @@
         <td>{{ book.title }}</td>
         <td>{% blocktrans with book.issue as issue and book.issue_year as year %}Issue {{ issue }}, {{ year}} {% endblocktrans %}</td>
         <td>{{ book.price_string }}</td>
-        <td></td>
+        <td>
+            <div class="btn-toolbar" role="toolbar">
+                <a class="btn btn-xs btn-link" href="{% url 'books.views.edit_book' book.id %}" role="button"><span class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}</a>
+                <a class="btn btn-xs btn-link" href="{% url 'books.views.remove_book' book.id %}" role="button"><span class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</a>
+            </div>
+        </td>
     </tr>
     {% endfor %}
 </table>
+<a class="btn btn-primary" href="{% url 'books.views.add_book' %}" role="button"><span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}</a>
+
 {% include "shared/footer.html" %}
 {% endspaceless %}
