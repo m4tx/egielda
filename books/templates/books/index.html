@@ -12,7 +12,7 @@
           {% load i18n %}
           <thead>
               <tr>
-                  <th>{% trans "Publishing house" %}</th>
+                  <th>{% trans "Publisher" %}</th>
                   <th>{% trans "Title" %}</th>
                   <th>{% trans "Issue" %}</th>
                   <th>{% trans "Price" %}</th>
@@ -21,10 +21,10 @@
           </thead>
           {% for book in book_list %}
           <tr>
-            <td>{{ book.publishing_house }}</td>
+            <td>{{ book.publisher }}</td>
             <td>{{ book.title }}</td>
             <td>{% blocktrans with book.issue as issue and book.issue_year as year %}Issue {{ issue }}, {{ year}} {% endblocktrans %}</td>
-            <td>{{ book.price }}</td>
+            <td>{{ book.price_string }}</td>
             <td></td>
           {% endfor %}
           </tr>

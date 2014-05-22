@@ -68,6 +68,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+CURRENCY = 'zł'
 
 TIME_ZONE = 'UTC'
 

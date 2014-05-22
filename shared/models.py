@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext as _
 
@@ -5,7 +6,7 @@ from django.utils.translation import ugettext as _
 class Student(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    student_class = models.CharField(max_length=2)
+    student_class = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=9)
 
     def __str__(self):
@@ -14,22 +15,26 @@ class Student(models.Model):
 
 
 class BookType(models.Model):
-    publishing_house = models.CharField(max_length=150)
+    publisher = models.CharField(max_length=150)
     title = models.CharField(max_length=150)
-    issue = models.IntegerField(default=1)
-    issue_year = models.IntegerField(default=-1)
+    issue = models.IntegerField()
+    issue_year = models.IntegerField()
     price = models.IntegerField()
+
+    def price_string(self):
+        return "%(price).2f%(currency)s" % {'price': (self.price / 100),
+                                            'currency': getattr(settings, 'CURRENCY', 'USD')}
 
     def __str__(self):
         return _(
-            "%(publishing_house)s %(title)s, Issue %(issue)d %(issue_year)d" % {
-                'publishing_house': self.publishing_house,
+            "%(publisher)s %(title)s, Issue %(issue)d %(issue_year)d" % {
+                'publisher': self.publisher,
                 'title': self.title, 'issue': self.issue,
                 'issue_year': self.issue_year})
 
 
 class Book(models.Model):
-    type = models.ForeignKey(BookType)
+    book_type = models.ForeignKey(BookType)
     owner = models.ForeignKey(Student)
     physical = models.BooleanField()
     """Is the book physically available for buying"""
@@ -37,9 +42,10 @@ class Book(models.Model):
 
     def __str__(self):
         return _(
-            "%(type)s from %(owner)s, physical: %(physical)s, sold: %(sold)s" % {'type': self.type, 'owner': self.owner,
-                                                                                 'physical': self.physical,
-                                                                                 'sold': self.sold})
+            "%(book_type)s from %(owner)s, physical: %(physical)s, sold: %(sold)s" % {'book_type': self.book_type,
+                                                                                      'owner': self.owner,
+                                                                                      'physical': self.physical,
+                                                                                      'sold': self.sold})
 
 
 class Purchase(models.Model):
