@@ -1,34 +1,27 @@
-<!DOCTYPE html>
 {% spaceless %}
 {% load i18n %}
-<html lang="pl">
-    <head>
-        {% include "shared/head.html" %}
-        <title>{% trans "Manage books" %}</title>
-    </head>
-    <body>
-        {% include "shared/header.html" %}
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>{% trans "Publisher" %}</th>
-                    <th>{% trans "Title" %}</th>
-                    <th>{% trans "Issue" %}</th>
-                    <th>{% trans "Price" %}</th>
-                    <th>{% trans "Actions" %}</th>
-                </tr>
-            </thead>
-            {% for book in book_list %}
-            <tr>
-                <td>{{ book.publisher }}</td>
-                <td>{{ book.title }}</td>
-                <td>{% blocktrans with book.issue as issue and book.issue_year as year %}Issue {{ issue }}, {{ year}} {% endblocktrans %}</td>
-                <td>{{ book.price_string }}</td>
-                <td></td>
-            </tr>
-            {% endfor %}
-        </table>
-        {% include "shared/footer.html" %}
-    </body>
-</html>
+{% include "shared/head.html" %}
+<title>{% trans "Manage books" %}</title>
+{% include "shared/header.html" %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>{% trans "Publisher" %}</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Issue" %}</th>
+            <th>{% trans "Price" %}</th>
+            <th>{% trans "Actions" %}</th>
+        </tr>
+    </thead>
+    {% for book in book_list %}
+    <tr>
+        <td>{{ book.publisher }}</td>
+        <td>{{ book.title }}</td>
+        <td>{% blocktrans with book.issue as issue and book.issue_year as year %}Issue {{ issue }}, {{ year}} {% endblocktrans %}</td>
+        <td>{{ book.price_string }}</td>
+        <td></td>
+    </tr>
+    {% endfor %}
+</table>
+{% include "shared/footer.html" %}
 {% endspaceless %}
