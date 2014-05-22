@@ -1,5 +1,6 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render
+from books.forms import BookForm
 
 from shared.models import BookType
 
@@ -10,7 +11,13 @@ def index(request):
 
 
 def add_book(request):
-    return HttpResponse("Hello world!")
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            pass # TODO
+    else:
+        form = BookForm()
+    return render(request, 'books/add.html', {'form': form})
 
 
 def edit_book(request, book_id):

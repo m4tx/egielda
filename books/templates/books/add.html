@@ -1,0 +1,25 @@
+{% spaceless %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% include "shared/head.html" %}
+<title>{% trans "Add book" %}</title>
+{% include "shared/header.html" %}
+<h1>{% trans "Add book" %}</h1>
+{% if form.errors %}
+<p style="color: red;">
+    Please correct the error{{ form.errors|pluralize }} below.
+</p>
+{% endif %}
+<form class="form-horizontal" action="" method="post">
+    {% for field in form %}
+       <div class="form-group">
+          <div class="col-sm-offset-3">{{ field.errors }}</div>
+          <label class="col-sm-3 control-label" for="{{ field.auto_id }}">{{ field.help_text }}: </label>
+          <div class="col-sm-9">{{ field|add_class:"form-control" }}</div>
+       </div>
+    {% endfor %}
+    {% csrf_token %}
+    <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</button>
+</form>
+{% include "shared/footer.html" %}
+{% endspaceless %}
