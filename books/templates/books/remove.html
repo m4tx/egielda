@@ -1,0 +1,37 @@
+{% spaceless %}
+{% load i18n %}
+{% include "shared/head.html" %}
+<title>{% trans "Manage books" %}</title>
+{% include "shared/header.html" %}
+{% include "shared/alerts.html" %}
+<h1>{% trans "Remove book" %}</h1>
+{% if book_list.count == 1 %}
+<div class="alert alert-danger">{% trans "Are you sure you want to remove this book?" %}</div>
+{% else %}
+<div class="alert alert-danger">{% trans "Are you sure you want to remove these books?" %}</div>
+{% endif %} 
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>{% trans "Publisher" %}</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Issue" %}</th>
+            <th>{% trans "Price" %}</th>
+        </tr>
+    </thead>
+    {% for book in book_list %}
+    <tr>
+        <td>{{ book.publisher }}</td>
+        <td>{{ book.title }}</td>
+        <td>{% blocktrans with book.issue as issue and book.issue_year as year %}Issue {{ issue }}, {{ year}} {% endblocktrans %}</td>
+        <td>{{ book.price_string }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<form action="{{ request.path }}" method="post">
+    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>
+    {% csrf_token %}
+</form>
+
+{% include "shared/footer.html" %}
+{% endspaceless %}

@@ -12,7 +12,9 @@ def index(request):
     args = {'book_list': book_list}
     if 'success_msg' in request.session:
         args['success_msg'] = {
-            'book_added': _("The book was added successfully!")
+            'book_added': _("The book was added successfully."),
+            'book_removed': _("The book was removed successfully."),
+            'books_removed': _("The books were removed successfully."),
         }[request.session['success_msg']]
         del request.session['success_msg']
     return render(request, 'books/index.html', args)
@@ -37,5 +39,11 @@ def edit_book(request, book_id):
     return HttpResponse("Hello world!")
 
 
-def remove_book(request, book_id):
-    return HttpResponse("Hello world!")
+def remove_book(request, book_ids):
+    book_list = BookType.objects.filter(id__in=book_ids.split(','))
+    if request.method == 'POST':
+        request.session['success_msg'] = 'book_removed' if len(book_list) == 1 else 'books_removed'
+        book_list.delete()
+        return HttpResponseRedirect(reverse('index'))
+    else:
+        return render(request, 'books/remove.html', {'book_list': book_list})
