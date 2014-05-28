@@ -10,10 +10,11 @@ from shared.models import BookType
 def index(request):
     book_list = BookType.objects.all()
     args = {'book_list': book_list}
-    if request.session['success_msg']:
+    if 'success_msg' in request.session:
         args['success_msg'] = {
             'book_added': _("The book was added successfully!")
         }[request.session['success_msg']]
+        del request.session['success_msg']
     return render(request, 'books/index.html', args)
 
 
