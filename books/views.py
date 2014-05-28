@@ -25,7 +25,8 @@ def add_book(request):
         form = BookForm(request.POST)
         if form.is_valid():
             book_type = BookType(publisher=form.cleaned_data['publisher'], title=form.cleaned_data['title'],
-                                 issue=form.cleaned_data['issue'], issue_year=form.cleaned_data['issue_year'],
+                                 edition=form.cleaned_data['edition'],
+                                 publication_year=form.cleaned_data['publication_year'],
                                  price=form.cleaned_data['price'] * 100)
             book_type.save()
             request.session['success_msg'] = 'book_added'

@@ -17,8 +17,8 @@ class Student(models.Model):
 class BookType(models.Model):
     publisher = models.CharField(max_length=150)
     title = models.CharField(max_length=150)
-    issue = models.IntegerField()
-    issue_year = models.IntegerField()
+    edition = models.IntegerField()
+    publication_year = models.IntegerField()
     price = models.IntegerField()
 
     def price_string(self):
@@ -27,10 +27,10 @@ class BookType(models.Model):
 
     def __str__(self):
         return _(
-            "%(publisher)s %(title)s, Issue %(issue)d %(issue_year)d" % {
+            "%(publisher)s %(title)s, Edition %(edition)d %(publication_year)d" % {
                 'publisher': self.publisher,
-                'title': self.title, 'issue': self.issue,
-                'issue_year': self.issue_year})
+                'title': self.title, 'edition': self.edition,
+                'publication_year': self.publication_year})
 
 
 class Book(models.Model):
