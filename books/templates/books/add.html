@@ -4,7 +4,7 @@
 <title>{% trans "Add book" %}</title>
 {% include "shared/header.html" %}
 <h1>{% trans "Add book" %}</h1>
-<form class="form-horizontal" action="" method="post">
+<form class="form-horizontal" action="{{ request.path }}" method="post">
     {% include "shared/default_form.html" %}
     {% csrf_token %}
     <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</button>

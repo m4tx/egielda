@@ -1,23 +1,35 @@
-from django.http.response import HttpResponse
+from django.core.urlresolvers import reverse
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from books.forms import BookForm
+from django.utils.translation import ugettext as _
 
+from books.forms import BookForm
 from shared.models import BookType
 
 
 def index(request):
     book_list = BookType.objects.all()
-    return render(request, 'books/index.html', {'book_list': book_list})
+    args = {'book_list': book_list}
+    if request.session['success_msg']:
+        args['success_msg'] = {
+            'book_added': _("The book was added successfully!")
+        }[request.session['success_msg']]
+    return render(request, 'books/index.html', args)
 
 
 def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
         if form.is_valid():
-            pass # TODO
+            book_type = BookType(publisher=form.cleaned_data['publisher'], title=form.cleaned_data['title'],
+                                 issue=form.cleaned_data['issue'], issue_year=form.cleaned_data['issue_year'],
+                                 price=form.cleaned_data['price'] * 100)
+            book_type.save()
+            request.session['success_msg'] = 'book_added'
+            return HttpResponseRedirect(reverse('index'))
     else:
         form = BookForm()
-    return render(request, 'books/add.html', {'form': form})
+        return render(request, 'books/add.html', {'form': form})
 
 
 def edit_book(request, book_id):
