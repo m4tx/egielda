@@ -5,6 +5,7 @@
 {% include "shared/header.html" %}
 {% include "shared/alerts.html" %}
 <h1>{% trans "Books" %}</h1>
+{% if book_list %}
 <table class="table table-hover">
     <thead>
         <tr>
@@ -15,6 +16,7 @@
             <th>{% trans "Actions" %}</th>
         </tr>
     </thead>
+
     {% for book in book_list %}
     <tr>
         <td>{{ book.publisher }}</td>
@@ -30,6 +32,9 @@
     </tr>
     {% endfor %}
 </table>
+{% else %}
+<div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+{% endif %}
 <a class="btn btn-primary" href="{% url 'books.views.add_book' %}" role="button"><span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}</a>
 
 {% include "shared/footer.html" %}
