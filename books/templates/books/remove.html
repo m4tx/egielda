@@ -9,7 +9,6 @@
 {% else %}
 <h1>{% trans "Remove books" %}</h1>
 {% endif %}
-{% if book_list %}
 {% if book_list.count == 1 %}
 <div class="alert alert-danger">{% trans "Are you sure you want to remove this book?" %}</div>
 {% else %}
@@ -35,8 +34,4 @@
     <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>
     {% csrf_token %}
 </form>
-{% else %}
-<div class="alert alert-info">{% trans "There's nothing to display." %}</div>
-<a class="btn btn-primary" href="{% url 'index' %}" role="button"><span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</a>
-{% endif %}
 {% endblock %}
