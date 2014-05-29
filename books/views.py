@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
@@ -25,8 +25,6 @@ def add_book(request):
         form = BookForm(request.POST)
         if form.is_valid():
             book_type = BookType(publisher=form.cleaned_data['publisher'], title=form.cleaned_data['title'],
-                                 edition=form.cleaned_data['edition'],
-                                 publication_year=form.cleaned_data['publication_year'],
                                  price=form.cleaned_data['price'] * 100)
             book_type.save()
             request.session['success_msg'] = 'book_added'
@@ -37,7 +35,11 @@ def add_book(request):
 
 
 def edit_book(request, book_id):
-    return HttpResponse("Hello world!")
+    if request.method == 'POST':
+        pass
+    else:
+        form = BookForm()
+        return render(request, 'books/edit.html', {'form': form})
 
 
 def remove_book(request, book_ids):
