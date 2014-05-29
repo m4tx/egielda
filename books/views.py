@@ -24,9 +24,7 @@ def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
         if form.is_valid():
-            book_type = BookType(publisher=form.cleaned_data['publisher'], title=form.cleaned_data['title'],
-                                 price=form.cleaned_data['price'] * 100)
-            book_type.save()
+            form.save()
             request.session['success_msg'] = 'book_added'
             return HttpResponseRedirect(reverse('index'))
     else:

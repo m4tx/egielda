@@ -7,10 +7,10 @@ from egielda import settings
 class BookType(models.Model):
     publisher = models.CharField(max_length=150)
     title = models.CharField(max_length=150)
-    price = models.IntegerField()
+    price = models.DecimalField(max_digits=5, decimal_places=2)
 
     def price_string(self):
-        return "%(price).2f%(currency)s" % {'price': (self.price / 100),
+        return "%(price).2f%(currency)s" % {'price': self.price,
                                             'currency': getattr(settings, 'CURRENCY', 'USD')}
 
     def __str__(self):
