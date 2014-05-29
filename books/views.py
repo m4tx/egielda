@@ -13,6 +13,7 @@ def index(request):
     if 'success_msg' in request.session:
         args['success_msg'] = {
             'book_added': _("The book was added successfully."),
+            'book_edited': _("The book was edited successfully."),
             'book_removed': _("The book was removed successfully."),
             'books_removed': _("The books were removed successfully."),
         }[request.session['success_msg']]
@@ -33,12 +34,16 @@ def add_book(request):
 
 
 def edit_book(request, book_id):
+    book = BookType.objects.get(id=book_id)
     if request.method == 'POST':
-        pass
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            request.session['success_msg'] = 'book_edited'
+            return HttpResponseRedirect(reverse('index'))
     else:
-        book = BookType.objects.get(id=book_id)
         form = BookForm(instance=book)
-        return render(request, 'books/edit.html', {'form': form})
+    return render(request, 'books/edit.html', {'form': form})
 
 
 def remove_book(request, book_ids):
