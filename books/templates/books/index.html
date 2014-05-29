@@ -1,9 +1,9 @@
 {% spaceless %}
 {% load i18n %}
-{% include "shared/head.html" %}
+{% include "common/head.html" %}
 <title>{% trans "Manage books" %}</title>
-{% include "shared/header.html" %}
-{% include "shared/alerts.html" %}
+{% include "common/header.html" %}
+{% include "common/alerts.html" %}
 <h1>{% trans "Books" %}</h1>
 {% if book_list %}
 <table class="table table-hover">
@@ -37,5 +37,5 @@
 {% endif %}
 <a class="btn btn-primary" href="{% url 'books.views.add_book' %}" role="button"><span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}</a>
 
-{% include "shared/footer.html" %}
+{% include "common/footer.html" %}
 {% endspaceless %}

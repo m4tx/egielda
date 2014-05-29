@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 from books.forms import BookForm
-from shared.models import BookType
+from common.models import BookType
 
 
 def index(request):

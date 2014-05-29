@@ -1,13 +1,13 @@
 {% spaceless %}
 {% load i18n %}
-{% include "shared/head.html" %}
+{% include "common/head.html" %}
 <title>{% trans "Add book" %}</title>
-{% include "shared/header.html" %}
+{% include "common/header.html" %}
 <h1>{% trans "Add book" %}</h1>
 <form class="form-horizontal" action="{{ request.path }}" method="post">
-    {% include "shared/default_form.html" %}
+    {% include "common/default_form.html" %}
     {% csrf_token %}
     <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</button>
 </form>
-{% include "shared/footer.html" %}
+{% include "common/footer.html" %}
 {% endspaceless %}

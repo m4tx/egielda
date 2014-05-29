@@ -1,8 +1,8 @@
 {% spaceless %}
 {% load i18n %}
-{% include "shared/head.html" %}
+{% include "common/head.html" %}
 <title>{% trans "Manage books" %}</title>
-{% include "shared/header.html" %}
+{% include "common/header.html" %}
 {% if book_list.count <= 1 %}
 <h1>{% trans "Remove book" %}</h1>
 {% else %}
@@ -41,5 +41,5 @@
 <a class="btn btn-primary" href="{% url 'index' %}" role="button"><span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</a>
 {% endif %}
 
-{% include "shared/footer.html" %}
+{% include "common/footer.html" %}
 {% endspaceless %}
