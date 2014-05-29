@@ -1,8 +1,9 @@
-{% spaceless %}
+{% extends "common/base.html" %}
 {% load i18n %}
-{% include "common/head.html" %}
-<title>{% trans "Manage books" %}</title>
-{% include "common/header.html" %}
+
+{% block title %}{% trans "Manage books" %}{% endblock %}
+
+{% block content %}
 {% include "common/alerts.html" %}
 <h1>{% trans "Books" %}</h1>
 {% if book_list %}
@@ -36,6 +37,4 @@
 <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
 {% endif %}
 <a class="btn btn-primary" href="{% url 'books.views.add_book' %}" role="button"><span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}</a>
-
-{% include "common/footer.html" %}
-{% endspaceless %}
+{% endblock %}
