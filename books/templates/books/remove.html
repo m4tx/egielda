@@ -27,7 +27,7 @@
     <tr>
         <td>{{ book.publisher }}</td>
         <td>{{ book.title }}</td>
-        <td>{% blocktrans with book.edition as edition and book.publication_year as year %}Edition {{ edition }}, {{ year}} {% endblocktrans %}</td>
+        <td>{{ book.edition_string }}</td>
         <td>{{ book.price_string }}</td>
     </tr>
     {% endfor %}

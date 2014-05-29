@@ -1,6 +1,6 @@
-from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext as _
+from books.models import BookType
 
 
 class Student(models.Model):
@@ -12,25 +12,6 @@ class Student(models.Model):
     def __str__(self):
         return _("%(first_name)s %(last_name)s, %(student_class)s" %
                  {'first_name': self.first_name, 'last_name': self.last_name, 'student_class': self.student_class})
-
-
-class BookType(models.Model):
-    publisher = models.CharField(max_length=150)
-    title = models.CharField(max_length=150)
-    edition = models.IntegerField()
-    publication_year = models.IntegerField()
-    price = models.IntegerField()
-
-    def price_string(self):
-        return "%(price).2f%(currency)s" % {'price': (self.price / 100),
-                                            'currency': getattr(settings, 'CURRENCY', 'USD')}
-
-    def __str__(self):
-        return _(
-            "%(publisher)s %(title)s, Edition %(edition)d %(publication_year)d" % {
-                'publisher': self.publisher,
-                'title': self.title, 'edition': self.edition,
-                'publication_year': self.publication_year})
 
 
 class Book(models.Model):
