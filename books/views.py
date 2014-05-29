@@ -31,14 +31,15 @@ def add_book(request):
             return HttpResponseRedirect(reverse('index'))
     else:
         form = BookForm()
-        return render(request, 'books/add.html', {'form': form})
+    return render(request, 'books/add.html', {'form': form})
 
 
 def edit_book(request, book_id):
     if request.method == 'POST':
         pass
     else:
-        form = BookForm()
+        book = BookType.objects.get(id=book_id)
+        form = BookForm(instance=book)
         return render(request, 'books/edit.html', {'form': form})
 
 
