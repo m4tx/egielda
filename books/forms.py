@@ -10,7 +10,6 @@ class BookForm(ModelForm):
     class Meta:
         model = BookType
         fields = ['publisher', 'title', 'price']
-        initial = {'publisher': 'gowno'}
 
     def __init__(self, *args, **kwargs):
         super(BookForm, self).__init__(*args, **kwargs)

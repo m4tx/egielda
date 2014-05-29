@@ -1,7 +1,7 @@
 {% load widget_tweaks %}
 {% for field in form %}
     <div class="form-group">
-        <label class="col-sm-3 col-md-2 control-label" for="{{ field.auto_id }}">{{ field.help_text }}: </label>
+        <label class="col-sm-3 col-md-2 control-label" for="{{ field.auto_id }}">{{ field.label }}:</label>
         <div class="col-sm-9 col-md-10{% if field.errors %} has-error{% endif %}">
             {{ field|add_class:"form-control" }}
             {% for error in field.errors %}
