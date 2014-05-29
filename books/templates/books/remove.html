@@ -20,7 +20,6 @@
         <tr>
             <th>{% trans "Publisher" %}</th>
             <th>{% trans "Title" %}</th>
-            <th>{% trans "Edition" %}</th>
             <th>{% trans "Price" %}</th>
         </tr>
     </thead>
@@ -28,7 +27,6 @@
     <tr>
         <td>{{ book.publisher }}</td>
         <td>{{ book.title }}</td>
-        <td>{{ book.edition_string }}</td>
         <td>{{ book.price_string }}</td>
     </tr>
     {% endfor %}

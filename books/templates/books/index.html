@@ -12,7 +12,6 @@
         <tr>
             <th>{% trans "Publisher" %}</th>
             <th>{% trans "Title" %}</th>
-            <th>{% trans "Edition" %}</th>
             <th>{% trans "Price" %}</th>
             <th>{% trans "Actions" %}</th>
         </tr>
@@ -22,7 +21,6 @@
     <tr>
         <td>{{ book.publisher }}</td>
         <td>{{ book.title }}</td>
-        <td>{{ book.edition_string }}</td>
         <td>{{ book.price_string }}</td>
         <td>
             <div class="btn-toolbar" role="toolbar">
