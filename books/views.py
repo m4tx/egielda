@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, Http404, HttpResponse
 from django.shortcuts import render, get_list_or_404
 from django.utils.translation import ugettext as _
 
@@ -54,3 +54,15 @@ def remove_book(request, book_ids):
         return HttpResponseRedirect(reverse('index'))
     else:
         return render(request, 'books/remove.html', {'book_list': book_list})
+
+
+def bulk_actions(request, action_name):
+    book_list = []
+    if action_name == 'remove' and request.method == 'POST':
+        for item in request.POST.lists():
+            print(item[1])
+            if item[1][0] == 'on':
+                book_list.append(item[0][7:])
+        return HttpResponseRedirect(reverse('books.views.remove_book', args=[",".join(book_list)]))
+    else:
+        raise Http404
