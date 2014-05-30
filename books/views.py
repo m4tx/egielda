@@ -47,7 +47,9 @@ def edit_book(request, book_id):
 
 
 def remove_book(request, book_ids):
-    book_list = get_list_or_404(BookType, id__in=book_ids.split(','))
+    book_list = BookType.objects.filter(id__in=book_ids.split(','))
+    if not book_list:
+        raise Http404
     if request.method == 'POST':
         request.session['success_msg'] = 'book_removed' if len(book_list) == 1 else 'books_removed'
         book_list.delete()
