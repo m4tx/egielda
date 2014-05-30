@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'common',
     'books',
+    'sell',
 )
 
 MIDDLEWARE_CLASSES = (

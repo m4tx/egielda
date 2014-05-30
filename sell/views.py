@@ -1,5 +1,11 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+
+from sell.forms import PersonalDataForm
 
 
 def index(request):
-    return HttpResponse("Hello, world!")
+    if request.method == 'POST':
+        pass
+    else:
+        form = PersonalDataForm()
+    return render(request, 'sell/personal_data.html', {'form': form})
