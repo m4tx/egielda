@@ -10,4 +10,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^manage/books/', include('books.urls')),
+    url(r'^manage/categories/', include('categories.urls')),
 )
