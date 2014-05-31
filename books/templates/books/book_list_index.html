@@ -1,0 +1,14 @@
+{% extends "books/book_list_base.html" %}
+{% load i18n %}
+
+{% block actions %}
+    <a class="btn btn-xs btn-link" href="{% url 'books.views.edit_book' book.id %}" role="button"><span
+            class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}</a>
+    <a class="btn btn-xs btn-link" href="{% url 'books.views.remove_book' book.id %}" role="button"><span
+            class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</a>
+{% endblock %}
+
+{% block bulk_actions %}
+    <button class="btn btn-xs btn-link" type="submit"><span
+            class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>
+{% endblock %}

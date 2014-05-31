@@ -1,0 +1,37 @@
+{% load i18n %}
+
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th><input type="checkbox" id="select-all"></th>
+            <th>{% trans "Publisher" %}</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Price" %}</th>
+            <th>{% trans "Actions" %}</th>
+        </tr>
+    </thead>
+
+    {% for book in book_list %}
+    <tr>
+        <td><input type="checkbox" name="select-{{ book.id }}"></td>
+        <td>{{ book.publisher }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.price_string }}</td>
+        <td>
+            <div class="btn-toolbar" role="toolbar">
+                {% block actions %}{% endblock %}
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+
+    <tr class="info">
+        <td></td>
+        <td colspan="3" class="text-right text-muted">{% trans "Bulk actions:" %}</td>
+        <td>
+            <div class="btn-toolbar" role="toolbar">
+                {% block bulk_actions %}{% endblock %}
+            </div>
+        </td>
+    </tr>
+</table>
