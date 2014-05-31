@@ -5,8 +5,10 @@ from egielda import settings
 
 
 class BookType(models.Model):
+    isbn = models.CharField(max_length=13)
     publisher = models.CharField(max_length=150)
     title = models.CharField(max_length=150)
+    publication_year = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
     def price_string(self):

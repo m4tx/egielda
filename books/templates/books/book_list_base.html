@@ -4,8 +4,10 @@
     <thead>
         <tr>
             {% block thead_header %}{% endblock %}
+            <th>{% trans "ISBN" %}</th>
             <th>{% trans "Publisher" %}</th>
             <th>{% trans "Title" %}</th>
+            <th>{% trans "Publication" %}</th>
             <th>{% trans "Price" %}</th>
             <th>{% trans "Actions" %}</th>
         </tr>
@@ -14,8 +16,10 @@
     {% for book in book_list %}
     <tr>
         {% block tr_header %}{% endblock %}
+        <td>{{ book.isbn }}</td>
         <td>{{ book.publisher }}</td>
         <td>{{ book.title }}</td>
+        <td>{{ book.publication_year }}</td>
         <td>{{ book.price_string }}</td>
         <td>
             <div class="btn-toolbar" role="toolbar">

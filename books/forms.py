@@ -9,12 +9,15 @@ from egielda import settings
 class BookForm(ModelForm):
     class Meta:
         model = BookType
-        fields = ['publisher', 'title', 'price']
+        fields = ['isbn', 'publisher', 'title', 'publication_year', 'price']
         labels = {
-            'price': _("Price (%s)") % getattr(settings, 'CURRENCY', 'USD')
+            'isbn': _("ISBN"),
+            'price': _("Price (%s)") % getattr(settings, 'CURRENCY', 'USD'),
         }
         widgets = {
+            'isbn': forms.TextInput(attrs={'required': 'required'}),
             'publisher': forms.TextInput(attrs={'required': 'required'}),
             'title': forms.TextInput(attrs={'required': 'required'}),
+            'publication_year': forms.NumberInput(attrs={'required': 'required', 'min': '1900', 'max': '2100'}),
             'price': forms.NumberInput(attrs={'required': 'required', 'max': '999.99'}),
         }
