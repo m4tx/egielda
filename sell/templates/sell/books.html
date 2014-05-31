@@ -40,6 +40,7 @@
 {% endblock %}
 
 {% block footer %}
+{% load staticfiles %}
 <script>
     var chosenBooks = [];
 
@@ -66,4 +67,5 @@
         }
     }
 </script>
+<script src="{% static "js/isbnfinder.js" %}"></script>
 {% endblock %}
