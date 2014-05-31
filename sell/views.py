@@ -19,7 +19,7 @@ def personal_data(request):
             request.session['personal_data'] = model_to_dict(form.save(commit=False))
             return HttpResponseRedirect(reverse('sell.views.books'))
     else:
-        if request.session['personal_data']:
+        if 'personal_data' in request.session:
             form = PersonalDataForm(instance=Student(**request.session['personal_data']))
         else:
             form = PersonalDataForm()
