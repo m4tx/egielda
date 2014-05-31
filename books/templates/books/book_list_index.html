@@ -2,9 +2,9 @@
 {% load i18n %}
 
 {% block actions %}
-    <a class="btn btn-xs btn-link" href="{% url 'books.views.edit_book' book.id %}" role="button"><span
+    <a class="btn btn-xs btn-link" href="{% url 'books.views.edit_book' book.pk %}" role="button"><span
             class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}</a>
-    <a class="btn btn-xs btn-link" href="{% url 'books.views.remove_book' book.id %}" role="button"><span
+    <a class="btn btn-xs btn-link" href="{% url 'books.views.remove_book' book.pk %}" role="button"><span
             class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</a>
 {% endblock %}
 
@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block tr_header %}
-    <td><input type="checkbox" name="select-{{ book.id }}"></td>
+    <td><input type="checkbox" name="select-{{ book.pk }}"></td>
 {% endblock %}
 
 {% block footer %}
