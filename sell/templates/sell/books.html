@@ -1,0 +1,69 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Sell books" %}{% endblock %}
+
+{% block content %}
+<h1>{% trans "Sell books" %} <small>{% trans "Step 2 of 3: choose the books" %}</small></h1>
+
+{% include "sell/books_chosen_list.html" %}
+
+<form class="form-horizontal" action="{{ request.path }}" method="post">
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#bookList">{% trans "Choose from the list" %}</a></h4>
+            </div>
+            <div id="bookList" class="panel-collapse collapse">
+                <div class="panel-body">
+                    {% include "sell/books_book_list.html" %}
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#addBookForm">{% trans "Add new" %}</a></h4>
+            </div>
+            <div id="addBookForm" class="panel-collapse collapse">
+                <div class="panel-body">
+                    {% include "common/default_form.html" %}
+                    {% csrf_token %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-toolbar">
+        <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</button>
+        <button class="btn btn-primary pull-right">{% trans "Next" %} <span class="glyphicon glyphicon-chevron-right"></span></button>
+    </div>
+</form>
+{% endblock %}
+
+{% block footer %}
+<script>
+    var chosenBooks = [];
+
+    $('.btn-add-book').on('click', function() {
+        $(this).closest($('tr')).hide();
+        addBook();
+    });
+
+    $('#chosen-books-list').on('click', 'button.btn-remove-chosen-book', function() {
+        removeBook(0);
+    });
+
+    function addBook() {
+        chosenBooks.push(0);
+        $('#chosen-books-list').removeClass('hidden').append($('<tr data-id="' + 0 + '"><td><button class="btn-remove-chosen-book">Hello, world!</button></td></tr>'));
+    }
+
+    function removeBook(id) {
+        chosenBooks.splice(id, 1);
+        $('#chosen-books-list tr[data-id="' + id + '"]').remove();
+
+        if (chosenBooks.length == 0) {
+            $('#chosen-books-list').addClass('hidden');
+        }
+    }
+</script>
+{% endblock %}
