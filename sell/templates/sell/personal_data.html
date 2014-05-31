@@ -4,7 +4,7 @@
 {% block title %}{% trans "Sell books" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Sell books: step 1 of 3" %}</h1>
+<h1>{% trans "Sell books" %} <small>{% trans "Step 1 of 3: provide personal info" %}</small></h1>
 <form class="form-horizontal" action="{{ request.path }}" method="post">
     {% include "common/default_form.html" %}
     {% csrf_token %}
