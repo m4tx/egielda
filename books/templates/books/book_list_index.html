@@ -8,7 +8,24 @@
             class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</a>
 {% endblock %}
 
-{% block bulk_actions %}
-    <button class="btn btn-xs btn-link" type="submit"><span
-            class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>
+{% block thead_header %}
+    <th><input type="checkbox" id="select-all"></th>
+{% endblock %}
+
+{% block tr_header %}
+    <td><input type="checkbox" name="select-{{ book.id }}"></td>
+{% endblock %}
+
+{% block footer %}
+<tr class="info">
+    <td></td>
+    <td colspan="3" class="text-right text-muted">{% trans "Bulk actions:" %}</td>
+    <td>
+        <div class="btn-toolbar" role="toolbar">
+            <button class="btn btn-xs btn-link" type="submit"><span
+                    class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>
+        </div>
+    </td>
+</tr>
+
 {% endblock %}

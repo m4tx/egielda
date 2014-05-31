@@ -3,7 +3,7 @@
 <table class="table table-hover table-responsive">
     <thead>
         <tr>
-            <th><input type="checkbox" id="select-all"></th>
+            {% block thead_header %}{% endblock %}
             <th>{% trans "Publisher" %}</th>
             <th>{% trans "Title" %}</th>
             <th>{% trans "Price" %}</th>
@@ -13,7 +13,7 @@
 
     {% for book in book_list %}
     <tr>
-        <td><input type="checkbox" name="select-{{ book.id }}"></td>
+        {% block tr_header %}{% endblock %}
         <td>{{ book.publisher }}</td>
         <td>{{ book.title }}</td>
         <td>{{ book.price_string }}</td>
@@ -25,13 +25,5 @@
     </tr>
     {% endfor %}
 
-    <tr class="info">
-        <td></td>
-        <td colspan="3" class="text-right text-muted">{% trans "Bulk actions:" %}</td>
-        <td>
-            <div class="btn-toolbar" role="toolbar">
-                {% block bulk_actions %}{% endblock %}
-            </div>
-        </td>
-    </tr>
+    {% block footer %}{% endblock %}
 </table>
