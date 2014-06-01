@@ -4,7 +4,11 @@ button.on('click', function () {
     $.ajax(url).success(function (data) {
         $.ajax(data.items[0].selfLink + "?projection=lite").success(function (data) {
             $('input[name="publisher"]').val(data.volumeInfo.publisher);
-            $('input[name="title"]').val(data.volumeInfo.title);
+            var title = data.volumeInfo.title;
+            if (data.volumeInfo.subtitle != undefined) {
+                title += ": " + data.volumeInfo.subtitle;
+            }
+            $('input[name="title"]').val(title);
             $('input[name="publication_year"]').val(data.volumeInfo.publishedDate.substring(0, 4));
         });
     });
