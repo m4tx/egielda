@@ -45,26 +45,51 @@
     var chosenBooks = [];
 
     $('.btn-add-book').on('click', function() {
-        $(this).closest($('tr')).hide();
-        addBook();
+        var tr = $(this).closest($('tr'));
+        addBook(tr);
     });
 
     $('#chosen-books-list').on('click', 'button.btn-remove-chosen-book', function() {
         removeBook(0);
     });
 
-    function addBook() {
-        chosenBooks.push(0);
-        $('#chosen-books-list').removeClass('hidden').append($('<tr data-id="' + 0 + '"><td><button class="btn-remove-chosen-book">Hello, world!</button></td></tr>'));
+    function ExistingBook(pk) {
+        this.pk = pk;
+    }
+
+    function addBook(tr) {
+        var ctr = tr.clone();
+        tr.addClass('hidden');
+        var id = chosenBooks.push(new ExistingBook(ctr.data('pk'))) - 1;
+
+        var chosenTable = $('#chosen-books-list');
+        chosenTable.removeClass('hidden');
+
+        $('td:last-child', ctr).remove();
+        var button = $('<button class="btn btn-xs btn-link btn-add-book"><span class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>');
+        button.on('click', function() {
+            removeBook(id);
+        });
+        ctr.append($('<td/>').append(button));
+        chosenTable.append(ctr);
     }
 
     function removeBook(id) {
+        console.log(chosenBooks[id]);
+
+        var book = chosenBooks[id];
+        if (book.pk != undefined) {
+            $('#bookList table tr[data-pk="' + book.pk + '"]').removeClass('hidden');
+        }
+
         chosenBooks.splice(id, 1);
-        $('#chosen-books-list tr[data-id="' + id + '"]').remove();
+        $('#chosen-books-list tbody tr:eq(' + id + ')').remove();
 
         if (chosenBooks.length == 0) {
             $('#chosen-books-list').addClass('hidden');
         }
+
+
     }
 </script>
 <script src="{% static "js/isbnfinder.js" %}"></script>

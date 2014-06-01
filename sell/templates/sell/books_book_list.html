@@ -1,6 +1,11 @@
 {% extends "books/book_list_base.html" %}
 {% load i18n %}
 
+{% block tr_attributes %}
+    data-pk="{{ book.pk }}"
+{% endblock %}
+
 {% block actions %}
-    <button class="btn btn-xs btn-link btn-add-book"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</button>
+    <button class="btn btn-xs btn-link btn-add-book"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}
+    </button>
 {% endblock %}

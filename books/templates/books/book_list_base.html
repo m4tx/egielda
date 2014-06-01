@@ -14,7 +14,7 @@
     </thead>
 
     {% for book in book_list %}
-    <tr>
+    <tr{% block tr_attributes %}{% endblock %}>
         {% block tr_header %}{% endblock %}
         <td>{{ book.isbn }}</td>
         <td>{{ book.publisher }}</td>
