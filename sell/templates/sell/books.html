@@ -7,36 +7,33 @@
 <h1>{% trans "Sell books" %} <small>{% trans "Step 2 of 3: choose the books" %}</small></h1>
 
 {% include "sell/books_chosen_list.html" %}
-
-<form class="form-horizontal" action="{{ request.path }}" method="post">
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#bookList">{% trans "Choose from the list" %}</a></h4>
-            </div>
-            <div id="bookList" class="panel-collapse collapse">
-                <div class="panel-body">
-                    {% include "sell/books_book_list.html" %}
-                </div>
-            </div>
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#bookList">{% trans "Choose from the list" %}</a></h4>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#addBookForm">{% trans "Add new" %}</a></h4>
-            </div>
-            <div id="addBookForm" class="panel-collapse collapse">
-                <div class="panel-body">
-                    {% include "common/default_form.html" %}
-                    {% csrf_token %}
-                </div>
+        <div id="bookList" class="panel-collapse collapse">
+            <div class="panel-body">
+                {% include "sell/books_book_list.html" %}
             </div>
         </div>
     </div>
-    <div class="btn-toolbar">
-        <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</button>
-        <button class="btn btn-primary pull-right">{% trans "Next" %} <span class="glyphicon glyphicon-chevron-right"></span></button>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#addBookForm">{% trans "Add new" %}</a></h4>
+        </div>
+        <div id="addBookForm" class="panel-collapse collapse">
+            <div class="panel-body form-horizontal">
+                {% include "common/default_form.html" %}
+                <button class="btn btn-default pull-right" id="btn-add-new-book"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</button>
+            </div>
+        </div>
     </div>
-</form>
+</div>
+<div class="btn-toolbar">
+    <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</button>
+    <button class="btn btn-primary pull-right">{% trans "Next" %} <span class="glyphicon glyphicon-chevron-right"></span></button>
+</div>
 {% endblock %}
 
 {% block footer %}
@@ -45,38 +42,64 @@
     var chosenBooks = [];
 
     $('.btn-add-book').on('click', function() {
-        var tr = $(this).closest($('tr'));
-        addBook(tr);
+        addBook($(this).closest($('tr')));
     });
-
-    $('#chosen-books-list').on('click', 'button.btn-remove-chosen-book', function() {
-        removeBook(0);
+    $('#btn-add-new-book').on('click', function () {
+        addNewBook();
     });
 
     function ExistingBook(pk) {
         this.pk = pk;
     }
 
+    function NewBook() {
+    }
+
     function addBook(tr) {
         var ctr = tr.clone();
         tr.addClass('hidden');
-        var id = chosenBooks.push(new ExistingBook(ctr.data('pk'))) - 1;
-
-        var chosenTable = $('#chosen-books-list');
-        chosenTable.removeClass('hidden');
-
         $('td:last-child', ctr).remove();
+
+        addBookTr(ctr, new ExistingBook(ctr.data('pk')));
+    }
+
+    function addNewBook() {
+        var ids = ['isbn', 'publisher', 'title', 'publication_year', 'price'];
+
+        var book = new NewBook();
+        var tr = $('<tr/>');
+        var add = false;
+        for (var prid in ids) {
+            var input = $('input[name="' + ids[prid] + '"]');
+            book[ids[prid]] = input.val();
+            input.val("");
+
+            if (book[ids[prid]] != "") {
+                add = true;
+            }
+            tr = tr.append($('<td/>').append(book[ids[prid]]));
+        }
+
+        if (add) {
+            addBookTr(tr, book);
+        }
+    }
+
+    function addBookTr(tr, book) {
+        var id = chosenBooks.push(book) - 1;
+
         var button = $('<button class="btn btn-xs btn-link btn-add-book"><span class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>');
         button.on('click', function() {
             removeBook(id);
         });
-        ctr.append($('<td/>').append(button));
-        chosenTable.append(ctr);
+        tr.append($('<td/>').append(button));
+
+        var chosenTable = $('#chosen-books-list');
+        chosenTable.removeClass('hidden');
+        chosenTable.append(tr);
     }
 
     function removeBook(id) {
-        console.log(chosenBooks[id]);
-
         var book = chosenBooks[id];
         if (book.pk != undefined) {
             $('#bookList table tr[data-pk="' + book.pk + '"]').removeClass('hidden');
@@ -88,8 +111,6 @@
         if (chosenBooks.length == 0) {
             $('#chosen-books-list').addClass('hidden');
         }
-
-
     }
 </script>
 <script src="{% static "js/isbnfinder.js" %}"></script>
