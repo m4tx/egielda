@@ -98,7 +98,7 @@
 
         var button = $('<button class="btn btn-xs btn-link btn-remove-book"><span class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>');
         button.on('click', function() {
-            removeBook($('#chosen-books-list button.btn-remove-book').index(this))
+            removeBook($('#chosen-books-list').find('button.btn-remove-book').index(this))
         });
         tr.append($('<td/>').append(button));
 
@@ -110,14 +110,15 @@
     function removeBook(id) {
         var book = chosenBooks[id];
         if (book.pk != undefined) {
-            $('#bookList table tr[data-pk="' + book.pk + '"]').removeClass('hidden');
+            $('#bookList').find('table tr[data-pk="' + book.pk + '"]').removeClass('hidden');
         }
 
+        var chosenBooksList = $('#chosen-books-list');
         chosenBooks.splice(id, 1);
-        $('#chosen-books-list tbody tr:eq(' + id + ')').remove();
+        chosenBooksList.find('tbody tr:eq(' + id + ')').remove();
 
         if (chosenBooks.length == 0) {
-            $('#chosen-books-list').addClass('hidden');
+            chosenBooksList.addClass('hidden');
         }
     }
 </script>
