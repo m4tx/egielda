@@ -96,9 +96,9 @@
     function addBookTr(tr, book) {
         var id = chosenBooks.push(book) - 1;
 
-        var button = $('<button class="btn btn-xs btn-link btn-add-book"><span class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>');
+        var button = $('<button class="btn btn-xs btn-link btn-remove-book"><span class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>');
         button.on('click', function() {
-            removeBook(id);
+            removeBook($('#chosen-books-list button.btn-remove-book').index(this))
         });
         tr.append($('<td/>').append(button));
 
