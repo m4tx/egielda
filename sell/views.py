@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.forms import model_to_dict
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from books.forms import BookForm
@@ -30,6 +30,16 @@ def personal_data(request):
 
 
 def books(request):
+    if request.method == 'POST':
+        request.session['chosen_books'] = request.POST['book_data']
+        if 'btn-back' in request.POST:
+            return HttpResponseRedirect(reverse(personal_data))
+        elif 'btn-next' in request.POST:
+            return HttpResponseRedirect(reverse(summary))
     book_list = BookType.objects.all()
     form = BookForm()
     return render(request, 'sell/books.html', {'form': form, 'book_list': book_list})
+
+
+def summary(request):
+    return HttpResponse("Hello, world!")

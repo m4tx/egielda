@@ -31,8 +31,11 @@
     </div>
 </div>
 <div class="btn-toolbar">
-    <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</button>
-    <button class="btn btn-primary pull-right">{% trans "Next" %} <span class="glyphicon glyphicon-chevron-right"></span></button>
+    <form action="{{ request.path }}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-default" id="btn-back"><span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</button>
+        <button class="btn btn-primary pull-right" id="btn-next">{% trans "Next" %} <span class="glyphicon glyphicon-chevron-right"></span></button>
+    </form>
 </div>
 {% endblock %}
 
@@ -46,6 +49,11 @@
     });
     $('#btn-add-new-book').on('click', function () {
         addNewBook();
+    });
+    $('button#btn-next,button#btn-back').on('click', function() {
+        $('form').append($('<input type="hidden" name="book_data">').attr('value', JSON.stringify(chosenBooks)))
+            .append($('<input type="hidden" name="' + this.id + '">'))
+            .submit();
     });
 
     function ExistingBook(pk) {
