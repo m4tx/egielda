@@ -5,9 +5,7 @@ from django.shortcuts import render
 
 from books.forms import BookForm
 from books.models import BookType
-
 from common.models import Student
-
 from sell.forms import PersonalDataForm
 
 
@@ -38,7 +36,9 @@ def books(request):
             return HttpResponseRedirect(reverse(summary))
     book_list = BookType.objects.all()
     form = BookForm()
-    return render(request, 'sell/books.html', {'form': form, 'book_list': book_list})
+    return render(request, 'sell/books.html',
+                  {'form': form, 'book_list': book_list,
+                   'chosen_books': request.session['chosen_books'] if 'chosen_books' in request.session else None})
 
 
 def summary(request):

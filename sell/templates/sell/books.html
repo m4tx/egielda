@@ -42,7 +42,7 @@
 {% block footer %}
 {% load staticfiles %}
 <script>
-    var chosenBooks = [];
+    var chosenBooks = {% if chosen_books %}{{ chosen_books|safe }}{% else %}[]{% endif %};
 
     $('.btn-add-book').on('click', function() {
         addBook($(this).closest($('tr')));
@@ -63,6 +63,18 @@
     function NewBook() {
     }
 
+    function addRetrievedBooks() {
+        chosenBooks = chosenBooks.filter(function(n) { return n != null }); // remove all nulls
+
+        for (var book in chosenBooks) {
+            if (chosenBooks[book].pk != undefined) {
+                addBook($('#bookList').find('table tr[data-pk="' + chosenBooks[book].pk + '"]'));
+            } else {
+                addBookTr(createNewBookTr(chosenBooks[book]));
+            }
+        }
+    }
+
     function addBook(tr) {
         var ctr = tr.clone();
         tr.addClass('hidden');
@@ -73,9 +85,9 @@
 
     function addNewBook() {
         var ids = ['isbn', 'publisher', 'title', 'publication_year', 'price'];
+        var vals = [];
 
         var book = new NewBook();
-        var tr = $('<tr/>');
         var add = false;
         for (var prid in ids) {
             var input = $('input[name="' + ids[prid] + '"]');
@@ -85,12 +97,22 @@
             if (book[ids[prid]] != "") {
                 add = true;
             }
-            tr = tr.append($('<td/>').append(book[ids[prid]]));
+            vals.push(book[ids[prid]]);
         }
 
         if (add) {
-            addBookTr(tr, book);
+            addBookTr(createNewBookTr(vals), book);
         }
+    }
+
+    function createNewBookTr(vals) {
+        var tr = $('<tr/>');
+
+        for (var id in vals) {
+            tr = tr.append($('<td/>').append(vals[id]));
+        }
+
+        return tr;
     }
 
     function addBookTr(tr, book) {
@@ -121,6 +143,8 @@
             chosenBooksList.addClass('hidden');
         }
     }
+
+    addRetrievedBooks();
 </script>
 <script src="{% static "js/isbnfinder.js" %}"></script>
 {% endblock %}
