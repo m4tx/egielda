@@ -45,7 +45,10 @@
     var chosenBooks = {% if chosen_books %}{{ chosen_books|safe }}{% else %}[]{% endif %};
 
     $('.btn-add-book').on('click', function() {
-        addBook($(this).closest($('tr')));
+        var tr = $(this).closest($('tr'));
+        var book = new ExistingBook(tr.data('pk'));
+        chosenBooks.push(book);
+        addExistingBook(tr, book);
     });
     $('#btn-add-new-book').on('click', function () {
         addNewBook();
@@ -64,23 +67,21 @@
     }
 
     function addRetrievedBooks() {
-        chosenBooks = chosenBooks.filter(function(n) { return n != null }); // remove all nulls
-
         for (var book in chosenBooks) {
             if (chosenBooks[book].pk != undefined) {
-                addBook($('#bookList').find('table tr[data-pk="' + chosenBooks[book].pk + '"]'));
+                addExistingBook($('#bookList').find('table tr[data-pk="' + chosenBooks[book].pk + '"]'));
             } else {
                 addBookTr(createNewBookTr(chosenBooks[book]));
             }
         }
     }
 
-    function addBook(tr) {
+    function addExistingBook(tr, book) {
         var ctr = tr.clone();
         tr.addClass('hidden');
         $('td:last-child', ctr).remove();
 
-        addBookTr(ctr, new ExistingBook(ctr.data('pk')));
+        addBookTr(ctr, book);
     }
 
     function addNewBook() {
@@ -101,6 +102,7 @@
         }
 
         if (add) {
+            chosenBooks.push(book);
             addBookTr(createNewBookTr(vals), book);
         }
     }
@@ -116,8 +118,6 @@
     }
 
     function addBookTr(tr, book) {
-        var id = chosenBooks.push(book) - 1;
-
         var button = $('<button class="btn btn-xs btn-link btn-remove-book"><span class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>');
         button.on('click', function() {
             removeBook($('#chosen-books-list').find('button.btn-remove-book').index(this))
