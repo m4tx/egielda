@@ -111,7 +111,7 @@
         var tr = $('<tr/>');
 
         for (var id in vals) {
-            tr = tr.append($('<td/>').append(vals[id]));
+            tr = tr.append($('<td/>').text(vals[id]));
         }
 
         return tr;
