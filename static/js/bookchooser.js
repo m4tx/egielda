@@ -47,6 +47,10 @@ function addNewBook() {
     for (var prid in ids) {
         var input = $('input[name="' + ids[prid] + '"]');
         book[ids[prid]] = input.val();
+        if (ids[prid] == 'price' && book[ids[prid]] != '') {
+            book[ids[prid]] = parseFloat(book[ids[prid]]).toFixed(2);
+            book[ids[prid]] += currency;
+        }
         input.val("");
 
         if (book[ids[prid]] != "") {

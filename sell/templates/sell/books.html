@@ -42,6 +42,7 @@
 <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
 <script>
     var chosenBooks = {% if chosen_books %}{{ chosen_books|safe }}{% else %}[]{% endif %};
+    var currency = '{{ currency|safe }}';
 </script>
 <script src="{% static "js/bookchooser.js" %}"></script>
 <script src="{% static "js/isbnfinder.js" %}"></script>
