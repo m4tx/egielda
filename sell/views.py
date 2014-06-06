@@ -1,3 +1,6 @@
+import json
+from decimal import Decimal
+
 from django.core.urlresolvers import reverse
 from django.forms import model_to_dict
 from django.http.response import HttpResponseRedirect, HttpResponse
@@ -42,4 +45,19 @@ def books(request):
 
 
 def summary(request):
-    return HttpResponse("Hello, world!")
+    try:
+        existing_list = []
+        types = []
+        book_list = json.loads(request.session['chosen_books'])
+        for book in book_list:
+            if 'pk' in book:
+                existing_list.append(book['pk'])
+            else:
+                if book['price'] != "":
+                    book['price'] = Decimal(book['price'])
+                types.append(BookType(**book))
+        types.extend(BookType.objects.filter(pk__in=existing_list))
+        return render(request, 'sell/summary.html', {'personal_data': request.session['personal_data'],
+                                                     'book_list': sorted(types, key=lambda x: x.title.lower())})
+    except ValueError:
+        return HttpResponse(status=400)

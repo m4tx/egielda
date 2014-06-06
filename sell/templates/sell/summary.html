@@ -1,0 +1,50 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Sell books" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Sell books" %}
+        <small>{% trans "Step 3 of 3: summary" %}</small>
+    </h1>
+    <h2>{% trans "Personal data" %}</h2>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{% trans "First name" %}:</label>
+
+            <div class="col-sm-9">
+                <p class="form-control-static">{{ personal_data.first_name }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{% trans "Last name" %}:</label>
+
+            <div class="col-sm-9">
+                <p class="form-control-static">{{ personal_data.last_name }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{% trans "Class" %}:</label>
+
+            <div class="col-sm-9">
+                <p class="form-control-static">{{ personal_data.student_class }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{% trans "Phone number" %}:</label>
+
+            <div class="col-sm-9">
+                <p class="form-control-static">{{ personal_data.phone_number }}</p>
+            </div>
+        </div>
+    </div>
+    <h2>{% trans "Books to sell" %}</h2>
+    {% include "books/book_list_base.html" with hide_actions=True %}
+    <form action="{{ request.path }}" method="post">
+        {% csrf_token %}
+        <a href="{% url 'sell.views.books' %}" class="btn btn-default"><span
+                class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</a>
+        <button class="btn btn-primary pull-right" id="btn-next" type="submit"><span
+                class="glyphicon glyphicon-ok"></span> {% trans "Accept" %}</button>
+    </form>
+{% endblock %}
