@@ -24,17 +24,18 @@
                     <th>{% trans "Actions" %}</th>
                 </tr>
                 </thead>
-                {% for student in student_list %}
+                {% for student, count in student_list %}
                     <tr>
                         <td>{{ student.first_name }}</td>
                         <td>{{ student.last_name }}</td>
                         <td>{{ student.class }}</td>
                         <td>{{ student.phone_number }}</td>
-                        <td>10</td>
+                        <td>{{ count }}</td>
                         <td>
                             <a class="btn btn-xs btn-link" href="{% url 'students.views.accept_books' student.pk %}"
                                role="button"><span class="glyphicon glyphicon-ok"></span> {% trans "Accept" %}</a>
-                            <a class="btn btn-xs btn-link" href="{% url 'students.views.list_books' student.pk %}"
+                            <a class="btn btn-xs btn-link"
+                               href="{% url 'students.views.unaccepted_list_books' student.pk %}"
                                role="button"><span class="glyphicon glyphicon-list"></span> {% trans "List books" %}</a>
                         </td>
                     </tr>

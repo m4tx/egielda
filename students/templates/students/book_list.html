@@ -1,0 +1,47 @@
+{% load i18n %}
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            {% if not accepted_view %}
+                <th>{% trans "Accepted" %}</th>
+                <th>{% trans "Sold" %}</th>
+            {% endif %}
+            <th>{% trans "ISBN" %}</th>
+            <th>{% trans "Publisher" %}</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Publication" %}</th>
+            <th>{% trans "Price" %}</th>
+            {% if show_actions %}
+                <th>{% trans "Actions" %}</th>
+            {% endif %}
+        </tr>
+        </thead>
+
+        {% for book in book_list %}
+            <tr{% block tr_attributes %}{% endblock %}>
+                {% block tr_header %}{% endblock %}
+                {% if not accepted_view %}
+                    <td class="text-center"><span
+                            class="glyphicon glyphicon-{% if book.physical %}ok{% else %}remove{% endif %}"></span></td>
+                    <td>{% if book.sold %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</td>
+                {% endif %}
+                <td>{{ book.book_type.isbn }}</td>
+                <td>{{ book.book_type.publisher }}</td>
+                <td>{{ book.book_type.title }}</td>
+                <td>{{ book.book_type.publication_year }}</td>
+                <td>{% block price %}{{ book.book_type.price_string }}{% endblock %}</td>
+                {% if show_actions %}
+                    <td>
+                        <div class="btn-toolbar" role="toolbar">
+                            {% block actions %}{% endblock %}
+                        </div>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+
+        {% block footer %}{% endblock %}
+    </table>
+</div>

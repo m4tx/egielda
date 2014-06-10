@@ -1,0 +1,12 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Students" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Students" %} <small>{% blocktrans %}{{ student_name }}'s books{% endblocktrans %}</small></h1>
+
+    {% include 'students/book_list.html' %}
+
+    <a href="{% url parent_page %}" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</a>
+{% endblock %}

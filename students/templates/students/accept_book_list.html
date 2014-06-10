@@ -1,0 +1,18 @@
+{% extends "students/book_list.html" %}
+
+{% load i18n %}
+
+{% block price %}
+    {% if book.book_type.price == 0 %}
+        <input class="form-control input-sm">
+    {% else %}
+        {{ book.book_type.price_string }}
+    {% endif %}
+{% endblock %}
+
+{% block actions %}
+    {% if book.book_type.price == 0 %}
+        <a href="" class="btn btn-xs btn-link" role="button"><span
+                class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}</a>
+    {% endif %}
+{% endblock %}

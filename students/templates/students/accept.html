@@ -1,0 +1,13 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Students" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Students" %} <small>{% blocktrans %}Accept {{ student_name }}'s books{% endblocktrans %}</small></h1>
+
+    {% include 'students/accept_book_list.html' with show_actions=True accepted_view=True %}
+
+    <a href="{% url 'students.views.unaccepted' %}" class="btn btn-default" role="button"><span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
+    <a href="#" class="btn btn-primary pull-right" role="button"><span class="glyphicon glyphicon-ok"></span> {% trans "Accept" %}</a>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext as _
+
 from books.models import BookType
 
 
@@ -8,6 +9,9 @@ class Student(models.Model):
     last_name = models.CharField(max_length=30)
     student_class = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=9)
+
+    def student_name(self):
+        return self.first_name + " " + self.last_name
 
     def __str__(self):
         return _("%(first_name)s %(last_name)s, %(student_class)s" %
