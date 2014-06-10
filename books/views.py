@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
-from django.http.response import HttpResponseRedirect, Http404, HttpResponse
-from django.shortcuts import render, get_list_or_404
+from django.http.response import HttpResponseRedirect, Http404
+from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.utils.translation import ugettext as _
 
 from books.forms import BookForm
@@ -34,7 +34,7 @@ def add_book(request):
 
 
 def edit_book(request, book_id):
-    book = BookType.objects.get(id=book_id)
+    book = get_object_or_404(BookType, id=book_id)
     if request.method == 'POST':
         form = BookForm(request.POST, instance=book)
         if form.is_valid():
@@ -47,9 +47,7 @@ def edit_book(request, book_id):
 
 
 def remove_book(request, book_ids):
-    book_list = BookType.objects.filter(id__in=book_ids.split(','))
-    if not book_list:
-        raise Http404
+    book_list = get_list_or_404(BookType, id__in=book_ids.split(','))
     if request.method == 'POST':
         request.session['success_msg'] = 'book_removed' if len(book_list) == 1 else 'books_removed'
         book_list.delete()
@@ -62,7 +60,6 @@ def bulk_actions(request, action_name):
     book_list = []
     if action_name == 'remove' and request.method == 'POST':
         for item in request.POST.lists():
-            print(item[1])
             if item[1][0] == 'on':
                 book_list.append(item[0][7:])
         return HttpResponseRedirect(reverse(remove_book, args=[",".join(book_list)]))
