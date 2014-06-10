@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^manage/books/', include('books.urls')),
     url(r'^manage/categories/', include('categories.urls')),
+    url(r'^manage/students/', include('students.urls')),
     url(r'^sell/', include('sell.urls')),
     (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
 )
