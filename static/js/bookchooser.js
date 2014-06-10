@@ -1,4 +1,4 @@
-$('.btn-add-book').on('click', function() {
+$('.btn-add-book').on('click', function () {
     var tr = $(this).closest($('tr'));
     var book = new ExistingBook(tr.data('pk'));
     chosenBooks.push(book);
@@ -7,7 +7,7 @@ $('.btn-add-book').on('click', function() {
 $('#btn-add-new-book').on('click', function () {
     addNewBook();
 });
-$('button#btn-next,button#btn-back').on('click', function() {
+$('button#btn-next,button#btn-back').on('click', function () {
     $('form').append($('<input type="hidden" name="book_data">').attr('value', JSON.stringify(chosenBooks)))
         .append($('<input type="hidden" name="' + this.id + '">'))
         .submit();
@@ -21,11 +21,15 @@ function NewBook() {
 }
 
 function addRetrievedBooks() {
-    for (var book in chosenBooks) {
-        if (chosenBooks[book].pk != undefined) {
-            addExistingBook($('#bookList').find('table tr[data-pk="' + chosenBooks[book].pk + '"]'));
+    for (var bookid in chosenBooks) {
+        if (chosenBooks[bookid].pk != undefined) {
+            addExistingBook($('#bookList').find('table tr[data-pk="' + chosenBooks[bookid].pk + '"]'));
         } else {
-            addBookTr(createNewBookTr(chosenBooks[book]));
+            var book = $.extend({}, chosenBooks[bookid]); // Clone the associative array
+            if (book.price != "") {
+                book.price += currency;
+            }
+            addBookTr(createNewBookTr(book));
         }
     }
 }
@@ -49,13 +53,16 @@ function addNewBook() {
         book[ids[prid]] = input.val();
         if (ids[prid] == 'price' && book[ids[prid]] != '') {
             book[ids[prid]] = parseFloat(book[ids[prid]]).toFixed(2);
+            vals.push(book[ids[prid]] + currency);
+        } else {
+            vals.push(book[ids[prid]]);
         }
         input.val("");
 
         if (book[ids[prid]] != "") {
             add = true;
         }
-        vals.push(book[ids[prid]]);
+
     }
 
     if (add) {
@@ -68,11 +75,7 @@ function createNewBookTr(vals) {
     var tr = $('<tr/>');
 
     for (var id in vals) {
-        if (id == 'price' && vals[id] != '') {
-            tr = tr.append($('<td/>').text(vals[id] + currency));
-        } else {
-            tr = tr.append($('<td/>').text(vals[id]));
-        }
+        tr = tr.append($('<td/>').text(vals[id]));
     }
 
     return tr;
@@ -80,7 +83,7 @@ function createNewBookTr(vals) {
 
 function addBookTr(tr, book) {
     var button = $('<button class="btn btn-xs btn-link btn-remove-book"><span class="glyphicon glyphicon-remove"></span> ' + gettext("Remove") + '</button>');
-    button.on('click', function() {
+    button.on('click', function () {
         removeBook($('#chosen-books-list').find('button.btn-remove-book').index(this))
     });
     tr.append($('<td/>').append(button));
