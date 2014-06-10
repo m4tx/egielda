@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from django.core.urlresolvers import reverse
 from django.forms import model_to_dict
-from django.http.response import HttpResponseRedirect, HttpResponse
+from django.http.response import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.db import transaction
 
@@ -50,6 +50,8 @@ def books(request):
 def summary(request):
     try:
         book_list = json.loads(request.session['chosen_books'])
+        if len(book_list) == 0:
+            return HttpResponseBadRequest()
         if request.method == 'POST':
             with transaction.atomic():
                 student = Student(**request.session['personal_data'])
@@ -69,7 +71,7 @@ def summary(request):
                         type.save()
                         dbbook.book_type = type
                     dbbook.save()
-            del request.session['chosen_books'] # Prevent from adding the same books multiple times
+            del request.session['chosen_books']  # Prevent from adding the same books multiple times
             return render(request, 'sell/success.html')
         else:
             existing_list = []
@@ -85,4 +87,4 @@ def summary(request):
             return render(request, 'sell/summary.html', {'personal_data': request.session['personal_data'],
                                                          'book_list': sorted(types, key=lambda x: x.title.lower())})
     except ValueError:
-        return HttpResponse(status=400)
+        return HttpResponseBadRequest()

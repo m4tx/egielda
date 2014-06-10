@@ -87,6 +87,8 @@ function addBookTr(tr, book) {
 
     var chosenTable = $('#chosen-books-list');
     chosenTable.removeClass('hidden');
+    $('button#btn-next').removeAttr('disabled');
+
     chosenTable.append(tr);
 }
 
@@ -102,6 +104,7 @@ function removeBook(id) {
 
     if (chosenBooks.length == 0) {
         chosenBooksList.addClass('hidden');
+        $('button#btn-next').attr('disabled', 'disabled');
     }
 }
 
