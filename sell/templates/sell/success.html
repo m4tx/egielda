@@ -1,0 +1,11 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Sell books" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Sell books" %}</h1>
+    <div class="alert alert-success">
+        {% trans "Your request was accepted. You can deliver your books now." %}
+    </div>
+{% endblock %}

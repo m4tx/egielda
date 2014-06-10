@@ -5,10 +5,11 @@ from django.core.urlresolvers import reverse
 from django.forms import model_to_dict
 from django.http.response import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from django.db import transaction
 
 from books.forms import BookForm
 from books.models import BookType
-from common.models import Student
+from common.models import Student, Book
 from egielda import settings
 from sell.forms import PersonalDataForm
 
@@ -48,18 +49,40 @@ def books(request):
 
 def summary(request):
     try:
-        existing_list = []
-        types = []
         book_list = json.loads(request.session['chosen_books'])
-        for book in book_list:
-            if 'pk' in book:
-                existing_list.append(book['pk'])
-            else:
-                if book['price'] != "":
-                    book['price'] = Decimal(book['price'])
-                types.append(BookType(**book))
-        types.extend(BookType.objects.filter(pk__in=existing_list))
-        return render(request, 'sell/summary.html', {'personal_data': request.session['personal_data'],
-                                                     'book_list': sorted(types, key=lambda x: x.title.lower())})
+        if request.method == 'POST':
+            with transaction.atomic():
+                student = Student(**request.session['personal_data'])
+                student.save()
+                for book in book_list:
+                    dbbook = Book(owner=student, physical=False, sold=False)
+                    if 'pk' in book:
+                        dbbook.book_type_id = book['pk']
+                    else:
+                        if book['price'] != "":
+                            book['price'] = Decimal(book['price'])
+                        else:
+                            book['price'] = 0
+                        if book['publication_year'] == "":
+                            book['publication_year'] = 1900
+                        type = BookType(**book)
+                        type.save()
+                        dbbook.book_type = type
+                    dbbook.save()
+            del request.session['chosen_books'] # Prevent from adding the same books multiple times
+            return render(request, 'sell/success.html')
+        else:
+            existing_list = []
+            types = []
+            for book in book_list:
+                if 'pk' in book:
+                    existing_list.append(book['pk'])
+                else:
+                    if book['price'] != "":
+                        book['price'] = Decimal(book['price'])
+                    types.append(BookType(**book))
+            types.extend(BookType.objects.filter(pk__in=existing_list))
+            return render(request, 'sell/summary.html', {'personal_data': request.session['personal_data'],
+                                                         'book_list': sorted(types, key=lambda x: x.title.lower())})
     except ValueError:
         return HttpResponse(status=400)
