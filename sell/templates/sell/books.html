@@ -22,6 +22,10 @@
         </div>
         <div id="addBookForm" class="panel-collapse collapse">
             <div class="panel-body form-horizontal">
+                <div class="alert alert-info">
+                    {% trans "Before adding a new book, please check if it is not already present in the list." %}<p>
+                    {% trans "Also, we <strong>strongly</strong> recommend entering the ISBN number and clicking the magnifying glass icon next to the input field. The other fields will be automatically filled, so you won't have to do it by hand." %}
+                </div>
                 {% include "common/default_form.html" %}
                 <button class="btn btn-default pull-right" id="btn-add-new-book"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</button>
             </div>
