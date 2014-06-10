@@ -49,7 +49,6 @@ function addNewBook() {
         book[ids[prid]] = input.val();
         if (ids[prid] == 'price' && book[ids[prid]] != '') {
             book[ids[prid]] = parseFloat(book[ids[prid]]).toFixed(2);
-            book[ids[prid]] += currency;
         }
         input.val("");
 
@@ -69,7 +68,11 @@ function createNewBookTr(vals) {
     var tr = $('<tr/>');
 
     for (var id in vals) {
-        tr = tr.append($('<td/>').text(vals[id]));
+        if (id == 'price' && vals[id] != '') {
+            tr = tr.append($('<td/>').text(vals[id] + currency));
+        } else {
+            tr = tr.append($('<td/>').text(vals[id]));
+        }
     }
 
     return tr;
