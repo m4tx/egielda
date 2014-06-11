@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from students import views
+from users import views
 
 
 urlpatterns = [

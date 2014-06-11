@@ -1,14 +1,14 @@
 {% extends "common/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Students" %}{% endblock %}
+{% block title %}{% trans "Users" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Students" %}</h1>
+    <h1>{% trans "Users" %}</h1>
 
     <ul class="nav nav-tabs">
         <li class="active"><a href="#">{% trans "All" %}</a></li>
-        <li><a href="{% url 'students.views.unaccepted' %}">{% trans "With unaccepted books" %}</a></li>
+        <li><a href="{% url 'users.views.unaccepted' %}">{% trans "With unaccepted books" %}</a></li>
     </ul>
 
     {% if student_list %}
@@ -29,7 +29,7 @@
                         <td>{{ student.last_name }}</td>
                         <td>{{ student.class }}</td>
                         <td>{{ student.phone_number }}</td>
-                        <td><a class="btn btn-xs btn-link" href="{% url 'students.views.list_books' student.pk %}"
+                        <td><a class="btn btn-xs btn-link" href="{% url 'users.views.list_books' student.pk %}"
                                role="button"><span class="glyphicon glyphicon-list"></span> {% trans "List books" %}</a>
                         </td>
                     </tr>

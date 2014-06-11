@@ -4,13 +4,13 @@ from django.utils.translation import ugettext as _
 from books.models import BookType
 
 
-class Student(models.Model):
+class AppUser(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     student_class = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=9)
 
-    def student_name(self):
+    def user_name(self):
         return self.first_name + " " + self.last_name
 
     def __str__(self):
@@ -20,7 +20,7 @@ class Student(models.Model):
 
 class Book(models.Model):
     book_type = models.ForeignKey(BookType)
-    owner = models.ForeignKey(Student)
+    owner = models.ForeignKey(AppUser)
     accepted = models.BooleanField()
     """Is the book physically available for buying"""
     sold = models.BooleanField()
@@ -36,7 +36,7 @@ class Book(models.Model):
 class Purchase(models.Model):
     book = models.ForeignKey(Book)
     date = models.DateField()
-    purchaser = models.ForeignKey(Student)
+    purchaser = models.ForeignKey(AppUser)
 
     def __str__(self):
         return _(

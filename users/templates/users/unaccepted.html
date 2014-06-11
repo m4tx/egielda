@@ -1,13 +1,13 @@
 {% extends "common/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Students" %}{% endblock %}
+{% block title %}{% trans "Users" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Students" %}</h1>
+    <h1>{% trans "Users" %}</h1>
 
     <ul class="nav nav-tabs">
-        <li><a href="{% url 'students.views.index' %}">{% trans "All" %}</a></li>
+        <li><a href="{% url 'users.views.index' %}">{% trans "All" %}</a></li>
         <li class="active"><a href="#">{% trans "With unaccepted books" %}</a></li>
     </ul>
 
@@ -32,10 +32,10 @@
                         <td>{{ student.phone_number }}</td>
                         <td>{{ count }}</td>
                         <td>
-                            <a class="btn btn-xs btn-link" href="{% url 'students.views.accept_books' student.pk %}"
+                            <a class="btn btn-xs btn-link" href="{% url 'users.views.accept_books' student.pk %}"
                                role="button"><span class="glyphicon glyphicon-ok"></span> {% trans "Accept" %}</a>
                             <a class="btn btn-xs btn-link"
-                               href="{% url 'students.views.unaccepted_list_books' student.pk %}"
+                               href="{% url 'users.views.unaccepted_list_books' student.pk %}"
                                role="button"><span class="glyphicon glyphicon-list"></span> {% trans "List books" %}</a>
                         </td>
                     </tr>

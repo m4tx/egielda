@@ -9,7 +9,7 @@ from django.db import transaction
 
 from books.forms import BookForm
 from books.models import BookType
-from common.models import Student, Book
+from common.models import AppUser, Book
 from egielda import settings
 from sell.forms import PersonalDataForm
 
@@ -26,7 +26,7 @@ def personal_data(request):
             return HttpResponseRedirect(reverse(books))
     else:
         if 'personal_data' in request.session:
-            form = PersonalDataForm(instance=Student(**request.session['personal_data']))
+            form = PersonalDataForm(instance=AppUser(**request.session['personal_data']))
         else:
             form = PersonalDataForm()
     return render(request, 'sell/personal_data.html', {'form': form})
@@ -54,7 +54,7 @@ def summary(request):
             return HttpResponseBadRequest()
         if request.method == 'POST':
             with transaction.atomic():
-                student = Student(**request.session['personal_data'])
+                student = AppUser(**request.session['personal_data'])
                 student.save()
                 for book in book_list:
                     dbbook = Book(owner=student, accepted=False, sold=False)

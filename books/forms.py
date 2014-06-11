@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from books.models import BookType
 from egielda import settings
@@ -14,6 +14,10 @@ class BookForm(ModelForm):
         model = BookType
         fields = ['isbn', 'publisher', 'title', 'publication_year', 'price']
         labels = {
+            'isbn': _("ISBN"),
+            'publisher': _("Publisher"),
+            'title': _("Title"),
+            'publication_year': _("Publication year"),
             'price': _("Price (%s)") % getattr(settings, 'CURRENCY', 'USD'),
         }
         widgets = {
