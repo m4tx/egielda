@@ -259,7 +259,7 @@ msgid ""
 "Check now if all of the data displayed here are correct. If there is "
 "anything you want to modify, just click the \"Back\" button."
 msgstr ""
-"Sprawdź teraz, czy wszystkie dane, które zostały podane, są poprawne."
+"Sprawdź teraz, czy wszystkie dane, które zostały podane, są poprawne. "
 "Jeżeli jest cokolwiek, co wymaga poprawy, po prostu kliknij przycisk "
 "\"Powrót\"."
 
