@@ -10,6 +10,7 @@ class BookType(models.Model):
     title = models.CharField(max_length=150, blank=True)
     publication_year = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
+    visible = models.BooleanField(default=False)
 
     def price_string(self):
         return "%(price).2f%(currency)s" % {'price': self.price,

@@ -57,7 +57,7 @@ def summary(request):
                 student = Student(**request.session['personal_data'])
                 student.save()
                 for book in book_list:
-                    dbbook = Book(owner=student, physical=False, sold=False)
+                    dbbook = Book(owner=student, accepted=False, sold=False)
                     if 'pk' in book:
                         dbbook.book_type_id = book['pk']
                     else:

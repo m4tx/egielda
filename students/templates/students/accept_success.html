@@ -1,0 +1,15 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Students - Accept books" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Students" %}
+        <small>{% blocktrans %}Accept {{ student_name }}'s books{% endblocktrans %}</small>
+    </h1>
+
+    <div class="alert alert-success">{% trans "The books were accepted successfully!" %}</div>
+
+    <a href="{% url 'students.views.unaccepted' %}" class="btn btn-primary" role="button"><span
+            class="glyphicon glyphicon-chevron-left"></span> {% trans "Back to list" %}</a>
+{% endblock %}

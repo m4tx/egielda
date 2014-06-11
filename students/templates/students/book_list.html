@@ -24,7 +24,7 @@
                 {% block tr_header %}{% endblock %}
                 {% if not accepted_view %}
                     <td class="text-center"><span
-                            class="glyphicon glyphicon-{% if book.physical %}ok{% else %}remove{% endif %}"></span></td>
+                            class="glyphicon glyphicon-{% if book.accepted %}ok{% else %}remove{% endif %}"></span></td>
                     <td>{% if book.sold %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</td>
                 {% endif %}
                 <td>{{ book.book_type.isbn }}</td>

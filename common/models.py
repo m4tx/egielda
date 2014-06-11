@@ -21,15 +21,15 @@ class Student(models.Model):
 class Book(models.Model):
     book_type = models.ForeignKey(BookType)
     owner = models.ForeignKey(Student)
-    physical = models.BooleanField()
+    accepted = models.BooleanField()
     """Is the book physically available for buying"""
     sold = models.BooleanField()
 
     def __str__(self):
         return _(
-            "%(book_type)s from %(owner)s, physical: %(physical)s, sold: %(sold)s" % {'book_type': self.book_type,
+            "%(book_type)s from %(owner)s, accepted: %(accepted)s, sold: %(sold)s" % {'book_type': self.book_type,
                                                                                       'owner': self.owner,
-                                                                                      'physical': self.physical,
+                                                                                      'accepted': self.accepted,
                                                                                       'sold': self.sold})
 
 
