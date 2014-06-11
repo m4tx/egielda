@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-11 13:27+0000\n"
+"POT-Creation-Date: 2014-06-11 13:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,14 +27,14 @@ msgid "ISBN"
 msgstr ""
 
 #: books/forms.py:18 books/templates/books/book_list_base.html:9
-#: books/templates/books/remove.html:20
+#: books/templates/books/remove.html:21
 #: sell/templates/sell/books_chosen_list.html:8
 #: users/templates/users/book_list.html:12
 msgid "Publisher"
 msgstr "Wydawnictwo"
 
 #: books/forms.py:19 books/templates/books/book_list_base.html:10
-#: books/templates/books/remove.html:21
+#: books/templates/books/remove.html:22
 #: sell/templates/sell/books_chosen_list.html:9
 #: users/templates/users/book_list.html:13
 msgid "Title"
@@ -87,7 +87,7 @@ msgid "Publication"
 msgstr "Wydanie"
 
 #: books/templates/books/book_list_base.html:12
-#: books/templates/books/remove.html:22
+#: books/templates/books/remove.html:23
 #: sell/templates/sell/books_chosen_list.html:11
 #: users/templates/users/book_list.html:15
 msgid "Price"
@@ -107,7 +107,7 @@ msgstr "Edytuj"
 
 #: books/templates/books/book_list_index.html:8
 #: books/templates/books/book_list_index.html:25
-#: books/templates/books/remove.html:34
+#: books/templates/books/remove.html:38
 msgid "Remove"
 msgstr "Usuń"
 
@@ -144,13 +144,17 @@ msgstr "Usuń książkę"
 msgid "Remove books"
 msgstr "Usuń książki"
 
-#: books/templates/books/remove.html:13
+#: books/templates/books/remove.html:14
 msgid "Are you sure you want to remove this book?"
 msgstr "Czy jesteś pewien, że chcesz usunąć tę książkę?"
 
-#: books/templates/books/remove.html:15
+#: books/templates/books/remove.html:16
 msgid "Are you sure you want to remove these books?"
 msgstr "Czy jesteś pewien, że chcesz usunąć te książki?"
+
+#: books/templates/books/remove.html:36 users/templates/users/accept.html:16
+msgid "Cancel"
+msgstr "Anuluj"
 
 #: common/models.py:17
 #, python-format
@@ -167,11 +171,29 @@ msgstr ""
 msgid "%(book)s from %(owner)s sold to %(purchaser)s at %(date)s"
 msgstr ""
 
-#: sell/forms.py:20 sell/templates/sell/summary.html:27
+#: sell/forms.py:20 sell/templates/sell/summary.html:16
+#: users/templates/users/index.html:19
+#: users/templates/users/unaccepted.html:19
+msgid "First name"
+msgstr "Imię"
+
+#: sell/forms.py:21 sell/templates/sell/summary.html:23
+#: users/templates/users/index.html:20
+#: users/templates/users/unaccepted.html:20
+msgid "Last name"
+msgstr "Nazwisko"
+
+#: sell/forms.py:22 sell/templates/sell/summary.html:30
 #: users/templates/users/index.html:21
 #: users/templates/users/unaccepted.html:21
 msgid "Class"
 msgstr "Klasa"
+
+#: sell/forms.py:23 sell/templates/sell/summary.html:37
+#: users/templates/users/index.html:22
+#: users/templates/users/unaccepted.html:22
+msgid "Phone number"
+msgstr "Numer telefonu"
 
 #: sell/templates/sell/books.html:4 sell/templates/sell/books.html.py:7
 #: sell/templates/sell/personal_data.html:4
@@ -210,7 +232,7 @@ msgstr ""
 "wtedy wypełnione automatycznie, więc nie będziesz musiał(a) robić tego "
 "ręcznie."
 
-#: sell/templates/sell/books.html:38 sell/templates/sell/summary.html:46
+#: sell/templates/sell/books.html:38 sell/templates/sell/summary.html:49
 #: users/templates/users/list_books.html:11
 msgid "Back"
 msgstr "Powrót"
@@ -232,30 +254,24 @@ msgstr ""
 msgid "Step 3 of 3: summary"
 msgstr "Krok 3 z 3: podsumowanie"
 
-#: sell/templates/sell/summary.html:10
+#: sell/templates/sell/summary.html:11
+msgid ""
+"Check now if all of the data displayed here are correct. If there is "
+"anything you want to modify, just click the \"Back\" button."
+msgstr ""
+"Sprawdź teraz, czy wszystkie dane, które zostały podane, są poprawne."
+"Jeżeli jest cokolwiek, co wymaga poprawy, po prostu kliknij przycisk "
+"\"Powrót\"."
+
+#: sell/templates/sell/summary.html:13
 msgid "Personal data"
 msgstr "Dane osobiste"
 
-#: sell/templates/sell/summary.html:13 users/templates/users/index.html:19
-#: users/templates/users/unaccepted.html:19
-msgid "First name"
-msgstr "Imię"
-
-#: sell/templates/sell/summary.html:20 users/templates/users/index.html:20
-#: users/templates/users/unaccepted.html:20
-msgid "Last name"
-msgstr "Nazwisko"
-
-#: sell/templates/sell/summary.html:34 users/templates/users/index.html:22
-#: users/templates/users/unaccepted.html:22
-msgid "Phone number"
-msgstr "Numer telefonu"
-
-#: sell/templates/sell/summary.html:41
+#: sell/templates/sell/summary.html:44
 msgid "Books to sell"
 msgstr "Książki do sprzedania"
 
-#: sell/templates/sell/summary.html:48 users/templates/users/accept.html:18
+#: sell/templates/sell/summary.html:51 users/templates/users/accept.html:18
 #: users/templates/users/unaccepted.html:36
 msgid "Accept"
 msgstr "Akceptuj"
@@ -280,10 +296,6 @@ msgstr "Użytkownicy"
 #, python-format
 msgid "Accept %(user_name)s's books"
 msgstr "Zaakceptuj książki użytkownika %(user_name)s"
-
-#: users/templates/users/accept.html:16
-msgid "Cancel"
-msgstr "Anuluj"
 
 #: users/templates/users/accept_success.html:11
 msgid "The books were accepted successfully."
