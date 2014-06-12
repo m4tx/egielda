@@ -1,10 +1,10 @@
 {% extends "common/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Sell books" %}{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Sell books" %}
+    <h1>{{ page_title }}
         <small>{% trans "Step 3 of 3: summary" %}</small>
     </h1>
     <div class="alert alert-info">

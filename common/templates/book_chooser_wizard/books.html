@@ -1,19 +1,19 @@
 {% extends "common/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Sell books" %}{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Sell books" %} <small>{% trans "Step 2 of 3: choose the books" %}</small></h1>
+<h1>{{ page_title }} <small>{% trans "Step 2 of 3: choose the books" %}</small></h1>
 
-{% include "sell/books_chosen_list.html" %}
+{% include "book_chooser_wizard/books_chosen_list.html" %}
 <div class="panel-group" id="accordion">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#bookList">{% trans "Choose from the list" %}</a></h4>
         </div>
         <div id="bookList" class="panel-collapse collapse">
-            {% include "sell/books_book_list.html" %}
+            {% include "book_chooser_wizard/books_book_list.html" %}
         </div>
     </div>
     <div class="panel panel-default">

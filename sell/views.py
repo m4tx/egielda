@@ -1,17 +1,61 @@
-import json
 from decimal import Decimal
 
 from django.core.urlresolvers import reverse
-from django.forms import model_to_dict
-from django.http.response import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render
-from django.db import transaction
 
-from books.forms import BookForm
+from django.http.response import HttpResponseRedirect
+from django.shortcuts import render
+from django.utils.translation import ugettext_lazy as _
+
 from books.models import BookType
-from common.models import AppUser, Book
-from egielda import settings
-from sell.forms import PersonalDataForm
+from common.models import Book
+from common.views import BookChooserWizard
+
+
+class SellWizard(BookChooserWizard):
+    def page_title(self):
+        return _("Purchase books")
+
+    def get_personal_data_view(self):
+        return personal_data
+
+    def get_books_view(self):
+        return books
+
+    def get_summary_view(self):
+        return summary
+
+    def process_books_summary(self, user, book_list):
+        for book in book_list:
+            dbbook = Book(owner=user, accepted=False, sold=False)
+            if 'pk' in book:
+                dbbook.book_type_id = book['pk']
+            else:
+                if book['price'] != "":
+                    book['price'] = Decimal(book['price'])
+                else:
+                    book['price'] = 0
+                if book['publication_year'] == "":
+                    book['publication_year'] = 1900
+                book_type = BookType(**book)
+                book_type.save()
+                dbbook.book_type = type
+            dbbook.save()
+
+    def get_book_list(self, book_list):
+        existing_list = []
+        types = []
+        for book in book_list:
+            if 'pk' in book:
+                existing_list.append(book['pk'])
+            else:
+                if book['price'] != "":
+                    book['price'] = Decimal(book['price'])
+                types.append(BookType(**book))
+        types.extend(BookType.objects.filter(pk__in=existing_list))
+        return types
+
+    def success(self, request):
+        return render(request, 'sell/success.html')
 
 
 def index(request):
@@ -19,72 +63,12 @@ def index(request):
 
 
 def personal_data(request):
-    if request.method == 'POST':
-        form = PersonalDataForm(request.POST)
-        if form.is_valid():
-            request.session['personal_data'] = model_to_dict(form.save(commit=False))
-            return HttpResponseRedirect(reverse(books))
-    else:
-        if 'personal_data' in request.session:
-            form = PersonalDataForm(instance=AppUser(**request.session['personal_data']))
-        else:
-            form = PersonalDataForm()
-    return render(request, 'sell/personal_data.html', {'form': form})
+    return SellWizard().personal_data(request)
 
 
 def books(request):
-    if request.method == 'POST':
-        request.session['chosen_books'] = request.POST['book_data']
-        if 'btn-back' in request.POST:
-            return HttpResponseRedirect(reverse(personal_data))
-        elif 'btn-next' in request.POST:
-            return HttpResponseRedirect(reverse(summary))
-    book_list = BookType.objects.all()
-    form = BookForm()
-    return render(request, 'sell/books.html',
-                  {'form': form, 'book_list': book_list,
-                   'chosen_books': request.session['chosen_books'] if 'chosen_books' in request.session else None,
-                   'currency': getattr(settings, 'CURRENCY', 'USD')})
+    return SellWizard().books(request)
 
 
 def summary(request):
-    try:
-        book_list = json.loads(request.session['chosen_books'])
-        if len(book_list) == 0:
-            return HttpResponseBadRequest()
-        if request.method == 'POST':
-            with transaction.atomic():
-                student = AppUser(**request.session['personal_data'])
-                student.save()
-                for book in book_list:
-                    dbbook = Book(owner=student, accepted=False, sold=False)
-                    if 'pk' in book:
-                        dbbook.book_type_id = book['pk']
-                    else:
-                        if book['price'] != "":
-                            book['price'] = Decimal(book['price'])
-                        else:
-                            book['price'] = 0
-                        if book['publication_year'] == "":
-                            book['publication_year'] = 1900
-                        type = BookType(**book)
-                        type.save()
-                        dbbook.book_type = type
-                    dbbook.save()
-            del request.session['chosen_books']  # Prevent from adding the same books multiple times
-            return render(request, 'sell/success.html')
-        else:
-            existing_list = []
-            types = []
-            for book in book_list:
-                if 'pk' in book:
-                    existing_list.append(book['pk'])
-                else:
-                    if book['price'] != "":
-                        book['price'] = Decimal(book['price'])
-                    types.append(BookType(**book))
-            types.extend(BookType.objects.filter(pk__in=existing_list))
-            return render(request, 'sell/summary.html', {'personal_data': request.session['personal_data'],
-                                                         'book_list': sorted(types, key=lambda x: x.title.lower())})
-    except ValueError:
-        return HttpResponseBadRequest()
+    return SellWizard().summary(request)
