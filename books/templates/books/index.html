@@ -29,5 +29,5 @@
 {% else %}
 <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
 {% endif %}
-<a class="btn btn-primary" href="{% url 'books.views.add_book' %}" role="button"><span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}</a>
+<a class="btn btn-primary pull-right" href="{% url 'books.views.add_book' %}" role="button"><span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}</a>
 {% endblock %}

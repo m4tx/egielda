@@ -8,7 +8,10 @@
     <form class="form-horizontal" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}
-        <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}
+        <a href="{% url 'books.views.index' %}" class="btn btn-default" role="button"><span
+                class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
+        <button class="btn btn-primary pull-right" type="submit"><span
+                class="glyphicon glyphicon-plus"></span> {% trans "Add" %}
         </button>
     </form>
 {% endblock %}

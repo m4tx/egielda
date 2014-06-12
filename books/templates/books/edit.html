@@ -4,12 +4,15 @@
 {% block title %}{% trans "Edit book" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Edit book" %}</h1>
-<form class="form-horizontal" action="{{ request.path }}" method="post">
-    {% include "common/default_form.html" %}
-    {% csrf_token %}
-    <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}</button>
-</form>
+    <h1>{% trans "Edit book" %}</h1>
+    <form class="form-horizontal" action="{{ request.path }}" method="post">
+        {% include "common/default_form.html" %}
+        {% csrf_token %}
+        <a href="{% url 'books.views.index' %}" class="btn btn-default" role="button"><span
+                class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
+        <button class="btn btn-primary pull-right" type="submit"><span
+                class="glyphicon glyphicon-ok"></span> {% trans "Save" %}</button>
+    </form>
 {% endblock %}
 
 {% block footer %}
