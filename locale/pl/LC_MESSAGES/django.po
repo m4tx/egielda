@@ -269,9 +269,8 @@ msgid "Accept"
 msgstr "Akceptuj"
 
 #: purchase/views.py:16
-#, fuzzy
 msgid "Purchase books"
-msgstr "Zarządzaj książkami"
+msgstr "Kup książki"
 
 #: sell/views.py:16 sell/templates/sell/success.html:4
 #: sell/templates/sell/success.html.py:7
