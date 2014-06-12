@@ -13,7 +13,7 @@ from common.views import BookChooserWizard
 
 class SellWizard(BookChooserWizard):
     def page_title(self):
-        return _("Purchase books")
+        return _("Sell books")
 
     def get_personal_data_view(self):
         return personal_data
