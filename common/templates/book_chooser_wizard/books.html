@@ -7,15 +7,17 @@
 <h1>{{ page_title }} <small>{% trans "Step 2 of 3: choose the books" %}</small></h1>
 
 {% include "book_chooser_wizard/books_chosen_list.html" %}
+
 <div class="panel-group" id="accordion">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#bookList">{% trans "Choose from the list" %}</a></h4>
         </div>
-        <div id="bookList" class="panel-collapse collapse">
+        <div id="bookList" class="panel-collapse collapse in">
             {% include "book_chooser_wizard/books_book_list.html" %}
         </div>
     </div>
+    {% if feature_add_new %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#addBookForm">{% trans "Add new" %}</a></h4>
@@ -31,7 +33,9 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
+
 <div class="btn-toolbar">
     <form action="{{ request.path }}" method="post">
         {% csrf_token %}

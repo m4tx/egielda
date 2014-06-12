@@ -41,13 +41,13 @@
             </div>
         </div>
     </div>
-    <h2>{% trans "Books to sell" %}</h2>
+    <h2>{% trans "Books" %}</h2>
     {% include "books/book_list_base.html" with hide_actions=True %}
     <form action="{{ request.path }}" method="post">
         {% csrf_token %}
-        <a href="{% url 'sell.views.books' %}" class="btn btn-default"><span
-                class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</a>
-        <button class="btn btn-primary pull-right" id="btn-next" type="submit"><span
+        <button class="btn btn-default" name="btn-back" type="submit"><span
+                class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</button>
+        <button class="btn btn-primary pull-right" name="btn-next" type="submit"><span
                 class="glyphicon glyphicon-ok"></span> {% trans "Accept" %}</button>
     </form>
 {% endblock %}

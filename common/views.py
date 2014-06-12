@@ -4,7 +4,7 @@ import json
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.forms import model_to_dict
-from django.http import HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render
 
 from books.forms import BookForm
@@ -44,6 +44,10 @@ class BookChooserWizard:
     def process_books_summary(self, user, book_list):
         pass
 
+    @property
+    def feature_add_new(self):
+        return False
+
     def personal_data(self, request):
         if request.method == 'POST':
             form = PersonalDataForm(request.POST)
@@ -69,7 +73,7 @@ class BookChooserWizard:
         return render(request, 'book_chooser_wizard/books.html',
                       {'page_title': self.page_title, 'form': form, 'book_list': book_list,
                        'chosen_books': request.session['chosen_books'] if 'chosen_books' in request.session else None,
-                       'currency': getattr(settings, 'CURRENCY', 'USD')})
+                       'currency': getattr(settings, 'CURRENCY', 'USD'), 'feature_add_new': self.feature_add_new})
 
     def summary(self, request):
         try:
@@ -77,12 +81,15 @@ class BookChooserWizard:
             if len(book_list) == 0:
                 return HttpResponseBadRequest()
             if request.method == 'POST':
-                with transaction.atomic():
-                    user = AppUser(**request.session['personal_data'])
-                    user.save()
-                    self.process_books_summary(user, book_list)
-                del request.session['chosen_books']  # Prevent from adding the same books multiple times
-                return self.success(request)
+                if 'btn-back' in request.POST:
+                    return HttpResponseRedirect(reverse(self.get_books_view()))
+                else:
+                    with transaction.atomic():
+                        user = AppUser(**request.session['personal_data'])
+                        user.save()
+                        self.process_books_summary(user, book_list)
+                    del request.session['chosen_books']  # Prevent from adding the same books multiple times
+                    return self.success(request)
             else:
                 return render(request, 'book_chooser_wizard/summary.html',
                               {'page_title': self.page_title, 'personal_data': request.session['personal_data'],
