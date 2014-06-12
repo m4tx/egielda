@@ -11,3 +11,8 @@
     <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}</button>
 </form>
 {% endblock %}
+
+{% block footer %}
+    {% load staticfiles %}
+    <script src="{% static "js/isbnfinder.js" %}"></script>
+{% endblock %}
