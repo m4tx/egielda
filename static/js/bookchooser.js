@@ -77,7 +77,9 @@ function addNewBook() {
 
     if (add) {
         chosenBooks.push(book);
-        addBookTr(createNewBookTr(vals), book);
+        var tr = createNewBookTr(vals);
+        tr.append($('<td data-type="amount">1</td>'));
+        addBookTr(tr, book);
     }
 }
 
