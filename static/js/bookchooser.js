@@ -1,8 +1,18 @@
 $('.btn-add-book').on('click', function () {
     var tr = $(this).closest($('tr'));
-    var book = new ExistingBook(tr.data('pk'));
-    chosenBooks.push(book);
-    addExistingBook(tr, book);
+    var existingTr = $('#chosen-books-list').find('tr[data-pk="' + tr.data('pk') + '"]');
+    if (existingTr.length > 0) {
+        var amountTr = existingTr.find('td[data-type="amount"]');
+        var amount = parseInt(amountTr.text());
+        amountTr.text(amount + 1);
+        $.grep(chosenBooks, function (n, i) {
+            return n.pk == tr.data('pk')
+        })[0].amount += 1;
+    } else {
+        var book = new ExistingBook(tr.data('pk'), 1);
+        chosenBooks.push(book);
+        addExistingBook(tr, book);
+    }
 });
 $('#btn-add-new-book').on('click', function () {
     addNewBook();
@@ -13,8 +23,9 @@ $('button#btn-next,button#btn-back').on('click', function () {
         .submit();
 });
 
-function ExistingBook(pk) {
+function ExistingBook(pk, amount) {
     this.pk = pk;
+    this.amount = amount;
 }
 
 function NewBook() {
@@ -36,8 +47,8 @@ function addRetrievedBooks() {
 
 function addExistingBook(tr, book) {
     var ctr = tr.clone();
-    tr.addClass('hidden');
     $('td:last-child', ctr).remove();
+    ctr.append($('<td data-type="amount">1</td>'));
 
     addBookTr(ctr, book);
 }
@@ -62,7 +73,6 @@ function addNewBook() {
         if (book[ids[prid]] != "") {
             add = true;
         }
-
     }
 
     if (add) {
@@ -97,17 +107,19 @@ function addBookTr(tr, book) {
 
 function removeBook(id) {
     var book = chosenBooks[id];
-    if (book.pk != undefined) {
-        $('#bookList').find('table tr[data-pk="' + book.pk + '"]').removeClass('hidden');
-    }
-
     var chosenBooksList = $('#chosen-books-list');
-    chosenBooks.splice(id, 1);
-    chosenBooksList.find('tbody tr:eq(' + id + ')').remove();
+    var tr = chosenBooksList.find('tbody tr:eq(' + id + ')');
+    if (book.amount > 1) {
+        book.amount -= 1;
+        tr.find('td[data-type="amount"]').text(book.amount);
+    } else {
+        tr.remove();
+        chosenBooks.splice(id, 1);
 
-    if (chosenBooks.length == 0) {
-        chosenBooksList.addClass('hidden');
-        $('button#btn-next').attr('disabled', 'disabled');
+        if (chosenBooks.length == 0) {
+            chosenBooksList.addClass('hidden');
+            $('button#btn-next').attr('disabled', 'disabled');
+        }
     }
 }
 
