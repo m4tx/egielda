@@ -74,6 +74,7 @@ function addNewBook() {
             add = true;
         }
     }
+    book.amount = 1;
 
     if (add) {
         chosenBooks.push(book);
