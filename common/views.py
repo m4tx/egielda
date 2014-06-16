@@ -70,6 +70,7 @@ class BookChooserWizard:
                 return HttpResponseRedirect(reverse(self.get_summary_view()))
         book_list = BookType.objects.all()
         form = BookForm()
+        del form.fields['price']
         return render(request, 'book_chooser_wizard/books.html',
                       {'page_title': self.page_title, 'form': form, 'book_list': book_list,
                        'chosen_books': request.session['chosen_books'] if 'chosen_books' in request.session else None,

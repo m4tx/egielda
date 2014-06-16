@@ -1,6 +1,13 @@
 {% extends "common/base.html" %}
 {% load i18n %}
 
+{% block css %}
+   table th
+   {
+      width: 20%;
+   }
+{% endblock %}
+
 {% block title %}{% trans "Users" %}{% endblock %}
 
 {% block content %}
@@ -20,23 +27,18 @@
                     <th>{% trans "Last name" %}</th>
                     <th>{% trans "Class" %}</th>
                     <th>{% trans "Phone number" %}</th>
-                    <th>{% trans "Books" %}</th>
                     <th>{% trans "Actions" %}</th>
                 </tr>
                 </thead>
-                {% for student, count in student_list %}
+                {% for student in student_list %}
                     <tr>
                         <td>{{ student.first_name }}</td>
                         <td>{{ student.last_name }}</td>
                         <td>{{ student.student_class }}</td>
                         <td>{{ student.phone_number }}</td>
-                        <td>{{ count }}</td>
                         <td>
                             <a class="btn btn-xs btn-link" href="{% url 'users.views.accept_books' student.pk %}"
                                role="button"><span class="glyphicon glyphicon-ok"></span> {% trans "Accept" %}</a>
-                            <a class="btn btn-xs btn-link"
-                               href="{% url 'users.views.unaccepted_list_books' student.pk %}"
-                               role="button"><span class="glyphicon glyphicon-list"></span> {% trans "List books" %}</a>
                         </td>
                     </tr>
                 {% endfor %}

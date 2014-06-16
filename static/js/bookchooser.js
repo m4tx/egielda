@@ -62,8 +62,10 @@ function addNewBook() {
     for (var prid in ids) {
         var input = $('input[name="' + ids[prid] + '"]');
         book[ids[prid]] = input.val();
-        if (ids[prid] == 'price' && book[ids[prid]] != '') {
+        if (ids[prid] == 'price') {
             book[ids[prid]] = parseFloat(book[ids[prid]]).toFixed(2);
+            if(isNaN(book[ids[prid]]))
+               book[ids[prid]] = parseFloat(0).toFixed(2);
             vals.push(book[ids[prid]] + currency);
         } else {
             vals.push(book[ids[prid]]);

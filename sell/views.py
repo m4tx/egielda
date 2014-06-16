@@ -40,7 +40,7 @@ class SellWizard(BookChooserWizard):
                 else:
                     book['price'] = 0
                 if book['publication_year'] == "":
-                    book['publication_year'] = 1900
+                    book['publication_year'] = 1970
                 book_type = BookType(**book)
                 book_type.save()
                 dbbook.book_type = book_type

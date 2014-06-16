@@ -21,11 +21,12 @@ def index(request):
 
 def unaccepted(request):
     book_list = Book.objects.filter(accepted=False)
-    counts = defaultdict(int)
+    student_list = []
     for book in book_list:
-        counts[book.owner] += 1
+        if book.owner not in student_list:
+            student_list.append(book.owner)
     return render(request, 'users/unaccepted.html',
-                  {'student_list': counts.items(), 'parent_page': 'users.views.unaccepted'})
+                  {'student_list': student_list, 'parent_page': 'users.views.unaccepted'})
 
 
 def unaccepted_list_books(request, user_pk):
