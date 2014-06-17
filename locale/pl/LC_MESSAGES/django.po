@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-12 20:25+0000\n"
+"POT-Creation-Date: 2014-06-17 16:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,30 +19,29 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: books/forms.py:11 books/forms.py:17
-#: books/templates/books/book_list_base.html:8
+#: books/forms.py:11 books/templates/books/book_list_base.html:8
 #: common/templates/book_chooser_wizard/books_chosen_list.html:7
 #: users/templates/users/book_list.html:11
 msgid "ISBN"
 msgstr ""
 
-#: books/forms.py:18 books/templates/books/book_list_base.html:9
+#: books/forms.py:19 books/templates/books/book_list_base.html:9
 #: common/templates/book_chooser_wizard/books_chosen_list.html:8
 #: users/templates/users/book_list.html:12
 msgid "Publisher"
 msgstr "Wydawnictwo"
 
-#: books/forms.py:19 books/templates/books/book_list_base.html:10
+#: books/forms.py:20 books/templates/books/book_list_base.html:10
 #: common/templates/book_chooser_wizard/books_chosen_list.html:9
 #: users/templates/users/book_list.html:13
 msgid "Title"
 msgstr "Tytuł"
 
-#: books/forms.py:20
+#: books/forms.py:21
 msgid "Publication year"
 msgstr "Rok wydania"
 
-#: books/forms.py:21
+#: books/forms.py:22
 #, python-format
 msgid "Price (%s)"
 msgstr "Cena (%s)"
@@ -79,7 +78,7 @@ msgid "Cancel"
 msgstr "Anuluj"
 
 #: books/templates/books/add.html:14
-#: common/templates/book_chooser_wizard/books.html:30
+#: common/templates/book_chooser_wizard/books.html:36
 #: common/templates/book_chooser_wizard/books_book_list.html:9
 msgid "Add"
 msgstr "Dodaj"
@@ -98,8 +97,8 @@ msgstr "Cena"
 
 #: books/templates/books/book_list_base.html:14
 #: common/templates/book_chooser_wizard/books_chosen_list.html:13
-#: users/templates/users/book_list.html:17 users/templates/users/index.html:23
-#: users/templates/users/unaccepted.html:24
+#: users/templates/users/book_list.html:17 users/templates/users/index.html:30
+#: users/templates/users/unaccepted.html:30
 msgid "Actions"
 msgstr "Akcje"
 
@@ -130,12 +129,13 @@ msgstr "Zapisz"
 msgid "Manage books"
 msgstr "Zarządzaj książkami"
 
-#: books/templates/books/index.html:8 users/templates/users/unaccepted.html:23
+#: books/templates/books/index.html:8
+#: common/templates/book_chooser_wizard/summary.html:44
 msgid "Books"
 msgstr "Książki"
 
-#: books/templates/books/index.html:30 users/templates/users/index.html:40
-#: users/templates/users/unaccepted.html:46
+#: books/templates/books/index.html:30 users/templates/users/index.html:47
+#: users/templates/users/unaccepted.html:48
 msgid "There's nothing to display."
 msgstr "Nie ma nic do wyświetlenia."
 
@@ -156,26 +156,26 @@ msgid "Are you sure you want to remove these books?"
 msgstr "Czy jesteś pewien, że chcesz usunąć te książki?"
 
 #: common/forms.py:24 common/templates/book_chooser_wizard/summary.html:16
-#: sell/forms.py:20 users/templates/users/index.html:19
-#: users/templates/users/unaccepted.html:19
+#: sell/forms.py:20 users/templates/users/index.html:26
+#: users/templates/users/unaccepted.html:26
 msgid "First name"
 msgstr "Imię"
 
 #: common/forms.py:25 common/templates/book_chooser_wizard/summary.html:23
-#: sell/forms.py:21 users/templates/users/index.html:20
-#: users/templates/users/unaccepted.html:20
+#: sell/forms.py:21 users/templates/users/index.html:27
+#: users/templates/users/unaccepted.html:27
 msgid "Last name"
 msgstr "Nazwisko"
 
 #: common/forms.py:26 common/templates/book_chooser_wizard/summary.html:30
-#: sell/forms.py:22 users/templates/users/index.html:21
-#: users/templates/users/unaccepted.html:21
+#: sell/forms.py:22 users/templates/users/index.html:28
+#: users/templates/users/unaccepted.html:28
 msgid "Class"
 msgstr "Klasa"
 
 #: common/forms.py:27 common/templates/book_chooser_wizard/summary.html:37
-#: sell/forms.py:23 users/templates/users/index.html:22
-#: users/templates/users/unaccepted.html:22
+#: sell/forms.py:23 users/templates/users/index.html:29
+#: users/templates/users/unaccepted.html:29
 msgid "Phone number"
 msgstr "Numer telefonu"
 
@@ -194,25 +194,25 @@ msgstr ""
 msgid "%(book)s from %(owner)s sold to %(purchaser)s at %(date)s"
 msgstr ""
 
-#: common/templates/book_chooser_wizard/books.html:7
+#: common/templates/book_chooser_wizard/books.html:8
 msgid "Step 2 of 3: choose the books"
 msgstr "Krok 2 z 3: wybierz książki"
 
-#: common/templates/book_chooser_wizard/books.html:13
+#: common/templates/book_chooser_wizard/books.html:15
 msgid "Choose from the list"
 msgstr "Wybierz z listy"
 
-#: common/templates/book_chooser_wizard/books.html:21
+#: common/templates/book_chooser_wizard/books.html:25
 msgid "Add new"
 msgstr "Dodaj nową"
 
-#: common/templates/book_chooser_wizard/books.html:26
+#: common/templates/book_chooser_wizard/books.html:30
 msgid ""
 "Before adding a new book, please check if it is not already present in the "
 "list."
 msgstr "Przed dodaniem książki sprawdź, czy nie ma jej już na liście."
 
-#: common/templates/book_chooser_wizard/books.html:27
+#: common/templates/book_chooser_wizard/books.html:32
 msgid ""
 "Also, we <strong>strongly</strong> recommend entering the ISBN number and "
 "clicking the magnifying glass icon next to the input field. The other fields "
@@ -223,13 +223,17 @@ msgstr ""
 "wtedy wypełnione automatycznie, więc nie będziesz musiał(a) robić tego "
 "ręcznie."
 
-#: common/templates/book_chooser_wizard/books.html:38
+#: common/templates/book_chooser_wizard/books.html:44
+msgid "Chosen books"
+msgstr "Wybrane książki"
+
+#: common/templates/book_chooser_wizard/books.html:52
 #: common/templates/book_chooser_wizard/summary.html:49
 #: users/templates/users/list_books.html:11
 msgid "Back"
 msgstr "Powrót"
 
-#: common/templates/book_chooser_wizard/books.html:39
+#: common/templates/book_chooser_wizard/books.html:53
 #: common/templates/book_chooser_wizard/personal_data.html:11
 msgid "Next"
 msgstr "Dalej"
@@ -258,13 +262,9 @@ msgstr ""
 msgid "Personal data"
 msgstr "Dane osobiste"
 
-#: common/templates/book_chooser_wizard/summary.html:44
-msgid "Books to sell"
-msgstr "Książki do sprzedania"
-
 #: common/templates/book_chooser_wizard/summary.html:51
 #: users/templates/users/accept.html:18
-#: users/templates/users/unaccepted.html:36
+#: users/templates/users/unaccepted.html:41
 msgid "Accept"
 msgstr "Akceptuj"
 
@@ -289,11 +289,11 @@ msgstr "Użytkownicy - Zaakceptuj książki"
 
 #: users/templates/users/accept.html:7
 #: users/templates/users/accept_success.html:7
-#: users/templates/users/index.html:4 users/templates/users/index.html.py:7
+#: users/templates/users/index.html:11 users/templates/users/index.html:14
 #: users/templates/users/list_books.html:4
 #: users/templates/users/list_books.html:7
-#: users/templates/users/unaccepted.html:4
-#: users/templates/users/unaccepted.html:7
+#: users/templates/users/unaccepted.html:11
+#: users/templates/users/unaccepted.html:14
 msgid "Users"
 msgstr "Użytkownicy"
 
@@ -327,18 +327,17 @@ msgstr "Tak"
 msgid "No"
 msgstr "Nie"
 
-#: users/templates/users/index.html:10
-#: users/templates/users/unaccepted.html:10
+#: users/templates/users/index.html:17
+#: users/templates/users/unaccepted.html:17
 msgid "All"
 msgstr "Wszyscy"
 
-#: users/templates/users/index.html:11
-#: users/templates/users/unaccepted.html:11
+#: users/templates/users/index.html:18
+#: users/templates/users/unaccepted.html:18
 msgid "With unaccepted books"
 msgstr "Z niezaakceptowanymi książkami"
 
-#: users/templates/users/index.html:33
-#: users/templates/users/unaccepted.html:39
+#: users/templates/users/index.html:40
 msgid "List books"
 msgstr "Lista książek"
 
