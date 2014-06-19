@@ -8,5 +8,5 @@
 
     {% include 'users/book_list.html' %}
 
-    <a href="{% url parent_page %}" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</a>
+    <a href="{% url 'users.views.index' %}" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</a>
 {% endblock %}

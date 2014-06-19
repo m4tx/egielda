@@ -33,16 +33,11 @@ def unaccepted(request):
     return render(request, 'users/unaccepted.html', args)
 
 
-def unaccepted_list_books(request, user_pk):
-    return list_books(request, user_pk, 'users.views.unaccepted')
-
-
-def list_books(request, user_pk, parent_page='users.views.index'):
+def list_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
     book_list = get_list_or_404(Book, owner=user)
     return render(request, 'users/list_books.html',
-                  {'user_name': user.user_name(), 'book_list': book_list,
-                   'parent_page': parent_page})
+                  {'user_name': user.user_name(), 'book_list': book_list})
 
 
 def accept_books(request, user_pk):
