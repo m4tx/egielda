@@ -4,11 +4,11 @@ from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.utils.translation import ugettext_lazy as _
 
 from books.forms import BookForm
 from books.models import BookType
 from common.models import AppUser, Book
+from common.uiutils import alerts
 
 
 def index(request):
@@ -23,14 +23,7 @@ def unaccepted(request):
         if book.owner not in student_list:
             student_list.append(book.owner)
 
-    args = {'student_list': student_list}
-    if 'success_msg' in request.session:
-        args['success_msg'] = {
-            'books_accepted': _("The books were accepted successfully."),
-        }[request.session['success_msg']]
-        del request.session['success_msg']
-
-    return render(request, 'users/unaccepted.html', args)
+    return render(request, 'users/unaccepted.html', alerts(request, {'student_list': student_list}))
 
 
 def list_books(request, user_pk):
