@@ -11,8 +11,8 @@
 {% block title %}{% trans "Users" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Users" %}</h1>
     {% include "common/alerts.html" %}
+    <h1>{% trans "Users" %}</h1>
 
     <ul class="nav nav-tabs">
         <li><a href="{% url 'users.views.index' %}">{% trans "All" %}</a></li>
