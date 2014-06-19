@@ -1,16 +1,13 @@
-from collections import defaultdict
 from decimal import Decimal
 
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponseRedirect
-
 from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.utils.translation import ugettext_lazy as _
 
 from books.forms import BookForm
-
 from books.models import BookType
-
 from common.models import AppUser, Book
 
 
@@ -25,8 +22,15 @@ def unaccepted(request):
     for book in book_list:
         if book.owner not in student_list:
             student_list.append(book.owner)
-    return render(request, 'users/unaccepted.html',
-                  {'student_list': student_list, 'parent_page': 'users.views.unaccepted'})
+
+    args = {'student_list': student_list}
+    if 'success_msg' in request.session:
+        args['success_msg'] = {
+            'books_accepted': _("The books were accepted successfully."),
+        }[request.session['success_msg']]
+        del request.session['success_msg']
+
+    return render(request, 'users/unaccepted.html', args)
 
 
 def unaccepted_list_books(request, user_pk):
@@ -53,7 +57,8 @@ def accept_books(request, user_pk):
                     book.book_type.save()
                 book.accepted = True
                 book.save()
-        return render(request, 'users/accept_success.html', {'student_name': user.user_name()})
+        request.session['success_msg'] = 'books_accepted'
+        return HttpResponseRedirect(reverse(unaccepted))
     else:
         return render(request, 'users/accept.html',
                       {'user_name': user.user_name(), 'book_list': book_list, 'student_pk': user_pk})

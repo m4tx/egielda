@@ -12,6 +12,7 @@
 
 {% block content %}
     <h1>{% trans "Users" %}</h1>
+    {% include "common/alerts.html" %}
 
     <ul class="nav nav-tabs">
         <li><a href="{% url 'users.views.index' %}">{% trans "All" %}</a></li>
