@@ -1,11 +1,12 @@
 {% extends "common/base.html" %}
 {% load i18n %}
 
-{% block css %}
-   table th
-   {
-      width: 20%;
-   }
+{% block head %}
+    <style>
+        table th {
+            width: 20%;
+        }
+    </style>
 {% endblock %}
 
 {% block title %}{% trans "Users" %}{% endblock %}
