@@ -9,6 +9,11 @@
     {% else %}
         <h1>{% trans "Remove books" %}</h1>
     {% endif %}
+    <ol class="breadcrumb">
+        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
+        <li><a href="{% url 'books.views.index' %}">{% trans "Books" %}</a></li>
+        <li class="active">{% trans "Usuń" %}</li>
+    </ol>
 
     {% if book_list|length == 1 %}
         <div class="alert alert-danger">{% trans "Are you sure you want to remove this book?" %}</div>

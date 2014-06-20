@@ -5,6 +5,12 @@
 
 {% block content %}
     <h1>{% trans "Edit book" %}</h1>
+    <ol class="breadcrumb">
+        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
+        <li><a href="{% url 'books.views.index' %}">{% trans "Books" %}</a></li>
+        <li class="active">{% trans "Edit" %}</li>
+    </ol>
+
     <form class="form-horizontal" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}

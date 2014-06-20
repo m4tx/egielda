@@ -14,6 +14,11 @@
 {% block content %}
     {% include "common/alerts.html" %}
     <h1>{% trans "Users" %}</h1>
+    <ol class="breadcrumb">
+        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
+        <li><a href="{% url 'users.views.index' %}">{% trans "Users" %}</a></li>
+        <li class="active">{% trans "With unaccepted books" %}</li>
+    </ol>
 
     <ul class="nav nav-tabs">
         <li><a href="{% url 'users.views.index' %}">{% trans "All" %}</a></li>
