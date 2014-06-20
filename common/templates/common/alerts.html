@@ -1,19 +1,19 @@
 {% if error_msg or warning_msg or success_msg %}
     <script type="text/javascript">
-    window.addEventListener("load", function(){
-       $(".alert-dismissable").each(function(){
-          $(this).addClass("fade in");
-          $(this).prepend("<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>");
-       });
-    });
+        window.addEventListener("load", function () {
+            $(".alert-dismissable").each(function () {
+                $(this).addClass("fade in");
+                $(this).prepend("<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>");
+            });
+        });
     </script>
     {% if error_msg %}
-       <div class="alert alert-danger alert-dismissable">{{ error_msg }}</div>
+        <div class="alert alert-danger alert-dismissable">{{ error_msg }}</div>
     {% endif %}
     {% if warning_msg %}
-       <div class="alert alert-warning alert-dismissable">{{ warning_msg }}</div>
+        <div class="alert alert-warning alert-dismissable">{{ warning_msg }}</div>
     {% endif %}
     {% if success_msg %}
-       <div class="alert alert-success alert-dismissable">{{ success_msg }}</div>
+        <div class="alert alert-success alert-dismissable">{{ success_msg }}</div>
     {% endif %}
 {% endif %}

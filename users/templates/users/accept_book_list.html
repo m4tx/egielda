@@ -14,7 +14,8 @@
 {% block actions %}
     {% if not book.book_type.visible %}
         <a href="{% url 'users.views.accept_edit_book' student_pk book.book_type.pk %}" class="btn btn-xs btn-link"
-           role="button"><span
-                class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}</a>
+           role="button">
+            <span class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}
+        </a>
     {% endif %}
 {% endblock %}

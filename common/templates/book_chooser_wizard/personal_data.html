@@ -4,10 +4,14 @@
 {% block title %}{{ page_title }}{% endblock %}
 
 {% block content %}
-<h1>{{ page_title }} <small>{% trans "Step 1 of 3: provide personal info" %}</small></h1>
-<form class="form-horizontal" action="{{ request.path }}" method="post">
-    {% include "common/default_form.html" %}
-    {% csrf_token %}
-    <button class="btn btn-primary pull-right" type="submit">{% trans "Next" %} <span class="glyphicon glyphicon-chevron-right"></span></button>
-</form>
+    <h1>{{ page_title }}
+        <small>{% trans "Step 1 of 3: provide personal info" %}</small>
+    </h1>
+    
+    <form class="form-horizontal" action="{{ request.path }}" method="post">
+        {% include "common/default_form.html" %}
+        {% csrf_token %}
+        <button class="btn btn-primary pull-right" type="submit">{% trans "Next" %} <span
+                class="glyphicon glyphicon-chevron-right"></span></button>
+    </form>
 {% endblock %}

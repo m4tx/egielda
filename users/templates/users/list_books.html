@@ -4,9 +4,13 @@
 {% block title %}{% trans "Users" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Users" %} <small>{% blocktrans %}{{ user_name }}'s books{% endblocktrans %}</small></h1>
+    <h1>{% trans "Users" %}
+        <small>{% blocktrans %}{{ user_name }}'s books{% endblocktrans %}</small>
+    </h1>
 
     {% include 'users/book_list.html' %}
 
-    <a href="{% url 'users.views.index' %}" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</a>
+    <a href="{% url 'users.views.index' %}" class="btn btn-primary" role="button">
+        <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %>
+    </a>
 {% endblock %}

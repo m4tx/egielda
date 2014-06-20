@@ -4,30 +4,32 @@
 {% block title %}{% trans "Manage books" %}{% endblock %}
 
 {% block content %}
-{% include "common/alerts.html" %}
-<h1>{% trans "Books" %}</h1>
-{% if book_list %}
-<form action="{% url 'books.views.bulk_actions' 'remove' %}" method="post">
-    {% include "books/book_list_index.html" %}
-    {% csrf_token %}
-</form>
+    {% include "common/alerts.html" %}
+    <h1>{% trans "Books" %}</h1>
 
-{% block footer %}
-<script type="text/javascript">
-    window.addEventListener("load", function() {
-        $("input[name^='select-']").on('change', function() {
-            $(this).closest($('tr')).toggleClass('active', this.checked);
-        });
+    {% if book_list %}
+        <form action="{% url 'books.views.bulk_actions' 'remove' %}" method="post">
+            {% include "books/book_list_index.html" %}
+            {% csrf_token %}
+        </form>
 
-        $("input#select-all").on('change', function() {
-            $("input[name^='select-']").prop('checked', this.checked);
-            $("input[name^='select-']").closest($('tr')).toggleClass('active', this.checked);
-        });
-    });
-</script>
-{% endblock %}
-{% else %}
-<div class="alert alert-info">{% trans "There's nothing to display." %}</div>
-{% endif %}
-<a class="btn btn-primary pull-right" href="{% url 'books.views.add_book' %}" role="button"><span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}</a>
+        {% block footer %}
+            <script type="text/javascript">
+                window.addEventListener("load", function () {
+                    $("input[name^='select-']").on('change', function () {
+                        $(this).closest($('tr')).toggleClass('active', this.checked);
+                    });
+
+                    $("input#select-all").on('change', function () {
+                        $("input[name^='select-']").prop('checked', this.checked);
+                        $("input[name^='select-']").closest($('tr')).toggleClass('active', this.checked);
+                    });
+                });
+            </script>
+        {% endblock %}
+    {% else %}
+        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+    {% endif %}
+    <a class="btn btn-primary pull-right" href="{% url 'books.views.add_book' %}" role="button"><span
+            class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}</a>
 {% endblock %}

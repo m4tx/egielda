@@ -37,7 +37,8 @@
                         <td>{{ student.last_name }}</td>
                         <td>{{ student.student_class }}</td>
                         <td>{{ student.phone_number }}</td>
-                        <td><a class="btn btn-xs btn-link" href="{% url 'users.views.list_books' student.pk %}"
+                        <td>
+                            <a class="btn btn-xs btn-link" href="{% url 'users.views.list_books' student.pk %}"
                                role="button"><span class="glyphicon glyphicon-list"></span> {% trans "List books" %}</a>
                         </td>
                     </tr>
