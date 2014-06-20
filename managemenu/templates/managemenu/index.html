@@ -1,0 +1,57 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block head %}
+    <style>
+        .table-bordered > tbody > tr > td.module-icon {
+            border-right: 0;
+            width: 102px;
+        }
+
+        .table-bordered > tbody > tr > td.module-icon .glyphicon {
+            font-size: 76px;
+        }
+
+        .table-bordered > tbody > tr > td.module-icon + td {
+            border-left: 0;
+        }
+
+        .table-bordered > tbody > tr.toptr:hover + tr {
+            background-color: #f5f5f5;
+        }
+
+        .table a {
+            color: #333;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}{% trans "Manage" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Manage" %}</h1>
+    <ol class="breadcrumb">
+        <li class="active">{% trans "Manage" %}</li>
+    </ol>
+
+    <table class="table table-bordered table-hover">
+        <tr class="toptr">
+            <td rowspan="2" class="module-icon">
+                <a href="{% url 'books.views.index' %}"><span class="glyphicon glyphicon-book"></span></a>
+            </td>
+            <td><a href="{% url 'books.views.index' %}"><h4>{% trans "Books" %}</h4></a></td>
+        </tr>
+        <tr>
+            <td><a href="{% url 'books.views.add_book' %}">{% trans "Add new" %}</a></td>
+        </tr>
+        <tr class="toptr">
+            <td rowspan="2" class="module-icon">
+                <a href="{% url 'users.views.index' %}"><span class="glyphicon glyphicon-user"></span></a>
+            </td>
+            <td><a href="{% url 'users.views.index' %}"><h4>{% trans "Users" %}</h4></a></td>
+        </tr>
+        <tr>
+            <td><a href="{% url 'users.views.unaccepted' %}">{% trans "With unaccepted books" %}</a></td>
+        </tr>
+    </table>
+{% endblock %}

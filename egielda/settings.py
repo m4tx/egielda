@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'sell',
     'users',
     'purchase',
+    'managemenu',
 )
 
 MIDDLEWARE_CLASSES = (

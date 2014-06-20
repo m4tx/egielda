@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^manage/', include('managemenu.urls')),
     url(r'^manage/books/', include('books.urls')),
     url(r'^manage/categories/', include('categories.urls')),
     url(r'^manage/users/', include('users.urls')),
