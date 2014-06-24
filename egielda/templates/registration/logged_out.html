@@ -1,0 +1,16 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Sign out" %}{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{% trans "Sign out" %}</h1>
+    </div>
+
+    <div class="alert alert-success">
+        {% trans "You have been successfully signed out." %}
+    </div>
+
+    <a class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> {% trans "Homepage" %}</a>
+{% endblock %}
