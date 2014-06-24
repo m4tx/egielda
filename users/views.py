@@ -1,5 +1,7 @@
 from decimal import Decimal
 
+from django.contrib.auth.decorators import user_passes_test
+
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponseRedirect
@@ -7,15 +9,18 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 
 from books.forms import BookForm
 from books.models import BookType
+from common.auth import user_is_admin
 from common.models import AppUser, Book
 from common.uiutils import alerts
 
 
+@user_passes_test(user_is_admin)
 def index(request):
     student_list = AppUser.objects.all()
     return render(request, 'users/index.html', {'student_list': student_list})
 
 
+@user_passes_test(user_is_admin)
 def unaccepted(request):
     book_list = Book.objects.filter(accepted=False)
     student_list = []
@@ -26,6 +31,7 @@ def unaccepted(request):
     return render(request, 'users/unaccepted.html', alerts(request, {'student_list': student_list}))
 
 
+@user_passes_test(user_is_admin)
 def list_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
     book_list = get_list_or_404(Book, owner=user)
@@ -33,6 +39,7 @@ def list_books(request, user_pk):
                   {'user_name': user.user_name(), 'book_list': book_list})
 
 
+@user_passes_test(user_is_admin)
 def accept_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
     book_list = get_list_or_404(Book, owner=user, accepted=False)
@@ -52,6 +59,7 @@ def accept_books(request, user_pk):
                       {'user_name': user.user_name(), 'book_list': book_list, 'student_pk': user_pk})
 
 
+@user_passes_test(user_is_admin)
 def accept_edit_book(request, user_pk, book_id):
     book = get_object_or_404(BookType, id=book_id)
 
