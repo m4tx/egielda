@@ -12,5 +12,7 @@
         {% trans "You have been successfully signed out." %}
     </div>
 
-    <a class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> {% trans "Homepage" %}</a>
+    <a href="{% url 'home' %}" class="btn btn-primary" role="button">
+        <span class="glyphicon glyphicon-home"></span> {% trans "Homepage" %}
+    </a>
 {% endblock %}

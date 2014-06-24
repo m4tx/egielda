@@ -1,0 +1,22 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Home" %}{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>e-Giełda</h1>
+
+        <p>{% trans "What do you want to do?" %}</p>
+
+        <p>
+            <a href="{% url 'purchase.views.index' %}" class="btn btn-primary btn-lg" role="button">
+                <span class="glyphicon glyphicon-shopping-cart"></span> {% trans "Purchase" %}
+            </a>
+            or
+            <a href="{% url 'sell.views.index' %}" class="btn btn-default btn-lg" role="button">
+                <span class="glyphicon glyphicon-transfer"></span> {% trans "Sell" %}
+            </a>
+        </p>
+    </div>
+{% endblock %}
