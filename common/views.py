@@ -4,7 +4,7 @@ import json
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.forms import model_to_dict
-from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render
 
 from books.forms import BookForm
@@ -62,6 +62,9 @@ class BookChooserWizard:
         return render(request, 'book_chooser_wizard/personal_data.html', {'page_title': self.page_title, 'form': form})
 
     def books(self, request):
+        if 'personal_data' not in request.session:
+            return HttpResponseRedirect(reverse(self.get_personal_data_view()))
+
         if request.method == 'POST':
             request.session['chosen_books'] = request.POST['book_data']
             if 'btn-back' in request.POST:
@@ -77,10 +80,15 @@ class BookChooserWizard:
                        'currency': getattr(settings, 'CURRENCY', 'USD'), 'feature_add_new': self.feature_add_new})
 
     def summary(self, request):
+        if 'personal_data' not in request.session:
+            return HttpResponseRedirect(reverse(self.get_personal_data_view()))
+        elif 'chosen_books' not in request.session:
+            return HttpResponseRedirect(reverse(self.get_books_view()))
+
         try:
             book_list = json.loads(request.session['chosen_books'])
             if len(book_list) == 0:
-                return HttpResponseBadRequest()
+                return HttpResponseRedirect(reverse(self.get_books_view()))
             if request.method == 'POST':
                 if 'btn-back' in request.POST:
                     return HttpResponseRedirect(reverse(self.get_books_view()))
