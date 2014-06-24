@@ -41,6 +41,10 @@
                         </a>
                         <ul class="dropdown-menu">
                             {% if user.is_authenticated %}
+                                {% if user.is_staff %}
+                                    <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
+                                    <li role="presentation" class="divider"></li>
+                                {% endif %}
                                 <li><a href="{% url 'logout' %}">{% trans "Sign out" %}</a></li>
                             {% else %}
                                 <li><a href="{% url 'login' %}">{% trans "Sign in" %}</a></li>
