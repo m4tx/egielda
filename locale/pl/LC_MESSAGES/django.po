@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-20 15:50+0000\n"
+"POT-Creation-Date: 2014-06-24 22:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,7 +119,7 @@ msgstr "Edytuj"
 
 #: books/templates/books/book_list_index.html:8
 #: books/templates/books/book_list_index.html:25
-#: books/templates/books/remove.html:28
+#: books/templates/books/remove.html:15 books/templates/books/remove.html:28
 msgid "Remove"
 msgstr "Usuń"
 
@@ -151,10 +151,6 @@ msgstr "Usuń książkę"
 #: books/templates/books/remove.html:10
 msgid "Remove books"
 msgstr "Usuń książki"
-
-#: books/templates/books/remove.html:15
-msgid "Usuń"
-msgstr ""
 
 #: books/templates/books/remove.html:19
 msgid "Are you sure you want to remove this book?"
@@ -193,12 +189,12 @@ msgstr "Numer telefonu"
 msgid "%(first_name)s %(last_name)s, %(student_class)s"
 msgstr ""
 
-#: common/models.py:30
+#: common/models.py:29
 #, python-format
 msgid "%(book_type)s from %(owner)s, accepted: %(accepted)s, sold: %(sold)s"
 msgstr ""
 
-#: common/models.py:43
+#: common/models.py:39
 #, python-format
 msgid "%(book)s from %(owner)s sold to %(purchaser)s at %(date)s"
 msgstr ""
@@ -292,6 +288,54 @@ msgstr "Dane osobiste"
 #: users/templates/users/unaccepted.html:48
 msgid "Accept"
 msgstr "Akceptuj"
+
+#: common/templates/common/base.html:28
+msgid "Toggle navigation"
+msgstr "Nawigacja"
+
+#: common/templates/common/base.html:39
+msgid "Anonymous"
+msgstr "Anonimowy"
+
+#: common/templates/common/base.html:44
+#: egielda/templates/registration/logged_out.html:4
+#: egielda/templates/registration/logged_out.html:8
+msgid "Sign out"
+msgstr "Wyloguj się"
+
+#: common/templates/common/base.html:46
+#: egielda/templates/registration/login.html:4
+#: egielda/templates/registration/login.html:8
+#: egielda/templates/registration/login.html:36
+msgid "Sign in"
+msgstr "Zaloguj się"
+
+#: egielda/templates/registration/logged_out.html:12
+msgid "You have been successfully signed out."
+msgstr "Zostałeś pomyślnie wylogowany."
+
+#: egielda/templates/registration/logged_out.html:15
+msgid "Homepage"
+msgstr "Strona główna"
+
+#: egielda/templates/registration/login.html:13
+#, python-format
+msgid ""
+"You are already signed in as <b>%(user)s</b>. If you are sure you want to "
+"sign in as another user, use the form below."
+msgstr ""
+"Jesteś już zalogowany jako <b>%(user)s</b>. Jeśli jednak chcesz się zalogować "
+"jako inny użytkownik, użyj formularza poniżej."
+
+#: egielda/templates/registration/login.html:19
+#: egielda/templates/registration/login.html:23
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: egielda/templates/registration/login.html:27
+#: egielda/templates/registration/login.html:31
+msgid "Password"
+msgstr "Hasło"
 
 #: managemenu/templates/managemenu/index.html:51
 #: users/templates/users/accept.html:7 users/templates/users/accept.html:12
