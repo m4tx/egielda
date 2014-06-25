@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-24 22:01+0000\n"
+"POT-Creation-Date: 2014-06-25 14:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,6 +58,7 @@ msgstr "Dodaj książkę"
 
 #: books/templates/books/add.html:9 books/templates/books/edit.html:9
 #: books/templates/books/index.html:10 books/templates/books/remove.html:13
+#: common/templates/common/base.html:52
 #: managemenu/templates/managemenu/index.html:29
 #: managemenu/templates/managemenu/index.html:32
 #: managemenu/templates/managemenu/index.html:34
@@ -289,34 +290,103 @@ msgstr "Dane osobiste"
 msgid "Accept"
 msgstr "Akceptuj"
 
-#: common/templates/common/base.html:28
+#: common/templates/common/base.html:32
 msgid "Toggle navigation"
 msgstr "Nawigacja"
 
-#: common/templates/common/base.html:39
+#: common/templates/common/base.html:45
 msgid "Anonymous"
 msgstr "Anonimowy"
 
-#: common/templates/common/base.html:44
+#: common/templates/common/base.html:56
 #: egielda/templates/registration/logged_out.html:4
 #: egielda/templates/registration/logged_out.html:8
 msgid "Sign out"
 msgstr "Wyloguj się"
 
-#: common/templates/common/base.html:46
+#: common/templates/common/base.html:58
 #: egielda/templates/registration/login.html:4
 #: egielda/templates/registration/login.html:8
 #: egielda/templates/registration/login.html:36
 msgid "Sign in"
 msgstr "Zaloguj się"
 
+#: egielda/templates/400.html:12
+msgid "Your browser sent an invalid request."
+msgstr "Twoja przeglądarka wysłała nieprawidłowe żądanie."
+
+#: egielda/templates/403.html:12
+msgid "You don't have access to this page."
+msgstr "Nie masz dostępu do tej podstrony."
+
+#: egielda/templates/404.html:12
+msgid "Unfortunately, we don't have what you are looking for."
+msgstr "Niestety, nie mamy tego, czego szukasz."
+
+#: egielda/templates/404.html:15
+msgid "This error is usually caused by:"
+msgstr "Ten błąd jest zazwyczaj spowodowany przez:"
+
+#: egielda/templates/404.html:17
+msgid "Misspelled adress"
+msgstr "Źle wpisany adres"
+
+#: egielda/templates/404.html:18
+msgid ""
+"Outdated link. In this case, please report it to the website administrator"
+msgstr ""
+"Przestarzały link. W tym przypadku prosimy o zgłoszenie tego do "
+"administratora strony"
+
+#: egielda/templates/500.html:13
+msgid ""
+"Unfortunately, the server encountered unexpected technical problems and is "
+"unable to process your request now."
+msgstr ""
+"Niestety, serwer napotkał nieprzewidziane problemy techniczne i nie jest w "
+"stanie przetworzyć teraz Twojego żądania."
+
+#: egielda/templates/500.html:17
+msgid "You can try again in a few minutes."
+msgstr "Możesz spróbować za kilka minut."
+
+#: egielda/templates/500.html:18
+msgid "Also, please report this issue to the site administrator."
+msgstr "Prosimy również o zgłoszenie tego błędu administratorowi strony."
+
+#: egielda/templates/error.html:4 egielda/templates/error.html.py:9
+#, python-format
+msgid "Error %(error)s"
+msgstr "Błąd %(error)s"
+
+#: egielda/templates/error.html:19
+#: egielda/templates/registration/logged_out.html:16
+msgid "Homepage"
+msgstr "Strona główna"
+
+#: egielda/templates/egielda/home.html:5
+msgid "Home"
+msgstr "Strona główna"
+
+#: egielda/templates/egielda/home.html:11
+msgid "What do you want to do?"
+msgstr "Co chcesz zrobić?"
+
+#: egielda/templates/egielda/home.html:15
+msgid "Purchase"
+msgstr "Kup"
+
+#: egielda/templates/egielda/home.html:17
+msgid "or"
+msgstr "lub"
+
+#: egielda/templates/egielda/home.html:19
+msgid "Sell"
+msgstr "Sprzedaj"
+
 #: egielda/templates/registration/logged_out.html:12
 msgid "You have been successfully signed out."
 msgstr "Zostałeś pomyślnie wylogowany."
-
-#: egielda/templates/registration/logged_out.html:15
-msgid "Homepage"
-msgstr "Strona główna"
 
 #: egielda/templates/registration/login.html:13
 #, python-format
@@ -324,8 +394,8 @@ msgid ""
 "You are already signed in as <b>%(user)s</b>. If you are sure you want to "
 "sign in as another user, use the form below."
 msgstr ""
-"Jesteś już zalogowany jako <b>%(user)s</b>. Jeśli jednak chcesz się zalogować "
-"jako inny użytkownik, użyj formularza poniżej."
+"Jesteś już zalogowany jako <b>%(user)s</b>. Jeśli jednak chcesz się "
+"zalogować jako inny użytkownik, użyj formularza poniżej."
 
 #: egielda/templates/registration/login.html:19
 #: egielda/templates/registration/login.html:23
