@@ -60,6 +60,9 @@ def bulk_actions(request, action_name):
         for item in request.POST.lists():
             if item[1][0] == 'on':
                 book_list.append(item[0][7:])
-        return HttpResponseRedirect(reverse(remove_book, args=[",".join(book_list)]))
+        if book_list:
+            return HttpResponseRedirect(reverse(remove_book, args=[",".join(book_list)]))
+        else:
+            return HttpResponseRedirect(reverse(index))
     else:
         raise Http404
