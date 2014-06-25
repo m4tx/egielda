@@ -1,0 +1,20 @@
+{% extends "error.html" %}
+{% load i18n %}
+
+{% block page_container %}
+    {% with 404 as error %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+
+{% block subtitle %}Not found{% endblock %}
+
+{% block description %}{% trans "Unfortunately, we don't have what you are looking for." %}{% endblock %}
+
+{% block error_body %}
+    <p>{% trans "This error is usually caused by:" %}
+    <ul class="lead">
+        <li>{% trans "Misspelled adress" %}</li>
+        <li>{% trans "Outdated link. In this case, please report it to the website administrator" %}</li>
+    </ul>
+{% endblock %}

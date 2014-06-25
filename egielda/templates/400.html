@@ -1,0 +1,12 @@
+{% extends "error.html" %}
+{% load i18n %}
+
+{% block page_container %}
+    {% with 400 as error %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+
+{% block subtitle %}Bad request{% endblock %}
+
+{% block description %}{% trans "Your browser sent an invalid request." %}{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "error.html" %}
+{% load i18n %}
+
+{% block page_container %}
+    {% with disable_menu=True error=500 disable_homepage=True %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+
+{% block subtitle %}Internal Server Error{% endblock %}
+
+{% block description %}
+    {% trans "Unfortunately, the server encountered some technical problems and is unable to process your request now." %}
+{% endblock %}
+
+{% block error_body %}
+    <p>{% trans "You can try again in a few minutes." %}</p>
+    <p>{% trans "Also, please report this issue to the site administrator." %}</p>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "error.html" %}
+{% load i18n %}
+
+{% block page_container %}
+    {% with 403 as error %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+
+{% block subtitle %}Forbidden{% endblock %}
+
+{% block description %}{% trans "You don't have access to this page." %}{% endblock %}

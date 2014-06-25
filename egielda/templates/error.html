@@ -1,0 +1,23 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktrans %}Error {{ error }}{% endblocktrans %}{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>
+            {% blocktrans %}Error {{ error }}{% endblocktrans %}
+            <small>{% block subtitle %}{% endblock %}</small>
+        </h1>
+
+        <p class="text-danger">{% block description %}{% endblock %}</p>
+
+        {% block error_body %}{% endblock %}
+
+        {% if not disable_homepage %}
+            <a href="{% url 'home' %}" class="btn btn-lg btn-primary">
+                <span class="glyphicon glyphicon-home"></span> {% trans "Homepage" %}
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}
