@@ -18,7 +18,7 @@
 
         {% block head %}{% endblock %}
 
-        <title>{% block title %}{% endblock %} | e-Giełda</title>
+        <title>{% block title %}{% endblock %} | {{ SITE_NAME }}</title>
     </head>
     <body>
     <nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
@@ -31,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{% url 'home' %}">e-Giełda</a>
+                <a class="navbar-brand" href="{% url 'home' %}">{{ SITE_NAME }}</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">

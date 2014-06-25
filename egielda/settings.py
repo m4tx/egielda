@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.conf import global_settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -61,6 +62,10 @@ LOCALE_PATHS = (
     'locale',  # Need to set it here in order to share translations between apps
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    'egielda.processors.site_name_context_processor',
+)
+
 ROOT_URLCONF = 'egielda.urls'
 
 WSGI_APPLICATION = 'egielda.wsgi.application'
@@ -76,6 +81,7 @@ DATABASES = {
     }
 }
 
+SITE_NAME = "e-Giełda"
 LOGIN_REDIRECT_URL = 'egielda.views.home'
 
 # Internationalization
