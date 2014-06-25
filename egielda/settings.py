@@ -62,10 +62,6 @@ LOCALE_PATHS = (
     'locale',  # Need to set it here in order to share translations between apps
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
-    'egielda.processors.site_name_context_processor',
-)
-
 ROOT_URLCONF = 'egielda.urls'
 
 WSGI_APPLICATION = 'egielda.wsgi.application'

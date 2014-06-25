@@ -1,69 +1,71 @@
-{% load i18n %}
-{% get_current_language as LANGUAGE_CODE %}
 {% spaceless %}
-    <!DOCTYPE html>
-    <html lang="{{ LANGUAGE_CODE }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load i18n %}
+    {% load site_name %}
+    {% get_current_language as LANGUAGE_CODE %}
+    {% block page_container %}
+        <!DOCTYPE html>
+        <html lang="{{ LANGUAGE_CODE }}">
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+            <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <![endif]-->
 
-        {% block head %}{% endblock %}
+            {% block head %}{% endblock %}
 
-        <title>{% block title %}{% endblock %} | {{ SITE_NAME }}</title>
-    </head>
-    <body>
-    <nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">{% trans "Toggle navigation" %}</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{% url 'home' %}">{{ SITE_NAME }}</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {% if user.is_authenticated %}{{ user }}{% else %}{% trans "Anonymous" %}{% endif %} <b
-                                class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            {% if user.is_authenticated %}
-                                {% if user.is_staff %}
-                                    <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
-                                    <li role="presentation" class="divider"></li>
+            <title>{% block title %}{% endblock %} | {% site_name %}</title>
+        </head>
+        <body>
+        <nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">{% trans "Toggle navigation" %}</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'home' %}">{% site_name %}</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                {% if user.is_authenticated %}{{ user }}{% else %}{% trans "Anonymous" %}{% endif %} <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% if user.is_authenticated %}
+                                    {% if user.is_staff %}
+                                        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
+                                        <li role="presentation" class="divider"></li>
+                                    {% endif %}
+                                    <li><a href="{% url 'logout' %}">{% trans "Sign out" %}</a></li>
+                                {% else %}
+                                    <li><a href="{% url 'login' %}">{% trans "Sign in" %}</a></li>
                                 {% endif %}
-                                <li><a href="{% url 'logout' %}">{% trans "Sign out" %}</a></li>
-                            {% else %}
-                                <li><a href="{% url 'login' %}">{% trans "Sign in" %}</a></li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                </ul>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </nav>
+        <div class="container">
+            {% block content %}{% endblock %}
         </div>
-    </nav>
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    {% block footer %}{% endblock %}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        {% block footer %}{% endblock %}
 
-    </body>
-    </html>
+        </body>
+        </html>
+    {% endblock %}
 {% endspaceless %}

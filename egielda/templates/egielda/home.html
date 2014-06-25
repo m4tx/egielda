@@ -1,11 +1,12 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load site_name %}
 
 {% block title %}{% trans "Home" %}{% endblock %}
 
 {% block content %}
     <div class="jumbotron">
-        <h1>{{ SITE_NAME }}</h1>
+        <h1>{% site_name %}</h1>
 
         <p>{% trans "What do you want to do?" %}</p>
 
