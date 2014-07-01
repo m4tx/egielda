@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
+from django.views.generic import TemplateView
 
 admin.autodiscover()
 
@@ -20,7 +21,7 @@ urlpatterns = patterns(
 
     url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
 
-    url(r'^$', 'egielda.views.home', name='home'),
+    url(r'^$', TemplateView.as_view(template_name='egielda/home.html'), name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^manage/', include('managemenu.urls')),
     url(r'^manage/books/', include('books.urls')),
