@@ -5,7 +5,7 @@
     <a class="btn btn-xs btn-link" href="{% url 'books.views.edit_book' book.pk %}" role="button"><span
             class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}</a>
     <a class="btn btn-xs btn-link" href="{% url 'books.views.remove_book' book.pk %}" role="button"><span
-            class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</a>
+            class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}</a>
 {% endblock %}
 
 {% block thead_header %}
@@ -21,8 +21,9 @@
         <td colspan="6" class="text-right text-muted">{% trans "Bulk actions:" %}</td>
         <td>
             <div class="btn-toolbar" role="toolbar">
-                <button class="btn btn-xs btn-link" type="submit"><span
-                        class="glyphicon glyphicon-remove"></span> {% trans "Remove" %}</button>
+                <button class="btn btn-xs btn-link" type="submit">
+                    <span class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}
+                </button>
             </div>
         </td>
     </tr>
