@@ -20,6 +20,13 @@
 
             {% block head %}{% endblock %}
 
+            <style>
+                {# https://github.com/twbs/bootstrap/issues/14042 #}
+                ul.dropdown-menu > li span.glyphicon {
+                    width: 16px;
+                }
+            </style>
+
             <title>{% block title %}{% endblock %} | {% site_name %}</title>
         </head>
         <body>
@@ -49,13 +56,23 @@
                                     {% if user.is_authenticated %}
                                         {% if user.is_staff %}
                                             <li>
-                                                <a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a>
+                                                <a href="{% url 'managemenu.views.index' %}" role="menuitem">
+                                                    <span class="glyphicon glyphicon-cog"></span> {% trans "Manage" %}
+                                                </a>
                                             </li>
                                             <li role="presentation" class="divider"></li>
                                         {% endif %}
-                                        <li><a href="{% url 'logout' %}">{% trans "Sign out" %}</a></li>
+                                        <li>
+                                            <a href="{% url 'logout' %}" role="menuitem">
+                                                <span class="glyphicon glyphicon-log-out"></span> {% trans "Sign out" %}
+                                            </a>
+                                        </li>
                                     {% else %}
-                                        <li><a href="{% url 'login' %}">{% trans "Sign in" %}</a></li>
+                                        <li>
+                                            <a href="{% url 'login' %}" role="menuitem">
+                                                <span class="glyphicon glyphicon-log-in"></span> {% trans "Sign in" %}
+                                            </a>
+                                        </li>
                                     {% endif %}
                                 </ul>
                             </li>
