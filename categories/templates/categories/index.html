@@ -1,0 +1,56 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Manage categories" %}{% endblock %}
+
+{% block content %}
+    {% include "common/alerts.html" %}
+    <h1>{% trans "Categories" %}</h1>
+    <ol class="breadcrumb">
+        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
+        <li class="active">{% trans "Categories" %}</li>
+    </ol>
+
+    {% if category_list %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{% trans "Name" %}</th>
+                    <th>{% trans "Books" %}</th>
+                    <th>{% trans "Actions" %}</th>
+                </tr>
+                </thead>
+                {% for item, book_count in category_list %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>
+                            {% if book_count %}
+                                <a href="{% url 'categories.views.list_books' item.pk %}">
+                                    {{ book_count }}
+                                </a>
+                            {% else %}
+                                {{ book_count }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'categories.views.edit_category' item.pk %}" class="btn btn-xs btn-link"
+                               role="button">
+                                <span class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}
+                            </a>
+                            <a href="{% url 'categories.views.remove_category' item.pk %}"
+                               class="btn btn-xs btn-link" role="button">
+                                <span class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+    {% endif %}
+    <a class="btn btn-primary pull-right" href="{% url 'categories.views.add_category' %}" role="button">
+        <span class="glyphicon glyphicon-plus"></span> {% trans "Add category" %}
+    </a>
+{% endblock %}

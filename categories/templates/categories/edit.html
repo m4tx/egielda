@@ -1,0 +1,25 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Edit category" %}{% endblock %}
+
+{% block content %}
+    {% include "common/alerts.html" %}
+    <h1>{% trans "Edit category" %}</h1>
+    <ol class="breadcrumb">
+        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
+        <li><a href="{% url 'categories.views.index' %}">{% trans "Categories" %}</a></li>
+        <li class="active">{% trans "Edit" %}</li>
+    </ol>
+
+    <form class="form-horizontal" method="post" action="">
+        {% include 'common/default_form.html' %}
+        {% csrf_token %}
+        <a href="{% url 'categories.views.index' %}" class="btn btn-default">
+            <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}
+        </a>
+        <button type="submit" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}
+        </button>
+    </form>
+{% endblock %}

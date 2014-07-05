@@ -1,10 +1,12 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 
+from categories.models import Category
 from egielda import settings
 
 
 class BookType(models.Model):
+    categories = models.ManyToManyField(Category, blank=True)
     isbn = models.CharField(max_length=13, blank=True)
     publisher = models.CharField(max_length=150, blank=True)
     title = models.CharField(max_length=150, blank=True)

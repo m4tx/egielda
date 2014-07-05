@@ -1,0 +1,30 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "List of books in category" %}{% endblock %}
+
+{% block content %}
+    {% include "common/alerts.html" %}
+    <h1>
+        {% trans "Categories" %}
+        <small>
+            {% blocktrans with cat_name=category.name %}List of books in {{ cat_name }} category{% endblocktrans %}
+        </small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
+        <li><a href="{% url 'categories.views.index' %}">{% trans "Categories" %}</a></li>
+        <li class="active">{% trans "Book list" %}</li>
+    </ol>
+
+    {% if book_list %}
+        {% include 'books/book_list_base.html' with hide_actions=True %}
+    {% else %}
+        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+    {% endif %}
+
+    <a href="{% url 'categories.views.index' %}" class="btn btn-primary" role="button">
+        <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+    </a>
+{% endblock %}
+

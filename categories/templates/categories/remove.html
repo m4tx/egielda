@@ -1,0 +1,35 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Remove category" %}{% endblock %}
+
+{% block content %}
+    {% include "common/alerts.html" %}
+    <h1>{% trans "Remove category" %}</h1>
+    <ol class="breadcrumb">
+        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
+        <li><a href="{% url 'categories.views.index' %}">{% trans "Categories" %}</a></li>
+        <li class="active">{% trans "Remove" %}</li>
+    </ol>
+
+    <div class="alert alert-danger">
+        {% blocktrans with cat_name=category.name %}Are you sure you want to delete category {{ cat_name }}?{% endblocktrans %}
+        {% if book_count %}
+            <strong>
+                {% blocktrans count counter=book_count %}Please note that this category still contains {{ book_count }} book.{% plural %}Please note that this category still contains {{ book_count }} books.{% endblocktrans %}
+            </strong>
+        {% else %}
+            {% trans "This category does not contain any books." %}
+        {% endif %}
+    </div>
+
+    <form method="post" action="">
+        {% csrf_token %}
+        <a href="{% url 'categories.views.index' %}" class="btn btn-default">
+            <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}
+        </a>
+        <button type="submit" class="btn btn-danger pull-right">
+            <span class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}
+        </button>
+    </form>
+{% endblock %}
