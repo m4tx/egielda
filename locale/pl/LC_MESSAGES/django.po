@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-25 14:59+0000\n"
+"POT-Creation-Date: 2014-07-05 11:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr "Rok wydania"
 msgid "Price (%s)"
 msgstr "Cena (%s)"
 
-#: books/models.py:21
+#: books/models.py:23
 #, python-format
 msgid "%(publisher)s %(title)s"
 msgstr ""
@@ -58,7 +58,12 @@ msgstr "Dodaj książkę"
 
 #: books/templates/books/add.html:9 books/templates/books/edit.html:9
 #: books/templates/books/index.html:10 books/templates/books/remove.html:13
-#: common/templates/common/base.html:52
+#: categories/templates/categories/add.html:10
+#: categories/templates/categories/edit.html:10
+#: categories/templates/categories/index.html:10
+#: categories/templates/categories/list.html:15
+#: categories/templates/categories/remove.html:10
+#: common/templates/common/base.html:60
 #: managemenu/templates/managemenu/index.html:29
 #: managemenu/templates/managemenu/index.html:32
 #: managemenu/templates/managemenu/index.html:34
@@ -71,23 +76,31 @@ msgstr "Zarządzaj"
 #: books/templates/books/add.html:10 books/templates/books/edit.html:10
 #: books/templates/books/index.html:8 books/templates/books/index.html:11
 #: books/templates/books/remove.html:14
+#: categories/templates/categories/index.html:20
 #: common/templates/book_chooser_wizard/summary.html:44
-#: managemenu/templates/managemenu/index.html:42
+#: managemenu/templates/managemenu/index.html:51
 msgid "Books"
 msgstr "Książki"
 
 #: books/templates/books/add.html:11
+#: categories/templates/categories/add.html:12
 #: common/templates/book_chooser_wizard/books.html:25
 #: managemenu/templates/managemenu/index.html:45
+#: managemenu/templates/managemenu/index.html:54
 msgid "Add new"
 msgstr "Dodaj nową"
 
 #: books/templates/books/add.html:18 books/templates/books/edit.html:18
-#: books/templates/books/remove.html:26 users/templates/users/accept.html:22
+#: books/templates/books/remove.html:26
+#: categories/templates/categories/add.html:19
+#: categories/templates/categories/edit.html:19
+#: categories/templates/categories/remove.html:29
+#: users/templates/users/accept.html:22
 msgid "Cancel"
 msgstr "Anuluj"
 
 #: books/templates/books/add.html:20
+#: categories/templates/categories/add.html:22
 #: common/templates/book_chooser_wizard/books.html:37
 #: common/templates/book_chooser_wizard/books_book_list.html:10
 msgid "Add"
@@ -106,6 +119,7 @@ msgid "Price"
 msgstr "Cena"
 
 #: books/templates/books/book_list_base.html:14
+#: categories/templates/categories/index.html:21
 #: common/templates/book_chooser_wizard/books_chosen_list.html:13
 #: users/templates/users/book_list.html:17 users/templates/users/index.html:35
 #: users/templates/users/unaccepted.html:37
@@ -114,6 +128,8 @@ msgstr "Akcje"
 
 #: books/templates/books/book_list_index.html:6
 #: books/templates/books/edit.html:11
+#: categories/templates/categories/edit.html:12
+#: categories/templates/categories/index.html:39
 #: users/templates/users/accept_book_list.html:18
 msgid "Edit"
 msgstr "Edytuj"
@@ -121,6 +137,9 @@ msgstr "Edytuj"
 #: books/templates/books/book_list_index.html:8
 #: books/templates/books/book_list_index.html:25
 #: books/templates/books/remove.html:15 books/templates/books/remove.html:28
+#: categories/templates/categories/index.html:43
+#: categories/templates/categories/remove.html:12
+#: categories/templates/categories/remove.html:32
 msgid "Remove"
 msgstr "Usuń"
 
@@ -133,6 +152,7 @@ msgid "Edit book"
 msgstr "Edytuj książkę"
 
 #: books/templates/books/edit.html:20
+#: categories/templates/categories/edit.html:22
 msgid "Save"
 msgstr "Zapisz"
 
@@ -140,7 +160,10 @@ msgstr "Zapisz"
 msgid "Manage books"
 msgstr "Zarządzaj książkami"
 
-#: books/templates/books/index.html:35 users/templates/users/index.html:53
+#: books/templates/books/index.html:35
+#: categories/templates/categories/index.html:51
+#: categories/templates/categories/list.html:23
+#: users/templates/users/index.html:53
 #: users/templates/users/unaccepted.html:55
 msgid "There's nothing to display."
 msgstr "Nie ma nic do wyświetlenia."
@@ -160,6 +183,83 @@ msgstr "Czy jesteś pewien, że chcesz usunąć tę książkę?"
 #: books/templates/books/remove.html:21
 msgid "Are you sure you want to remove these books?"
 msgstr "Czy jesteś pewien, że chcesz usunąć te książki?"
+
+#: categories/forms.py:12 categories/templates/categories/index.html:19
+msgid "Name"
+msgstr "Nazwa"
+
+#: categories/templates/categories/add.html:4
+#: categories/templates/categories/add.html:8
+#: categories/templates/categories/index.html:54
+msgid "Add category"
+msgstr "Dodaj kategorię"
+
+#: categories/templates/categories/add.html:11
+#: categories/templates/categories/edit.html:11
+#: categories/templates/categories/index.html:8
+#: categories/templates/categories/index.html:11
+#: categories/templates/categories/list.html:9
+#: categories/templates/categories/list.html:16
+#: categories/templates/categories/remove.html:11
+#: managemenu/templates/managemenu/index.html:42
+msgid "Categories"
+msgstr "Kategorie"
+
+#: categories/templates/categories/edit.html:4
+#: categories/templates/categories/edit.html:8
+msgid "Edit category"
+msgstr "Edytuj kategorię"
+
+#: categories/templates/categories/index.html:4
+msgid "Manage categories"
+msgstr "Zarządzaj kategoriami"
+
+#: categories/templates/categories/list.html:4
+msgid "List of books in category"
+msgstr "Lista książek w kategorii"
+
+#: categories/templates/categories/list.html:11
+#, python-format
+msgid "List of books in %(cat_name)s category"
+msgstr "Lista książek w kategorii %(cat_name)s"
+
+#: categories/templates/categories/list.html:17
+#: users/templates/users/index.html:46
+msgid "Book list"
+msgstr "Lista książek"
+
+#: categories/templates/categories/list.html:27
+#: common/templates/book_chooser_wizard/books.html:53
+#: common/templates/book_chooser_wizard/summary.html:49
+#: users/templates/users/list_books.html:19
+msgid "Back"
+msgstr "Powrót"
+
+#: categories/templates/categories/remove.html:4
+#: categories/templates/categories/remove.html:8
+msgid "Remove category"
+msgstr "Usuń kategorię"
+
+#: categories/templates/categories/remove.html:16
+#, python-format
+msgid "Are you sure you want to delete category %(cat_name)s?"
+msgstr "Czy jesteś pewien, że chcesz usunąć kategorię %(cat_name)s?"
+
+#: categories/templates/categories/remove.html:19
+#, python-format
+msgid "Please note that this category still contains %(book_count)s book."
+msgid_plural ""
+"Please note that this category still contains %(book_count)s books."
+msgstr[0] ""
+"Miej na uwadze, że w tej kategorii wciąż jest %(book_count)s książka."
+msgstr[1] ""
+"Miej na uwadze, że w tej kategorii wciąż są %(book_count)s książki."
+msgstr[2] ""
+"Miej na uwadze, że w tej kategorii wciąż jest %(book_count)s książek."
+
+#: categories/templates/categories/remove.html:22
+msgid "This category does not contain any books."
+msgstr "W tej kategorii nie ma żadnych książek."
 
 #: common/forms.py:24 common/templates/book_chooser_wizard/summary.html:16
 #: sell/forms.py:20 users/templates/users/index.html:31
@@ -220,6 +320,18 @@ msgstr "Książki zostały pomyślnie usunięte."
 msgid "The books were accepted successfully."
 msgstr "Książki zostały pomyślnie zaakceptowane."
 
+#: common/uiutils.py:12
+msgid "The category was added successfully."
+msgstr "Kategoria została pomyślnie dodana."
+
+#: common/uiutils.py:13
+msgid "The category was edited successfully."
+msgstr "Kategoria została pomyślnie zedytowana."
+
+#: common/uiutils.py:14
+msgid "The category was removed successfully."
+msgstr "Kategoria została pomyślnie usunięta."
+
 #: common/templates/book_chooser_wizard/books.html:8
 msgid "Step 2 of 3: choose the books"
 msgstr "Krok 2 z 3: wybierz książki"
@@ -248,12 +360,6 @@ msgstr ""
 #: common/templates/book_chooser_wizard/books.html:45
 msgid "Chosen books"
 msgstr "Wybrane książki"
-
-#: common/templates/book_chooser_wizard/books.html:53
-#: common/templates/book_chooser_wizard/summary.html:49
-#: users/templates/users/list_books.html:19
-msgid "Back"
-msgstr "Powrót"
 
 #: common/templates/book_chooser_wizard/books.html:54
 #: common/templates/book_chooser_wizard/personal_data.html:14
@@ -290,21 +396,21 @@ msgstr "Dane osobiste"
 msgid "Accept"
 msgstr "Akceptuj"
 
-#: common/templates/common/base.html:32
+#: common/templates/common/base.html:39
 msgid "Toggle navigation"
 msgstr "Nawigacja"
 
-#: common/templates/common/base.html:45
+#: common/templates/common/base.html:52
 msgid "Anonymous"
 msgstr "Anonimowy"
 
-#: common/templates/common/base.html:56
+#: common/templates/common/base.html:67
 #: egielda/templates/registration/logged_out.html:4
 #: egielda/templates/registration/logged_out.html:8
 msgid "Sign out"
 msgstr "Wyloguj się"
 
-#: common/templates/common/base.html:58
+#: common/templates/common/base.html:73
 #: egielda/templates/registration/login.html:4
 #: egielda/templates/registration/login.html:8
 #: egielda/templates/registration/login.html:36
@@ -360,7 +466,7 @@ msgid "Error %(error)s"
 msgstr "Błąd %(error)s"
 
 #: egielda/templates/error.html:19
-#: egielda/templates/registration/logged_out.html:16
+#: egielda/templates/registration/logged_out.html:17
 msgid "Homepage"
 msgstr "Strona główna"
 
@@ -388,6 +494,10 @@ msgstr "Sprzedaj"
 msgid "You have been successfully signed out."
 msgstr "Zostałeś pomyślnie wylogowany."
 
+#: egielda/templates/registration/logged_out.html:20
+msgid "Sign in again"
+msgstr "Zaloguj się ponownie"
+
 #: egielda/templates/registration/login.html:13
 #, python-format
 msgid ""
@@ -407,7 +517,7 @@ msgstr "Nazwa użytkownika"
 msgid "Password"
 msgstr "Hasło"
 
-#: managemenu/templates/managemenu/index.html:51
+#: managemenu/templates/managemenu/index.html:60
 #: users/templates/users/accept.html:7 users/templates/users/accept.html:12
 #: users/templates/users/index.html:12 users/templates/users/index.html:15
 #: users/templates/users/index.html:18 users/templates/users/list_books.html:4
@@ -419,7 +529,7 @@ msgstr "Hasło"
 msgid "Users"
 msgstr "Użytkownicy"
 
-#: managemenu/templates/managemenu/index.html:54
+#: managemenu/templates/managemenu/index.html:63
 #: users/templates/users/accept.html:13 users/templates/users/index.html:23
 #: users/templates/users/unaccepted.html:20
 #: users/templates/users/unaccepted.html:25
@@ -473,10 +583,6 @@ msgstr "Nie"
 #: users/templates/users/unaccepted.html:24
 msgid "All"
 msgstr "Wszyscy"
-
-#: users/templates/users/index.html:46
-msgid "Book list"
-msgstr "Lista książek"
 
 #: users/templates/users/list_books.html:8
 #, python-format
