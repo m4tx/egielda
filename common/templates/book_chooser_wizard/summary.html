@@ -42,7 +42,7 @@
         </div>
     </div>
     <h2>{% trans "Books" %}</h2>
-    {% include "books/book_list_base.html" with hide_actions=True %}
+    {% include "book_chooser_wizard/books_chosen_list.html" with hide_actions=True %}
     <form action="{{ request.path }}" method="post">
         {% csrf_token %}
         <button class="btn btn-default" name="btn-back" type="submit"><span

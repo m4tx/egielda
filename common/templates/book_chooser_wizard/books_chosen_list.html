@@ -8,10 +8,31 @@
                 <th>{% trans "Publisher" %}</th>
                 <th>{% trans "Title" %}</th>
                 <th>{% trans "Publication" %}</th>
-                <th>{% trans "Price" %}</th>
                 <th>{% trans "Amount" %}</th>
-                <th>{% trans "Actions" %}</th>
+                <th>{% trans "Price" %}</th>
+                {% if not hide_actions %}
+                    <th>{% trans "Actions" %}</th>
+                {% endif %}
             </tr>
+
+            {% for book in chosen_book_list %}
+                <tr{% block tr_attributes %}{% endblock %}>
+                    {% block tr_header %}{% endblock %}
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.publisher }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.publication_year }}</td>
+                    <td>{{ book.amount }}</td>
+                    <td>{{ book.price_string }}</td>
+                    {% if not hide_actions %}
+                        <td>
+                            <div class="btn-toolbar" role="toolbar">
+                                {% block actions %}{% endblock %}
+                            </div>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
         </thead>
     </table>
 </div>

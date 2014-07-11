@@ -30,8 +30,6 @@ class SellWizard(BookChooserWizard):
     def process_books_summary(self, user, book_list):
         for book in book_list:
             dbbook = Book(owner=user, accepted=False, sold=False)
-            amount = book['amount']
-            del book['amount']
             if 'pk' in book:
                 dbbook.book_type_id = book['pk']
             else:
@@ -51,13 +49,17 @@ class SellWizard(BookChooserWizard):
         types = []
         for book in book_list:
             if 'pk' in book:
-                existing_list.append(book['pk'])
+                existing_list.append((book['pk'], book['amount']))
             else:
                 if book['price'] != "":
                     book['price'] = Decimal(book['price'])
-                del book['amount']
                 types.append(BookType(**book))
-        types.extend(BookType.objects.filter(pk__in=existing_list))
+
+        for el in existing_list:
+            book = BookType.objects.get(pk=el[0])
+            book.amount = el[1]
+            types.append(book)
+
         return types
 
     def success(self, request):

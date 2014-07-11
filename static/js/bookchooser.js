@@ -11,7 +11,7 @@ $('.btn-add-book').on('click', function () {
     } else {
         var book = new ExistingBook(tr.data('pk'), 1);
         chosenBooks.push(book);
-        addExistingBook(tr, book);
+        addExistingBook(tr);
     }
 });
 $('#btn-add-new-book').on('click', function () {
@@ -34,7 +34,7 @@ function NewBook() {
 function addRetrievedBooks() {
     for (var bookid in chosenBooks) {
         if (chosenBooks[bookid].pk != undefined) {
-            addExistingBook($('#bookList').find('table tr[data-pk="' + chosenBooks[bookid].pk + '"]'));
+            addExistingBook($('#bookList').find('table tr[data-pk="' + chosenBooks[bookid].pk + '"]'), chosenBooks[bookid].amount);
         } else {
             var book = $.extend({}, chosenBooks[bookid]); // Clone the associative array
             if (book.price != "") {
@@ -45,12 +45,12 @@ function addRetrievedBooks() {
     }
 }
 
-function addExistingBook(tr, book) {
+function addExistingBook(tr, amount) {
     var ctr = tr.clone();
     $('td:last-child', ctr).remove();
-    ctr.append($('<td data-type="amount">1</td>'));
+    ctr.append($('<td data-type="amount">' + amount + '</td>'));
 
-    addBookTr(ctr, book);
+    addBookTr(ctr);
 }
 
 function addNewBook() {
@@ -82,7 +82,7 @@ function addNewBook() {
         chosenBooks.push(book);
         var tr = createNewBookTr(vals);
         tr.append($('<td data-type="amount">1</td>'));
-        addBookTr(tr, book);
+        addBookTr(tr);
     }
 }
 
@@ -96,7 +96,7 @@ function createNewBookTr(vals) {
     return tr;
 }
 
-function addBookTr(tr, book) {
+function addBookTr(tr) {
     var button = $('<button class="btn btn-xs btn-link btn-remove-book"><span class="glyphicon glyphicon-remove"></span> ' + gettext("Remove") + '</button>');
     button.on('click', function () {
         removeBook($('#chosen-book-list').find('button.btn-remove-book').index(this))
