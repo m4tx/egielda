@@ -33,15 +33,17 @@ class SellWizard(BookChooserWizard):
             if 'pk' in book:
                 dbbook.book_type_id = book['pk']
             else:
-                if book['price'] != "":
-                    book['price'] = Decimal(book['price'])
-                else:
-                    book['price'] = 0
+                book['price'] = Decimal(book['price'])
                 if book['publication_year'] == "":
                     book['publication_year'] = 1970
+
+                amount = book['amount']
+                del book['amount']
                 book_type = BookType(**book)
                 book_type.save()
                 dbbook.book_type = book_type
+                dbbook.amount = amount
+
             dbbook.save()
 
     def get_book_list(self, book_list):
@@ -51,9 +53,11 @@ class SellWizard(BookChooserWizard):
             if 'pk' in book:
                 existing_list.append((book['pk'], book['amount']))
             else:
-                if book['price'] != "":
-                    book['price'] = Decimal(book['price'])
+                book['price'] = Decimal(book['price'])
+                amount = book['amount']
+                del book['amount']
                 types.append(BookType(**book))
+                types[-1].amount = amount
 
         for el in existing_list:
             book = BookType.objects.get(pk=el[0])

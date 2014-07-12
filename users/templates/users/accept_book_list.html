@@ -4,7 +4,7 @@
 
 {% block price %}
     {% if not book.book_type.visible %}
-        <input type="number" step="0.01" class="form-control input-sm" name="price-{{ book.book_type.pk }}"
+        <input type="number" step="0.01" max="999.99" class="form-control input-sm" name="price-{{ book.book_type.pk }}"
                value="{{ book.book_type.price }}">
     {% else %}
         {{ book.book_type.price_string }}

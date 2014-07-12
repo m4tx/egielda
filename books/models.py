@@ -15,8 +15,11 @@ class BookType(models.Model):
     visible = models.BooleanField(default=False)
 
     def price_string(self):
-        return "%(price).2f%(currency)s" % {'price': self.price,
-                                            'currency': getattr(settings, 'CURRENCY', 'USD')}
+        if float(self.price) != 0:
+            return "%(price).2f%(currency)s" % {'price': self.price,
+                                                'currency': getattr(settings, 'CURRENCY', 'USD')}
+        else:
+            return "N/A"
 
     def __str__(self):
         return _(

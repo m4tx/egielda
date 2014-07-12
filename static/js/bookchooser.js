@@ -11,11 +11,33 @@ $('.btn-add-book').on('click', function () {
     } else {
         var book = new ExistingBook(tr.data('pk'), 1);
         chosenBooks.push(book);
-        addExistingBook(tr);
+        addExistingBook(tr, book.amount);
     }
 });
+
 $('#btn-add-new-book').on('click', function () {
-    addNewBook();
+    var isbn = $.trim($('input[name="isbn"]').val())
+
+    var existingTr = $('#chosen-book-list tr td').filter(function() {
+        return $(this).text() == isbn
+    });
+    existingTr = existingTr.parent();
+
+    if (existingTr.length > 0) {
+        var amountTr = existingTr.find('td[data-type="amount"]');
+        var amount = parseInt(amountTr.text());
+        amountTr.text(amount + 1);
+        $.grep(chosenBooks, function (n, i) {
+            return n.isbn == isbn;
+        })[0].amount += 1;
+    } else {
+        var len = $('input[name="isbn"]').val().replace(/[\D]/g, '').length;
+        if(len != 13 && len != 10) {
+            return showMessage(gettext("Please enter valid ISBN number."));
+        }
+
+        addNewBook(1);
+    }
 });
 $('button#btn-next,button#btn-back').on('click', function () {
     $('form').append($('<input type="hidden" name="book_data">').attr('value', JSON.stringify(chosenBooks)))
@@ -37,9 +59,7 @@ function addRetrievedBooks() {
             addExistingBook($('#bookList').find('table tr[data-pk="' + chosenBooks[bookid].pk + '"]'), chosenBooks[bookid].amount);
         } else {
             var book = $.extend({}, chosenBooks[bookid]); // Clone the associative array
-            if (book.price != "") {
-                book.price += currency;
-            }
+            book.price = "N/A";
             addBookTr(createNewBookTr(book));
         }
     }
@@ -53,35 +73,29 @@ function addExistingBook(tr, amount) {
     addBookTr(ctr);
 }
 
-function addNewBook() {
-    var ids = ['isbn', 'publisher', 'title', 'publication_year', 'price'];
+function addNewBook(amount) {
+    var ids = ['isbn', 'publisher', 'title', 'publication_year'];
     var vals = [];
 
     var book = new NewBook();
     var add = false;
     for (var prid in ids) {
         var input = $('input[name="' + ids[prid] + '"]');
-        book[ids[prid]] = input.val();
-        if (ids[prid] == 'price') {
-            book[ids[prid]] = parseFloat(book[ids[prid]]).toFixed(2);
-            if(isNaN(book[ids[prid]]))
-               book[ids[prid]] = parseFloat(0).toFixed(2);
-            vals.push(book[ids[prid]] + currency);
-        } else {
-            vals.push(book[ids[prid]]);
-        }
-        input.val("");
+        book[ids[prid]] = $.trim(input.val());
+        vals.push(book[ids[prid]]);
 
         if (book[ids[prid]] != "") {
             add = true;
         }
     }
-    book.amount = 1;
+    vals.push("N/A");
+    book.price = 0;
+    book.amount = amount;
 
     if (add) {
         chosenBooks.push(book);
         var tr = createNewBookTr(vals);
-        tr.append($('<td data-type="amount">1</td>'));
+        tr.append($('<td data-type="amount">' + book.amount + '</td>'))
         addBookTr(tr);
     }
 }
@@ -90,7 +104,11 @@ function createNewBookTr(vals) {
     var tr = $('<tr/>');
 
     for (var id in vals) {
-        tr = tr.append($('<td/>').text(vals[id]));
+        if(id === 'amount') {
+            tr = tr.append($('<td data-type="amount"/>').text(vals[id]));
+        } else {
+            tr = tr.append($('<td/>').text(vals[id]));
+        }
     }
 
     return tr;
@@ -129,3 +147,7 @@ function removeBook(id) {
 }
 
 addRetrievedBooks();
+
+function showMessage(text) {
+    alert(text);
+}

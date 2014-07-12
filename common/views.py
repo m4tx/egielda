@@ -71,7 +71,7 @@ class BookChooserWizard:
                 return HttpResponseRedirect(reverse(self.get_personal_data_view()))
             elif 'btn-next' in request.POST:
                 return HttpResponseRedirect(reverse(self.get_summary_view()))
-        book_list = BookType.objects.all()
+        book_list = BookType.objects.filter(visible=True).exclude(price=0)
         form = BookForm()
         del form.fields['price']
         return render(request, 'book_chooser_wizard/books.html',
