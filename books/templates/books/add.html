@@ -1,6 +1,10 @@
 {% extends "common/base.html" %}
 {% load i18n %}
 
+{% block head %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.css">
+{% endblock %}
+
 {% block title %}{% trans "Add book" %}{% endblock %}
 
 {% block content %}
@@ -24,5 +28,8 @@
 
 {% block footer %}
     {% load staticfiles %}
+    <script src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.js"></script>
     <script src="{% static "js/isbnfinder.js" %}"></script>
+    <script src="{% static "js/bookeditor.js" %}"></script>
 {% endblock %}

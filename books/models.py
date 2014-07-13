@@ -6,13 +6,13 @@ from egielda import settings
 
 
 class BookType(models.Model):
-    categories = models.ManyToManyField(Category, blank=True)
     isbn = models.CharField(max_length=13, blank=True)
     publisher = models.CharField(max_length=150, blank=True)
     title = models.CharField(max_length=150, blank=True)
     publication_year = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
     visible = models.BooleanField(default=False)
+    categories = models.ManyToManyField(Category, blank=True)
 
     def price_string(self):
         if float(self.price) != 0:

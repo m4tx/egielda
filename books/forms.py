@@ -14,12 +14,14 @@ class BookForm(ModelForm):
 
     class Meta:
         model = BookType
-        fields = ['isbn', 'publisher', 'title', 'publication_year', 'price']
+        fields = '__all__'
+        exclude = ['visible']
         labels = {
             'publisher': _("Publisher"),
             'title': _("Title"),
             'publication_year': _("Publication year"),
             'price': _("Price (%s)") % getattr(settings, 'CURRENCY', 'USD'),
+            'categories': _("Categories")
         }
         widgets = {
             'publisher': forms.TextInput(attrs={'required': 'required'}),
