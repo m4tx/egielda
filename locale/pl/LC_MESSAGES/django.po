@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-05 11:33+0000\n"
+"POT-Creation-Date: 2014-07-13 10:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,38 +25,49 @@ msgstr ""
 msgid "ISBN"
 msgstr ""
 
-#: books/forms.py:19 books/templates/books/book_list_base.html:9
+#: books/forms.py:20 books/templates/books/book_list_base.html:9
 #: common/templates/book_chooser_wizard/books_chosen_list.html:8
 #: users/templates/users/book_list.html:12
 msgid "Publisher"
 msgstr "Wydawnictwo"
 
-#: books/forms.py:20 books/templates/books/book_list_base.html:10
+#: books/forms.py:21 books/templates/books/book_list_base.html:10
 #: common/templates/book_chooser_wizard/books_chosen_list.html:9
 #: users/templates/users/book_list.html:13
 msgid "Title"
 msgstr "Tytuł"
 
-#: books/forms.py:21
+#: books/forms.py:22
 msgid "Publication year"
 msgstr "Rok wydania"
 
-#: books/forms.py:22
+#: books/forms.py:23
 #, python-format
 msgid "Price (%s)"
 msgstr "Cena (%s)"
 
-#: books/models.py:23
+#: books/forms.py:24 categories/templates/categories/add.html:11
+#: categories/templates/categories/edit.html:11
+#: categories/templates/categories/index.html:8
+#: categories/templates/categories/index.html:11
+#: categories/templates/categories/list.html:9
+#: categories/templates/categories/list.html:16
+#: categories/templates/categories/remove.html:11
+#: managemenu/templates/managemenu/index.html:42
+msgid "Categories"
+msgstr "Kategorie"
+
+#: books/models.py:26
 #, python-format
 msgid "%(publisher)s %(title)s"
 msgstr ""
 
-#: books/templates/books/add.html:4 books/templates/books/add.html.py:7
+#: books/templates/books/add.html:8 books/templates/books/add.html.py:11
 #: books/templates/books/index.html:38
 msgid "Add book"
 msgstr "Dodaj książkę"
 
-#: books/templates/books/add.html:9 books/templates/books/edit.html:9
+#: books/templates/books/add.html:13 books/templates/books/edit.html:13
 #: books/templates/books/index.html:10 books/templates/books/remove.html:13
 #: categories/templates/categories/add.html:10
 #: categories/templates/categories/edit.html:10
@@ -73,7 +84,7 @@ msgstr "Dodaj książkę"
 msgid "Manage"
 msgstr "Zarządzaj"
 
-#: books/templates/books/add.html:10 books/templates/books/edit.html:10
+#: books/templates/books/add.html:14 books/templates/books/edit.html:14
 #: books/templates/books/index.html:8 books/templates/books/index.html:11
 #: books/templates/books/remove.html:14
 #: categories/templates/categories/index.html:20
@@ -82,7 +93,7 @@ msgstr "Zarządzaj"
 msgid "Books"
 msgstr "Książki"
 
-#: books/templates/books/add.html:11
+#: books/templates/books/add.html:15
 #: categories/templates/categories/add.html:12
 #: common/templates/book_chooser_wizard/books.html:25
 #: managemenu/templates/managemenu/index.html:45
@@ -90,7 +101,7 @@ msgstr "Książki"
 msgid "Add new"
 msgstr "Dodaj nową"
 
-#: books/templates/books/add.html:18 books/templates/books/edit.html:18
+#: books/templates/books/add.html:22 books/templates/books/edit.html:22
 #: books/templates/books/remove.html:26
 #: categories/templates/categories/add.html:19
 #: categories/templates/categories/edit.html:19
@@ -99,7 +110,7 @@ msgstr "Dodaj nową"
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: books/templates/books/add.html:20
+#: books/templates/books/add.html:24
 #: categories/templates/categories/add.html:22
 #: common/templates/book_chooser_wizard/books.html:37
 #: common/templates/book_chooser_wizard/books_book_list.html:10
@@ -120,14 +131,14 @@ msgstr "Cena"
 
 #: books/templates/books/book_list_base.html:14
 #: categories/templates/categories/index.html:21
-#: common/templates/book_chooser_wizard/books_chosen_list.html:13
+#: common/templates/book_chooser_wizard/books_chosen_list.html:14
 #: users/templates/users/book_list.html:17 users/templates/users/index.html:35
 #: users/templates/users/unaccepted.html:37
 msgid "Actions"
 msgstr "Akcje"
 
 #: books/templates/books/book_list_index.html:6
-#: books/templates/books/edit.html:11
+#: books/templates/books/edit.html:15
 #: categories/templates/categories/edit.html:12
 #: categories/templates/categories/index.html:39
 #: users/templates/users/accept_book_list.html:18
@@ -147,11 +158,11 @@ msgstr "Usuń"
 msgid "Bulk actions:"
 msgstr "Masowe działania:"
 
-#: books/templates/books/edit.html:4 books/templates/books/edit.html.py:7
+#: books/templates/books/edit.html:8 books/templates/books/edit.html.py:11
 msgid "Edit book"
 msgstr "Edytuj książkę"
 
-#: books/templates/books/edit.html:20
+#: books/templates/books/edit.html:24
 #: categories/templates/categories/edit.html:22
 msgid "Save"
 msgstr "Zapisz"
@@ -193,17 +204,6 @@ msgstr "Nazwa"
 #: categories/templates/categories/index.html:54
 msgid "Add category"
 msgstr "Dodaj kategorię"
-
-#: categories/templates/categories/add.html:11
-#: categories/templates/categories/edit.html:11
-#: categories/templates/categories/index.html:8
-#: categories/templates/categories/index.html:11
-#: categories/templates/categories/list.html:9
-#: categories/templates/categories/list.html:16
-#: categories/templates/categories/remove.html:11
-#: managemenu/templates/managemenu/index.html:42
-msgid "Categories"
-msgstr "Kategorie"
 
 #: categories/templates/categories/edit.html:4
 #: categories/templates/categories/edit.html:8
@@ -252,8 +252,7 @@ msgid_plural ""
 "Please note that this category still contains %(book_count)s books."
 msgstr[0] ""
 "Miej na uwadze, że w tej kategorii wciąż jest %(book_count)s książka."
-msgstr[1] ""
-"Miej na uwadze, że w tej kategorii wciąż są %(book_count)s książki."
+msgstr[1] "Miej na uwadze, że w tej kategorii wciąż są %(book_count)s książki."
 msgstr[2] ""
 "Miej na uwadze, że w tej kategorii wciąż jest %(book_count)s książek."
 
@@ -352,10 +351,9 @@ msgid ""
 "clicking the magnifying glass icon next to the input field. The other fields "
 "will be automatically filled, so you won't have to do it by hand."
 msgstr ""
-"Dodatkowo, <strong>mocno</strong> zalecamy wprowadzenie numeru ISBN "
-"oraz kliknięcie ikony lupy obok pola edycyjnego. Pozostałe pola zostaną "
-"wtedy wypełnione automatycznie, więc nie będziesz musiał(a) robić tego "
-"ręcznie."
+"Dodatkowo, <strong>mocno</strong> zalecamy wprowadzenie numeru ISBN oraz "
+"kliknięcie ikony lupy obok pola edycyjnego. Pozostałe pola zostaną wtedy "
+"wypełnione automatycznie, więc nie będziesz musiał(a) robić tego ręcznie."
 
 #: common/templates/book_chooser_wizard/books.html:45
 msgid "Chosen books"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-11 13:31+0000\n"
+"POT-Creation-Date: 2014-07-13 10:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,18 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: static/js/bookchooser.js:85
+#: static/js/bookchooser.js:36
+msgid "Please enter valid ISBN number."
+msgstr "Proszę wprowadzić poprawny numer ISBN."
+
+#: static/js/bookchooser.js:118
 msgid "Remove"
 msgstr "Usuń"
+
+#: static/js/bookeditor.js:3
+msgid "{0} of {1} selected"
+msgstr "Zaznaczono {0} z {1}"
+
+#: static/js/bookeditor.js:4
+msgid "Nothing selected"
+msgstr "Nic nie zaznaczono"
