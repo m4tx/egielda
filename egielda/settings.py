@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'purchase',
     'managemenu',
     'categories',
+    'stats',
 )
 
 MIDDLEWARE_CLASSES = (

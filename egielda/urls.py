@@ -26,6 +26,7 @@ urlpatterns = patterns(
     url(r'^manage/books/', include('books.urls')),
     url(r'^manage/categories/', include('categories.urls')),
     url(r'^manage/users/', include('users.urls')),
+    url(r'^manage/stats/', include('stats.urls')),
     url(r'^sell/', include('sell.urls')),
     url(r'^purchase/', include('purchase.urls')),
 )
