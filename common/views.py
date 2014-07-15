@@ -9,6 +9,7 @@ from django.shortcuts import render
 
 from books.forms import BookForm
 from books.models import BookType
+from categories.models import Category
 from common.forms import PersonalDataForm
 from common.models import AppUser
 from egielda import settings
@@ -71,11 +72,14 @@ class BookChooserWizard:
                 return HttpResponseRedirect(reverse(self.get_personal_data_view()))
             elif 'btn-next' in request.POST:
                 return HttpResponseRedirect(reverse(self.get_summary_view()))
+
         book_list = BookType.objects.filter(visible=True).exclude(price=0)
+        category_list = Category.objects.all()
         form = BookForm()
         del form.fields['price']
         return render(request, 'book_chooser_wizard/books.html',
                       {'page_title': self.page_title, 'form': form, 'book_list': book_list,
+                       'category_list': category_list,
                        'chosen_books': request.session['chosen_books'] if 'chosen_books' in request.session else None,
                        'currency': getattr(settings, 'CURRENCY', 'USD'), 'feature_add_new': self.feature_add_new})
 

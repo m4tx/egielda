@@ -3,6 +3,7 @@
 
 {% block tr_attributes %}
     data-pk="{{ book.pk }}"
+    data-categories="{{ book.cat_pks_string }}"
 {% endblock %}
 
 {% block actions %}
