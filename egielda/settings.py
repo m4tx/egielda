@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'managemenu',
     'categories',
     'stats',
+    'dates',
 )
 
 MIDDLEWARE_CLASSES = (

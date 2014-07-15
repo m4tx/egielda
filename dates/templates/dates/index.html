@@ -1,0 +1,54 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block head %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "css/bootstrap-datetimepicker.min.css" %}">
+{% endblock %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ page_title }}</h1>
+    <ol class="breadcrumb">
+        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
+        <li class="active">{% trans "Dates" %}</li>
+    </ol>
+
+    <form class="form-horizontal" action="{{ request.path }}" method="post">
+        {% include "common/default_form.html" %}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}</button>
+    </form>
+{% endblock %}
+
+{% block footer %}
+    <script src="{% static "js/moment.js" %}"></script>
+    <script src="{% static "js/bootstrap-datetimepicker.min.js" %}"></script>
+    <script type="text/javascript">
+        window.addEventListener("load", function(){
+            var is_datetime_supported = false;
+            var input = document.createElement("input");
+            input.setAttribute("type", "datetime-local");
+
+            if (input.type === "datetime-local") {
+                is_datetime_supported = true;
+            }
+
+            $('[data-datetimepicker]').each(function(){
+                if (is_datetime_supported) {
+                    return;
+                }
+
+                $(this).attr("placeholder", "RRRR-MM-DD GG:MM");
+                if ($(this).is("[value]")) {
+                    $(this).attr("value", $(this).attr("value").replace("T", " "));
+                }
+
+                $("<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>").insertAfter($(this));
+                $(this).next().addBack().wrapAll("<div class=\"input-group\" data-date-format=\"YYYY-MM-DD HH:mm\"></div>");
+                $(this).parent().datetimepicker();
+            });
+        });
+    </script>
+{% endblock %}
