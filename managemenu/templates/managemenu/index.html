@@ -73,10 +73,12 @@
         </tr>
         <tr class="toptr">
             <td rowspan="2" class="module-icon">
-                <a href="{% url 'dates.views.index' %}"><span class="glyphicon glyphicon-calendar"></span></a>
+                <a href="{% url 'settings.views.index' %}"><span class="glyphicon glyphicon-wrench"></span></a>
             </td>
-            <td><a href="{% url 'dates.views.index' %}"><h4>{% trans "Dates" %}</h4></a></td>
+            <td><a href="{% url 'settings.views.index' %}"><h4>{% trans "Settings" %}</h4></a></td>
         </tr>
-        <tr></tr>
+        <tr>
+            <td><a href="{% url 'settings.views.dates' %}">{% trans "Dates" %}</a></td>
+        </tr>
     </table>
 {% endblock %}

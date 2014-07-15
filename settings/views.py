@@ -5,13 +5,17 @@ from django.utils.translation import ugettext_lazy as _
 from django.http.response import HttpResponseRedirect
 
 from common.models import Setting
-from dates.forms import DatesForm
+from settings.forms import DatesForm
 
 from egielda.views import string2datetime
 
 
 @user_passes_test(user_is_admin)
 def index(request):
+    return render(request, 'settings/index.html', {'page_title': _("Settings")})
+
+@user_passes_test(user_is_admin)
+def dates(request):
     if request.method == 'POST':
         form = DatesForm(request.POST)
         if form.is_valid():
@@ -35,4 +39,4 @@ def index(request):
         except Exception as e:
             form = DatesForm()
 
-    return render(request, 'dates/index.html', {'page_title': _("Dates"), 'form': form})
+    return render(request, 'settings/dates.html', {'page_title': _("Dates"), 'form': form})
