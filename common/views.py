@@ -77,6 +77,7 @@ class BookChooserWizard:
         category_list = Category.objects.all()
         form = BookForm()
         del form.fields['price']
+        del form.fields['categories']
         return render(request, 'book_chooser_wizard/books.html',
                       {'page_title': self.page_title, 'form': form, 'book_list': book_list,
                        'category_list': category_list,
