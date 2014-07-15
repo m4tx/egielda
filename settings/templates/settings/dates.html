@@ -16,6 +16,11 @@
         <li class="active">{% trans "Dates" %}</li>
     </ol>
 
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#">{% trans "Dates" %}</a></li>
+    </ul>
+
+    <br />
     <form class="form-horizontal" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}
