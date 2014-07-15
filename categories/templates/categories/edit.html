@@ -1,16 +1,13 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load manage_header %}
 
 {% block title %}{% trans "Edit category" %}{% endblock %}
 
 {% block content %}
     {% include "common/alerts.html" %}
     <h1>{% trans "Edit category" %}</h1>
-    <ol class="breadcrumb">
-        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
-        <li><a href="{% url 'categories.views.index' %}">{% trans "Categories" %}</a></li>
-        <li class="active">{% trans "Edit" %}</li>
-    </ol>
+    {% manage_header "categories/edit" %}
 
     <form class="form-horizontal" method="post" action="">
         {% include 'common/default_form.html' %}

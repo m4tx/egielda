@@ -30,9 +30,8 @@
 
 {% block content %}
     <h1>{% trans "Manage" %}</h1>
-    <ol class="breadcrumb">
-        <li class="active">{% trans "Manage" %}</li>
-    </ol>
+    {% load manage_header %}
+    {% manage_header %}
 
     <table class="table table-bordered table-hover">
         <tr class="toptr">

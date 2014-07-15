@@ -1,5 +1,6 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load manage_header %}
 
 {% block title %}{% trans "Users" %}{% endblock %}
 
@@ -7,11 +8,7 @@
     <h1>{% trans "Users" %}
         <small>{% blocktrans %}{{ user_name }}'s books{% endblocktrans %}</small>
     </h1>
-    <ol class="breadcrumb">
-        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
-        <li><a href="{% url 'users.views.index' %}">{% trans "Users" %}</a></li>
-        <li class="active">{% trans "User's books" %}</li>
-    </ol>
+    {% manage_header "users/list_books" %}
 
     {% include 'users/book_list.html' %}
 

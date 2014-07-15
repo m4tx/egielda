@@ -1,15 +1,13 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load manage_header %}
 
 {% block title %}{% trans "Manage books" %}{% endblock %}
 
 {% block content %}
     {% include "common/alerts.html" %}
     <h1>{% trans "Books" %}</h1>
-    <ol class="breadcrumb">
-        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
-        <li class="active">{% trans "Books" %}</li>
-    </ol>
+    {% manage_header "books" %}
 
     {% if book_list %}
         <form action="{% url 'books.views.bulk_actions' 'remove' %}" method="post">

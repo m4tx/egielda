@@ -1,5 +1,6 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load manage_header %}
 
 {% block head %}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.css">
@@ -9,11 +10,7 @@
 
 {% block content %}
     <h1>{% trans "Add book" %}</h1>
-    <ol class="breadcrumb">
-        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
-        <li><a href="{% url 'books.views.index' %}">{% trans "Books" %}</a></li>
-        <li class="active">{% trans "Add new" %}</li>
-    </ol>
+    {% manage_header "books/add" %}
 
     <form class="form-horizontal" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}

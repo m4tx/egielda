@@ -1,15 +1,13 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load manage_header %}
 
 {% block title %}{% trans "Manage categories" %}{% endblock %}
 
 {% block content %}
     {% include "common/alerts.html" %}
     <h1>{% trans "Categories" %}</h1>
-    <ol class="breadcrumb">
-        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
-        <li class="active">{% trans "Categories" %}</li>
-    </ol>
+    {% manage_header "categories" %}
 
     {% if category_list %}
         <div class="table-responsive">

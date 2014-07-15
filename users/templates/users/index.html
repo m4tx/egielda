@@ -1,5 +1,6 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load manage_header %}
 
 {% block head %}
     <style>
@@ -13,10 +14,7 @@
 
 {% block content %}
     <h1>{% trans "Users" %}</h1>
-    <ol class="breadcrumb">
-        <li><a href="{% url 'managemenu.views.index' %}">{% trans "Manage" %}</a></li>
-        <li class="active">{% trans "Users" %}</li>
-    </ol>
+    {% manage_header "users" %}
 
     <ul class="nav nav-tabs">
         <li class="active"><a href="#">{% trans "All" %}</a></li>
