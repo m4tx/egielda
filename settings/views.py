@@ -3,6 +3,7 @@ from django.shortcuts import render
 from common.auth import user_is_admin
 from django.utils.translation import ugettext_lazy as _
 from django.http.response import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 from common.models import Setting
 from settings.forms import DatesForm
@@ -12,7 +13,7 @@ from egielda.views import string2datetime
 
 @user_passes_test(user_is_admin)
 def index(request):
-    return render(request, 'settings/index.html', {'page_title': _("Settings")})
+    return HttpResponseRedirect(reverse(dates))
 
 @user_passes_test(user_is_admin)
 def dates(request):
