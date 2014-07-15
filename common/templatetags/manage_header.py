@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 import books
 import categories
+import managemenu
 import settings
 import users
 
