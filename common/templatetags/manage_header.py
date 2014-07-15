@@ -55,7 +55,7 @@ class ManageHeaderNode(template.Node):
         }]
 
         # Split the path
-        split = self.path.split(sep="/")
+        split = self.path.split("/")
         if len(split) == 1 and split[0] == "":
             split = []
 
