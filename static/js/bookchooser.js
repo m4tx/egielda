@@ -148,6 +148,26 @@ function removeBook(id) {
 
 addRetrievedBooks();
 
+$("#category_filter").on("change", function(){
+    var category = parseInt($(this).val());
+    $("#bookList table > tbody > tr").each(function(){
+        var bookCategories = $(this).attr("data-categories").split(",");
+        var visible = false;
+
+        for(var categoryID in bookCategories) {
+            if(parseInt(bookCategories[categoryID]) === category || category === 0) {
+                $(this).attr("style", "display: table-row");
+                visible = true;
+                break;
+            }
+        }
+
+        if(!visible) {
+            $(this).attr("style", "display: none");
+        }
+    });
+})
+
 function showMessage(text) {
     alert(text);
 }

@@ -23,9 +23,10 @@
 
                             <div class="col-sm-9 col-md-10">
                                 <select class="form-control" id="category_filter">
-                                    <option>{% trans "All" context "categories" %}</option>
+                                    <option value="0">{% trans "All" context "categories" %}</option>
+                                    <option disabled="disabled">────────</option>
                                     {% for category in category_list %}
-                                        <option data-pk="{{ category.pk }}">{{ category.name }}</option>
+                                        <option value="{{ category.pk }}">{{ category.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
