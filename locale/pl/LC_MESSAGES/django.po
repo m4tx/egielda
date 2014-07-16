@@ -573,19 +573,19 @@ msgstr ""
 
 #: settings/forms.py:6
 msgid "Selling start date"
-msgstr "Data początku sprzedawania"
+msgstr "Początek sprzedaży"
 
 #: settings/forms.py:9
 msgid "Selling end date"
-msgstr "Data końca sprzedawania"
+msgstr "Koniec sprzedaży"
 
 #: settings/forms.py:12
 msgid "Purchasing start date"
-msgstr "Data początku kupowania"
+msgstr "Początek kupowania"
 
 #: settings/forms.py:15
 msgid "Purchasing end date"
-msgstr "Data końca kupowania"
+msgstr "Koniec kupowania"
 
 #: users/templates/users/accept.html:5
 msgid "Users - Accept books"
