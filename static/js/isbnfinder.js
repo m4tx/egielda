@@ -1,13 +1,13 @@
 var button = $('<button class="btn btn-default" type="button" disabled="disabled"><span class="glyphicon glyphicon-search"></span></button>');
 
-$('input[name="isbn"]').on('keyup', function() {
+function checkIsbnLength() {
     var len = $(this).val().replace(/[\D]/g, '').length;
     if (len != 10 && len != 13) {
         button.attr("disabled", "disabled");
     } else {
         button.removeAttr("disabled");
     }
-});
+}
 
 button.on('click', function () {
     var isbn = $('input[name="isbn"]').val().replace(/[\D]/g, ''); // remove all non-digit characters
@@ -25,5 +25,8 @@ button.on('click', function () {
         });
     });
 });
-$('input[name="isbn"]').wrap('<div class="input-group"></div>').parent().append($('<span class="input-group-btn"/>')
-    .append(button));
+
+var isbnInput = $('input[name="isbn"]');
+checkIsbnLength.call(isbnInput);
+isbnInput.on('input', checkIsbnLength);
+isbnInput.wrap('<div class="input-group"/>').parent().append($('<span class="input-group-btn"/>').append(button));
