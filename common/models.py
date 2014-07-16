@@ -32,7 +32,7 @@ class Book(models.Model):
 
 class Purchase(models.Model):
     book = models.ForeignKey(Book)
-    date = models.DateField()
+    date = models.DateTimeField()
     purchaser = models.ForeignKey(AppUser)
 
     def __str__(self):
