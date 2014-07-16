@@ -20,7 +20,9 @@ def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
         if form.is_valid():
-            form.save()
+            book = form.save(commit=False)
+            book.visible = True
+            book.save()
             request.session['success_msg'] = 'book_added'
             return HttpResponseRedirect(reverse(index))
     else:
@@ -34,7 +36,9 @@ def edit_book(request, book_id):
     if request.method == 'POST':
         form = BookForm(request.POST, instance=book)
         if form.is_valid():
-            form.save()
+            book = form.save(commit=False)
+            book.visible = True
+            book.save()
             request.session['success_msg'] = 'book_edited'
             return HttpResponseRedirect(reverse(index))
     else:
