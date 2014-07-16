@@ -37,7 +37,7 @@ class Purchase(models.Model):
 
     def __str__(self):
         return _("%(book)s from %(owner)s sold to %(purchaser)s at %(date)s" %
-                 {'book': self.book.type, 'owner': self.book.owner, 'purchaser': self.purchaser, 'date': self.date})
+                 {'book': self.book.book_type, 'owner': self.book.owner, 'purchaser': self.purchaser, 'date': self.date})
 
 class Setting(models.Model):
     name = models.CharField(max_length=100)
