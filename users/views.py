@@ -1,10 +1,9 @@
 from decimal import Decimal
 
 from django.contrib.auth.decorators import user_passes_test
-
 from django.core.urlresolvers import reverse
 from django.db import transaction
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
 from books.forms import BookForm
@@ -22,7 +21,7 @@ def index(request):
 
 @user_passes_test(user_is_admin)
 def unaccepted(request):
-    book_list = Book.objects.filter(accepted=False)
+    book_list = Book.objects.filter(accepted=False).select_related('owner')
     student_list = []
     for book in book_list:
         if book.owner not in student_list:
@@ -34,7 +33,7 @@ def unaccepted(request):
 @user_passes_test(user_is_admin)
 def list_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
-    book_list = get_list_or_404(Book, owner=user)
+    book_list = get_list_or_404(Book.objects.select_related('book_type'), owner=user)
     return render(request, 'users/list_books.html',
                   {'user_name': user.user_name(), 'book_list': book_list})
 
@@ -42,16 +41,19 @@ def list_books(request, user_pk):
 @user_passes_test(user_is_admin)
 def accept_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
-    book_list = get_list_or_404(Book, owner=user, accepted=False)
+    books = Book.objects.filter(owner=user, accepted=False).select_related('book_type')
+    book_list = list(books)
+    if not book_list:
+        raise Http404("There's no books of that user.")
+
     if request.method == 'POST':
         with transaction.atomic():
+            books.update(accepted=True)
             for book in book_list:
                 if not book.book_type.visible:
                     book.book_type.price = Decimal(request.POST['price-' + str(book.book_type.pk)])
                     book.book_type.visible = True
                     book.book_type.save()
-                book.accepted = True
-                book.save()
         request.session['success_msg'] = 'books_accepted'
         return HttpResponseRedirect(reverse(unaccepted))
     else:

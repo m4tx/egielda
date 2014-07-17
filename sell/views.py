@@ -47,11 +47,11 @@ class SellWizard(BookChooserWizard):
             dbbook.save()
 
     def get_book_list(self, book_list):
-        existing_list = []
+        existing_dict = {}
         types = []
         for book in book_list:
             if 'pk' in book:
-                existing_list.append((book['pk'], book['amount']))
+                existing_dict[book['pk']] = book['amount']
             else:
                 book['price'] = Decimal(book['price'])
                 amount = book['amount']
@@ -59,9 +59,9 @@ class SellWizard(BookChooserWizard):
                 types.append(BookType(**book))
                 types[-1].amount = amount
 
-        for el in existing_list:
-            book = BookType.objects.get(pk=el[0])
-            book.amount = el[1]
+        existing_list = BookType.objects.filter(pk__in=existing_dict.keys())
+        for book in existing_list:
+            book.amount = existing_dict[book.pk]
             types.append(book)
 
         return types

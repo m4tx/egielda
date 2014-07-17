@@ -8,8 +8,8 @@ from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render
 
 from books.forms import BookForm
+
 from books.models import BookType
-from categories.models import Category
 from common.forms import PersonalDataForm
 from common.models import AppUser
 from egielda import settings
@@ -73,8 +73,14 @@ class BookChooserWizard:
             elif 'btn-next' in request.POST:
                 return HttpResponseRedirect(reverse(self.get_summary_view()))
 
-        book_list = BookType.objects.filter(visible=True).exclude(price=0)
-        category_list = Category.objects.all()
+        book_list = BookType.objects.filter(visible=True).exclude(price=0).prefetch_related('categories')
+        category_list = []
+        for book in book_list:
+            book.cat_pks_string = ','.join(str(cat.pk) for cat in book.categories.all())
+            for cat in book.categories.all():
+                if cat not in category_list:
+                    category_list.append(cat)
+
         form = BookForm()
         del form.fields['price']
         del form.fields['categories']

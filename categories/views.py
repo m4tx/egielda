@@ -14,7 +14,7 @@ from common.uiutils import alerts
 
 @user_passes_test(user_is_admin)
 def index(request):
-    book_list = BookType.objects.all()
+    book_list = BookType.objects.all().prefetch_related('categories')
     category_list = Category.objects.all()
     count = {o: 0 for o in category_list}
     for book in book_list:

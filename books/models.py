@@ -21,9 +21,6 @@ class BookType(models.Model):
         else:
             return "N/A"
 
-    def cat_pks_string(self):
-        return ','.join(str(cat[0]) for cat in self.categories.all().values_list('pk'))
-
     def __str__(self):
         return _(
             "%(publisher)s %(title)s" % {
