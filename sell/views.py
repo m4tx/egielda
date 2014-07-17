@@ -1,14 +1,13 @@
 from decimal import Decimal
 
 from django.core.urlresolvers import reverse
-
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 
 from books.models import BookType
+from common.bookchooserwizard import BookChooserWizard
 from common.models import Book
-from common.views import BookChooserWizard
 
 
 class SellWizard(BookChooserWizard):
