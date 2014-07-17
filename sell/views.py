@@ -1,7 +1,5 @@
 from decimal import Decimal
 
-from django.core.urlresolvers import reverse
-from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 
@@ -11,18 +9,15 @@ from common.models import Book
 
 
 class SellWizard(BookChooserWizard):
+    @property
     def page_title(self):
         return _("Sell books")
 
-    def get_personal_data_view(self):
-        return personal_data
+    @property
+    def url_namespace(self):
+        return "sell"
 
-    def get_books_view(self):
-        return books
-
-    def get_summary_view(self):
-        return summary
-
+    @property
     def feature_add_new(self):
         return True
 
@@ -67,19 +62,3 @@ class SellWizard(BookChooserWizard):
 
     def success(self, request):
         return render(request, 'sell/success.html')
-
-
-def index(request):
-    return HttpResponseRedirect(reverse(personal_data))
-
-
-def personal_data(request):
-    return SellWizard().personal_data(request)
-
-
-def books(request):
-    return SellWizard().books(request)
-
-
-def summary(request):
-    return SellWizard().summary(request)

@@ -1,12 +1,14 @@
 from abc import abstractmethod
 import json
-from types import FunctionType
 
-from django.core.urlresolvers import reverse
+from django.conf.urls import url
+
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import transaction
 from django.forms import model_to_dict
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render
+from django.views.generic import RedirectView
 
 from books.forms import BookForm
 from books.models import BookType
@@ -24,24 +26,11 @@ class BookChooserWizard:
         """
         return None
 
+    @property
     @abstractmethod
-    def get_personal_data_view(self) -> FunctionType:
+    def url_namespace(self) -> str:
         """
-        :return: "Personal data" view function
-        """
-        return None
-
-    @abstractmethod
-    def get_books_view(self):
-        """
-        :return: "Books" view function
-        """
-        return None
-
-    @abstractmethod
-    def get_summary_view(self):
-        """
-        :return: "Summary" view function
+        :return: the URL namespace that the particular subclass of BookChooserWizard is in
         """
         return None
 
@@ -81,12 +70,22 @@ class BookChooserWizard:
         """
         return False
 
+    @property
+    def url_patterns(self):
+        return [
+            url(r'^$', RedirectView.as_view(url=reverse_lazy(self.personal_data))),
+            url(r'^personal/$', self.personal_data, name='personal_data'),
+            url(r'^books/$', self.books, name='books'),
+            url(r'^summary/$', self.summary, name='summary'),
+        ]
+
     def personal_data(self, request):
         if request.method == 'POST':
             form = PersonalDataForm(request.POST)
             if form.is_valid():
                 request.session['personal_data'] = model_to_dict(form.save(commit=False))
-                return HttpResponseRedirect(reverse(self.get_books_view()))
+                print(self.url_namespace)
+                return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
         else:
             if 'personal_data' in request.session:
                 form = PersonalDataForm(instance=AppUser(**request.session['personal_data']))
@@ -96,14 +95,14 @@ class BookChooserWizard:
 
     def books(self, request):
         if 'personal_data' not in request.session:
-            return HttpResponseRedirect(reverse(self.get_personal_data_view()))
+            return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
 
         if request.method == 'POST':
             request.session['chosen_books'] = request.POST['book_data']
             if 'btn-back' in request.POST:
-                return HttpResponseRedirect(reverse(self.get_personal_data_view()))
+                return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
             elif 'btn-next' in request.POST:
-                return HttpResponseRedirect(reverse(self.get_summary_view()))
+                return HttpResponseRedirect(reverse(self.url_namespace + ':summary'))
 
         book_list = BookType.objects.filter(visible=True).exclude(price=0).prefetch_related('categories')
         category_list = []
@@ -124,17 +123,17 @@ class BookChooserWizard:
 
     def summary(self, request):
         if 'personal_data' not in request.session:
-            return HttpResponseRedirect(reverse(self.get_personal_data_view()))
+            return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
         elif 'chosen_books' not in request.session:
-            return HttpResponseRedirect(reverse(self.get_books_view()))
+            return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
 
         try:
             book_list = json.loads(request.session['chosen_books'])
             if len(book_list) == 0:
-                return HttpResponseRedirect(reverse(self.get_books_view()))
+                return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
             if request.method == 'POST':
                 if 'btn-back' in request.POST:
-                    return HttpResponseRedirect(reverse(self.get_books_view()))
+                    return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
                 else:
                     with transaction.atomic():
                         user = AppUser(**request.session['personal_data'])

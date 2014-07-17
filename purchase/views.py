@@ -4,24 +4,21 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import View
 
 from books.models import BookType
 from common.bookchooserwizard import BookChooserWizard
 from common.models import Book
 
 
-class SellWizard(BookChooserWizard):
+class PurchaseWizard(BookChooserWizard):
+    @property
     def page_title(self):
         return _("Purchase books")
 
-    def get_personal_data_view(self):
-        return personal_data
-
-    def get_books_view(self):
-        return books
-
-    def get_summary_view(self):
-        return summary
+    @property
+    def url_namespace(self):
+        return "purchase"
 
     def process_books_summary(self, user, book_list):
         for book in book_list:
@@ -56,19 +53,3 @@ class SellWizard(BookChooserWizard):
 
     def success(self, request):
         return render(request, 'sell/success.html')
-
-
-def index(request):
-    return HttpResponseRedirect(reverse(personal_data))
-
-
-def personal_data(request):
-    return SellWizard().personal_data(request)
-
-
-def books(request):
-    return SellWizard().books(request)
-
-
-def summary(request):
-    return SellWizard().summary(request)

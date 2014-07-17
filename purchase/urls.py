@@ -1,11 +1,4 @@
-from django.conf.urls import url
-
-from purchase import views
+from purchase.views import PurchaseWizard
 
 
-urlpatterns = [
-    url(r'^$', views.index),
-    url(r'^personal/$', views.personal_data),
-    url(r'^books/$', views.books),
-    url(r'^summary/$', views.summary),
-]
+urlpatterns = PurchaseWizard().url_patterns

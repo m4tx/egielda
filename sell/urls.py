@@ -1,11 +1,4 @@
-from django.conf.urls import url
-
-from sell import views
+from sell.views import SellWizard
 
 
-urlpatterns = [
-    url(r'^$', views.index),
-    url(r'^personal/$', views.personal_data),
-    url(r'^books/$', views.books),
-    url(r'^summary/$', views.summary),
-]
+urlpatterns = SellWizard().url_patterns
