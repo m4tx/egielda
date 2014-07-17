@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 
 from common.models import Setting
 from settings.forms import DatesForm
+from settings.settings import Settings
 
 from egielda.views import string2datetime
 
@@ -20,19 +21,22 @@ def dates(request):
     if request.method == 'POST':
         form = DatesForm(request.POST)
         if form.is_valid():
-            Setting.objects.update_or_create(name="start_sell", defaults={'value': form.cleaned_data['start_sell']})
-            Setting.objects.update_or_create(name="end_sell", defaults={'value': form.cleaned_data['end_sell']})
-            Setting.objects.update_or_create(name="start_purchase", defaults={'value': form.cleaned_data['start_purchase']})
-            Setting.objects.update_or_create(name="end_purchase", defaults={'value': form.cleaned_data['end_purchase']})
+            Setting.objects.update_or_create(name="start_sell",
+                                             defaults={'value': form.cleaned_data['start_sell']})
+            Setting.objects.update_or_create(name="end_sell",
+                                             defaults={'value': form.cleaned_data['end_sell']})
+            Setting.objects.update_or_create(name="start_purchase",
+                                             defaults={'value': form.cleaned_data['start_purchase']})
+            Setting.objects.update_or_create(name="end_purchase",
+                                             defaults={'value': form.cleaned_data['end_purchase']})
             return HttpResponseRedirect("")
     else:
         try:
-            settings = Setting.objects.filter(name__in=['start_sell', 'end_sell', 'start_purchase', 'end_purchase'])
-            settings = dict((o.name, o.value) for o in settings)
-            start_sell = string2datetime(settings['start_sell'].value)
-            end_sell = string2datetime(settings['end_sell'].value)
-            start_purchase = string2datetime(settings['start_purchase'].value)
-            end_purchase = string2datetime(settings['end_purchase'].value)
+            settings = Settings(['start_sell', 'end_sell', 'start_purchase', 'end_purchase'])
+            start_sell = string2datetime(settings.get('start_sell'))
+            end_sell = string2datetime(settings.get('end_sell'))
+            start_purchase = string2datetime(settings.get('start_purchase'))
+            end_purchase = string2datetime(settings.get('end_purchase'))
 
             values = dict()
             values['start_sell'] = start_sell.strftime("%Y-%m-%dT%H:%M")
@@ -40,7 +44,7 @@ def dates(request):
             values['start_purchase'] = start_purchase.strftime("%Y-%m-%dT%H:%M")
             values['end_purchase'] = end_purchase.strftime("%Y-%m-%dT%H:%M")
             form = DatesForm(values)
-        except Exception as e:
+        except Setting.DoesNotExist:
             form = DatesForm()
 
     return render(request, 'settings/dates.html', {'page_title': _("Dates"), 'form': form})

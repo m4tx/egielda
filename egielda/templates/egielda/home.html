@@ -9,6 +9,7 @@
         <h1>{% site_name %}</h1>
 
         {% if sell_available and purchase_available %}<p>{% trans "What do you want to do?" %}</p>{% endif %}
+        {% if not sell_available and not purchase_available %}<p>{% trans "The website is currently disabled." %}</p>{% endif %}
 
         <p>
             {% if purchase_available %}

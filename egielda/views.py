@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.db.models import Q
 from common.models import Setting
 from datetime import datetime
 from django.utils import timezone
+
+from settings.settings import Settings
 
 
 def home(request):
@@ -10,12 +11,11 @@ def home(request):
     purchase_available = False
 
     try:
-        settings = Setting.objects.filter(name__in=['start_sell', 'end_sell', 'start_purchase', 'end_purchase'])
-        settings = dict((o.name, o.value) for o in settings)
-        start_sell = string2datetime(settings['start_sell'].value)
-        end_sell = string2datetime(settings['end_sell'].value)
-        start_purchase = string2datetime(settings['start_purchase'].value)
-        end_purchase = string2datetime(settings['end_purchase'].value)
+        settings = Settings(['start_sell', 'end_sell', 'start_purchase', 'end_purchase'])
+        start_sell = string2datetime(settings.get('start_sell'))
+        end_sell = string2datetime(settings.get('end_sell'))
+        start_purchase = string2datetime(settings.get('start_purchase'))
+        end_purchase = string2datetime(settings.get('end_purchase'))
 
         now = timezone.now()
 
@@ -24,8 +24,8 @@ def home(request):
 
         if (now - start_purchase).total_seconds() > 0 and (end_purchase - now).total_seconds() > 0:
             purchase_available = True
-    except Exception:
-        sell_available = purchase_available = True
+    except Setting.DoesNotExist:
+        pass
 
     return render(request, 'egielda/home.html',
                   {'sell_available': sell_available, 'purchase_available': purchase_available})
