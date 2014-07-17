@@ -77,7 +77,7 @@ class BookChooserWizard:
     def feature_add_new(self) -> bool:
         """
         Controls whether "Add new book" panel should be shown or not.
-        :return: ``True`` if "Add new book" should be enabled; ``False`  otherwise.
+        :return: ``True`` if "Add new book" should be enabled; ``False``  otherwise.
         """
         return False
 
