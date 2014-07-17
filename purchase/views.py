@@ -52,4 +52,4 @@ class PurchaseWizard(BookChooserWizard):
         return types
 
     def success(self, request):
-        return render(request, 'sell/success.html')
+        return render(request, 'purchase/success.html')
