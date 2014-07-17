@@ -12,7 +12,7 @@ from egielda import settings
 def index(request):
     stats = dict()
     stats['books_sold_value'] = BookType.objects.filter(book__sold=True).annotate(count=Count('book')).aggregate(
-                                                        Sum('price', field='count * price'))['price__sum']
+                                                        Sum('price', field='count * price'))['price__sum'] or 0
 
     return render(request, 'stats/index.html', {'page_title': _("Statistics"), 'stats': stats,
                                                 'currency': getattr(settings, 'CURRENCY', 'USD')})
