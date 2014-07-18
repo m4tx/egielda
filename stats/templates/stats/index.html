@@ -5,5 +5,9 @@
 
 {% block content %}
     <h1>{{ page_title }}</h1>
-    <p>{% trans "Income" %}: {{ stats.books_sold_value }}{{ currency }}</p>
+    <p>
+        {% with books_sold=stats.books_sold books_sold_value=stats.books_sold_value %}
+            {% blocktrans count counter=books_sold %}1 book was sold for the amount of {{ books_sold_value }}{{ currency }}.{% plural %}{{ books_sold }} books were sold for a total amount of {{ books_sold_value }}{{ currency }}.{% endblocktrans %}
+        {% endwith %}
+    </p>
 {% endblock %}

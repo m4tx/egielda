@@ -9,7 +9,7 @@ from common.models import Setting
 from settings.forms import DatesForm
 from settings.settings import Settings
 
-from egielda.views import string2datetime
+from settings.settings import string2datetime
 
 
 @user_passes_test(user_is_admin)

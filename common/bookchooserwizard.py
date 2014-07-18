@@ -73,7 +73,7 @@ class BookChooserWizard:
     @property
     def url_patterns(self):
         return [
-            url(r'^$', RedirectView.as_view(url=reverse_lazy(self.url_namespace + ':personal_data'))),
+            url(r'^$', RedirectView.as_view(url=reverse_lazy(self.url_namespace + ':personal_data')), name='index'),
             url(r'^personal/$', self.personal_data, name='personal_data'),
             url(r'^books/$', self.books, name='books'),
             url(r'^summary/$', self.summary, name='summary'),
