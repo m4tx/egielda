@@ -20,7 +20,7 @@ from egielda import settings
 class BookChooserWizard:
     @property
     @abstractmethod
-    def page_title(self):
+    def page_title(self) -> str:
         """
         :return: the title of the page to the <h1> and <title> tags.
         """
