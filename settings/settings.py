@@ -1,4 +1,4 @@
-from common.models import Setting
+from settings.models import Setting
 from datetime import datetime
 from django.utils import timezone
 
@@ -25,7 +25,7 @@ def is_sell_available():
         if (now - start_sell).total_seconds() > 0 and (end_sell - now).total_seconds() > 0:
             return True
 
-    except Setting.DoesNotExist:
+    except KeyError:
         return False
 
     return False
@@ -42,7 +42,7 @@ def is_purchase_available():
         if (now - start_purchase).total_seconds() > 0 and (end_purchase - now).total_seconds() > 0:
             return True
 
-    except Setting.DoesNotExist:
+    except KeyError:
         return False
 
     return False

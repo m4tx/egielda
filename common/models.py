@@ -39,12 +39,3 @@ class Purchase(models.Model):
         return _("%(book)s from %(owner)s sold to %(purchaser)s at %(date)s" %
                  {'book': self.book.book_type, 'owner': self.book.owner, 'purchaser': self.purchaser,
                   'date': self.date})
-
-
-class Setting(models.Model):
-    name = models.CharField(max_length=100)
-    value = models.CharField(max_length=1000)
-
-    def __str__(self):
-        return _("%(name)s: %(value)s" %
-                 {'name': self.name, 'value': self.value})

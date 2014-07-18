@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.http.response import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from common.models import Setting
+from settings.models import Setting
 from settings.forms import DatesForm
 from settings.settings import Settings
 
@@ -44,7 +44,7 @@ def dates(request):
             values['start_purchase'] = start_purchase.strftime("%Y-%m-%dT%H:%M")
             values['end_purchase'] = end_purchase.strftime("%Y-%m-%dT%H:%M")
             form = DatesForm(values)
-        except Setting.DoesNotExist:
+        except KeyError:
             form = DatesForm()
 
     return render(request, 'settings/dates.html', {'page_title': _("Dates"), 'form': form})
