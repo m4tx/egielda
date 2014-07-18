@@ -84,7 +84,6 @@ class BookChooserWizard:
             form = PersonalDataForm(request.POST)
             if form.is_valid():
                 request.session['personal_data'] = model_to_dict(form.save(commit=False))
-                print(self.url_namespace)
                 return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
         else:
             if 'personal_data' in request.session:
