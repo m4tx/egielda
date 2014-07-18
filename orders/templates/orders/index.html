@@ -1,0 +1,12 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load manage_header %}
+
+{% block title %}{% trans "Manage orders" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Orders" %}</h1>
+    {% manage_header "orders" %}
+
+
+{% endblock %}

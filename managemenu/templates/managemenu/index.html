@@ -63,6 +63,15 @@
         </tr>
         <tr class="toptr">
             <td rowspan="2" class="module-icon">
+                <a href="{% url 'orders.views.index' %}"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+            </td>
+            <td><a href="{% url 'orders.views.index' %}"><h4>{% trans "Orders" %}</h4></a></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr class="toptr">
+            <td rowspan="2" class="module-icon">
                 <a href="{% url 'stats.views.index' %}"><span class="glyphicon glyphicon-stats"></span></a>
             </td>
             <td><a href="{% url 'stats.views.index' %}"><h4>{% trans "Statistics" %}</h4></a></td>

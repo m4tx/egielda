@@ -26,6 +26,9 @@ def manage_header(*args):
             'list_books': ['users.views.list_books', _("User's books")],
             'accept_books': ['users.views.accept_books', _("Accept user's books")],
         }],
+        'orders': ['orders.views.index', _("Orders"), {
+
+        }],
         'settings': ['settings.views.index', _("Settings"), {
             'dates': ['settings.views.dates', _("Dates")],
         }]

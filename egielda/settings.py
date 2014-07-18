@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'categories',
     'stats',
     'settings',
+    'orders',
 )
 
 MIDDLEWARE_CLASSES = (
