@@ -23,6 +23,7 @@ def add_book(request):
             book = form.save(commit=False)
             book.visible = True
             book.save()
+            form.save_m2m()
             request.session['success_msg'] = 'book_added'
             return HttpResponseRedirect(reverse(index))
     else:
@@ -39,6 +40,7 @@ def edit_book(request, book_id):
             book = form.save(commit=False)
             book.visible = True
             book.save()
+            form.save_m2m()
             request.session['success_msg'] = 'book_edited'
             return HttpResponseRedirect(reverse(index))
     else:
