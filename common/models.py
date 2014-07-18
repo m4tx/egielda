@@ -23,11 +23,11 @@ class Book(models.Model):
     owner = models.ForeignKey(AppUser, related_name='appuser_owner')
     accepted = models.BooleanField()
     """Is the book physically available for buying"""
-    reserved_until = models.DateTimeField()
-    reserver = models.ForeignKey(AppUser, related_name='appuser_reserver')
+    reserved_until = models.DateTimeField(null=True)
+    reserver = models.ForeignKey(AppUser, related_name='appuser_reserver', null=True)
     sold = models.BooleanField()
-    sold_date = models.DateTimeField()
-    purchaser = models.ForeignKey(AppUser, related_name='appuser_purchaser')
+    sold_date = models.DateTimeField(null=True)
+    purchaser = models.ForeignKey(AppUser, related_name='appuser_purchaser', null=True)
 
     def __str__(self):
         return _("%(book_type)s from %(owner)s, accepted: %(accepted)s, sold: %(sold)s" %
