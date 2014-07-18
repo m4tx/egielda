@@ -19,6 +19,7 @@ def alerts(request: HttpRequest, args: dict):
             'category_added': _("The category was added successfully."),
             'category_edited': _("The category was edited successfully."),
             'category_remove': _("The category was removed successfully."),
+            'settings_updated': _("Settings were updated successfully."),
         }[request.session['success_msg']]
         del request.session['success_msg']
     return args

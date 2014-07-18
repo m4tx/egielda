@@ -10,6 +10,7 @@ from settings.forms import DatesForm
 from settings.settings import Settings
 
 from settings.settings import string2datetime
+from utils.alerts import set_success_msg, alerts
 
 
 @user_passes_test(user_is_admin)
@@ -29,6 +30,7 @@ def dates(request):
                                              defaults={'value': form.cleaned_data['start_purchase']})
             Setting.objects.update_or_create(name="end_purchase",
                                              defaults={'value': form.cleaned_data['end_purchase']})
+            set_success_msg(request, 'settings_updated')
             return HttpResponseRedirect("")
     else:
         try:
@@ -47,4 +49,4 @@ def dates(request):
         except KeyError:
             form = DatesForm()
 
-    return render(request, 'settings/dates.html', {'page_title': _("Dates"), 'form': form})
+    return render(request, 'settings/dates.html', alerts(request, {'page_title': _("Dates"), 'form': form}))
