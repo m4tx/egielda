@@ -32,13 +32,10 @@ def manage_header(*args):
     }]
 
     # Split the path
-    if len(args) == 0:
-        path = ""
-    else:
-        path = args[0]
-    split = path.split("/")
-    if len(split) == 1 and split[0] == "":
+    if len(args) == 0 or args[0] == "":
         split = []
+    else:
+        split = args[0].split("/")
 
     # Iterate through the items in path and add the items from the tree to the nodes list
     nodes = [tree]
