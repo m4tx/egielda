@@ -1,7 +1,14 @@
+from django.http import HttpRequest
 from django.utils.translation import ugettext_lazy as _
 
 
-def alerts(request, args):
+def alerts(request: HttpRequest, args: dict):
+    """
+    Adds alert-specific arguments to pass to the template (common/alerts.html).
+    :param request: HttpRequest object from the view
+    :param args: current arguments dictionary to add new arguments to
+    :return: modified args dict
+    """
     if 'success_msg' in request.session:
         args['success_msg'] = {
             'book_added': _("The book was added successfully."),
@@ -15,3 +22,12 @@ def alerts(request, args):
         }[request.session['success_msg']]
         del request.session['success_msg']
     return args
+
+
+def set_success_msg(request: HttpRequest, msg_id: str):
+    """
+    Sets success message id to display.
+    :param request: HttpRequest object from the view
+    :param msg_id: message id to set
+    """
+    request.session['success_msg'] = msg_id

@@ -10,7 +10,7 @@ from books.forms import BookForm
 from books.models import BookType
 from common.auth import user_is_admin
 from common.models import AppUser, Book
-from common.uiutils import alerts
+from utils.alerts import alerts, set_success_msg
 
 
 @user_passes_test(user_is_admin)
@@ -54,7 +54,7 @@ def accept_books(request, user_pk):
                     book.book_type.price = Decimal(request.POST['price-' + str(book.book_type.pk)])
                     book.book_type.visible = True
                     book.book_type.save()
-        request.session['success_msg'] = 'books_accepted'
+        set_success_msg(request, 'books_accepted')
         return HttpResponseRedirect(reverse(unaccepted))
     else:
         return render(request, 'users/accept.html',

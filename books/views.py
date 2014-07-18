@@ -6,7 +6,7 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 from books.forms import BookForm
 from common.auth import user_is_admin
 from common.models import BookType
-from common.uiutils import alerts
+from utils.alerts import alerts, set_success_msg
 
 
 @user_passes_test(user_is_admin)
@@ -24,7 +24,7 @@ def add_book(request):
             book.visible = True
             book.save()
             form.save_m2m()
-            request.session['success_msg'] = 'book_added'
+            set_success_msg(request, 'book_added')
             return HttpResponseRedirect(reverse(index))
     else:
         form = BookForm()
@@ -41,7 +41,7 @@ def edit_book(request, book_id):
             book.visible = True
             book.save()
             form.save_m2m()
-            request.session['success_msg'] = 'book_edited'
+            set_success_msg(request, 'book_edited')
             return HttpResponseRedirect(reverse(index))
     else:
         form = BookForm(instance=book)
@@ -52,7 +52,7 @@ def edit_book(request, book_id):
 def remove_book(request, book_ids):
     book_list = get_list_or_404(BookType, id__in=book_ids.split(','))
     if request.method == 'POST':
-        request.session['success_msg'] = 'book_removed' if len(book_list) == 1 else 'books_removed'
+        set_success_msg(request, 'book_removed' if len(book_list) == 1 else 'books_removed')
         book_list.delete()
         return HttpResponseRedirect(reverse(index))
     else:

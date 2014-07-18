@@ -1,15 +1,13 @@
 from django.contrib.auth.decorators import user_passes_test
-
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
 from books.models import BookType
-
 from categories.forms import CategoryForm
 from categories.models import Category
 from common.auth import user_is_admin
-from common.uiutils import alerts
+from utils.alerts import alerts, set_success_msg
 
 
 @user_passes_test(user_is_admin)
@@ -32,7 +30,7 @@ def add_category(request):
         form = CategoryForm(request.POST)
         if form.is_valid():
             form.save()
-            request.session['success_msg'] = 'category_added'
+            set_success_msg(request, 'category_added')
             return HttpResponseRedirect(reverse(index))
     else:
         form = CategoryForm()
@@ -46,7 +44,7 @@ def edit_category(request, cat_pk):
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
-            request.session['success_msg'] = 'category_edited'
+            set_success_msg(request, 'category_edited')
             return HttpResponseRedirect(reverse(index))
     else:
         form = CategoryForm(instance=category)
