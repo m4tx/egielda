@@ -13,4 +13,6 @@
         <li><a href="{% url 'orders.views.executed' %}">{% trans "Executed" %}</a></li>
         <li><a href="{% url 'orders.views.outdated' %}">{% trans "Outdated" %}</a></li>
     </ul>
+
+    {% include "orders/orders_table.html" %}
 {% endblock %}
