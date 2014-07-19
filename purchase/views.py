@@ -1,9 +1,9 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from decimal import Decimal
 
 from django.db.models import Q
 from django.shortcuts import render
-from django.utils.timezone import utc
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from books.models import BookType
@@ -28,16 +28,15 @@ class PurchaseWizard(BookChooserWizard):
         # yet accepted and matches the BookTypes we're looking for
         books = Book.objects.prefetch_related('book_type') \
             .filter(accepted=True, sold=False, book_type__in=book_type_list) \
-            .filter(Q(reserved_until__lte=datetime.utcnow().replace(tzinfo=utc)) | Q(reserved_until__isnull=True)) \
-            .order_by('-pk')
+            .filter(Q(reserved_until__lte=timezone.now()) | Q(reserved_until__isnull=True)).order_by('-pk')
 
         # Remove duplicated Books. Thanks to order_by('-pk'), we'll have firstly added book as a value here
         book_dict = dict((book.book_type, book.pk) for book in books)
 
         # Reserve the Books and create our Order
-        Book.objects.filter(pk__in=book_dict.values()).update(reserved_until=datetime.now() + timedelta(1),
+        Book.objects.filter(pk__in=book_dict.values()).update(reserved_until=timezone.now() + timedelta(1),
                                                               reserver=user)
-        order = Order(user=user, valid_until=datetime.now() + timedelta(1))
+        order = Order(user=user, valid_until=timezone.now() + timedelta(1))
         order.save()
         order.books.add(*book_dict.values())
 
