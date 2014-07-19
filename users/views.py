@@ -75,11 +75,11 @@ def accept_books(request, user_pk):
             for book in book_list:
                 if int(request.POST['amount-' + str(book.book_type.pk)]) < book.amount:
                     books_list = Book.objects.filter(owner=user,
-                                        book_type__isbn=book.book_type.isbn,
-                                        book_type__title=book.book_type.title
+                                                     book_type__isbn=book.book_type.isbn,
+                                                     book_type__title=book.book_type.title
                     )
 
-                    books_to_keep = books_list[:book.amount-int(request.POST['amount-' + str(book.book_type.pk)])]
+                    books_to_keep = books_list[:int(request.POST['amount-' + str(book.book_type.pk)])]
                     books_list.exclude(pk__in=books_to_keep).delete()
 
                 elif int(request.POST['amount-' + str(book.book_type.pk)]) > book.amount:
@@ -88,6 +88,7 @@ def accept_books(request, user_pk):
                     dbbook = book
                     for i in range(0, amount):
                         dbbook.pk = None
+                        dbbook.accepted = True
                         dbbook.save()
 
         set_success_msg(request, 'books_accepted')

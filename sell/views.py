@@ -25,19 +25,21 @@ class SellWizard(BookChooserWizard):
         for book in book_list:
             amount = book['amount']
             del book['amount']
+
+            dbbook = Book(owner=user, accepted=False, sold=False)
+            if 'pk' in book:
+                dbbook.book_type_id = book['pk']
+            else:
+                book['price'] = Decimal(book['price'])
+                if book['publication_year'] == "":
+                    book['publication_year'] = 1970
+
+                book_type = BookType(**book)
+                book_type.save()
+                dbbook.book_type = book_type
+
             for i in range(0, amount):
-                dbbook = Book(owner=user, accepted=False, sold=False)
-                if 'pk' in book:
-                    dbbook.book_type_id = book['pk']
-                else:
-                    book['price'] = Decimal(book['price'])
-                    if book['publication_year'] == "":
-                        book['publication_year'] = 1970
-
-                    book_type = BookType(**book)
-                    book_type.save()
-                    dbbook.book_type = book_type
-
+                dbbook.pk = None
                 dbbook.save()
 
     def get_book_list(self, book_list):
