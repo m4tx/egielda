@@ -4,6 +4,7 @@ from collections import Counter
 from django.contrib.auth.decorators import user_passes_test
 from django.core.urlresolvers import reverse
 from django.db import transaction
+from django.db.models import Count
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
@@ -16,7 +17,7 @@ from utils.alerts import alerts, set_success_msg
 
 @user_passes_test(user_is_admin)
 def index(request):
-    student_list = AppUser.objects.all()
+    student_list = AppUser.objects.annotate(count=Count('appuser_owner')).exclude(count=0)
     return render(request, 'users/index.html', {'student_list': student_list})
 
 
