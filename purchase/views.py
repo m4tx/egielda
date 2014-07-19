@@ -1,14 +1,15 @@
+from datetime import datetime, timedelta
 from decimal import Decimal
 
-from django.core.urlresolvers import reverse
-from django.http.response import HttpResponseRedirect
+from django.db.models import Q
 from django.shortcuts import render
+from django.utils.timezone import utc
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import View
 
 from books.models import BookType
 from common.bookchooserwizard import BookChooserWizard
 from common.models import Book
+from orders.models import Order
 
 
 class PurchaseWizard(BookChooserWizard):
@@ -21,21 +22,24 @@ class PurchaseWizard(BookChooserWizard):
         return "purchase"
 
     def process_books_summary(self, user, book_list):
-        for book in book_list:
-            dbbook = Book(owner=user, accepted=False, sold=False)
-            if 'pk' in book:
-                dbbook.book_type_id = book['pk']
-            else:
-                if book['price'] != "":
-                    book['price'] = Decimal(book['price'])
-                else:
-                    book['price'] = 0
-                if book['publication_year'] == "":
-                    book['publication_year'] = 1970
-                book_type = BookType(**book)
-                book_type.save()
-                dbbook.book_type = type
-            dbbook.save()
+        book_type_list = [book['pk'] for book in book_list]  # List of Book primary keys
+
+        # Select the Books which are not yet sold nor reserved,
+        # yet accepted and matches the BookTypes we're looking for
+        books = Book.objects.prefetch_related('book_type') \
+            .filter(accepted=True, sold=False, book_type__in=book_type_list) \
+            .filter(Q(reserved_until__lte=datetime.utcnow().replace(tzinfo=utc)) | Q(reserved_until__isnull=True)) \
+            .order_by('-pk')
+
+        # Remove duplicated Books. Thanks to order_by('-pk'), we'll have firstly added book as a value here
+        book_dict = dict((book.book_type, book.pk) for book in books)
+
+        # Reserve the Books and create our Order
+        Book.objects.filter(pk__in=book_dict.values()).update(reserved_until=datetime.now() + timedelta(1),
+                                                              reserver=user)
+        order = Order(user=user, valid_until=datetime.now() + timedelta(1))
+        order.save()
+        order.books.add(*book_dict.values())
 
     def get_book_list(self, book_list):
         existing_list = []
