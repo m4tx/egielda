@@ -6,4 +6,15 @@
 {% block content %}
     <h1>{{ page_title }}</h1>
 
+    {% for key, value in stats %}
+        <div class="panel panel-info">
+            <div class="panel-heading">{{ key }}</div>
+            <ul class="list-group">
+                {% for el in value %}
+                    <li class="list-group-item"><b>{{ el.book_type.title }}</b><br />{{ el.purchaser }}, {{ el.sold_date|date:'H:i' }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+
 {% endblock %}

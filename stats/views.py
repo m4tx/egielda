@@ -4,7 +4,7 @@ from django.db.models import Sum, Count
 from common.auth import user_is_admin
 from django.utils.translation import ugettext_lazy as _
 
-from common.models import BookType
+from common.models import Book, BookType
 from egielda import settings
 
 
@@ -21,5 +21,11 @@ def index(request):
 
 @user_passes_test(user_is_admin)
 def books_sold(request):
-    #Purchase.objects.all().order_by('-date')
-    return render(request, 'stats/books_sold.html', {'page_title': _("Books sold")})
+    books = Book.objects.filter(sold=True).order_by('-sold_date')
+
+    stats = dict()
+
+    for book in books:
+        stats.setdefault(book.sold_date.date(), []).append(book)
+
+    return render(request, 'stats/books_sold.html', {'page_title': _("Books sold"), 'stats': list(reversed(sorted(stats.items())))})
