@@ -13,6 +13,7 @@
             <th>{% trans "Title" %}</th>
             <th>{% trans "Publication" %}</th>
             <th>{% trans "Price" %}</th>
+            <th>{% trans "Amount" %}</th>
             {% if show_actions %}
                 <th>{% trans "Actions" %}</th>
             {% endif %}
@@ -32,6 +33,7 @@
                 <td>{{ book.book_type.title }}</td>
                 <td>{{ book.book_type.publication_year }}</td>
                 <td>{% block price %}{{ book.book_type.price_string }}{% endblock %}</td>
+                <td>{% block amount %}{{ book.amount }}{% endblock %}</td>
                 {% if show_actions %}
                     <td>
                         <div class="btn-toolbar" role="toolbar">

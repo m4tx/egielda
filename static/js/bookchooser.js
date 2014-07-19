@@ -17,9 +17,10 @@ $('.btn-add-book').on('click', function () {
 
 $('#btn-add-new-book').on('click', function () {
     var isbn = $.trim($('input[name="isbn"]').val())
+    var title = $.trim($('input[name="title"]').val())
 
-    var existingTr = $('#chosen-book-list tr td').filter(function() {
-        return $(this).text() == isbn
+    var existingTr = $('#chosen-book-list tr td:first-child').filter(function() {
+        return $(this).text() == isbn && $(this).next().next().text() == title
     });
     existingTr = existingTr.parent();
 
@@ -28,7 +29,7 @@ $('#btn-add-new-book').on('click', function () {
         var amount = parseInt(amountTr.text());
         amountTr.text(amount + 1);
         $.grep(chosenBooks, function (n, i) {
-            return n.isbn == isbn;
+            return n.isbn == isbn && n.title == title;
         })[0].amount += 1;
     } else {
         var len = $('input[name="isbn"]').val().replace(/[\D]/g, '').length;

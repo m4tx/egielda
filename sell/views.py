@@ -23,22 +23,22 @@ class SellWizard(BookChooserWizard):
 
     def process_books_summary(self, user, book_list):
         for book in book_list:
-            dbbook = Book(owner=user, accepted=False, sold=False)
-            if 'pk' in book:
-                dbbook.book_type_id = book['pk']
-            else:
-                book['price'] = Decimal(book['price'])
-                if book['publication_year'] == "":
-                    book['publication_year'] = 1970
+            amount = book['amount']
+            del book['amount']
+            for i in range(0, amount):
+                dbbook = Book(owner=user, accepted=False, sold=False)
+                if 'pk' in book:
+                    dbbook.book_type_id = book['pk']
+                else:
+                    book['price'] = Decimal(book['price'])
+                    if book['publication_year'] == "":
+                        book['publication_year'] = 1970
 
-                amount = book['amount']
-                del book['amount']
-                book_type = BookType(**book)
-                book_type.save()
-                dbbook.book_type = book_type
-                dbbook.amount = amount
+                    book_type = BookType(**book)
+                    book_type.save()
+                    dbbook.book_type = book_type
 
-            dbbook.save()
+                dbbook.save()
 
     def get_book_list(self, book_list):
         existing_dict = {}

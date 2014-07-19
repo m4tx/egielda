@@ -1,4 +1,5 @@
 from decimal import Decimal
+from collections import Counter
 
 from django.contrib.auth.decorators import user_passes_test
 from django.core.urlresolvers import reverse
@@ -34,6 +35,14 @@ def unaccepted(request):
 def list_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
     book_list = get_list_or_404(Book.objects.select_related('book_type'), owner=user)
+
+    amounts = Counter([(str(b.book_type.isbn) + b.book_type.title) for b in book_list])
+    d = {}
+    for book in book_list:
+        book.amount = amounts[str(book.book_type.isbn) + book.book_type.title]
+        d[(str(book.book_type.isbn) + book.book_type.title)] = book
+    book_list = list(d.values())
+
     return render(request, 'users/list_books.html',
                   {'user_name': user.user_name(), 'book_list': book_list})
 
@@ -43,6 +52,14 @@ def accept_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
     books = Book.objects.filter(owner=user, accepted=False).select_related('book_type')
     book_list = list(books)
+
+    amounts = Counter([(str(b.book_type.isbn) + b.book_type.title) for b in book_list])
+    d = {}
+    for book in book_list:
+        book.amount = amounts[str(book.book_type.isbn) + book.book_type.title]
+        d[(str(book.book_type.isbn) + book.book_type.title)] = book
+    book_list = list(d.values())
+
     if not book_list:
         raise Http404("There's no books of that user.")
 
@@ -54,6 +71,25 @@ def accept_books(request, user_pk):
                     book.book_type.price = Decimal(request.POST['price-' + str(book.book_type.pk)])
                     book.book_type.visible = True
                     book.book_type.save()
+
+            for book in book_list:
+                if int(request.POST['amount-' + str(book.book_type.pk)]) < book.amount:
+                    books_list = Book.objects.filter(owner=user,
+                                        book_type__isbn=book.book_type.isbn,
+                                        book_type__title=book.book_type.title
+                    )
+
+                    books_to_keep = books_list[:book.amount-int(request.POST['amount-' + str(book.book_type.pk)])]
+                    books_list.exclude(pk__in=books_to_keep).delete()
+
+                elif int(request.POST['amount-' + str(book.book_type.pk)]) > book.amount:
+                    amount = int(request.POST['amount-' + str(book.book_type.pk)]) - book.amount
+                    del book.amount
+                    dbbook = book
+                    for i in range(0, amount):
+                        dbbook.pk = None
+                        dbbook.save()
+
         set_success_msg(request, 'books_accepted')
         return HttpResponseRedirect(reverse(unaccepted))
     else:

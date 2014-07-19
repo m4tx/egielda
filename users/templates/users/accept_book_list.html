@@ -11,6 +11,15 @@
     {% endif %}
 {% endblock %}
 
+{% block amount %}
+    {% if not book.accepted %}
+        <input type="number" step="1" class="form-control input-sm" name="amount-{{ book.book_type.pk }}"
+               value="{{ book.amount }}">
+    {% else %}
+        {{ book.amount }}
+    {% endif %}
+{% endblock %}
+
 {% block actions %}
     {% if not book.book_type.visible %}
         <a href="{% url 'users.views.accept_edit_book' student_pk book.book_type.pk %}" class="btn btn-xs btn-link"
