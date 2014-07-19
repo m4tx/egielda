@@ -1,0 +1,19 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load manage_header %}
+
+{% block title %}{% trans "Orders" %} – {% trans "Executed" %}{% endblock %}
+
+{% block content %}
+    <h1>
+        {% trans "Orders" %}
+        <small>{% trans "Executed" %}</small>
+    </h1>
+    {% manage_header "orders/executed" %}
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li><a href="{% url 'orders.views.not_executed' %}">{% trans "Not executed" %}</a></li>
+        <li class="active"><a href="#">{% trans "Executed" %}</a></li>
+        <li><a href="{% url 'orders.views.outdated' %}">{% trans "Outdated" %}</a></li>
+    </ul>
+{% endblock %}

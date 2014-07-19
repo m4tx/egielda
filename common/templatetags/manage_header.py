@@ -27,7 +27,9 @@ def manage_header(*args):
             'accept_books': ['users.views.accept_books', _("Accept user's books")],
         }],
         'orders': ['orders.views.index', _("Orders"), {
-
+            'not_executed': ['orders.views.not_executed', _("Not executed")],
+            'outdated': ['orders.views.outdated', _("Outdated")],
+            'executed': ['orders.views.executed', _("Executed")],
         }],
         'settings': ['settings.views.index', _("Settings"), {
             'dates': ['settings.views.dates', _("Dates")],
