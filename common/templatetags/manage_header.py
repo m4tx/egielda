@@ -31,6 +31,9 @@ def manage_header(*args):
             'outdated': ['orders.views.outdated', _("Outdated")],
             'executed': ['orders.views.executed', _("Executed")],
         }],
+        'stats': ['stats.views.index', _("Statistics"), {
+            'sold': ['stats.views.sold', _("Books sold")],
+        }],
         'settings': ['settings.views.index', _("Settings"), {
             'dates': ['settings.views.dates', _("Dates")],
         }]

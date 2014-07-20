@@ -1,5 +1,6 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load manage_header %}
 
 {% block title %}{{ page_title }}{% endblock %}
 
@@ -47,6 +48,7 @@
 
 {% block content %}
     <h1>{{ page_title }}</h1>
+    {% manage_header "stats/sold" %}
 
     {% for key, value in stats %}
         <div class="panel panel-info">
