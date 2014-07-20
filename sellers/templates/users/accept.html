@@ -2,20 +2,19 @@
 {% load i18n %}
 {% load manage_header %}
 
-{% block title %}{% trans "Users - Accept books" %}{% endblock %}
+{% block title %}{% trans "Sellers with unaccepted books - Accept books" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Users" %}
+    <h1>{% trans "Sellers with unaccepted books" %}
         <small>{% blocktrans %}Accept {{ user_name }}'s books{% endblocktrans %}</small>
     </h1>
-    {% manage_header "users/accept_books" %}
 
     <div class="alert alert-info">{% trans "If you want to delete some book, just pass 0 as amount." %}</div>
     <form action="{{ request.path }}" method="post">
         {% csrf_token %}
         {% include 'users/accept_book_list.html' with show_actions=True accepted_view=True %}
 
-        <a href="{% url 'users.views.unaccepted' %}" class="btn btn-default" role="button"><span
+        <a href="{% url 'sellers.views.index' %}" class="btn btn-default" role="button"><span
                 class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
         <button class="btn btn-primary pull-right" role="submit"><span
                 class="glyphicon glyphicon-ok"></span> {% trans "Accept" %}</button>

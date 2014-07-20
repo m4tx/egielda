@@ -4,9 +4,8 @@ from collections import Counter
 from django.contrib.auth.decorators import user_passes_test
 from django.core.urlresolvers import reverse
 from django.db import transaction
-from django.db.models import Count
 from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 
 from books.forms import BookForm
 from books.models import BookType
@@ -17,35 +16,13 @@ from utils.alerts import alerts, set_success_msg
 
 @user_passes_test(user_is_admin)
 def index(request):
-    student_list = AppUser.objects.annotate(count=Count('appuser_owner')).exclude(count=0)
-    return render(request, 'users/index.html', {'student_list': student_list})
-
-
-@user_passes_test(user_is_admin)
-def unaccepted(request):
     book_list = Book.objects.filter(accepted=False).select_related('owner')
     student_list = []
     for book in book_list:
         if book.owner not in student_list:
             student_list.append(book.owner)
 
-    return render(request, 'users/unaccepted.html', alerts(request, {'student_list': student_list}))
-
-
-@user_passes_test(user_is_admin)
-def list_books(request, user_pk):
-    user = get_object_or_404(AppUser, pk=user_pk)
-    book_list = get_list_or_404(Book.objects.select_related('book_type'), owner=user)
-
-    amounts = Counter([(str(b.book_type.isbn) + b.book_type.title) for b in book_list])
-    d = {}
-    for book in book_list:
-        book.amount = amounts[str(book.book_type.isbn) + book.book_type.title]
-        d[(str(book.book_type.isbn) + book.book_type.title)] = book
-    book_list = list(d.values())
-
-    return render(request, 'users/list_books.html',
-                  {'user_name': user.user_name(), 'book_list': book_list})
+    return render(request, 'users/index.html', alerts(request, {'student_list': student_list}))
 
 
 @user_passes_test(user_is_admin)
@@ -93,7 +70,7 @@ def accept_books(request, user_pk):
                         dbbook.save()
 
         set_success_msg(request, 'books_accepted')
-        return HttpResponseRedirect(reverse(unaccepted))
+        return HttpResponseRedirect(reverse(index))
     else:
         return render(request, 'users/accept.html',
                       {'user_name': user.user_name(), 'book_list': book_list, 'student_pk': user_pk})

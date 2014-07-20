@@ -45,7 +45,7 @@ INSTALLED_APPS = (
     'common',
     'books',
     'sell',
-    'users',
+    'sellers',
     'purchase',
     'managemenu',
     'categories',

@@ -21,11 +21,6 @@ def manage_header(*args):
             'edit': ['books.views.edit_book', _("Edit")],
             'remove': ['books.views.remove_book', _("Remove")],
         }],
-        'users': ['users.views.index', _("Users"), {
-            'unaccepted': ['users.views.unaccepted', _("With unaccepted books")],
-            'list_books': ['users.views.list_books', _("User's books")],
-            'accept_books': ['users.views.accept_books', _("Accept user's books")],
-        }],
         'orders': ['orders.views.index', _("Orders"), {
             'not_executed': ['orders.views.not_executed', _("Not executed")],
             'outdated': ['orders.views.outdated', _("Outdated")],

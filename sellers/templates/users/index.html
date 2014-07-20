@@ -10,17 +10,11 @@
     </style>
 {% endblock %}
 
-{% block title %}{% trans "Users" %}{% endblock %}
+{% block title %}{% trans "Sellers with unaccepted books" %}{% endblock %}
 
 {% block content %}
     {% include "common/alerts.html" %}
-    <h1>{% trans "Users" %}</h1>
-    {% manage_header "users/unaccepted" %}
-
-    <ul class="nav nav-tabs">
-        <li><a href="{% url 'users.views.index' %}">{% trans "All" %}</a></li>
-        <li class="active"><a href="#">{% trans "With unaccepted books" %}</a></li>
-    </ul>
+    <h1>{% trans "Sellers with unaccepted books" %}</h1>
 
     {% if student_list %}
         <div class="table-responsive">
@@ -41,7 +35,7 @@
                         <td>{{ student.student_class }}</td>
                         <td>{{ student.phone_number }}</td>
                         <td>
-                            <a class="btn btn-xs btn-link" href="{% url 'users.views.accept_books' student.pk %}"
+                            <a class="btn btn-xs btn-link" href="{% url 'sellers.views.accept_books' student.pk %}"
                                role="button"><span class="glyphicon glyphicon-ok"></span> {% trans "Accept" %}</a>
                         </td>
                     </tr>

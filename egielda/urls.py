@@ -25,7 +25,7 @@ urlpatterns = patterns(
     url(r'^manage/', include('managemenu.urls')),
     url(r'^manage/books/', include('books.urls')),
     url(r'^manage/categories/', include('categories.urls')),
-    url(r'^manage/users/', include('users.urls')),
+    url(r'^manage/sellers/', include('sellers.urls')),
     url(r'^manage/orders/', include('orders.urls')),
     url(r'^manage/stats/', include('stats.urls')),
     url(r'^manage/settings/', include('settings.urls')),
