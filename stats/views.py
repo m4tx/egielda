@@ -16,7 +16,8 @@ def index(request):
     stats['books_sold_value'] = books.aggregate(Sum('price', field='count * price'))['price__sum'] or 0
 
     return render(request, 'stats/index.html', {'page_title': _("Statistics"), 'stats': stats,
-                                                'currency': getattr(settings, 'CURRENCY', 'USD')})
+                                                'currency': getattr(settings, 'CURRENCY', 'USD')
+    })
 
 
 @user_passes_test(user_is_admin)
@@ -28,4 +29,14 @@ def books_sold(request):
     for book in books:
         stats.setdefault(book.sold_date.date(), []).append(book)
 
-    return render(request, 'stats/books_sold.html', {'page_title': _("Books sold"), 'stats': list(reversed(sorted(stats.items())))})
+    for key, stat in stats.items():
+        sum = 0
+        for el in stat:
+            sum += el.book_type.price
+
+        stats[key] = (stats[key], sum)
+
+    return render(request, 'stats/books_sold.html', {'page_title': _("Books sold"),
+                                                    'stats': list(reversed(sorted(stats.items()))),
+                                                    'currency': getattr(settings, 'CURRENCY', 'USD')
+    })
