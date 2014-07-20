@@ -12,7 +12,7 @@
 
         .panel-info > .panel-heading {
             color: #3A505B;
-            background-image: linear-gradient(to bottom, #E6F1F6 0%,#E6F1F6 100%);
+            background-image: linear-gradient(to bottom, #E6F1F6 0%, #E6F1F6 100%);
             background-color: #E6F1F6;
             padding: 5px 13px;
             line-height: 1.1;
@@ -65,12 +65,11 @@
                             <a href="{% url 'books.views.edit_book' el.book_type.pk %}">{{ el.book_type.title }}</a>
                             <span class="text-muted pull-right">{{ el.book_type.price|floatformat:2 }}{{ currency }}</span>
                         </h5>
-                        <span class="text-muted">{{ el.purchaser }}
-                        {% trans "at" %} {{ el.sold_date|date:'H:i' }}</span>
+                        <span class="text-muted">{% blocktrans with purchaser=el.purchaser sold_date=el.sold_date|date:'H:i' %}{{ purchaser }} at {{ sold_date }}{% endblocktrans %}</span>
                     </li>
                 {% endfor %}
             </ul>
         </div>
-        {% endfor %}
+    {% endfor %}
 
 {% endblock %}
