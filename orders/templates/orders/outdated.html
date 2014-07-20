@@ -10,8 +10,8 @@
 
     <ul class="nav nav-tabs" role="tablist">
         <li><a href="{% url 'orders.views.not_executed' %}">{% trans "Not executed" %}</a></li>
-        <li><a href="{% url 'orders.views.executed' %}">{% trans "Executed" %}</a></li>
         <li class="active"><a href="#">{% trans "Outdated" %}</a></li>
+        <li><a href="{% url 'orders.views.executed' %}">{% trans "Executed" %}</a></li>
     </ul>
 
     {% include "orders/orders_table.html" %}
