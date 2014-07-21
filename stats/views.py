@@ -22,7 +22,7 @@ def index(request):
 
 @user_passes_test(user_is_admin)
 def books_sold(request):
-    books = Book.objects.filter(sold=True).order_by('-sold_date')
+    books = Book.objects.filter(sold=True).order_by('-sold_date').select_related('book_type', 'purchaser')
 
     stats = dict()
 
@@ -49,14 +49,22 @@ def users(request):
 @user_passes_test(user_is_admin)
 def list_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
-    book_list = get_list_or_404(Book.objects.select_related('book_type'), owner=user)
+    book_list = get_list_or_404(Book.objects.select_related('book_type', 'purchaser'), owner=user)
 
     amounts = Counter([(str(b.book_type.isbn) + b.book_type.title) for b in book_list])
     d = {}
+    e = {}
     for book in book_list:
         book.amount = amounts[str(book.book_type.isbn) + book.book_type.title]
         d[(str(book.book_type.isbn) + book.book_type.title)] = book
 
-    book_list = list(d.values())
+        e.setdefault((str(book.book_type.isbn) + book.book_type.title), [])
+        if book.sold:
+            e[str(book.book_type.isbn) + book.book_type.title].append(book.purchaser)
 
-    return render(request, 'stats/list_books.html', {'user_name': user.user_name(), 'book_list': book_list})
+    book_list = list(d.values())
+    book_list = zip(book_list, list(e.values()))
+
+    return render(request, 'stats/list_books.html', {'user_name': user.user_name(),
+                                                     'book_list': book_list,
+                                                     'currency': getattr(settings, 'CURRENCY', 'USD')})
