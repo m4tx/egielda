@@ -84,5 +84,7 @@
         var currency = '{{ currency|safe }}';
     </script>
     <script src="{% static "js/bookchooser.js" %}"></script>
-    <script src="{% static "js/isbnfinder.js" %}"></script>
+    {% if feature_add_new %}
+        <script src="{% static "js/isbnfinder.js" %}"></script>
+    {% endif %}
 {% endblock %}
