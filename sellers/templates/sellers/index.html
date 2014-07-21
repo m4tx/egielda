@@ -15,6 +15,7 @@
 {% block content %}
     {% include "common/alerts.html" %}
     <h1>{% trans "Sellers with unaccepted books" %}</h1>
+    {% manage_header "sellers" %}
 
     {% if student_list %}
         <div class="table-responsive">

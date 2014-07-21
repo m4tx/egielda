@@ -2,10 +2,10 @@
 {% load i18n %}
 {% load manage_header %}
 
-{% block title %}{{ page_title }}{% endblock %}
+{% block title %}{% trans "Statistics" %}{% endblock %}
 
 {% block content %}
-    <h1>{{ page_title }}</h1>
+    <h1>{% trans "Statistics" %}</h1>
     {% manage_header "stats" %}
 
     <p>

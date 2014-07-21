@@ -1,0 +1,64 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load manage_header %}
+
+{% block head %}
+    <style>
+        .panel-info a {
+            color: #333;
+        }
+
+        .panel-info > .panel-heading {
+            color: #3A505B;
+            background-image: linear-gradient(to bottom, #E6F1F6 0%,#E6F1F6 100%);
+            background-color: #E6F1F6;
+            padding: 5px 13px;
+            line-height: 1.1;
+            font-size: 13px;
+        }
+
+        .list-group {
+            background-color: #F7FBFC;
+        }
+
+        .list-group-item {
+            background: inherit;
+        }
+
+        .list-group-item:nth-child(2n+1) {
+            background-color: #FFF;
+        }
+
+        .list-group-item:hover {
+            background-color: #FCFCE2;
+        }
+
+        .text-muted {
+            font-size: 12px;
+        }
+
+        h5 {
+            font-weight: bold;
+            margin: 7px 0;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}{% trans "Statistics" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Statistics" %}
+        <small>{% blocktrans %}{{ user_name }}'s books{% endblocktrans %}</small>
+    </h1>
+    {% manage_header "stats/users" %}
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            {% blocktrans %}{{ user_name }}'s books{% endblocktrans %}
+        </div>
+        <ul class="list-group">
+            {% for book in book_list %}
+                <li class="list-group-item">{{ book.book_type.title }}</li>
+            {% endfor %}
+        </ul>
+{% endblock %}

@@ -26,8 +26,12 @@ def manage_header(*args):
             'outdated': ['orders.views.outdated', _("Outdated")],
             'executed': ['orders.views.executed', _("Executed")],
         }],
+        'sellers': ['sellers.views.index', _("Sellers with unaccepted books"), {
+            'accept_books': ['sellers.views.accept_books', _("Accept books")],
+        }],
         'stats': ['stats.views.index', _("Statistics"), {
             'sold': ['stats.views.sold', _("Books sold")],
+            'users': ['stats.views.users', _("Users")],
         }],
         'settings': ['settings.views.index', _("Settings"), {
             'dates': ['settings.views.dates', _("Dates")],

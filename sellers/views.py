@@ -22,7 +22,7 @@ def index(request):
         if book.owner not in student_list:
             student_list.append(book.owner)
 
-    return render(request, 'users/index.html', alerts(request, {'student_list': student_list}))
+    return render(request, 'sellers/index.html', alerts(request, {'student_list': student_list}))
 
 
 @user_passes_test(user_is_admin)
@@ -72,7 +72,7 @@ def accept_books(request, user_pk):
         set_success_msg(request, 'books_accepted')
         return HttpResponseRedirect(reverse(index))
     else:
-        return render(request, 'users/accept.html',
+        return render(request, 'sellers/accept.html',
                       {'user_name': user.user_name(), 'book_list': book_list, 'student_pk': user_pk})
 
 
@@ -84,7 +84,7 @@ def accept_edit_book(request, user_pk, book_id):
         form = BookForm(request.POST, instance=book)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse(accept_books, args=user_pk))
+            return HttpResponseRedirect(reverse(accept_books, args=(user_pk,)))
     else:
         form = BookForm(instance=book)
     return render(request, 'books/edit.html', {'form': form})

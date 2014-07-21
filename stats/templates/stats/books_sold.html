@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load manage_header %}
 
-{% block title %}{{ page_title }}{% endblock %}
+{% block title %}{% trans "Books sold" %}{% endblock %}
 
 {% block head %}
     <style>
@@ -47,7 +47,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ page_title }}</h1>
+    <h1>{% trans "Books sold" %}</h1>
     {% manage_header "stats/sold" %}
 
     {% for key, value in stats %}
