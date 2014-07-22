@@ -64,7 +64,7 @@
                         <a href="{% url 'books.views.edit_book' book.book_type.pk %}">{{ book.book_type.title }}</a>
                         <span class="text-muted pull-right">{{ book.book_type.price|floatformat:2 }}{{ currency }}</span>
                     </h5><br />
-                    {% trans "Sold" %}: {{ purchasers|length }}/<b>{{ book.amount }}</b>
+                    {% trans "Sold" context "count" %}: {{ purchasers|length }}/<b>{{ book.amount }}</b>
                     {% if purchasers|length > 0 %}
                         <table class="table table-responsive">
                             <thead>
