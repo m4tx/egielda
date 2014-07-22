@@ -1,5 +1,9 @@
 $('.btn-add-book').on('click', function () {
     var tr = $(this).closest($('tr'));
+    var inStockTd = $('td.in-stock', tr);
+    inStockTd.text(parseInt(inStockTd.text()) - 1);
+    checkInStock(tr);
+
     var existingTr = $('#chosen-book-list').find('tr[data-pk="' + tr.data('pk') + '"]');
     if (existingTr.length > 0) {
         var amountTr = existingTr.find('td[data-type="amount"]');
@@ -46,6 +50,24 @@ $('button#btn-next,button#btn-back').on('click', function () {
         .submit();
 });
 
+function checkInStock(tr) {
+    var inStock = $('td.in-stock', tr);
+    var inStockVal = parseInt(inStock.text());
+    var addBookBtn = $('button.btn-add-book', tr);
+
+    // Reset
+    $(tr).removeClass('bg-warning bg-danger text-muted');
+    addBookBtn.removeAttr('disabled');
+
+    // Check the In stock value
+    if (inStockVal == 0) {
+        $(tr).addClass('bg-danger text-muted');
+        $('button.btn-add-book', tr).attr('disabled', 'disabled');
+    } else if (inStockVal < 6) {
+        $(tr).addClass('bg-warning');
+    }
+}
+
 function ExistingBook(pk, amount) {
     this.pk = pk;
     this.amount = amount;
@@ -57,7 +79,10 @@ function NewBook() {
 function addRetrievedBooks() {
     for (var bookid in chosenBooks) {
         if (chosenBooks[bookid].pk != undefined) {
-            addExistingBook($('#bookList').find('table tr[data-pk="' + chosenBooks[bookid].pk + '"]'), chosenBooks[bookid].amount);
+            var tr = $('#bookList').find('table tr[data-pk="' + chosenBooks[bookid].pk + '"]');
+            var inStock = $('td.in-stock', tr);
+            inStock.text(parseInt(inStock.text()) - chosenBooks[bookid].amount);
+            addExistingBook(tr, chosenBooks[bookid].amount);
         } else {
             var book = $.extend({}, chosenBooks[bookid]); // Clone the associative array
             book.price = "N/A";
@@ -69,6 +94,7 @@ function addRetrievedBooks() {
 function addExistingBook(tr, amount) {
     var ctr = tr.clone();
     $('td:last-child', ctr).remove();
+    $('td.in-stock', ctr).remove();
     ctr.append($('<td data-type="amount">' + amount + '</td>'));
 
     addBookTr(ctr);
@@ -131,6 +157,13 @@ function addBookTr(tr) {
 
 function removeBook(id) {
     var book = chosenBooks[id];
+    if (book.hasOwnProperty('pk')) {
+        var listTr = 'tr[data-pk="' + book['pk'] + '"]';
+        var inStock = $('td.in-stock', listTr);
+        inStock.text(parseInt(inStock.text()) + 1);
+        checkInStock(listTr)
+    }
+
     var chosenBooksList = $('#chosen-book-list');
     var tr = chosenBooksList.find('tbody tr:eq(' + id + ')');
     if (book.amount > 1) {
@@ -148,6 +181,9 @@ function removeBook(id) {
 }
 
 addRetrievedBooks();
+$('table tbody tr', '#bookList').each(function(index, value) {
+    checkInStock(value);
+});
 
 $("#category_filter").on("change", function(){
     var category = parseInt($(this).val());

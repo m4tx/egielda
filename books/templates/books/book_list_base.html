@@ -10,6 +10,7 @@
             <th>{% trans "Title" %}</th>
             <th>{% trans "Publication" %}</th>
             <th>{% trans "Price" %}</th>
+            {% block thead_footer %}{% endblock %}
             {% if not hide_actions %}
                 <th>{% trans "Actions" %}</th>
             {% endif %}
@@ -24,6 +25,7 @@
                 <td>{{ book.title }}</td>
                 <td>{{ book.publication_year }}</td>
                 <td>{{ book.price_string }}</td>
+                {% block tr_footer %}{% endblock %}
                 {% if not hide_actions %}
                     <td>
                         <div class="btn-toolbar" role="toolbar">

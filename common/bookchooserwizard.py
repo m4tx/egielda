@@ -1,10 +1,12 @@
 from abc import abstractmethod
+from collections import defaultdict
 import json
 
 from django.conf.urls import url
 
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import transaction
+from django.db.models import Count
 from django.forms import model_to_dict
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render
@@ -15,6 +17,7 @@ from books.models import BookType
 from common.forms import PersonalDataForm
 from common.models import AppUser
 from egielda import settings
+from purchase.utils import get_available_books
 
 
 class BookChooserWizard:
@@ -71,6 +74,10 @@ class BookChooserWizard:
         return False
 
     @property
+    def feature_books_in_stock(self) -> bool:
+        return False
+
+    @property
     def url_patterns(self):
         return [
             url(r'^$', RedirectView.as_view(url=reverse_lazy(self.url_namespace + ':personal_data')), name='index'),
@@ -104,6 +111,14 @@ class BookChooserWizard:
                 return HttpResponseRedirect(reverse(self.url_namespace + ':summary'))
 
         book_list = BookType.objects.filter(visible=True).exclude(price=0).prefetch_related('categories')
+        if self.feature_books_in_stock:
+            books_available = get_available_books().filter(book_type__in=book_list)
+            countdict = defaultdict(int)
+            for book in books_available:
+                countdict[book.book_type] += 1
+            for book_type in book_list:
+                book_type.count = countdict[book_type]
+
         category_list = []
         for book in book_list:
             book.cat_pks_string = ','.join(str(cat.pk) for cat in book.categories.all())
@@ -118,7 +133,8 @@ class BookChooserWizard:
                       {'page_title': self.page_title, 'form': form, 'book_list': book_list,
                        'category_list': category_list,
                        'chosen_books': request.session['chosen_books'] if 'chosen_books' in request.session else None,
-                       'currency': getattr(settings, 'CURRENCY', 'USD'), 'feature_add_new': self.feature_add_new})
+                       'currency': getattr(settings, 'CURRENCY', 'USD'), 'feature_add_new': self.feature_add_new,
+                       'feature_books_in_stock': self.feature_books_in_stock})
 
     def summary(self, request):
         if 'personal_data' not in request.session:

@@ -1,7 +1,6 @@
 from datetime import timedelta
 from decimal import Decimal
 
-from django.db.models import Q
 from django.shortcuts import render
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -10,6 +9,7 @@ from books.models import BookType
 from common.bookchooserwizard import BookChooserWizard
 from common.models import Book
 from orders.models import Order
+from purchase.utils import get_available_books
 
 
 class PurchaseWizard(BookChooserWizard):
@@ -21,14 +21,15 @@ class PurchaseWizard(BookChooserWizard):
     def url_namespace(self):
         return "purchase"
 
+    @property
+    def feature_books_in_stock(self):
+        return True
+
     def process_books_summary(self, user, book_list):
         book_type_list = [book['pk'] for book in book_list]  # List of Book primary keys
 
-        # Select the Books which are not yet sold nor reserved,
-        # yet accepted and matches the BookTypes we're looking for
-        books = Book.objects.prefetch_related('book_type') \
-            .filter(accepted=True, sold=False, book_type__in=book_type_list) \
-            .filter(Q(reserved_until__lte=timezone.now()) | Q(reserved_until__isnull=True)).order_by('-pk')
+        # Select the Books which are available for purchasing and matches the BookTypes we're looking for
+        books = get_available_books().filter(book_type__in=book_type_list).order_by('-pk')
 
         # Remove duplicated Books. Thanks to order_by('-pk'), we'll have firstly added book as a value here
         book_dict = dict((book.book_type, book.pk) for book in books)

@@ -6,6 +6,18 @@
     data-categories="{{ book.cat_pks_string }}"
 {% endblock %}
 
+{% block thead_footer %}
+    {% if feature_books_in_stock %}
+        <th>{% trans "In stock" %}</th>
+    {% endif %}
+{% endblock %}
+
+{% block tr_footer %}
+    {% if feature_books_in_stock %}
+        <td class="in-stock">{{ book.count }}</td>
+    {% endif %}
+{% endblock %}
+
 {% block actions %}
     <button class="btn btn-xs btn-link btn-add-book">
         <span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}
