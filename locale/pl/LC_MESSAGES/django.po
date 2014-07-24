@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-15 21:20+0000\n"
-"PO-Revision-Date: 2014-07-15 23:20+0100\n"
+"POT-Creation-Date: 2014-07-24 21:52+0000\n"
+"PO-Revision-Date: 2014-07-24 23:52+0100\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -21,19 +21,19 @@ msgstr ""
 
 #: books/forms.py:11 books/templates/books/book_list_base.html:8
 #: common/templates/book_chooser_wizard/books_chosen_list.html:7
-#: users/templates/users/book_list.html:11
+#: sellers/templates/sellers/accept_book_list.html:7
 msgid "ISBN"
 msgstr "ISBN"
 
 #: books/forms.py:20 books/templates/books/book_list_base.html:9
 #: common/templates/book_chooser_wizard/books_chosen_list.html:8
-#: users/templates/users/book_list.html:12
+#: sellers/templates/sellers/accept_book_list.html:8
 msgid "Publisher"
 msgstr "Wydawnictwo"
 
 #: books/forms.py:21 books/templates/books/book_list_base.html:10
 #: common/templates/book_chooser_wizard/books_chosen_list.html:9
-#: users/templates/users/book_list.html:13
+#: sellers/templates/sellers/accept_book_list.html:9
 msgid "Title"
 msgstr "Tytuł"
 
@@ -49,12 +49,12 @@ msgstr "Cena (%s)"
 #: books/forms.py:24 categories/templates/categories/index.html:9
 #: categories/templates/categories/list.html:10
 #: common/templates/book_chooser_wizard/books.html:22
-#: common/templatetags/manage_header.py:35
-#: managemenu/templates/managemenu/index.html:41
+#: common/templatetags/manage_header.py:13
+#: managemenu/templates/managemenu/index.html:92
 msgid "Categories"
 msgstr "Kategorie"
 
-#: books/models.py:29
+#: books/models.py:26
 #, python-format
 msgid "%(publisher)s %(title)s"
 msgstr "%(publisher)s %(title)s"
@@ -69,42 +69,45 @@ msgstr "Dodaj książkę"
 #: categories/templates/categories/add.html:16
 #: categories/templates/categories/edit.html:16
 #: categories/templates/categories/remove.html:26
-#: users/templates/users/accept.html:18
+#: sellers/templates/sellers/accept.html:19
 msgid "Cancel"
 msgstr "Anuluj"
 
 #: books/templates/books/add.html:21
 #: categories/templates/categories/add.html:19
-#: common/templates/book_chooser_wizard/books.html:55
-#: common/templates/book_chooser_wizard/books_book_list.html:11
+#: common/templates/book_chooser_wizard/books.html:56
+#: common/templates/book_chooser_wizard/books_book_list.html:23
 msgid "Add"
 msgstr "Dodaj"
 
 #: books/templates/books/book_list_base.html:11
 #: common/templates/book_chooser_wizard/books_chosen_list.html:10
-#: users/templates/users/book_list.html:14
+#: sellers/templates/sellers/accept_book_list.html:10
 msgid "Publication"
 msgstr "Wydanie"
 
 #: books/templates/books/book_list_base.html:12
 #: common/templates/book_chooser_wizard/books_chosen_list.html:11
-#: users/templates/users/book_list.html:15
+#: sellers/templates/sellers/accept_book_list.html:11
 msgid "Price"
 msgstr "Cena"
 
-#: books/templates/books/book_list_base.html:14
+#: books/templates/books/book_list_base.html:15
 #: categories/templates/categories/index.html:19
 #: common/templates/book_chooser_wizard/books_chosen_list.html:14
-#: users/templates/users/book_list.html:17 users/templates/users/index.html:33
-#: users/templates/users/unaccepted.html:34
+#: orders/templates/orders/orders_table.html:12
+#: sellers/templates/sellers/accept_book_list.html:14
+#: sellers/templates/sellers/index.html:29
+#: stats/templates/stats/list_books.html:75
+#: stats/templates/stats/users.html:28
 msgid "Actions"
 msgstr "Akcje"
 
 #: books/templates/books/book_list_index.html:6
 #: categories/templates/categories/index.html:37
-#: common/templatetags/manage_header.py:37
-#: common/templatetags/manage_header.py:43
-#: users/templates/users/accept_book_list.html:18
+#: common/templatetags/manage_header.py:15
+#: common/templatetags/manage_header.py:21
+#: sellers/templates/sellers/accept_book_list.html:45
 msgid "Edit"
 msgstr "Edytuj"
 
@@ -113,8 +116,8 @@ msgstr "Edytuj"
 #: books/templates/books/remove.html:25
 #: categories/templates/categories/index.html:41
 #: categories/templates/categories/remove.html:29
-#: common/templatetags/manage_header.py:38
-#: common/templatetags/manage_header.py:44
+#: common/templatetags/manage_header.py:16
+#: common/templatetags/manage_header.py:22
 msgid "Remove"
 msgstr "Usuń"
 
@@ -128,7 +131,7 @@ msgstr "Edytuj książkę"
 
 #: books/templates/books/edit.html:21
 #: categories/templates/categories/edit.html:19
-#: settings/templates/settings/dates.html:24
+#: settings/templates/settings/dates.html:26
 msgid "Save"
 msgstr "Zapisz"
 
@@ -139,16 +142,17 @@ msgstr "Zarządzaj książkami"
 #: books/templates/books/index.html:9
 #: categories/templates/categories/index.html:18
 #: common/templates/book_chooser_wizard/summary.html:44
-#: common/templatetags/manage_header.py:41
-#: managemenu/templates/managemenu/index.html:50
+#: common/templatetags/manage_header.py:19
+#: managemenu/templates/managemenu/index.html:83
+#: orders/templates/orders/orders_table.html:11
 msgid "Books"
 msgstr "Książki"
 
 #: books/templates/books/index.html:33
 #: categories/templates/categories/index.html:49
 #: categories/templates/categories/list.html:20
-#: users/templates/users/index.html:51
-#: users/templates/users/unaccepted.html:52
+#: orders/templates/orders/orders_table.html:27
+#: sellers/templates/sellers/index.html:47 stats/templates/stats/users.html:46
 msgid "There's nothing to display."
 msgstr "Nie ma nic do wyświetlenia."
 
@@ -197,9 +201,8 @@ msgid "List of books in %(cat_name)s category"
 msgstr "Lista książek w kategorii %(cat_name)s"
 
 #: categories/templates/categories/list.html:24
-#: common/templates/book_chooser_wizard/books.html:71
+#: common/templates/book_chooser_wizard/books.html:72
 #: common/templates/book_chooser_wizard/summary.html:49
-#: users/templates/users/list_books.html:16
 msgid "Back"
 msgstr "Powrót"
 
@@ -229,26 +232,28 @@ msgid "This category does not contain any books."
 msgstr "W tej kategorii nie ma żadnych książek."
 
 #: common/forms.py:24 common/templates/book_chooser_wizard/summary.html:16
-#: sell/forms.py:20 users/templates/users/index.html:29
-#: users/templates/users/unaccepted.html:30
+#: sell/forms.py:20 sellers/templates/sellers/index.html:25
+#: stats/templates/stats/users.html:24
 msgid "First name"
 msgstr "Imię"
 
 #: common/forms.py:25 common/templates/book_chooser_wizard/summary.html:23
-#: sell/forms.py:21 users/templates/users/index.html:30
-#: users/templates/users/unaccepted.html:31
+#: sell/forms.py:21 sellers/templates/sellers/index.html:26
+#: stats/templates/stats/users.html:25
 msgid "Last name"
 msgstr "Nazwisko"
 
 #: common/forms.py:26 common/templates/book_chooser_wizard/summary.html:30
-#: sell/forms.py:22 users/templates/users/index.html:31
-#: users/templates/users/unaccepted.html:32
+#: sell/forms.py:22 sellers/templates/sellers/index.html:27
+#: stats/templates/stats/list_books.html:73
+#: stats/templates/stats/users.html:26
 msgid "Class"
 msgstr "Klasa"
 
 #: common/forms.py:27 common/templates/book_chooser_wizard/summary.html:37
-#: sell/forms.py:23 users/templates/users/index.html:32
-#: users/templates/users/unaccepted.html:33
+#: sell/forms.py:23 sellers/templates/sellers/index.html:28
+#: stats/templates/stats/list_books.html:74
+#: stats/templates/stats/users.html:27
 msgid "Phone number"
 msgstr "Numer telefonu"
 
@@ -257,53 +262,11 @@ msgstr "Numer telefonu"
 msgid "%(first_name)s %(last_name)s, %(student_class)s"
 msgstr "%(first_name)s %(last_name)s, %(student_class)s"
 
-#: common/models.py:29
+#: common/models.py:33
 #, python-format
 msgid "%(book_type)s from %(owner)s, accepted: %(accepted)s, sold: %(sold)s"
 msgstr ""
 "%(book_type)s od %(owner)s, zaakceptowana: %(accepted)s, sprzedana: %(sold)s"
-
-#: common/models.py:39
-#, python-format
-msgid "%(book)s from %(owner)s sold to %(purchaser)s at %(date)s"
-msgstr "%(book)s od %(owner)s kupiona przez %(purchaser)s, data: %(date)s"
-
-#: common/models.py:47
-#, python-format
-msgid "%(name)s: %(value)s"
-msgstr "%(name)s: %(value)s"
-
-#: common/uiutils.py:7
-msgid "The book was added successfully."
-msgstr "Książka została pomyślnie dodana."
-
-#: common/uiutils.py:8
-msgid "The book was edited successfully."
-msgstr "Książka została pomyślnie zedytowana."
-
-#: common/uiutils.py:9
-msgid "The book was removed successfully."
-msgstr "Książka została pomyślnie usunięta."
-
-#: common/uiutils.py:10
-msgid "The books were removed successfully."
-msgstr "Książki zostały pomyślnie usunięte."
-
-#: common/uiutils.py:11
-msgid "The books were accepted successfully."
-msgstr "Książki zostały pomyślnie zaakceptowane."
-
-#: common/uiutils.py:12
-msgid "The category was added successfully."
-msgstr "Kategoria została pomyślnie dodana."
-
-#: common/uiutils.py:13
-msgid "The category was edited successfully."
-msgstr "Kategoria została pomyślnie zedytowana."
-
-#: common/uiutils.py:14
-msgid "The category was removed successfully."
-msgstr "Kategoria została pomyślnie usunięta."
 
 #: common/templates/book_chooser_wizard/books.html:8
 msgid "Step 2 of 3: choose the books"
@@ -318,21 +281,23 @@ msgctxt "categories"
 msgid "All"
 msgstr "Wszystkie"
 
-#: common/templates/book_chooser_wizard/books.html:43
-#: common/templatetags/manage_header.py:36
-#: common/templatetags/manage_header.py:42
-#: managemenu/templates/managemenu/index.html:44
-#: managemenu/templates/managemenu/index.html:53
+#: common/templates/book_chooser_wizard/books.html:44
+#: common/templatetags/manage_header.py:14
+#: common/templatetags/manage_header.py:20
+#: managemenu/templates/managemenu/index.html:86
+#: managemenu/templates/managemenu/index.html:95
 msgid "Add new"
 msgstr "Dodaj nową"
 
-#: common/templates/book_chooser_wizard/books.html:48
+#: common/templates/book_chooser_wizard/books.html:49
 msgid ""
-"Before adding a new book, please check if it is not already present in the "
-"list."
-msgstr "Przed dodaniem książki sprawdź, czy nie ma jej już na liście."
+"Before adding a new book, please check whether it is not already present in "
+"the list above and is it included in the school textbook list."
+msgstr ""
+"Przed dodaniem książki sprawdź, czy nie ma jej już na liście, oraz czy "
+"znajduje się ona na wykazie podręczników."
 
-#: common/templates/book_chooser_wizard/books.html:50
+#: common/templates/book_chooser_wizard/books.html:51
 msgid ""
 "Also, we <strong>strongly</strong> recommend entering the ISBN number and "
 "clicking the magnifying glass icon next to the input field. The other fields "
@@ -342,16 +307,21 @@ msgstr ""
 "kliknięcie ikony lupy obok pola edycyjnego. Pozostałe pola zostaną wtedy "
 "wypełnione automatycznie, więc nie będziesz musiał(a) robić tego ręcznie."
 
-#: common/templates/book_chooser_wizard/books.html:63
+#: common/templates/book_chooser_wizard/books.html:64
 msgid "Chosen books"
 msgstr "Wybrane książki"
 
-#: common/templates/book_chooser_wizard/books.html:72
+#: common/templates/book_chooser_wizard/books.html:73
 #: common/templates/book_chooser_wizard/personal_data.html:14
 msgid "Next"
 msgstr "Dalej"
 
+#: common/templates/book_chooser_wizard/books_book_list.html:11
+msgid "In stock"
+msgstr "Na stanie"
+
 #: common/templates/book_chooser_wizard/books_chosen_list.html:12
+#: sellers/templates/sellers/accept_book_list.html:12
 msgid "Amount"
 msgstr "Ilość"
 
@@ -376,76 +346,122 @@ msgid "Personal data"
 msgstr "Dane osobiste"
 
 #: common/templates/book_chooser_wizard/summary.html:51
-#: users/templates/users/accept.html:20
-#: users/templates/users/unaccepted.html:45
+#: sellers/templates/sellers/accept.html:21
+#: sellers/templates/sellers/index.html:40
 msgid "Accept"
 msgstr "Akceptuj"
 
-#: common/templates/common/base.html:39
+#: common/templates/common/base.html:43
 msgid "Toggle navigation"
 msgstr "Nawigacja"
 
-#: common/templates/common/base.html:52
+#: common/templates/common/base.html:56
 msgid "Anonymous"
 msgstr "Anonimowy"
 
-#: common/templates/common/base.html:60
-#: common/templatetags/manage_header.py:34
-#: managemenu/templates/managemenu/index.html:29
-#: managemenu/templates/managemenu/index.html:32
+#: common/templates/common/base.html:64
+#: common/templatetags/manage_header.py:12
+#: managemenu/templates/managemenu/index.html:37
+#: managemenu/templates/managemenu/index.html:40
 msgid "Manage"
 msgstr "Zarządzaj"
 
-#: common/templates/common/base.html:67
+#: common/templates/common/base.html:71
 #: egielda/templates/registration/logged_out.html:4
 #: egielda/templates/registration/logged_out.html:8
 msgid "Sign out"
 msgstr "Wyloguj się"
 
-#: common/templates/common/base.html:73
+#: common/templates/common/base.html:77
 #: egielda/templates/registration/login.html:4
 #: egielda/templates/registration/login.html:8
 #: egielda/templates/registration/login.html:36
 msgid "Sign in"
 msgstr "Zaloguj się"
 
-#: common/templatetags/manage_header.py:39 users/templates/users/index.html:44
+#: common/templatetags/manage_header.py:17 stats/templates/stats/users.html:39
 msgid "Book list"
 msgstr "Lista książek"
 
-#: common/templatetags/manage_header.py:46
-#: managemenu/templates/managemenu/index.html:59
-#: users/templates/users/accept.html:8 users/templates/users/index.html:13
-#: users/templates/users/index.html:16 users/templates/users/list_books.html:5
-#: users/templates/users/list_books.html:8
-#: users/templates/users/unaccepted.html:13
-#: users/templates/users/unaccepted.html:17
+#: common/templatetags/manage_header.py:24
+#: managemenu/templates/managemenu/index.html:49
+#: orders/templates/orders/executed.html:5
+#: orders/templates/orders/executed.html:8
+#: orders/templates/orders/not_executed.html:5
+#: orders/templates/orders/not_executed.html:8
+#: orders/templates/orders/outdated.html:5
+#: orders/templates/orders/outdated.html:8
+msgid "Orders"
+msgstr "Zamówienia"
+
+#: common/templatetags/manage_header.py:25
+#: managemenu/templates/managemenu/index.html:53
+#: orders/templates/orders/executed.html:12
+#: orders/templates/orders/not_executed.html:5
+#: orders/templates/orders/not_executed.html:12
+#: orders/templates/orders/outdated.html:12
+msgid "Not executed"
+msgstr "Niezrealizowane"
+
+#: common/templatetags/manage_header.py:26
+#: managemenu/templates/managemenu/index.html:54
+#: orders/templates/orders/executed.html:13
+#: orders/templates/orders/not_executed.html:13
+#: orders/templates/orders/outdated.html:5
+#: orders/templates/orders/outdated.html:13
+msgid "Outdated"
+msgstr "Nieważne"
+
+#: common/templatetags/manage_header.py:27
+#: managemenu/templates/managemenu/index.html:55
+#: orders/templates/orders/executed.html:5
+#: orders/templates/orders/executed.html:14
+#: orders/templates/orders/not_executed.html:14
+#: orders/templates/orders/outdated.html:14
+msgid "Executed"
+msgstr "Zrealizowane"
+
+#: common/templatetags/manage_header.py:29
+#: managemenu/templates/managemenu/index.html:62
+#: sellers/templates/sellers/accept.html:8
+#: sellers/templates/sellers/index.html:13
+#: sellers/templates/sellers/index.html:17
+msgid "Sellers with unaccepted books"
+msgstr "Sprzedający z niezaakceptowanymi książkami"
+
+#: common/templatetags/manage_header.py:30
+msgid "Accept books"
+msgstr "Zaakceptuj książki"
+
+#: common/templatetags/manage_header.py:32
+#: managemenu/templates/managemenu/index.html:71
+#: stats/templates/stats/index.html:5 stats/templates/stats/index.html.py:8
+#: stats/templates/stats/list_books.html:48
+#: stats/templates/stats/list_books.html:51
+msgid "Statistics"
+msgstr "Statystyki"
+
+#: common/templatetags/manage_header.py:33
+#: managemenu/templates/managemenu/index.html:75
+#: stats/templates/stats/books_sold.html:5
+#: stats/templates/stats/books_sold.html:50
+msgid "Books sold"
+msgstr "Sprzedane książki"
+
+#: common/templatetags/manage_header.py:34
+#: managemenu/templates/managemenu/index.html:76
+#: stats/templates/stats/users.html:13 stats/templates/stats/users.html:16
 msgid "Users"
 msgstr "Użytkownicy"
 
-#: common/templatetags/manage_header.py:47
-#: managemenu/templates/managemenu/index.html:62
-#: users/templates/users/index.html:21
-#: users/templates/users/unaccepted.html:22
-msgid "With unaccepted books"
-msgstr "Z niezaakceptowanymi książkami"
-
-#: common/templatetags/manage_header.py:48
-msgid "User's books"
-msgstr "Książki użytkownika"
-
-#: common/templatetags/manage_header.py:49
-msgid "Accept user's books"
-msgstr "Zaakceptuj książki użytkownika"
-
-#: common/templatetags/manage_header.py:51
-#: managemenu/templates/managemenu/index.html:77
+#: common/templatetags/manage_header.py:36
+#: managemenu/templates/managemenu/index.html:101
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: common/templatetags/manage_header.py:52
-#: managemenu/templates/managemenu/index.html:80 settings/views.py:43
-#: settings/templates/settings/dates.html:17
+#: common/templatetags/manage_header.py:37
+#: managemenu/templates/managemenu/index.html:104
+#: settings/templates/settings/dates.html:19 settings/views.py:52
 msgid "Dates"
 msgstr "Daty"
 
@@ -492,6 +508,30 @@ msgstr "Możesz spróbować za kilka minut."
 msgid "Also, please report this issue to the site administrator."
 msgstr "Prosimy również o zgłoszenie tego błędu administratorowi strony."
 
+#: egielda/templates/egielda/home.html:5
+msgid "Home"
+msgstr "Strona główna"
+
+#: egielda/templates/egielda/home.html:11
+msgid "What do you want to do?"
+msgstr "Co chcesz zrobić?"
+
+#: egielda/templates/egielda/home.html:12
+msgid "The website is currently disabled."
+msgstr "Strona internetowa jest teraz wyłączona."
+
+#: egielda/templates/egielda/home.html:17
+msgid "Purchase"
+msgstr "Kup"
+
+#: egielda/templates/egielda/home.html:20
+msgid "or"
+msgstr "lub"
+
+#: egielda/templates/egielda/home.html:23
+msgid "Sell"
+msgstr "Sprzedaj"
+
 #: egielda/templates/error.html:4 egielda/templates/error.html.py:9
 #, python-format
 msgid "Error %(error)s"
@@ -501,26 +541,6 @@ msgstr "Błąd %(error)s"
 #: egielda/templates/registration/logged_out.html:17
 msgid "Homepage"
 msgstr "Strona główna"
-
-#: egielda/templates/egielda/home.html:5
-msgid "Home"
-msgstr "Strona główna"
-
-#: egielda/templates/egielda/home.html:11
-msgid "What do you want to do?"
-msgstr "Co chcesz zrobić?"
-
-#: egielda/templates/egielda/home.html:16
-msgid "Purchase"
-msgstr "Kup"
-
-#: egielda/templates/egielda/home.html:19
-msgid "or"
-msgstr "lub"
-
-#: egielda/templates/egielda/home.html:22
-msgid "Sell"
-msgstr "Sprzedaj"
 
 #: egielda/templates/registration/logged_out.html:12
 msgid "You have been successfully signed out."
@@ -549,20 +569,39 @@ msgstr "Nazwa użytkownika"
 msgid "Password"
 msgstr "Hasło"
 
-#: managemenu/templates/managemenu/index.html:68 stats/views.py:11
-msgid "Statistics"
-msgstr "Statystyki"
+#: orders/models.py:14
+#, python-format
+msgid ""
+"Order from %(user)s made at %(date)s valid until %(valid_until)s containing "
+"%(books)d book(s)"
+msgstr ""
+"Zamówienie od %(user)s utworzone %(date)s ważne do %(valid_until)s "
+"zawierająca %(books)d książek"
 
-#: managemenu/templates/managemenu/index.html:71 stats/views.py:16
-msgid "Books sold"
-msgstr "Sprzedane książki"
+#: orders/templates/orders/orders_table.html:8
+msgid "Date"
+msgstr "Data"
 
-#: purchase/views.py:16
+#: orders/templates/orders/orders_table.html:9
+msgid "Valid until"
+msgstr "Ważne do"
+
+#: orders/templates/orders/orders_table.html:10
+msgid "User"
+msgstr "Użytkownik"
+
+#: purchase/templates/purchase/success.html:4
+#: purchase/templates/purchase/success.html:7 purchase/views.py:18
 msgid "Purchase books"
 msgstr "Kup książki"
 
-#: sell/views.py:16 sell/templates/sell/success.html:4
-#: sell/templates/sell/success.html.py:7
+#: purchase/templates/purchase/success.html:9
+msgid "Your request was accepted. You can claim your books now."
+msgstr ""
+"Podane dane zostały zaakceptowane. Możesz teraz zgłosić się po swoje książki."
+
+#: sell/templates/sell/success.html:4 sell/templates/sell/success.html.py:7
+#: sell/views.py:14
 msgid "Sell books"
 msgstr "Sprzedaj książki"
 
@@ -570,6 +609,19 @@ msgstr "Sprzedaj książki"
 msgid "Your request was accepted. You can deliver your books now."
 msgstr ""
 "Podane dane zostały zaakceptowane. Możesz teraz dostarczyć swoje książki."
+
+#: sellers/templates/sellers/accept.html:5
+msgid "Sellers with unaccepted books - Accept books"
+msgstr "Sprzedający z niezaakceptowanymi książkami - Zaakceptuj książki"
+
+#: sellers/templates/sellers/accept.html:9
+#, python-format
+msgid "Accept %(user_name)s's books"
+msgstr "Zaakceptuj książki użytkownika %(user_name)s"
+
+#: sellers/templates/sellers/accept.html:13
+msgid "If you want to delete some book, just pass 0 as amount."
+msgstr "Jeśli chcesz usunąć książkę, po prostu podaj 0 jako ilość."
 
 #: settings/forms.py:6
 msgid "Selling start date"
@@ -587,37 +639,106 @@ msgstr "Początek kupowania"
 msgid "Purchasing end date"
 msgstr "Koniec kupowania"
 
-#: users/templates/users/accept.html:5
-msgid "Users - Accept books"
-msgstr "Użytkownicy - Zaakceptuj książki"
-
-#: users/templates/users/accept.html:9
+#: settings/models.py:10
 #, python-format
-msgid "Accept %(user_name)s's books"
-msgstr "Zaakceptuj książki użytkownika %(user_name)s"
+msgid "%(name)s: %(value)s"
+msgstr "%(name)s: %(value)s"
 
-#: users/templates/users/book_list.html:8
-msgid "Accepted"
-msgstr "Zaakceptowana"
+#: stats/templates/stats/books_sold.html:68
+#, python-format
+msgid "%(purchaser)s at %(sold_date)s"
+msgstr "%(purchaser)s %(sold_date)s"
 
-#: users/templates/users/book_list.html:9
-msgid "Sold"
-msgstr "Sprzedana"
+#: stats/templates/stats/index.html:13
+#, python-format
+msgid "1 book was sold for the amount of %(books_sold_value)s%(currency)s."
+msgid_plural ""
+"%(books_sold)s books were sold for a total amount of %(books_sold_value)s"
+"%(currency)s."
+msgstr[0] "1 książka została sprzedana za %(books_sold_value)s%(currency)s."
+msgstr[1] ""
+"%(books_sold)s książki zostały sprzedane za łączną sumę %(books_sold_value)s"
+"%(currency)s."
+msgstr[2] ""
+"%(books_sold)s książek zostało sprzedanych za łączną sumę "
+"%(books_sold_value)s%(currency)s."
 
-#: users/templates/users/book_list.html:28
-msgid "Yes"
-msgstr "Tak"
-
-#: users/templates/users/book_list.html:28
-msgid "No"
-msgstr "Nie"
-
-#: users/templates/users/index.html:20
-#: users/templates/users/unaccepted.html:21
-msgid "All"
-msgstr "Wszyscy"
-
-#: users/templates/users/list_books.html:9
+#: stats/templates/stats/list_books.html:52
+#: stats/templates/stats/list_books.html:58
 #, python-format
 msgid "%(user_name)s's books"
 msgstr "Książki użytkownika %(user_name)s"
+
+#: stats/templates/stats/list_books.html:67
+msgctxt "count"
+msgid "Sold"
+msgstr "Sprzedano"
+
+#: stats/templates/stats/list_books.html:72
+msgid "Purchaser's name"
+msgstr "Nazwisko kupującego"
+
+#: stats/templates/stats/list_books.html:84
+msgid "See order"
+msgstr "Wyświetl zamówienie"
+
+#: stats/templates/stats/list_books.html:89
+msgid "In total"
+msgstr "Łącznie"
+
+#: utils/alerts.py:14
+msgid "The book was added successfully."
+msgstr "Książka została pomyślnie dodana."
+
+#: utils/alerts.py:15
+msgid "The book was edited successfully."
+msgstr "Książka została pomyślnie zedytowana."
+
+#: utils/alerts.py:16
+msgid "The book was removed successfully."
+msgstr "Książka została pomyślnie usunięta."
+
+#: utils/alerts.py:17
+msgid "The books were removed successfully."
+msgstr "Książki zostały pomyślnie usunięte."
+
+#: utils/alerts.py:18
+msgid "The books were accepted successfully."
+msgstr "Książki zostały pomyślnie zaakceptowane."
+
+#: utils/alerts.py:19
+msgid "The category was added successfully."
+msgstr "Kategoria została pomyślnie dodana."
+
+#: utils/alerts.py:20
+msgid "The category was edited successfully."
+msgstr "Kategoria została pomyślnie zedytowana."
+
+#: utils/alerts.py:21
+msgid "The category was removed successfully."
+msgstr "Kategoria została pomyślnie usunięta."
+
+#: utils/alerts.py:22
+msgid "Settings were updated successfully."
+msgstr "Ustawienia zostały pomyślnie zapisane."
+
+#~ msgid "%(book)s from %(owner)s sold to %(purchaser)s at %(date)s"
+#~ msgstr "%(book)s od %(owner)s kupiona przez %(purchaser)s, data: %(date)s"
+
+#~ msgid "User's books"
+#~ msgstr "Książki użytkownika"
+
+#~ msgid "Users - Accept books"
+#~ msgstr "Użytkownicy - Zaakceptuj książki"
+
+#~ msgid "Accepted"
+#~ msgstr "Zaakceptowana"
+
+#~ msgid "Yes"
+#~ msgstr "Tak"
+
+#~ msgid "No"
+#~ msgstr "Nie"
+
+#~ msgid "All"
+#~ msgstr "Wszyscy"
