@@ -11,7 +11,7 @@
 
         .panel-info > .panel-heading {
             color: #3A505B;
-            background-image: linear-gradient(to bottom, #E6F1F6 0%,#E6F1F6 100%);
+            background-image: linear-gradient(to bottom, #E6F1F6 0%, #E6F1F6 100%);
             background-color: #E6F1F6;
             padding: 5px 13px;
             line-height: 1.1;
@@ -63,30 +63,38 @@
                     <h5>
                         <a href="{% url 'books.views.edit_book' book.book_type.pk %}">{{ book.book_type.title }}</a>
                         <span class="text-muted pull-right">{{ book.book_type.price|floatformat:2 }}{{ currency }}</span>
-                    </h5><br />
+                    </h5><br/>
                     {% trans "Sold" context "count" %}: {{ purchasers|length }}/<b>{{ book.amount }}</b>
                     {% if purchasers|length > 0 %}
                         <table class="table table-responsive">
                             <thead>
+                            <tr>
                                 <th>#</th>
                                 <th>{% trans "Purchaser's name" %}</th>
                                 <th>{% trans "Class" %}</th>
                                 <th>{% trans "Phone number" %}</th>
                                 <th>{% trans "Actions" %}</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                {% for purchaser in purchasers %}
-                                    <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ purchaser.first_name }} {{ purchaser.last_name }}</td>
-                                        <td>{{ purchaser.student_class }}</td>
-                                        <td>{{ purchaser.phone_number }}</td>
-                                        <td><a class="btn btn-xs btn-link" role="button" href="{% url "orders.views.order_details" purchaser.pk %}"><span class="glyphicon glyphicon-list-alt"></span> {% trans "See order" %}</a></td>
-                                    </tr>
-                                {% endfor %}
+                            {% for purchaser in purchasers %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ purchaser.user_name }}</td>
+                                    <td>{{ purchaser.student_class }}</td>
+                                    <td>{{ purchaser.phone_number }}</td>
+                                    <td>
+                                        <a class="btn btn-xs btn-link" role="button"
+                                           href="{% url 'orders.views.order_details' purchaser.pk %}">
+                                            <span class="glyphicon glyphicon-list-alt"></span> {% trans "Show order" %}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
-                        {% trans "In total" %}: {{ purchasers|length|multiply:book.book_type.price|floatformat:2 }}{{ currency }}
+                        {% trans "In total" %}:
+                        {{ purchasers|length|multiply:book.book_type.price|floatformat:2 }}{{ currency }}
                     {% endif %}
                 </li>
             {% endfor %}
