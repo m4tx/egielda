@@ -1,0 +1,43 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load manage_header %}
+
+{% block title %}{% trans "Order details" %}{% endblock %}
+
+{% block content %}
+    <h1>
+        {% trans "Order details" %}
+        <small>{% blocktrans with user=order.user.user_name %}{{ user }}'s order{% endblocktrans %}</small>
+    </h1>
+    {% manage_header "orders/details" %}
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "User" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ order.user }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "Date" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ order.date }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "Valid until" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ order.valid_until }}</p>
+            </div>
+        </div>
+    </div>
+
+    {% include "books/book_list_base.html" with hide_actions=True %}
+
+    <a class="btn btn-default" role="button" href="{% url 'orders.views.index' %}">
+        <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+    </a>
+{% endblock %}

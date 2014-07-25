@@ -25,6 +25,7 @@ def manage_header(*args):
             'not_executed': ['orders.views.not_executed', _("Not executed")],
             'outdated': ['orders.views.outdated', _("Outdated")],
             'executed': ['orders.views.executed', _("Executed")],
+            'details': ['orders.views.details', _("Details")]
         }],
         'sellers': ['sellers.views.index', _("Sellers with unaccepted books"), {
             'accept_books': ['sellers.views.accept_books', _("Accept books")],

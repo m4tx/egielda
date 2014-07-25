@@ -1,14 +1,15 @@
 from django.db.models import Sum
 from django.db.models.query import QuerySet
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
 from orders.models import Order
 
 
 def order_details(request, order_pk):
-    return HttpResponse("Hello, world!")
+    order = get_object_or_404(Order.objects.prefetch_related('books'), pk=order_pk)
+    return render(request, 'orders/details.html',
+                  {'order': order, 'book_list': [book.book_type for book in order.books.all()]})
 
 
 def not_executed(request):
