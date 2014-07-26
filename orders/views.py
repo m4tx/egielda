@@ -7,7 +7,8 @@ from orders.models import Order
 
 
 def order_details(request, order_pk):
-    order = get_object_or_404(Order.objects.prefetch_related('books'), pk=order_pk)
+    order = get_object_or_404(Order.objects.prefetch_related('books', 'books__book_type').select_related('user'),
+                              pk=order_pk)
     return render(request, 'orders/details.html',
                   {'order': order, 'book_list': [book.book_type for book in order.books.all()]})
 
