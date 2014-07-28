@@ -1,0 +1,41 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load manage_header %}
+
+{% block head %}
+    <style>
+        table th {
+            width: 20%;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}{% trans "Books" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Books" %}</h1>
+    {% manage_header "stats/books" %}
+
+    {% if book_list %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>{% trans "Book" %}</th>
+                    <th>{% trans "Received count" %}</th>
+                    <th>{% trans "Sold count" %}</th>
+                </tr>
+                </thead>
+                {% for book in book_list %}
+                    <tr>
+                        <td><a href="{% url 'books.views.edit_book' book.pk %}">{{ book.title }}</a></td>
+                        <td>{{ book.received }}</td>
+                        <td>{{ book.sold }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+    {% endif %}
+{% endblock %}

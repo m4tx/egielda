@@ -1,4 +1,4 @@
-from django.db.models import Sum
+from django.db.models import Count
 from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
@@ -7,10 +7,10 @@ from orders.models import Order
 
 
 def order_details(request, order_pk):
-    order = get_object_or_404(Order.objects.prefetch_related('books', 'books__book_type').select_related('user'),
+    order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
                               pk=order_pk)
     return render(request, 'orders/details.html',
-                  {'order': order, 'book_list': [book.book_type for book in order.books.all()]})
+                  {'order': order, 'book_list': [book.book_type for book in order.book_set.all()]})
 
 
 def not_executed(request):
@@ -33,4 +33,5 @@ def get_orders() -> QuerySet:
     The function returns QuerySet of Order model with all necessary values for displaying also selected/prefetched.
     :return: the QuerySet of Order model
     """
-    return Order.objects.select_related('user').prefetch_related('books').annotate(sold_count=Sum('books__sold'))
+    return Order.objects.select_related('user').prefetch_related('books').annotate(
+        sold_count=Count('book', field='CASE WHEN books_book.sold THEN 1 END'))

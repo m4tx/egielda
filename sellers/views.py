@@ -8,9 +8,9 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 
 from books.forms import BookForm
-from books.models import BookType
+from books.models import BookType, Book
 from common.auth import user_is_admin
-from common.models import AppUser, Book
+from common.models import AppUser
 from utils.alerts import alerts, set_success_msg
 
 

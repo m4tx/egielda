@@ -5,7 +5,7 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 
 from books.forms import BookForm
 from common.auth import user_is_admin
-from common.models import BookType
+from books.models import BookType
 from utils.alerts import alerts, set_success_msg
 
 

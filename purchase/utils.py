@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.utils import timezone
-from common.models import Book
+from books.models import Book
 
 
 def get_available_books():

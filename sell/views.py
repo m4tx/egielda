@@ -3,9 +3,8 @@ from decimal import Decimal
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 
-from books.models import BookType
+from books.models import BookType, Book
 from common.bookchooserwizard import BookChooserWizard
-from common.models import Book
 
 
 class SellWizard(BookChooserWizard):

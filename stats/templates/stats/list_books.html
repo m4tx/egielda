@@ -51,7 +51,7 @@
     <h1>{% trans "Statistics" %}
         <small>{% blocktrans %}{{ user_name }}'s books{% endblocktrans %}</small>
     </h1>
-    {% manage_header "stats/users" %}
+    {% manage_header "stats/users/list" %}
 
     <div class="panel panel-info">
         <div class="panel-heading">
@@ -85,7 +85,7 @@
                                     <td>{{ purchaser.phone_number }}</td>
                                     <td>
                                         <a class="btn btn-xs btn-link" role="button"
-                                           href="{% url 'orders.views.order_details' purchaser.pk %}">
+                                           href="{% url 'orders.views.order_details' purchaser.order_id %}">
                                             <span class="glyphicon glyphicon-list-alt"></span> {% trans "Show order" %}
                                         </a>
                                     </td>

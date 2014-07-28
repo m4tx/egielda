@@ -32,7 +32,10 @@ def manage_header(*args):
         }],
         'stats': ['stats.views.index', _("Statistics"), {
             'sold': ['stats.views.sold', _("Books sold")],
-            'users': ['stats.views.users', _("Users")],
+            'users': ['stats.views.users', _("Users"), {
+                'list': ['stats.views.list_books', _("User's books")],
+            }],
+            'books': ['stats.views.books', _("Books")],
         }],
         'settings': ['settings.views.index', _("Settings"), {
             'dates': ['settings.views.dates', _("Dates")],

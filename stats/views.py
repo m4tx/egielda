@@ -5,7 +5,8 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.db.models import Sum, Count
 from common.auth import user_is_admin
 
-from common.models import Book, BookType, AppUser
+from common.models import AppUser
+from books.models import BookType, Book
 from egielda import settings
 
 
@@ -39,6 +40,7 @@ def books_sold(request):
     return render(request, 'stats/books_sold.html', {'stats': list(reversed(sorted(stats.items()))),
                                                      'currency': getattr(settings, 'CURRENCY', 'USD')})
 
+
 @user_passes_test(user_is_admin)
 def users(request):
     student_list = AppUser.objects.annotate(count=Count('appuser_owner')).exclude(count=0)
@@ -49,22 +51,32 @@ def users(request):
 @user_passes_test(user_is_admin)
 def list_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
-    book_list = get_list_or_404(Book.objects.select_related('book_type', 'purchaser'), owner=user)
+    book_list = get_list_or_404(Book.objects.select_related('book_type', 'purchaser', 'order'), owner=user)
 
     amounts = Counter([(str(b.book_type.isbn) + b.book_type.title) for b in book_list])
-    d = {}
-    e = {}
+    unique_books = {}
+    purchasers = {}
     for book in book_list:
         book.amount = amounts[str(book.book_type.isbn) + book.book_type.title]
-        d[(str(book.book_type.isbn) + book.book_type.title)] = book
+        unique_books[(str(book.book_type.isbn) + book.book_type.title)] = book
 
-        e.setdefault((str(book.book_type.isbn) + book.book_type.title), [])
+        purchasers.setdefault((str(book.book_type.isbn) + book.book_type.title), [])
         if book.sold:
-            e[str(book.book_type.isbn) + book.book_type.title].append(book.purchaser)
+            book.purchaser.order_id = book.order.pk
+            purchasers[str(book.book_type.isbn) + book.book_type.title].append(book.purchaser)
 
-    book_list = list(d.values())
-    book_list = zip(book_list, list(e.values()))
+    book_list = list(unique_books.values())
+    book_list = zip(book_list, list(purchasers.values()))
 
     return render(request, 'stats/list_books.html', {'user_name': user.user_name(),
                                                      'book_list': book_list,
                                                      'currency': getattr(settings, 'CURRENCY', 'USD')})
+
+
+@user_passes_test(user_is_admin)
+def books(request):
+    book_list = BookType.objects.annotate(received=Count('book')).annotate(
+        sold=Count('book', field='CASE WHEN books_book.sold THEN 1 END'))
+
+    return render(request, 'stats/books.html', {'book_list': book_list,
+                                                'currency': getattr(settings, 'CURRENCY', 'USD')})
