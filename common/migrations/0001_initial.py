@@ -7,17 +7,17 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('common', '__first__'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Order',
+            name='AppUser',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('date', models.DateTimeField(auto_now_add=True)),
-                ('valid_until', models.DateTimeField()),
-                ('user', models.ForeignKey(to='common.AppUser')),
+                ('first_name', models.CharField(max_length=30)),
+                ('last_name', models.CharField(max_length=30)),
+                ('student_class', models.CharField(max_length=30)),
+                ('phone_number', models.CharField(max_length=9)),
             ],
             options={
             },
