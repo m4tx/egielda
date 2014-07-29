@@ -63,7 +63,7 @@ function checkInStock(tr) {
     if (inStockVal == 0) {
         $(tr).addClass('bg-danger text-muted');
         $('button.btn-add-book', tr).attr('disabled', 'disabled');
-    } else if (inStockVal < 6) {
+    } else if (inStockVal <= 5) {
         $(tr).addClass('bg-warning');
     }
 }
@@ -93,6 +93,7 @@ function addRetrievedBooks() {
 
 function addExistingBook(tr, amount) {
     var ctr = tr.clone();
+    ctr.removeClass();
     $('td:last-child', ctr).remove();
     $('td.in-stock', ctr).remove();
     ctr.append($('<td data-type="amount">' + amount + '</td>'));
@@ -184,6 +185,31 @@ addRetrievedBooks();
 $('table tbody tr', '#bookList').each(function(index, value) {
     checkInStock(value);
 });
+
+function sortTable() {
+    var rows = $('#bookList tbody tr');
+    rows.detach();
+
+    rows.sort(function (a, b) {
+        a = parseInt($(a).find('.in-stock').text());
+        b = parseInt($(b).find('.in-stock').text());
+
+        if (a < b) {
+            return 1;
+        }
+
+        if (a > b) {
+            return -1;
+        }
+
+        return 0;
+    });
+
+    $.each(rows, function(index, row) {
+        $('#bookList tbody').append(row);
+    });
+}
+sortTable();
 
 $("#category_filter").on("change", function(){
     var category = parseInt($(this).val());
