@@ -30,7 +30,7 @@ def dates(request):
             return HttpResponseRedirect("")
     else:
         try:
-            settings = Settings(['start_sell', 'end_sell', 'start_purchase', 'end_purchase'])
+            settings = Settings('start_sell', 'end_sell', 'start_purchase', 'end_purchase')
             # Pack the retrieved values into new dictionary, formatting them as HTML datetime first
             values = dict(
                 (o, datetime_html_format(string_to_datetime(v))) for o, v in settings.__dict__['settings'].items())

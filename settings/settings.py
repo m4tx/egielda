@@ -5,7 +5,7 @@ from utils.dates import string_to_datetime
 
 
 class Settings:
-    def __init__(self, values=None):
+    def __init__(self, *values):
         if values is None:
             return
         settings = Setting.objects.filter(name__in=values)
@@ -20,7 +20,7 @@ class Settings:
 
 def is_sell_available():
     try:
-        settings = Settings(['start_sell', 'end_sell'])
+        settings = Settings('start_sell', 'end_sell')
         start_sell = string_to_datetime(settings.start_sell)
         end_sell = string_to_datetime(settings.end_sell)
 
@@ -37,7 +37,7 @@ def is_sell_available():
 
 def is_purchase_available():
     try:
-        settings = Settings(['start_purchase', 'end_purchase'])
+        settings = Settings('start_purchase', 'end_purchase')
         start_purchase = string_to_datetime(settings.start_purchase)
         end_purchase = string_to_datetime(settings.end_purchase)
 
