@@ -1,0 +1,56 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load manage_header %}
+{% load price %}
+
+{% block title %}{% trans "Book's details" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Book's details" %}</h1>
+    {% manage_header "books/details" %}
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "ISBN" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ book.isbn }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "Title" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ book.title }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "Publisher" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ book.publisher }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "Publication year" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ book.publication_year }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "Price" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ book.price|price }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "Categories" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ book.categories_str }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

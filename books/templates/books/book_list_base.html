@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load price %}
 
 <div class="table-responsive">
     <table class="table table-hover">
@@ -24,7 +25,7 @@
                 <td>{{ book.publisher }}</td>
                 <td>{{ book.title }}</td>
                 <td>{{ book.publication_year }}</td>
-                <td>{{ book.price_string }}</td>
+                <td>{{ book.price|price }}</td>
                 {% block tr_footer %}{% endblock %}
                 {% if not hide_actions %}
                     <td>

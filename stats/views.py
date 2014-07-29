@@ -7,7 +7,6 @@ from common.auth import user_is_admin
 
 from common.models import AppUser
 from books.models import BookType, Book
-from egielda import settings
 
 
 @user_passes_test(user_is_admin)
@@ -17,8 +16,7 @@ def index(request):
     stats['books_sold'] = books.aggregate(Sum('count'))['count__sum'] or 0
     stats['books_sold_value'] = books.aggregate(Sum('price', field='count * price'))['price__sum'] or 0
 
-    return render(request, 'stats/index.html', {'stats': stats,
-                                                'currency': getattr(settings, 'CURRENCY', 'USD')})
+    return render(request, 'stats/index.html', {'stats': stats})
 
 
 @user_passes_test(user_is_admin)
@@ -37,8 +35,7 @@ def books_sold(request):
 
         stats[key] = (stats[key], sum)
 
-    return render(request, 'stats/books_sold.html', {'stats': list(reversed(sorted(stats.items()))),
-                                                     'currency': getattr(settings, 'CURRENCY', 'USD')})
+    return render(request, 'stats/books_sold.html', {'stats': list(reversed(sorted(stats.items())))})
 
 
 @user_passes_test(user_is_admin)
@@ -66,11 +63,10 @@ def list_books(request, user_pk):
             purchasers[str(book.book_type.isbn) + book.book_type.title].append(book.purchaser)
 
     book_list = list(unique_books.values())
-    book_list = zip(book_list, list(purchasers.values()))
+    stats = zip(book_list, list(purchasers.values()))
 
     return render(request, 'stats/list_books.html', {'user_name': user.user_name(),
-                                                     'book_list': book_list,
-                                                     'currency': getattr(settings, 'CURRENCY', 'USD')})
+                                                     'stats': stats})
 
 
 @user_passes_test(user_is_admin)
@@ -78,5 +74,4 @@ def books(request):
     book_list = BookType.objects.annotate(received=Count('book')).annotate(
         sold=Count('book', field='CASE WHEN books_book.sold THEN 1 END'))
 
-    return render(request, 'stats/books.html', {'book_list': book_list,
-                                                'currency': getattr(settings, 'CURRENCY', 'USD')})
+    return render(request, 'stats/books.html', {'book_list': book_list})

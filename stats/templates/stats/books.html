@@ -28,7 +28,7 @@
                 </thead>
                 {% for book in book_list %}
                     <tr>
-                        <td><a href="{% url 'books.views.edit_book' book.pk %}">{{ book.title }}</a></td>
+                        <td><a href="{% url 'books.views.book_details' book.pk %}">{{ book.title }}</a></td>
                         <td>{{ book.received }}</td>
                         <td>{{ book.sold }}</td>
                     </tr>

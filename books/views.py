@@ -60,6 +60,13 @@ def remove_book(request, book_ids):
 
 
 @user_passes_test(user_is_admin)
+def book_details(request, book_id):
+    book = get_object_or_404(BookType, id=book_id)
+    book.categories_str = ", ".join([category.name for category in book.categories.all()])
+    return render(request, 'books/details.html', {'book': book})
+
+
+@user_passes_test(user_is_admin)
 def bulk_actions(request, action_name):
     book_list = []
     if action_name == 'remove' and request.method == 'POST':

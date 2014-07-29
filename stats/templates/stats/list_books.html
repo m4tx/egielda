@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load manage_header %}
 {% load math %}
+{% load price %}
 
 {% block head %}
     <style>
@@ -58,11 +59,11 @@
             {% blocktrans %}{{ user_name }}'s books{% endblocktrans %}
         </div>
         <ul class="list-group">
-            {% for book, purchasers in book_list %}
+            {% for book, purchasers in stats %}
                 <li class="list-group-item">
                     <h5>
-                        <a href="{% url 'books.views.edit_book' book.book_type.pk %}">{{ book.book_type.title }}</a>
-                        <span class="text-muted pull-right">{{ book.book_type.price|floatformat:2 }}{{ currency }}</span>
+                        <a href="{% url 'books.views.book_details' book.book_type.pk %}">{{ book.book_type.title }}</a>
+                        <span class="text-muted pull-right">{{ book.book_type.price|price }}</span>
                     </h5><br/>
                     {% trans "Sold" context "count" %}: {{ purchasers|length }}/<b>{{ book.amount }}</b>
                     {% if purchasers|length > 0 %}
@@ -94,7 +95,7 @@
                             </tbody>
                         </table>
                         {% trans "In total" %}:
-                        {{ purchasers|length|multiply:book.book_type.price|floatformat:2 }}{{ currency }}
+                        {{ purchasers|length|multiply:book.book_type.price|price }}
                     {% endif %}
                 </li>
             {% endfor %}

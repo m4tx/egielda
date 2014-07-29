@@ -4,7 +4,6 @@ from django.utils.translation import ugettext as _
 from categories.models import Category
 from orders.models import Order
 from common.models import AppUser
-from egielda import settings
 
 
 class BookType(models.Model):
@@ -15,13 +14,6 @@ class BookType(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     visible = models.BooleanField(default=False)
     categories = models.ManyToManyField(Category, blank=True)
-
-    def price_string(self):
-        if float(self.price) != 0:
-            return "%(price).2f%(currency)s" % {'price': self.price,
-                                                'currency': getattr(settings, 'CURRENCY', 'USD')}
-        else:
-            return "N/A"
 
     def __str__(self):
         return _(

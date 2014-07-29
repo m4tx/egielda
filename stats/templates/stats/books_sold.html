@@ -1,6 +1,7 @@
 {% extends "common/base.html" %}
 {% load i18n %}
 {% load manage_header %}
+{% load price %}
 
 {% block title %}{% trans "Books sold" %}{% endblock %}
 
@@ -55,15 +56,15 @@
             <div class="panel-heading">
                 <b>
                     {{ key }}
-                    <span class="pull-right">{{ value.1 }}{{ currency }}</span>
+                    <span class="pull-right">{{ value.1|price }}</span>
                 </b>
             </div>
             <ul class="list-group">
                 {% for el in value.0 %}
                     <li class="list-group-item">
                         <h5>
-                            <a href="{% url 'books.views.edit_book' el.book_type.pk %}">{{ el.book_type.title }}</a>
-                            <span class="text-muted pull-right">{{ el.book_type.price|floatformat:2 }}{{ currency }}</span>
+                            <a href="{% url 'books.views.book_details' el.book_type.pk %}">{{ el.book_type.title }}</a>
+                            <span class="text-muted pull-right">{{ el.book_type.price|price }}</span>
                         </h5>
                         <span class="text-muted">{% blocktrans with purchaser=el.purchaser sold_date=el.sold_date|date:'H:i' %}{{ purchaser }} at {{ sold_date }}{% endblocktrans %}</span>
                     </li>
