@@ -1,21 +1,22 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
-from common.auth import user_is_admin
 from django.utils.translation import ugettext_lazy as _
 from django.http.response import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
+from common.auth import user_is_admin
 from settings.models import Setting
 from settings.forms import DatesForm
 from settings.settings import Settings
-
-from settings.settings import string2datetime
+from settings.settings import string_to_datetime
 from utils.alerts import set_success_msg, alerts
+from utils.dates import datetime_html_format
 
 
 @user_passes_test(user_is_admin)
 def index(request):
     return HttpResponseRedirect(reverse(dates))
+
 
 @user_passes_test(user_is_admin)
 def dates(request):
@@ -35,18 +36,21 @@ def dates(request):
     else:
         try:
             settings = Settings(['start_sell', 'end_sell', 'start_purchase', 'end_purchase'])
-            start_sell = string2datetime(settings.get('start_sell'))
-            end_sell = string2datetime(settings.get('end_sell'))
-            start_purchase = string2datetime(settings.get('start_purchase'))
-            end_purchase = string2datetime(settings.get('end_purchase'))
+            start_sell = string_to_datetime(settings.get('start_sell'))
+            end_sell = string_to_datetime(settings.get('end_sell'))
+            start_purchase = string_to_datetime(settings.get('start_purchase'))
+            end_purchase = string_to_datetime(settings.get('end_purchase'))
 
-            values = dict()
-            values['start_sell'] = start_sell.strftime("%Y-%m-%dT%H:%M")
-            values['end_sell'] = end_sell.strftime("%Y-%m-%dT%H:%M")
-            values['start_purchase'] = start_purchase.strftime("%Y-%m-%dT%H:%M")
-            values['end_purchase'] = end_purchase.strftime("%Y-%m-%dT%H:%M")
+            values = {
+                'start_sell': datetime_html_format(start_sell),
+                'end_sell': datetime_html_format(end_sell),
+                'start_purchase': datetime_html_format(start_purchase),
+                'end_purchase': datetime_html_format(end_purchase),
+            }
             form = DatesForm(values)
         except KeyError:
             form = DatesForm()
 
     return render(request, 'settings/dates.html', alerts(request, {'page_title': _("Dates"), 'form': form}))
+
+

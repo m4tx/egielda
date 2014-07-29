@@ -1,6 +1,7 @@
-from settings.models import Setting
-from datetime import datetime
 from django.utils import timezone
+
+from settings.models import Setting
+from utils.dates import string_to_datetime
 
 
 class Settings:
@@ -17,8 +18,8 @@ class Settings:
 def is_sell_available():
     try:
         settings = Settings(['start_sell', 'end_sell'])
-        start_sell = string2datetime(settings.get('start_sell'))
-        end_sell = string2datetime(settings.get('end_sell'))
+        start_sell = string_to_datetime(settings.get('start_sell'))
+        end_sell = string_to_datetime(settings.get('end_sell'))
 
         now = timezone.now()
 
@@ -34,8 +35,8 @@ def is_sell_available():
 def is_purchase_available():
     try:
         settings = Settings(['start_purchase', 'end_purchase'])
-        start_purchase = string2datetime(settings.get('start_purchase'))
-        end_purchase = string2datetime(settings.get('end_purchase'))
+        start_purchase = string_to_datetime(settings.get('start_purchase'))
+        end_purchase = string_to_datetime(settings.get('end_purchase'))
 
         now = timezone.now()
 
@@ -48,7 +49,3 @@ def is_purchase_available():
     return False
 
 
-def string2datetime(date):
-    tz_index = date.index('+')
-    date = date[:tz_index] + date[tz_index:].replace(':', '')
-    return datetime.strptime(date, '%Y-%m-%d %H:%M:%S%z')
