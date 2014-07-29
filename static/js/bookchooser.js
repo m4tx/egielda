@@ -82,7 +82,7 @@ function addRetrievedBooks() {
             var tr = $('#bookList').find('table tr[data-pk="' + chosenBooks[bookid].pk + '"]');
             var inStock = $('td.in-stock', tr);
             inStock.text(parseInt(inStock.text()) - chosenBooks[bookid].amount);
-            addExistingBook(tr, chosenBooks[bookid].amount);
+            addExistingBook(tr.attr("data-id", bookid), chosenBooks[bookid].amount);
         } else {
             var book = $.extend({}, chosenBooks[bookid]); // Clone the associative array
             book.price = "N/A";
@@ -191,8 +191,18 @@ function sortTable() {
     rows.detach();
 
     rows.sort(function (a, b) {
-        a = parseInt($(a).find('.in-stock').text());
-        b = parseInt($(b).find('.in-stock').text());
+        var aAmount = 0;
+        if(typeof $(a).attr("data-id") != 'undefined') {
+            aAmount = chosenBooks[parseInt($(a).attr("data-id"))].amount;
+        }
+
+        var bAmount = 0;
+        if(typeof $(b).attr("data-id") != 'undefined') {
+            bAmount = chosenBooks[parseInt($(b).attr("data-id"))].amount;
+        }
+
+        a = parseInt($(a).find('.in-stock').text()) + aAmount;
+        b = parseInt($(b).find('.in-stock').text()) + bAmount;
 
         if (a < b) {
             return 1;
