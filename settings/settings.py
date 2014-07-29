@@ -12,10 +12,10 @@ class Settings:
         self.__dict__['settings'] = dict((o.name, o.value) for o in settings)
 
     def __getattr__(self, item):
-        return str(self.__dict__['settings'].get(item))
+        return self.__dict__['settings'][item]
 
     def __setattr__(self, key, value):
-        Setting.objects.update_or_create(name=key, defaults={'value': str(value)})
+        Setting.objects.update_or_create(name=key, defaults={'value': value})
 
 
 def is_sell_available():
