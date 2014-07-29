@@ -5,21 +5,24 @@ from utils.dates import string_to_datetime
 
 
 class Settings:
-    settings = dict()
-
-    def __init__(self, values):
+    def __init__(self, values=None):
+        if values is None:
+            return
         settings = Setting.objects.filter(name__in=values)
-        self.settings = dict((o.name, o.value) for o in settings)
+        self.__dict__['settings'] = dict((o.name, o.value) for o in settings)
 
-    def get(self, name):
-        return self.settings[name]
+    def __getattr__(self, item):
+        return str(self.__dict__['settings'].get(item))
+
+    def __setattr__(self, key, value):
+        Setting.objects.update_or_create(name=key, defaults={'value': str(value)})
 
 
 def is_sell_available():
     try:
         settings = Settings(['start_sell', 'end_sell'])
-        start_sell = string_to_datetime(settings.get('start_sell'))
-        end_sell = string_to_datetime(settings.get('end_sell'))
+        start_sell = string_to_datetime(settings.start_sell)
+        end_sell = string_to_datetime(settings.end_sell)
 
         now = timezone.now()
 
@@ -35,8 +38,8 @@ def is_sell_available():
 def is_purchase_available():
     try:
         settings = Settings(['start_purchase', 'end_purchase'])
-        start_purchase = string_to_datetime(settings.get('start_purchase'))
-        end_purchase = string_to_datetime(settings.get('end_purchase'))
+        start_purchase = string_to_datetime(settings.start_purchase)
+        end_purchase = string_to_datetime(settings.end_purchase)
 
         now = timezone.now()
 

@@ -5,7 +5,6 @@ from django.http.response import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 from common.auth import user_is_admin
-from settings.models import Setting
 from settings.forms import DatesForm
 from settings.settings import Settings
 from settings.settings import string_to_datetime
@@ -23,23 +22,19 @@ def dates(request):
     if request.method == 'POST':
         form = DatesForm(request.POST)
         if form.is_valid():
-            Setting.objects.update_or_create(name="start_sell",
-                                             defaults={'value': form.cleaned_data['start_sell']})
-            Setting.objects.update_or_create(name="end_sell",
-                                             defaults={'value': form.cleaned_data['end_sell']})
-            Setting.objects.update_or_create(name="start_purchase",
-                                             defaults={'value': form.cleaned_data['start_purchase']})
-            Setting.objects.update_or_create(name="end_purchase",
-                                             defaults={'value': form.cleaned_data['end_purchase']})
+            Settings().start_sell = form.cleaned_data['start_sell']
+            Settings().end_sell = form.cleaned_data['end_sell']
+            Settings().start_purchase = form.cleaned_data['start_purchase']
+            Settings().end_purchase = form.cleaned_data['end_purchase']
             set_success_msg(request, 'settings_updated')
             return HttpResponseRedirect("")
     else:
         try:
             settings = Settings(['start_sell', 'end_sell', 'start_purchase', 'end_purchase'])
-            start_sell = string_to_datetime(settings.get('start_sell'))
-            end_sell = string_to_datetime(settings.get('end_sell'))
-            start_purchase = string_to_datetime(settings.get('start_purchase'))
-            end_purchase = string_to_datetime(settings.get('end_purchase'))
+            start_sell = string_to_datetime(settings.start_sell)
+            end_sell = string_to_datetime(settings.end_sell)
+            start_purchase = string_to_datetime(settings.start_purchase)
+            end_purchase = string_to_datetime(settings.end_purchase)
 
             values = {
                 'start_sell': datetime_html_format(start_sell),
