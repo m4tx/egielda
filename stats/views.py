@@ -11,12 +11,8 @@ from books.models import BookType, Book
 
 @user_passes_test(user_is_admin)
 def index(request):
-    stats = dict()
-    books = BookType.objects.filter(book__sold=True).annotate(count=Count('book'))
-    stats['books_sold'] = books.aggregate(Sum('count'))['count__sum'] or 0
-    stats['books_sold_value'] = books.aggregate(Sum('price', field='count * price'))['price__sum'] or 0
 
-    return render(request, 'stats/index.html', {'stats': stats})
+    return render(request, 'stats/index.html', {})
 
 
 @user_passes_test(user_is_admin)
