@@ -31,17 +31,9 @@ def dates(request):
     else:
         try:
             settings = Settings(['start_sell', 'end_sell', 'start_purchase', 'end_purchase'])
-            start_sell = string_to_datetime(settings.start_sell)
-            end_sell = string_to_datetime(settings.end_sell)
-            start_purchase = string_to_datetime(settings.start_purchase)
-            end_purchase = string_to_datetime(settings.end_purchase)
-
-            values = {
-                'start_sell': datetime_html_format(start_sell),
-                'end_sell': datetime_html_format(end_sell),
-                'start_purchase': datetime_html_format(start_purchase),
-                'end_purchase': datetime_html_format(end_purchase),
-            }
+            # Pack the retrieved values into new dictionary, formatting them as HTML datetime first
+            values = dict(
+                (o, datetime_html_format(string_to_datetime(v))) for o, v in settings.__dict__['settings'].items())
             form = DatesForm(values)
         except KeyError:
             form = DatesForm()
