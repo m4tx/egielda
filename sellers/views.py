@@ -12,6 +12,7 @@ from books.models import BookType, Book
 from common.auth import user_is_admin
 from common.models import AppUser
 from utils.alerts import alerts, set_success_msg
+from egielda import settings
 
 
 @user_passes_test(user_is_admin)
@@ -73,7 +74,8 @@ def accept_books(request, user_pk):
         return HttpResponseRedirect(reverse(index))
     else:
         return render(request, 'sellers/accept.html',
-                      {'user_name': user.user_name(), 'book_list': book_list, 'student_pk': user_pk})
+                      {'user_name': user.user_name(), 'book_list': book_list, 'student_pk': user_pk,
+                       'currency': getattr(settings, 'CURRENCY', 'USD')})
 
 
 @user_passes_test(user_is_admin)
