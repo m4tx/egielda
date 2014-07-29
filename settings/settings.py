@@ -5,6 +5,14 @@ from utils.dates import string_to_datetime
 
 
 class Settings:
+    """
+    "Wrapper" class for Setting Model. The usage is following:
+    * Adding (or updating if one already exists) a setting can be done using __setattr__. Example usage:
+      ``Settings().setting = value``
+    * In order to retrieve a setting from the database, you have to pre-fetch it in constructor, then use __getattr__.
+      Example usage: ``Settings('setting').setting``.
+    """
+
     def __init__(self, *values):
         if values is None:
             return
