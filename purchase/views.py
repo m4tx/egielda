@@ -34,11 +34,10 @@ class PurchaseWizard(BookChooserWizard):
         book_dict = dict((book.book_type, book.pk) for book in books)
 
         # Reserve the Books and create our Order
-        Book.objects.filter(pk__in=book_dict.values()).update(reserved_until=timezone.now() + timedelta(1),
-                                                              reserver=user)
         order = Order(user=user, valid_until=timezone.now() + timedelta(1))
         order.save()
-        order.books.add(*book_dict.values())
+        Book.objects.filter(pk__in=book_dict.values()).update(reserved_until=timezone.now() + timedelta(1),
+                                                              reserver=user, order=order)
 
     def get_book_list(self, book_list):
         existing_list = []
