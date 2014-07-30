@@ -17,7 +17,7 @@
                     <td>{{ order.date }}</td>
                     <td>{{ order.valid_until }}</td>
                     <td>{{ order.user }}</td>
-                    <td>{{ order.books.count }}</td>
+                    <td>{{ order.book_set.count }}</td>
                     <td>
                         <a class="btn btn-xs btn-link" role="button"
                            href="{% url 'orders.views.order_details' order.pk %}">
