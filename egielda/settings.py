@@ -92,7 +92,7 @@ LOGIN_REDIRECT_URL = 'egielda.views.home'
 LANGUAGE_CODE = 'pl-pl'
 CURRENCY = 'zł'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Warsaw'
 
 USE_I18N = True
 
