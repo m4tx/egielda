@@ -33,5 +33,5 @@ def get_orders() -> QuerySet:
     The function returns QuerySet of Order model with all necessary values for displaying also selected/prefetched.
     :return: the QuerySet of Order model
     """
-    return Order.objects.select_related('user').prefetch_related('books').annotate(
+    return Order.objects.select_related('user').prefetch_related('book_set').annotate(
         sold_count=Count('book', field='CASE WHEN books_book.sold THEN 1 END'))
