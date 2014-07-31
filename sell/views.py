@@ -17,6 +17,10 @@ class SellWizard(BookChooserWizard):
         return "sell"
 
     @property
+    def session_var_name(self):
+        return "sell_chosen_books"
+
+    @property
     def feature_add_new(self):
         return True
 

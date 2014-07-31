@@ -21,6 +21,10 @@ class PurchaseWizard(BookChooserWizard):
         return "purchase"
 
     @property
+    def session_var_name(self):
+        return "purchase_chosen_books"
+
+    @property
     def feature_books_in_stock(self):
         return True
 

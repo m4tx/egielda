@@ -6,7 +6,6 @@ from django.conf.urls import url
 
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import transaction
-from django.db.models import Count
 from django.forms import model_to_dict
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render
@@ -34,6 +33,14 @@ class BookChooserWizard:
     def url_namespace(self) -> str:
         """
         :return: the URL namespace that the particular subclass of BookChooserWizard is in
+        """
+        return None
+
+    @property
+    @abstractmethod
+    def session_var_name(self) -> str:
+        """
+        :return: session variable name list of chosen books should be stored in
         """
         return None
 
@@ -104,7 +111,7 @@ class BookChooserWizard:
             return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
 
         if request.method == 'POST':
-            request.session['chosen_books'] = request.POST['book_data']
+            request.session[self.session_var_name] = request.POST['book_data']
             if 'btn-back' in request.POST:
                 return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
             elif 'btn-next' in request.POST:
@@ -132,18 +139,19 @@ class BookChooserWizard:
         return render(request, 'book_chooser_wizard/books.html',
                       {'page_title': self.page_title, 'form': form, 'book_list': book_list,
                        'category_list': category_list,
-                       'chosen_books': request.session['chosen_books'] if 'chosen_books' in request.session else None,
+                       'chosen_books': request.session[
+                           self.session_var_name] if self.session_var_name in request.session else None,
                        'currency': getattr(settings, 'CURRENCY', 'USD'), 'feature_add_new': self.feature_add_new,
                        'feature_books_in_stock': self.feature_books_in_stock})
 
     def summary(self, request):
         if 'personal_data' not in request.session:
             return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
-        elif 'chosen_books' not in request.session:
+        elif self.session_var_name not in request.session:
             return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
 
         try:
-            book_list = json.loads(request.session['chosen_books'])
+            book_list = json.loads(request.session[self.session_var_name])
             if len(book_list) == 0:
                 return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
             if request.method == 'POST':
@@ -154,7 +162,7 @@ class BookChooserWizard:
                         user = AppUser(**request.session['personal_data'])
                         user.save()
                         self.process_books_summary(user, book_list)
-                    del request.session['chosen_books']  # Prevent from adding the same books multiple times
+                    del request.session[self.session_var_name]  # Prevent from adding the same books multiple times
                     return self.success(request)
             else:
                 return render(request, 'book_chooser_wizard/summary.html',
