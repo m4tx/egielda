@@ -25,12 +25,12 @@ class BookType(models.Model):
 class Book(models.Model):
     book_type = models.ForeignKey(BookType)
     owner = models.ForeignKey(AppUser, related_name='appuser_owner')
-    accepted = models.BooleanField()
+    accepted = models.BooleanField(default=False)
     """Is the book physically available for buying"""
     order = models.ForeignKey(Order, null=True, blank=True)
     reserved_until = models.DateTimeField(null=True, blank=True)
     reserver = models.ForeignKey(AppUser, related_name='appuser_reserver', null=True, blank=True)
-    sold = models.BooleanField()
+    sold = models.BooleanField(default=False)
     sold_date = models.DateTimeField(null=True, blank=True)
     purchaser = models.ForeignKey(AppUser, related_name='appuser_purchaser', null=True, blank=True)
 
