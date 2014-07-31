@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from collections import defaultdict
+from collections import Counter
 import json
 
 from django.conf.urls import url
@@ -120,9 +120,7 @@ class BookChooserWizard:
         book_list = BookType.objects.filter(visible=True).exclude(price=0).prefetch_related('categories')
         if self.feature_books_in_stock:
             books_available = get_available_books().filter(book_type__in=book_list)
-            countdict = defaultdict(int)
-            for book in books_available:
-                countdict[book.book_type] += 1
+            countdict = Counter(book.book_type for book in books_available)
             for book_type in book_list:
                 book_type.count = countdict[book_type]
 
