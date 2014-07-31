@@ -1,18 +1,37 @@
 from collections import Counter
+from collections import defaultdict
 
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from django.db.models import Sum, Count
-from common.auth import user_is_admin
+from django.db.models import Count
 
+from common.auth import user_is_admin
 from common.models import AppUser
 from books.models import BookType, Book
+from utils.dates import date_range
 
 
 @user_passes_test(user_is_admin)
 def index(request):
+    books = Book.objects.select_related('book_type').prefetch_related('book_type__categories').filter(sold=True)
+    books_by_date = defaultdict(list)
+    for book in books:
+        books_by_date[book.sold_date.date()].append(book)
+    sold_book_categories = defaultdict(int)
+    for book in books:
+        for category in book.book_type.categories.all():
+            sold_book_categories[category] += 1
 
-    return render(request, 'stats/index.html', {})
+    first_day = min(books_by_date.keys())
+    last_day = max(books_by_date.keys())
+
+    sold_book_counts = list((date, len(books_by_date[date])) for date in date_range(first_day, last_day))
+    sold_book_prices = list(
+        (date, sum(book.book_type.price for book in books_by_date[date])) for date in date_range(first_day, last_day))
+
+    return render(request, 'stats/index.html',
+                  {'sold_book_counts': sold_book_counts, 'sold_book_prices': sold_book_prices,
+                   'sold_book_categories': sold_book_categories.items()})
 
 
 @user_passes_test(user_is_admin)

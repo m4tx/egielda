@@ -1,7 +1,12 @@
 {% extends "common/base.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load manage_header %}
 {% load price %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/nv.d3.css' %}">
+{% endblock %}
 
 {% block title %}{% trans "Statistics" %}{% endblock %}
 
@@ -14,4 +19,64 @@
         <li><a href="{% url 'stats.views.users' %}">{% trans "Users" %}</a></li>
         <li><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></li>
     </ul>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="sold-book-amounts-chart" class="embed-responsive embed-responsive-16by9">
+                <svg class="embed-responsive-item"></svg>
+            </div>
+        </div>
+        <div class="col-md-6">
+            Placeholder for a chart
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="sold-book-prices-chart" class="embed-responsive embed-responsive-16by9">
+                <svg class="embed-responsive-item"></svg>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="sold-book-categories-chart" class="embed-responsive embed-responsive-16by9">
+                <svg class="embed-responsive-item"></svg>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+    <script src="{% static 'js/nv.d3.min.js' %}"></script>
+    <script src="{% static 'js/statscharts.js' %}"></script>
+    <script>
+        function soldBookAmountsData() {
+            return  [
+                {
+                    values: [
+                        {% for date, count in sold_book_counts %}
+                            {"label": "{{ date|date:"d E" }}", "value":{{ count }}},
+                        {% endfor %}
+                    ]
+                }
+            ]
+        }
+        function soldBookPricesData() {
+            return  [
+                {
+                    values: [
+                        {% for date, count in sold_book_prices %}
+                            {"label": "{{ date|date:"d E" }}", "value":{{ count }}},
+                        {% endfor %}
+                    ]
+                }
+            ]
+        }
+        function soldBookCategoriesData() {
+            return  [
+                {% for category, count in sold_book_categories %}
+                    {"label": "{{ category.name }}", "value":{{ count }}},
+                {% endfor %}
+            ]
+        }
+    </script>
 {% endblock %}
