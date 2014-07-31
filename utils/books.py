@@ -14,12 +14,16 @@ def books_by_types(books):
     """
     amounts = Counter([book.book_type for book in books])
     d = {}
+    for book_type in amounts.keys():
+        book_type.amount = amounts[book_type]
     for book in books:
-        book.book_type.amount = amounts[book.book_type]
         d[book.book_type] = book
     return d
 
 
 def get_available_books():
+    """
+    :return: QuerySet including books which are available for buying
+    """
     return Book.objects.prefetch_related('book_type').filter(accepted=True, sold=False).filter(
         Q(reserved_until__lte=timezone.now()) | Q(reserved_until__isnull=True))
