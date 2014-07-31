@@ -19,6 +19,12 @@
                     <td>{{ order.user }}</td>
                     <td>{{ order.book_set.count }}</td>
                     <td>
+                        {% if show_execute %}
+                            <a class="btn btn-xs btn-link" role="button"
+                               href="{% url 'orders.views.execute' order.pk %}">
+                                <span class="glyphicon glyphicon-ok"></span> {% trans "Execute" %}
+                            </a>
+                        {% endif %}
                         <a class="btn btn-xs btn-link" role="button"
                            href="{% url 'orders.views.order_details' order.pk %}">
                             <span class="glyphicon glyphicon-list-alt"></span> {% trans "Show order" %}

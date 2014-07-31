@@ -1,0 +1,37 @@
+{% load i18n %}
+{% load price %}
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>{% trans "ISBN" %}</th>
+            <th>{% trans "Publisher" %}</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Publication" %}</th>
+            <th>{% trans "Price" %}</th>
+            <th>{% trans "Seller" %}</th>
+        </tr>
+        </thead>
+
+        {% for book in book_list %}
+            <tr>
+                <td>{{ book.book_type.isbn }}</td>
+                <td>{{ book.book_type.publisher }}</td>
+                <td>{{ book.book_type.title }}</td>
+                <td>{{ book.book_type.publication_year }}</td>
+                <td>{{ book.book_type.price|price }}</td>
+                <td>{{ book.owner }}</td>
+            </tr>
+        {% endfor %}
+
+        <tr class="bg-info">
+            <td colspan="4" class="text-right">{% trans "Total price:" %}</td>
+            <td colspan="2"><strong>{{ price_sum|price }}</strong></td>
+        </tr>
+        <tr class="bg-info">
+            <td colspan="4" class="text-right">{% trans "Number of books:" %}</td>
+            <td colspan="2"><strong>{{ book_list|length }}</strong></td>
+        </tr>
+    </table>
+</div>

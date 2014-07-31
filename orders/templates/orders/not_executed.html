@@ -5,6 +5,8 @@
 {% block title %}{% trans "Orders" %} – {% trans "Not executed" %}{% endblock %}
 
 {% block content %}
+    {% include 'common/alerts.html' %}
+
     <h1>{% trans "Orders" %}</h1>
     {% manage_header "orders/not_executed" %}
 
@@ -14,5 +16,5 @@
         <li><a href="{% url 'orders.views.executed' %}">{% trans "Executed" %}</a></li>
     </ul>
 
-    {% include "orders/orders_table.html" %}
+    {% include "orders/orders_table.html" with show_execute=True %}
 {% endblock %}

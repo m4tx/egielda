@@ -24,6 +24,7 @@ def manage_header(*args):
         }],
         'orders': ['orders.views.index', _("Orders"), {
             'not_executed': ['orders.views.not_executed', _("Not executed")],
+            'execute': ['orders.views.execute', _("Execute")],
             'outdated': ['orders.views.outdated', _("Outdated")],
             'executed': ['orders.views.executed', _("Executed")],
             'details': ['orders.views.details', _("Details")]

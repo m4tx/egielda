@@ -1,0 +1,17 @@
+{% extends 'books/book_list_base.html' %}
+{% load i18n %}
+
+{% block thead_footer %}
+    <th>{% trans "Amount" %}</th>
+    <th>{% trans "In stock" %}</th>
+{% endblock %}
+
+{% block tr_footer %}
+    <td>
+        <input type="number" step="1" class="form-control input-sm" name="amount-{{ book.pk }}"
+               value="{{ book.amount }}">
+    </td>
+    <td>
+        {{ book.in_stock }}
+    </td>
+{% endblock %}

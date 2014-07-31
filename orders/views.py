@@ -1,9 +1,20 @@
+from collections import Counter
+
+from django.core.urlresolvers import reverse
+from django.db import transaction
+
 from django.db.models import Count
 from django.db.models.query import QuerySet
+from django.http import HttpResponseRedirect
+from django.http.response import HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
+from books.models import Book
+
 from orders.models import Order
+from utils.alerts import set_success_msg, alerts
+from utils.books import books_by_types, get_available_books
 
 
 def order_details(request, order_pk):
@@ -15,7 +26,7 @@ def order_details(request, order_pk):
 
 def not_executed(request):
     orders = get_orders().filter(valid_until__gt=timezone.now(), sold_count=0)
-    return render(request, 'orders/not_executed.html', {'orders': orders})
+    return render(request, 'orders/not_executed.html', alerts(request, {'orders': orders}))
 
 
 def outdated(request):
@@ -26,6 +37,52 @@ def outdated(request):
 def executed(request):
     orders = get_orders().exclude(sold_count=0)
     return render(request, 'orders/executed.html', {'orders': orders})
+
+
+def execute(request, order_pk):
+    order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
+                              pk=order_pk)
+    book_types_dict = books_by_types(order.book_set.all())
+    book_types = book_types_dict.keys()
+    available = get_available_books()
+    counter = Counter(book.book_type for book in available)
+    for book_type in book_types:
+        book_type.in_stock = counter[book_type] + book_type.amount
+
+    if request.method == 'POST':
+        with transaction.atomic():
+            for book_type in book_types:
+                new_amount = int(request.POST['amount-' + str(book_type.pk)])
+                if book_type.in_stock < new_amount:
+                    return HttpResponseBadRequest()
+
+                if new_amount < book_type.amount:
+                    book_list = Book.objects.filter(order=order, book_type=book_type)
+                    books_to_keep = book_list[:new_amount]
+                    book_list.exclude(pk__in=books_to_keep).update(order=None, reserved_until=timezone.now())
+                elif new_amount > book_type.amount:
+                    amount = new_amount - book_type.amount
+                    book_instance = book_types_dict[book_type]
+                    books_to_add = get_available_books().filter(book_type=book_type)[:amount]
+                    Book.objects.filter(pk__in=books_to_add).update(order=order,
+                                                                    reserved_until=book_instance.reserved_until,
+                                                                    reserver=book_instance.reserver)
+
+        return HttpResponseRedirect(reverse(execute_accept, args=order_pk))
+    else:
+        return render(request, 'orders/execute.html', {'order': order, 'book_list': book_types})
+
+
+def execute_accept(request, order_pk):
+    order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
+                              pk=order_pk)
+    if request.method == 'POST':
+        order.book_set.all().update(sold=True, sold_date=timezone.now(), purchaser=order.user)
+        set_success_msg(request, 'order_executed')
+        return HttpResponseRedirect(reverse(not_executed))
+    else:
+        price_sum = sum(book.book_type.price for book in order.book_set.all())
+        return render(request, 'orders/execute_accept.html', {'order': order, 'price_sum': price_sum})
 
 
 def get_orders() -> QuerySet:
