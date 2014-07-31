@@ -1,8 +1,9 @@
-from time import sleep
 from django.test import LiveServerTestCase
+
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from books.models import BookType, Book
+
 from common.models import AppUser
 from utils.tests import create_test_superuser, login
 
@@ -19,6 +20,7 @@ class SellersLiveTests(LiveServerTestCase):
         type2.save()
         Book(book_type=type1, owner=user, accepted=True).save()
         Book(book_type=type1, owner=user, accepted=False).save()
+        Book(book_type=type2, owner=user, accepted=False).save()
         Book(book_type=type2, owner=user, accepted=False).save()
 
         create_test_superuser()
@@ -55,13 +57,17 @@ class SellersLiveTests(LiveServerTestCase):
         price_field = self.selenium.find_element_by_xpath('//input[contains(@name, "price")]')
         price_field.clear()
         price_field.send_keys("99")
-        amount_field = self.selenium.find_element_by_xpath('//input[contains(@name, "amount")]')
+        amount_field = self.selenium.find_element_by_xpath('//input[contains(@name, "amount") and @value=1]')
         amount_field.clear()
-        amount_field.send_keys("2")
+        amount_field.send_keys("3")
+        amount_field = self.selenium.find_element_by_xpath('//input[contains(@name, "amount") and @value=2]')
+        amount_field.clear()
+        amount_field.send_keys("0")
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
 
         books = Book.objects.all()
-        self.assertEqual(len(books), 4)  # Check if we actually created one Book by setting quantity to 2
+        # Check if we actually created and deleted Books by modifying quantities
+        self.assertEqual(len(books), 4)
         self.assertEqual(len(books.filter(accepted=True)), 4)  # Check if the Books are accepted now
         # Check whether the BookType which was not visible, is visible now
         self.assertEqual(len(BookType.objects.filter(visible=True)), 2)
