@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from books.models import BookType, Book
 from common.bookchooserwizard import BookChooserWizard
 from orders.models import Order
-from purchase.utils import get_available_books
+from utils.books import get_available_books
 
 
 class PurchaseWizard(BookChooserWizard):

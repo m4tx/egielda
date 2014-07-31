@@ -16,7 +16,7 @@ from books.models import BookType
 from common.forms import PersonalDataForm
 from common.models import AppUser
 from egielda import settings
-from purchase.utils import get_available_books
+from utils.books import get_available_books
 
 
 class BookChooserWizard:
