@@ -17,35 +17,31 @@
         </tr>
         </thead>
 
-        {% for book in book_list %}
+        {% for book_type in book_type_list %}
             <tr{% block tr_attributes %}{% endblock %}>
                 {% block tr_header %}{% endblock %}
-                <td>{{ book.book_type.isbn }}</td>
-                <td>{{ book.book_type.publisher }}</td>
-                <td>{{ book.book_type.title }}</td>
-                <td>{{ book.book_type.publication_year }}</td>
+                <td>{{ book_type.isbn }}</td>
+                <td>{{ book_type.publisher }}</td>
+                <td>{{ book_type.title }}</td>
+                <td>{{ book_type.publication_year }}</td>
                 <td>
-                    {% if not book.book_type.visible %}
+                    {% if not book_type.visible %}
                         <div class="input-group input-group-sm">
-                            <input type="number" step="0.01" max="999.99" class="form-control" name="price-{{ book.book_type.pk }}" value="{{ book.book_type.price }}">
+                            <input type="number" step="0.01" max="999.99" class="form-control" name="price-{{ book_type.pk }}" value="{{ book_type.price }}">
                             <span class="input-group-addon">{{ currency }}</span>
                         </div>
                     {% else %}
-                        {{ book.book_type.price|price }}
+                        {{ book_type.price|price }}
                 {% endif %}
                 </td>
                 <td>
-                    {% if not book.accepted %}
-                        <input type="number" step="1" class="form-control input-sm" name="amount-{{ book.book_type.pk }}" value="{{ book.amount }}">
-                    {% else %}
-                        {{ book.amount }}
-                    {% endif %}
+                    <input type="number" step="1" class="form-control input-sm" name="amount-{{ book_type.pk }}" value="{{ book_type.amount }}">
                 </td>
                 {% if show_actions %}
                     <td>
                         <div class="btn-toolbar" role="toolbar">
-                            {% if not book.book_type.visible %}
-                                <a href="{% url 'sellers.views.accept_edit_book' student_pk book.book_type.pk %}" class="btn btn-xs btn-link" role="button">
+                            {% if not book_type.visible %}
+                                <a href="{% url 'sellers.views.accept_edit_book' student_pk book_type.pk %}" class="btn btn-xs btn-link" role="button">
                                     <span class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}
                                 </a>
                             {% endif %}

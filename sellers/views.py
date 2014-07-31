@@ -1,5 +1,4 @@
 from decimal import Decimal
-from collections import Counter
 
 from django.contrib.auth.decorators import user_passes_test
 from django.core.urlresolvers import reverse
@@ -13,6 +12,7 @@ from common.auth import user_is_admin
 from common.models import AppUser
 from utils.alerts import alerts, set_success_msg
 from egielda import settings
+from utils.books import books_by_types
 
 
 @user_passes_test(user_is_admin)
@@ -30,51 +30,44 @@ def index(request):
 def accept_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
     books = Book.objects.filter(owner=user, accepted=False).select_related('book_type')
-    book_list = list(books)
 
-    amounts = Counter([(str(b.book_type.isbn) + b.book_type.title) for b in book_list])
-    d = {}
-    for book in book_list:
-        book.amount = amounts[str(book.book_type.isbn) + book.book_type.title]
-        d[(str(book.book_type.isbn) + book.book_type.title)] = book
-    book_list = list(d.values())
+    d = books_by_types(books)
+    book_type_list = list(d.keys())
 
-    if not book_list:
+    if not books:
         raise Http404("There's no books of that user.")
 
     if request.method == 'POST':
         with transaction.atomic():
             books.update(accepted=True)
-            for book in book_list:
-                if not book.book_type.visible:
-                    book.book_type.price = Decimal(request.POST['price-' + str(book.book_type.pk)])
-                    book.book_type.visible = True
-                    book.book_type.save()
+            for book_type in book_type_list:
+                if not book_type.visible:
+                    book_type.price = Decimal(request.POST['price-' + str(book_type.pk)])
+                    book_type.visible = True
+                    book_type.save()
 
-            for book in book_list:
-                if int(request.POST['amount-' + str(book.book_type.pk)]) < book.amount:
+            for book_type in book_type_list:
+                if int(request.POST['amount-' + str(book_type.pk)]) < book_type.amount:
                     books_list = Book.objects.filter(owner=user,
-                                                     book_type__isbn=book.book_type.isbn,
-                                                     book_type__title=book.book_type.title
-                    )
+                                                     book_type__isbn=book_type.isbn,
+                                                     book_type__title=book_type.title)
 
-                    books_to_keep = books_list[:int(request.POST['amount-' + str(book.book_type.pk)])]
+                    books_to_keep = books_list[:int(request.POST['amount-' + str(book_type.pk)])]
                     books_list.exclude(pk__in=books_to_keep).delete()
 
-                elif int(request.POST['amount-' + str(book.book_type.pk)]) > book.amount:
-                    amount = int(request.POST['amount-' + str(book.book_type.pk)]) - book.amount
-                    del book.amount
-                    dbbook = book
+                elif int(request.POST['amount-' + str(book_type.pk)]) > book_type.amount:
+                    amount = int(request.POST['amount-' + str(book_type.pk)]) - book_type.amount
+                    book = d[book_type]
                     for i in range(0, amount):
-                        dbbook.pk = None
-                        dbbook.accepted = True
-                        dbbook.save()
+                        book.pk = None
+                        book.accepted = True
+                        book.save()
 
         set_success_msg(request, 'books_accepted')
         return HttpResponseRedirect(reverse(index))
     else:
         return render(request, 'sellers/accept.html',
-                      {'user_name': user.user_name(), 'book_list': book_list, 'student_pk': user_pk,
+                      {'user_name': user.user_name(), 'book_type_list': book_type_list, 'student_pk': user_pk,
                        'currency': getattr(settings, 'CURRENCY', 'USD')})
 
 
