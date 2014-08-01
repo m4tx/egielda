@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-01 15:03+0200\n"
-"PO-Revision-Date: 2014-08-01 15:03+0100\n"
+"POT-Creation-Date: 2014-08-02 00:06+0200\n"
+"PO-Revision-Date: 2014-08-02 00:06+0100\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -57,7 +57,7 @@ msgstr "Cena (%s)"
 #: categories/templates/categories/list.html:10
 #: common/templates/book_chooser_wizard/books.html:22
 #: common/templatetags/manage_header.py:13
-#: managemenu/templates/managemenu/index.html:93
+#: managemenu/templates/managemenu/index.html:92
 msgid "Categories"
 msgstr "Kategorie"
 
@@ -114,9 +114,7 @@ msgstr "Cena"
 #: common/templates/book_chooser_wizard/books_chosen_list.html:15
 #: orders/templates/orders/orders_table.html:12
 #: sellers/templates/sellers/accept_book_list.html:15
-#: sellers/templates/sellers/index.html:29
-#: stats/templates/stats/list_books.html:77
-#: stats/templates/stats/users.html:28
+#: sellers/templates/sellers/index.html:29 stats/templates/stats/users.html:29
 msgid "Actions"
 msgstr "Akcje"
 
@@ -153,7 +151,7 @@ msgstr "Edytuj książkę"
 
 #: books/templates/books/edit.html:21
 #: categories/templates/categories/edit.html:19
-#: settings/templates/settings/dates.html:27
+#: settings/templates/settings/index.html:22
 msgid "Save"
 msgstr "Zapisz"
 
@@ -166,11 +164,11 @@ msgstr "Zarządzaj książkami"
 #: common/templates/book_chooser_wizard/summary.html:44
 #: common/templatetags/manage_header.py:19
 #: common/templatetags/manage_header.py:40
-#: managemenu/templates/managemenu/index.html:77
-#: managemenu/templates/managemenu/index.html:84
+#: managemenu/templates/managemenu/index.html:76
+#: managemenu/templates/managemenu/index.html:83
 #: orders/templates/orders/orders_table.html:11
 #: stats/templates/stats/books.html:13 stats/templates/stats/books.html:16
-#: stats/templates/stats/index.html:20
+#: stats/templates/stats/index.html:20 stats/templates/stats/users.html:28
 msgid "Books"
 msgstr "Książki"
 
@@ -179,7 +177,9 @@ msgstr "Książki"
 #: categories/templates/categories/list.html:20
 #: orders/templates/orders/orders_table.html:38
 #: sellers/templates/sellers/index.html:47 stats/templates/stats/books.html:39
-#: stats/templates/stats/users.html:46
+#: stats/templates/stats/list_books.html:85
+#: stats/templates/stats/list_books.html:109
+#: stats/templates/stats/users.html:48
 msgid "There's nothing to display."
 msgstr "Nie ma nic do wyświetlenia."
 
@@ -274,14 +274,12 @@ msgstr "Nazwisko"
 
 #: common/forms.py:26 common/templates/book_chooser_wizard/summary.html:30
 #: sell/forms.py:22 sellers/templates/sellers/index.html:27
-#: stats/templates/stats/list_books.html:75
 #: stats/templates/stats/users.html:26
 msgid "Class"
 msgstr "Klasa"
 
 #: common/forms.py:27 common/templates/book_chooser_wizard/summary.html:37
 #: sell/forms.py:23 sellers/templates/sellers/index.html:28
-#: stats/templates/stats/list_books.html:76
 #: stats/templates/stats/users.html:27
 msgid "Phone number"
 msgstr "Numer telefonu"
@@ -307,8 +305,8 @@ msgstr "Wszystkie"
 #: common/templates/book_chooser_wizard/books.html:44
 #: common/templatetags/manage_header.py:14
 #: common/templatetags/manage_header.py:20
-#: managemenu/templates/managemenu/index.html:87
-#: managemenu/templates/managemenu/index.html:96
+#: managemenu/templates/managemenu/index.html:86
+#: managemenu/templates/managemenu/index.html:95
 msgid "Add new"
 msgstr "Dodaj nową"
 
@@ -401,11 +399,11 @@ msgstr "Wyloguj się"
 #: common/templates/common/base.html:77
 #: egielda/templates/registration/login.html:4
 #: egielda/templates/registration/login.html:8
-#: egielda/templates/registration/login.html:36
+#: egielda/templates/registration/login.html:42
 msgid "Sign in"
 msgstr "Zaloguj się"
 
-#: common/templatetags/manage_header.py:17 stats/templates/stats/users.html:39
+#: common/templatetags/manage_header.py:17 stats/templates/stats/users.html:41
 msgid "Book list"
 msgstr "Lista książek"
 
@@ -472,15 +470,15 @@ msgid "Accept books"
 msgstr "Zaakceptuj książki"
 
 #: common/templatetags/manage_header.py:35
-#: managemenu/templates/managemenu/index.html:71
+#: managemenu/templates/managemenu/index.html:70
 #: stats/templates/stats/index.html:11 stats/templates/stats/index.html:14
-#: stats/templates/stats/list_books.html:49
-#: stats/templates/stats/list_books.html:52
+#: stats/templates/stats/list_books.html:59
+#: stats/templates/stats/list_books.html:62
 msgid "Statistics"
 msgstr "Statystyki"
 
 #: common/templatetags/manage_header.py:36
-#: managemenu/templates/managemenu/index.html:75
+#: managemenu/templates/managemenu/index.html:74
 #: stats/templates/stats/books_sold.html:6
 #: stats/templates/stats/books_sold.html:51
 #: stats/templates/stats/index.html:18
@@ -488,7 +486,7 @@ msgid "Books sold"
 msgstr "Sprzedane książki"
 
 #: common/templatetags/manage_header.py:37
-#: managemenu/templates/managemenu/index.html:76
+#: managemenu/templates/managemenu/index.html:75
 #: stats/templates/stats/index.html:19 stats/templates/stats/users.html:13
 #: stats/templates/stats/users.html:16
 msgid "Users"
@@ -499,15 +497,9 @@ msgid "User's books"
 msgstr "Książki użytkownika"
 
 #: common/templatetags/manage_header.py:42
-#: managemenu/templates/managemenu/index.html:102
+#: managemenu/templates/managemenu/index.html:101 settings/views.py:42
 msgid "Settings"
 msgstr "Ustawienia"
-
-#: common/templatetags/manage_header.py:43
-#: managemenu/templates/managemenu/index.html:105
-#: settings/templates/settings/dates.html:19 settings/views.py:41
-msgid "Dates"
-msgstr "Daty"
 
 #: egielda/templates/400.html:12
 msgid "Your browser sent an invalid request."
@@ -604,12 +596,16 @@ msgstr ""
 "zalogować jako inny użytkownik, użyj formularza poniżej."
 
 #: egielda/templates/registration/login.html:19
-#: egielda/templates/registration/login.html:23
+msgid "Authentication data you provided is incorrect."
+msgstr "Podane przez Ciebie dane logowania są nieprawidłowe."
+
+#: egielda/templates/registration/login.html:25
+#: egielda/templates/registration/login.html:29
 msgid "Username"
 msgstr "Nazwa użytkownika"
 
-#: egielda/templates/registration/login.html:27
-#: egielda/templates/registration/login.html:31
+#: egielda/templates/registration/login.html:33
+#: egielda/templates/registration/login.html:37
 msgid "Password"
 msgstr "Hasło"
 
@@ -626,7 +622,7 @@ msgstr "Szczegóły zamówienia"
 #: orders/templates/orders/details.html:10
 #, python-format
 msgid "%(user)s's order"
-msgstr "Zamówienie użytkownika %(user_name)s"
+msgstr "Zamówienie użytkownika %(user)s"
 
 #: orders/templates/orders/details.html:16
 #: orders/templates/orders/orders_table.html:10
@@ -672,7 +668,6 @@ msgid "Number of books:"
 msgstr "Liczba książek:"
 
 #: orders/templates/orders/orders_table.html:30
-#: stats/templates/stats/list_books.html:90
 msgid "Show order"
 msgstr "Wyświetl zamówienie"
 
@@ -705,21 +700,26 @@ msgstr "Sprzedający z niezaakceptowanymi książkami - Zaakceptuj książki"
 msgid "Accept %(user_name)s's books"
 msgstr "Zaakceptuj książki użytkownika %(user_name)s"
 
-#: settings/forms.py:6
+#: settings/forms.py:8
 msgid "Selling start date"
 msgstr "Początek sprzedaży"
 
-#: settings/forms.py:9
+#: settings/forms.py:13
 msgid "Selling end date"
 msgstr "Koniec sprzedaży"
 
-#: settings/forms.py:12
+#: settings/forms.py:18
 msgid "Purchasing start date"
 msgstr "Początek kupowania"
 
-#: settings/forms.py:15
+#: settings/forms.py:23
 msgid "Purchasing end date"
 msgstr "Koniec kupowania"
+
+#: settings/forms.py:28
+#, python-format
+msgid "Profit per book (%(currency)s)"
+msgstr "Zysk za książkę (%(currency)s)"
 
 #: settings/models.py:10
 #, python-format
@@ -735,7 +735,6 @@ msgid "Received"
 msgstr "Otrzymano"
 
 #: stats/templates/stats/books.html:26
-#: stats/templates/stats/list_books.html:68
 msgctxt "count"
 msgid "Sold"
 msgstr "Sprzedano"
@@ -761,19 +760,36 @@ msgstr "Przychód w każdym dniu"
 msgid "Number of books sold by categories"
 msgstr "Sprzedane książki wg kategorii"
 
-#: stats/templates/stats/list_books.html:53
-#: stats/templates/stats/list_books.html:59
+#: stats/templates/stats/list_books.html:63
 #, python-format
 msgid "%(user_name)s's books"
 msgstr "Książki użytkownika %(user_name)s"
 
-#: stats/templates/stats/list_books.html:74
-msgid "Purchaser's name"
-msgstr "Nazwisko kupującego"
+#: stats/templates/stats/list_books.html:69
+msgctxt "list of books"
+msgid "Sold"
+msgstr "Sprzedane"
+
+#: stats/templates/stats/list_books.html:90
+msgid "Total income:"
+msgstr "Łączny przychód:"
+
+#: stats/templates/stats/list_books.html:91
+msgid "Profit:"
+msgstr "Zysk:"
+
+#: stats/templates/stats/list_books.html:92
+msgid "For student:"
+msgstr "Dla ucznia:"
 
 #: stats/templates/stats/list_books.html:97
-msgid "In total"
-msgstr "Łącznie"
+msgctxt "list of books"
+msgid "Unsold"
+msgstr "Niesprzedane"
+
+#: stats/templates/stats/list_books.html:114
+msgid "Number of books unsold:"
+msgstr "Liczba niesprzedanych książek:"
 
 #: utils/alerts.py:14
 msgid "The book was added successfully."
@@ -814,6 +830,15 @@ msgstr "Ustawienia zostały pomyślnie zapisane."
 #: utils/alerts.py:23
 msgid "The order was executed successfully."
 msgstr "Zamówienie zostało pomyślnie zrealizowane."
+
+#~ msgid "Dates"
+#~ msgstr "Daty"
+
+#~ msgid "Purchaser's name"
+#~ msgstr "Nazwisko kupującego"
+
+#~ msgid "In total"
+#~ msgstr "Łącznie"
 
 #~ msgid "1 book was sold for the amount of %(books_sold_value)s%(currency)s."
 #~ msgid_plural ""
