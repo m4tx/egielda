@@ -71,7 +71,7 @@
         <ul class="list-group">
             {% for book in sold_book_list %}
                 <li class="list-group-item">
-                    <a href="{% url 'orders.views.order_details' book.order.pk %}" title="Show order"
+                    <a href="{% url 'orders.views.order_details' book.order.pk %}" title="{% trans "Show order" %}"
                        class="show-order">
                         <span class="glyphicon glyphicon-list-alt"></span>
                     </a>
