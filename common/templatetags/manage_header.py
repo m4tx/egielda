@@ -39,9 +39,7 @@ def manage_header(*args):
             }],
             'books': ['stats.views.books', _("Books")],
         }],
-        'settings': ['settings.views.index', _("Settings"), {
-            'dates': ['settings.views.dates', _("Dates")],
-        }]
+        'settings': ['settings.views.index', _("Settings")]
     }]
 
     # Split the path
