@@ -13,12 +13,18 @@ from utils.dates import date_range
 
 @user_passes_test(user_is_admin)
 def index(request):
-    books = Book.objects.select_related('book_type').prefetch_related('book_type__categories').filter(sold=True)
+    args = get_sold_books_chart_data()
+    args.update(get_given_books_chart_data())
+    return render(request, 'stats/index.html', args)
+
+
+def get_sold_books_chart_data():
+    sold_books = Book.objects.select_related('book_type').prefetch_related('book_type__categories').filter(sold=True)
     books_by_date = defaultdict(list)
-    for book in books:
+    for book in sold_books:
         books_by_date[book.sold_date.date()].append(book)
     sold_book_categories = defaultdict(int)
-    for book in books:
+    for book in sold_books:
         for category in book.book_type.categories.all():
             sold_book_categories[category] += 1
 
@@ -29,9 +35,23 @@ def index(request):
     sold_book_prices = list(
         (date, sum(book.book_type.price for book in books_by_date[date])) for date in date_range(first_day, last_day))
 
-    return render(request, 'stats/index.html',
-                  {'sold_book_counts': sold_book_counts, 'sold_book_prices': sold_book_prices,
-                   'sold_book_categories': sold_book_categories.items()})
+    return {'sold_book_counts': sold_book_counts, 'sold_book_prices': sold_book_prices,
+            'sold_book_categories': sold_book_categories.items()}
+
+
+def get_given_books_chart_data():
+    given_books = Book.objects.select_related('book_type').filter(accepted=True)
+    books_by_date = defaultdict(list)
+    for book in given_books:
+        books_by_date[book.accept_date.date()].append(book)
+
+    first_day = min(books_by_date.keys())
+    last_day = max(books_by_date.keys())
+
+    print(books_by_date)
+    given_book_counts = list((date, len(books_by_date[date])) for date in date_range(first_day, last_day))
+
+    return {'given_book_counts': given_book_counts}
 
 
 @user_passes_test(user_is_admin)

@@ -27,7 +27,9 @@
             </div>
         </div>
         <div class="col-lg-6">
-            Placeholder for a chart
+            <div id="given-book-amounts-chart" class="embed-responsive embed-responsive-16by9">
+                <svg class="embed-responsive-item"></svg>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -55,6 +57,15 @@
                 {
                     values: [
                         {% for date, count in sold_book_counts %}{"label":"{{ date|date:"d E" }}","value":{{ count }}},{% endfor %}
+                    ]
+                }
+            ]
+        }
+        function givenBookAmountsData() {
+            return  [
+                {
+                    values: [
+                        {% for date, count in given_book_counts %}{"label":"{{ date|date:"d E" }}","value":{{ count }}},{% endfor %}
                     ]
                 }
             ]

@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
 
 from books.forms import BookForm
 from books.models import BookType, Book
@@ -39,7 +40,7 @@ def accept_books(request, user_pk):
 
     if request.method == 'POST':
         with transaction.atomic():
-            books.update(accepted=True)
+            books.update(accepted=True, accept_date=timezone.now())
             for book_type in book_type_list:
                 if not book_type.visible:
                     book_type.price = Decimal(request.POST['price-' + str(book_type.pk)])

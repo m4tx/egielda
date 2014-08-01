@@ -27,6 +27,7 @@ class Book(models.Model):
     owner = models.ForeignKey(AppUser, related_name='appuser_owner')
     accepted = models.BooleanField(default=False)
     """Is the book physically available for buying"""
+    accept_date = models.DateTimeField(null=True, blank=True)
     order = models.ForeignKey(Order, null=True, blank=True)
     reserved_until = models.DateTimeField(null=True, blank=True)
     reserver = models.ForeignKey(AppUser, related_name='appuser_reserver', null=True, blank=True)

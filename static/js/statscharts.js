@@ -28,6 +28,20 @@ nv.addGraph(function () {
     return chart;
 });
 
+// Given book amounts chart
+nv.addGraph(function () {
+    var chart = createSimpleBarChart();
+    chart.yAxis.tickFormat(d3.format('d'));
+    chart.valueFormat(d3.format('d'));
+
+    d3.select('#given-book-amounts-chart svg')
+        .datum(givenBookAmountsData()) // Data provided in the HTML file
+        .call(chart);
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+});
+
 // Sold book prices chart
 nv.addGraph(function () {
     var chart = createSimpleBarChart();
