@@ -159,7 +159,7 @@ function addBookTr(tr) {
 function removeBook(id) {
     var book = chosenBooks[id];
     if (book.hasOwnProperty('pk')) {
-        var listTr = 'tr[data-pk="' + book['pk'] + '"]';
+        var listTr = '#bookList tr[data-pk="' + book['pk'] + '"]';
         var inStock = $('td.in-stock', listTr);
         inStock.text(parseInt(inStock.text()) + 1);
         checkInStock(listTr)
