@@ -1,0 +1,117 @@
+[
+{
+    "model": "common.appuser",
+    "pk": 1,
+    "fields": {
+        "last_name": "Test1",
+        "first_name": "User1",
+        "student_class": "1A",
+        "phone_number": "111222333"
+    }
+},
+{
+    "model": "common.appuser",
+    "pk": 2,
+    "fields": {
+        "last_name": "Test2",
+        "first_name": "User12",
+        "student_class": "1B",
+        "phone_number": "333222111"
+    }
+},
+{
+    "model": "books.booktype",
+    "pk": 1,
+    "fields": {
+        "visible": true,
+        "categories": [],
+        "publication_year": 2010,
+        "isbn": "9788375940794",
+        "publisher": "Some",
+        "price": "60",
+        "title": "Test book"
+    }
+},
+{
+    "model": "books.booktype",
+    "pk": 2,
+    "fields": {
+        "visible": true,
+        "categories": [],
+        "publication_year": 2000,
+        "isbn": "9781849696845",
+        "publisher": "Other",
+        "price": "99",
+        "title": "Test book 2"
+    }
+},
+{
+    "model": "books.book",
+    "pk": 1,
+    "fields": {
+        "reserver": 2,
+        "order": 1,
+        "accepted": true,
+        "sold_date": null,
+        "purchaser": null,
+        "book_type": 1,
+        "sold": false,
+        "reserved_until": "5014-08-01T23:50:36.226Z",
+        "owner": 1
+    }
+},
+{
+    "model": "books.book",
+    "pk": 2,
+    "fields": {
+        "reserver": null,
+        "order": null,
+        "accepted": true,
+        "sold_date": null,
+        "purchaser": null,
+        "book_type": 1,
+        "sold": false,
+        "reserved_until": null,
+        "owner": 1
+    }
+},
+{
+    "model": "books.book",
+    "pk": 3,
+    "fields": {
+        "reserver": 2,
+        "order": 1,
+        "accepted": true,
+        "sold_date": null,
+        "purchaser": null,
+        "book_type": 2,
+        "sold": false,
+        "reserved_until": "5014-08-01T23:50:36.226Z",
+        "owner": 1
+    }
+},
+{
+    "model": "books.book",
+    "pk": 4,
+    "fields": {
+        "reserver": 2,
+        "order": 1,
+        "accepted": true,
+        "sold_date": null,
+        "purchaser": null,
+        "book_type": 2,
+        "sold": false,
+        "reserved_until": "5014-08-01T23:50:36.226Z",
+        "owner": 1
+    }
+},
+{
+    "model": "orders.order",
+    "pk": 1,
+    "fields": {
+        "date": "2014-07-31T23:50:36.222Z",
+        "valid_until": "2014-08-01T23:50:36.222Z",
+        "user": 2
+    }
+}
+]
