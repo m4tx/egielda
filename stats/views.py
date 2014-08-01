@@ -1,13 +1,16 @@
-from collections import Counter
 from collections import defaultdict
+from decimal import Decimal
 
 from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
 
 from common.auth import user_is_admin
+
 from common.models import AppUser
 from books.models import BookType, Book
+from settings.settings import Settings
 from utils.dates import date_range
 
 
@@ -83,25 +86,17 @@ def users(request):
 @user_passes_test(user_is_admin)
 def list_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
-    book_list = get_list_or_404(Book.objects.select_related('book_type', 'purchaser', 'order'), owner=user)
+    book_list = Book.objects.select_related('book_type', 'purchaser', 'order').filter(owner=user)
 
-    amounts = Counter([(str(b.book_type.isbn) + b.book_type.title) for b in book_list])
-    unique_books = {}
-    purchasers = {}
-    for book in book_list:
-        book.amount = amounts[str(book.book_type.isbn) + book.book_type.title]
-        unique_books[(str(book.book_type.isbn) + book.book_type.title)] = book
-
-        purchasers.setdefault((str(book.book_type.isbn) + book.book_type.title), [])
-        if book.sold:
-            book.purchaser.order_id = book.order.pk
-            purchasers[str(book.book_type.isbn) + book.book_type.title].append(book.purchaser)
-
-    book_list = list(unique_books.values())
-    stats = zip(book_list, list(purchasers.values()))
+    sold_book_list = book_list.filter(sold=True)
+    sold_book_list.income = sum(book.book_type.price for book in sold_book_list)
+    sold_book_list.profit = Decimal(Settings('profit_per_book').profit_per_book) * len(sold_book_list)
+    sold_book_list.for_student = sold_book_list.income - sold_book_list.profit
+    unsold_book_list = book_list.filter(sold=False)
 
     return render(request, 'stats/list_books.html', {'user_name': user.user_name(),
-                                                     'stats': stats})
+                                                     'sold_book_list': sold_book_list,
+                                                     'unsold_book_list': unsold_book_list})
 
 
 @user_passes_test(user_is_admin)
