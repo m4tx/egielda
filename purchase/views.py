@@ -31,7 +31,7 @@ class PurchaseWizard(BookChooserWizard):
     def process_books_summary(self, user, book_list):
         book_type_list = [book['pk'] for book in book_list]  # List of Book primary keys
 
-        # Select the Books which are available for purchasing and matches the BookTypes we're looking for
+        # Select the Books which are available for purchasing and match the BookTypes we're looking for
         books = get_available_books().filter(book_type__in=book_type_list).order_by('-pk')
 
         # Remove duplicated Books. Thanks to order_by('-pk'), we'll have firstly added book as a value here
