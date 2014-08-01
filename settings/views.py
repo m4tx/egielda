@@ -27,15 +27,23 @@ def index(request):
         try:
             settings = Settings('start_sell', 'end_sell', 'start_purchase', 'end_purchase', 'profit_per_book')
             # Pack the retrieved values into new dictionary, formatting them as HTML datetime first
-            values = {
-                'start_sell': datetime_html_format(string_to_datetime(settings.start_sell)),
-                'end_sell': datetime_html_format(string_to_datetime(settings.end_sell)),
-                'start_purchase': datetime_html_format(string_to_datetime(settings.start_purchase)),
-                'end_purchase': datetime_html_format(string_to_datetime(settings.end_purchase)),
-                'profit_per_book': settings.profit_per_book,
-            }
-            form = SettingsForm(values)
+            values = dict(
+                filter(lambda x: x is not None,
+                       [add_date_value('start_sell', settings),
+                        add_date_value('end_sell', settings),
+                        add_date_value('start_purchase', settings),
+                        add_date_value('end_purchase', settings),
+                        ('profit_per_book', settings.profit_per_book if settings.exists('profit_per_book') else 1)])
+            )
+            form = SettingsForm(initial=values)
         except KeyError:
-            form = SettingsForm()
+            form = SettingsForm(initial={'profit_per_book': 1})
 
     return render(request, 'settings/index.html', alerts(request, {'page_title': _("Settings"), 'form': form}))
+
+
+def add_date_value(name, settings):
+    if settings.exists(name):
+        return name, datetime_html_format(string_to_datetime(getattr(settings, name)))
+    else:
+        return None
