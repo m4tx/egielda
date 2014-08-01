@@ -46,19 +46,15 @@ def accept_books(request, user_pk):
                     book_type.visible = True
                     book_type.save()
 
-            for book_type in book_type_list:
-                if int(request.POST['amount-' + str(book_type.pk)]) < book_type.amount:
-                    books_list = Book.objects.filter(owner=user,
-                                                     book_type__isbn=book_type.isbn,
-                                                     book_type__title=book_type.title)
-
-                    books_to_keep = books_list[:int(request.POST['amount-' + str(book_type.pk)])]
+                new_amount = int(request.POST['amount-' + str(book_type.pk)])
+                if new_amount < book_type.amount:
+                    books_list = Book.objects.filter(owner=user, book_type=book_type)
+                    books_to_keep = books_list[:new_amount]
                     books_list.exclude(pk__in=books_to_keep).delete()
-
-                elif int(request.POST['amount-' + str(book_type.pk)]) > book_type.amount:
-                    amount = int(request.POST['amount-' + str(book_type.pk)]) - book_type.amount
+                elif new_amount > book_type.amount:
+                    amount_difference = new_amount - book_type.amount
                     book = d[book_type]
-                    for i in range(0, amount):
+                    for i in range(0, amount_difference):
                         book.pk = None
                         book.accepted = True
                         book.save()
