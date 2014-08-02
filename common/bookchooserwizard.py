@@ -4,7 +4,6 @@ import json
 from decimal import Decimal
 
 from django.conf.urls import url
-
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import transaction
 from django.forms import model_to_dict
@@ -18,7 +17,7 @@ from common.forms import PersonalDataForm
 from common.models import AppUser
 from egielda import settings
 from utils.books import get_available_books
-from utils.alerts import alerts, set_warning_msg
+from utils.alerts import set_warning_msg
 
 
 class BookChooserWizard:
@@ -189,9 +188,9 @@ class BookChooserWizard:
 
             else:
                 return render(request, 'book_chooser_wizard/summary.html',
-                              alerts(request,
-                                     {'page_title': self.page_title, 'personal_data': request.session['personal_data'],
-                                      'chosen_book_list': sorted(self.get_book_list(book_list),
-                                                                 key=lambda x: x.title.lower())}))
+                              {'page_title': self.page_title,
+                               'personal_data': request.session['personal_data'],
+                               'chosen_book_list': sorted(self.get_book_list(book_list), key=lambda x: x.title.lower())}
+                )
         except ValueError:
             return HttpResponseBadRequest()

@@ -6,13 +6,13 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 from books.forms import BookForm
 from common.auth import user_is_admin
 from books.models import BookType
-from utils.alerts import alerts, set_success_msg
+from utils.alerts import set_success_msg
 
 
 @user_passes_test(user_is_admin)
 def index(request):
     book_list = BookType.objects.all()
-    return render(request, 'books/index.html', alerts(request, {'book_list': book_list}))
+    return render(request, 'books/index.html', {'book_list': book_list})
 
 
 @user_passes_test(user_is_admin)

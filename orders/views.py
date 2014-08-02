@@ -2,7 +2,6 @@ from collections import Counter
 
 from django.core.urlresolvers import reverse
 from django.db import transaction
-
 from django.db.models import Count
 from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
@@ -11,9 +10,8 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
 from books.models import Book
-
 from orders.models import Order
-from utils.alerts import set_success_msg, alerts
+from utils.alerts import set_success_msg
 from utils.books import books_by_types, get_available_books
 
 
@@ -26,7 +24,7 @@ def order_details(request, order_pk):
 
 def not_executed(request):
     orders = get_orders().filter(valid_until__gt=timezone.now(), sold_count=0)
-    return render(request, 'orders/not_executed.html', alerts(request, {'orders': orders}))
+    return render(request, 'orders/not_executed.html', {'orders': orders})
 
 
 def outdated(request):

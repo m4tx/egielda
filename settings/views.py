@@ -7,7 +7,7 @@ from common.auth import user_is_admin
 from settings.forms import SettingsForm
 from settings.settings import Settings
 from settings.settings import string_to_datetime
-from utils.alerts import set_success_msg, alerts
+from utils.alerts import set_success_msg
 from utils.dates import datetime_html_format
 
 
@@ -39,7 +39,7 @@ def index(request):
         except KeyError:
             form = SettingsForm(initial={'profit_per_book': 1})
 
-    return render(request, 'settings/index.html', alerts(request, {'page_title': _("Settings"), 'form': form}))
+    return render(request, 'settings/index.html', {'page_title': _("Settings"), 'form': form})
 
 
 def add_date_value(name, settings):

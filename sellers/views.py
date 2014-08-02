@@ -11,7 +11,7 @@ from books.forms import BookForm
 from books.models import BookType, Book
 from common.auth import user_is_admin
 from common.models import AppUser
-from utils.alerts import alerts, set_success_msg
+from utils.alerts import set_success_msg
 from egielda import settings
 from utils.books import books_by_types
 
@@ -24,7 +24,7 @@ def index(request):
         if book.owner not in student_list:
             student_list.append(book.owner)
 
-    return render(request, 'sellers/index.html', alerts(request, {'student_list': student_list}))
+    return render(request, 'sellers/index.html', {'student_list': student_list})
 
 
 @user_passes_test(user_is_admin)

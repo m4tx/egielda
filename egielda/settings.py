@@ -64,6 +64,10 @@ MIDDLEWARE_CLASSES = (
     'egielda.transactions_available.TransactionsAvailableMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.core.context_processors.request',
+)
+
 LOCALE_PATHS = (
     'locale',  # Need to set it here in order to share translations between apps
 )

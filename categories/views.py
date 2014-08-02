@@ -7,7 +7,7 @@ from books.models import BookType
 from categories.forms import CategoryForm
 from categories.models import Category
 from common.auth import user_is_admin
-from utils.alerts import alerts, set_success_msg
+from utils.alerts import set_success_msg
 
 
 @user_passes_test(user_is_admin)
@@ -20,8 +20,7 @@ def index(request):
             if category is not None:
                 count[category] += 1
 
-    return render(request, 'categories/index.html',
-                  alerts(request, {'category_list': sorted(count.items(), key=lambda o: o[0].name)}))
+    return render(request, 'categories/index.html', {'category_list': sorted(count.items(), key=lambda o: o[0].name)})
 
 
 @user_passes_test(user_is_admin)
