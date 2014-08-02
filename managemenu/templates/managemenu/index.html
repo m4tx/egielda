@@ -3,32 +3,69 @@
 
 {% block head %}
     <style>
-        .table-bordered > tbody > tr > td.module-icon {
-            border-right: 0;
-            width: 102px;
+        /* Menu */
+        ul.manage-menu, ul.manage-menu > li > ul {
+            list-style: none;
+            padding: 0;
         }
 
-        .table-bordered > tbody > tr > td.module-icon .glyphicon {
-            font-size: 76px;
-        }
-
-        .table-bordered > tbody > tr > td.module-icon + td {
-            border-left: 0;
-        }
-
-        .table-bordered > tbody > tr.toptr:hover + tr {
-            background-color: #f5f5f5;
-        }
-
-        .table a {
+        ul.manage-menu a {
             color: #333;
         }
 
-        .table td span:after {
+        ul.manage-menu > li {
+            border: 1px #ddd solid;
+            border-bottom-width: 0;
+            padding: 10px;
+            height: 100px;
+
+            position: relative;
+        }
+
+        ul.manage-menu > li:last-child {
+            border-bottom-width: 1px;
+        }
+
+        ul.manage-menu > li:hover {
+            background-color: #f5f5f5;
+        }
+
+        ul.manage-menu > li > a > .glyphicon {
+            font-size: 76px;
+            float: left;
+        }
+
+        ul.manage-menu > li > a > h4 {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        ul.manage-menu > li > a > h4:hover {
+            text-decoration: underline;
+        }
+
+        /* Submenus */
+        ul.manage-menu > li > ul {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: 100px;
+            padding: 8px;
+
+            border-color: #ddd;
+            border-style: solid;
+            border-width: 1px 0 0 1px;
+        }
+
+        ul.manage-menu > li > ul > li {
+            display: inline;
+        }
+
+        ul.manage-menu > li > ul > li:after {
             content: "\00a0\00a0\00a0•\00a0\00a0\00a0";
         }
 
-        .table td span:last-child:after {
+        ul.manage-menu > li > ul > li:last-child:after {
             content: none;
         }
     </style>
@@ -41,66 +78,57 @@
     {% load manage_header %}
     {% manage_header %}
 
-    <table class="table table-bordered table-hover">
-        <tr class="toptr">
-            <td rowspan="2" class="module-icon">
-                <a href="{% url 'orders.views.index' %}"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-            </td>
-            <td><a href="{% url 'orders.views.index' %}"><h4>{% trans "Orders" %}</h4></a></td>
-        </tr>
-        <tr>
-            <td>
-                <span><a href="{% url 'orders.views.not_executed' %}">{% trans "Not executed" %}</a></span>
-                <span><a href="{% url 'orders.views.outdated' %}">{% trans "Outdated" %}</a></span>
-                <span><a href="{% url 'orders.views.executed' %}">{% trans "Executed" %}</a></span>
-            </td>
-        </tr>
-        <tr class="toptr">
-            <td rowspan="2" class="module-icon">
-                <a href="{% url 'sellers.views.index' %}"><span class="glyphicon glyphicon-user"></span></a>
-            </td>
-            <td><a href="{% url 'sellers.views.index' %}"><h4>{% trans "Sellers with unaccepted books" %}</h4></a></td>
-        </tr>
-        <tr>
-        </tr>
-        <tr class="toptr">
-            <td rowspan="2" class="module-icon">
-                <a href="{% url 'stats.views.index' %}"><span class="glyphicon glyphicon-stats"></span></a>
-            </td>
-            <td><a href="{% url 'stats.views.index' %}"><h4>{% trans "Statistics" %}</h4></a></td>
-        </tr>
-        <tr>
-            <td>
-                <span><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></span>
-                <span><a href="{% url 'stats.views.users' %}">{% trans "Users" %}</a></span>
-                <span><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></span>
-            </td>
-        </tr>
-        <tr class="toptr">
-            <td rowspan="2" class="module-icon">
-                <a href="{% url 'books.views.index' %}"><span class="glyphicon glyphicon-book"></span></a>
-            </td>
-            <td><a href="{% url 'books.views.index' %}"><h4>{% trans "Books" %}</h4></a></td>
-        </tr>
-        <tr>
-            <td><a href="{% url 'books.views.add_book' %}">{% trans "Add new" %}</a></td>
-        </tr>
-        <tr class="toptr">
-            <td rowspan="2" class="module-icon">
-                <a href="{% url 'categories.views.index' %}"><span class="glyphicon glyphicon-tag"></span></a>
-            </td>
-            <td><a href="{% url 'categories.views.index' %}"><h4>{% trans "Categories" %}</h4></a></td>
-        </tr>
-        <tr>
-            <td><a href="{% url 'categories.views.add_category' %}">{% trans "Add new" %}</a></td>
-        </tr>
-        <tr class="toptr">
-            <td rowspan="2" class="module-icon">
-                <a href="{% url 'settings.views.index' %}"><span class="glyphicon glyphicon-wrench"></span></a>
-            </td>
-            <td><a href="{% url 'settings.views.index' %}"><h4>{% trans "Settings" %}</h4></a></td>
-        </tr>
-        <tr>
-        </tr>
-    </table>
+    <ul class="manage-menu">
+        <li>
+            <a href="{% url 'orders.views.index' %}">
+                <span class="glyphicon glyphicon-shopping-cart"></span> <h4>{% trans "Orders" %}</h4>
+            </a>
+            <ul>
+                <li><a href="{% url 'orders.views.not_executed' %}">{% trans "Not executed" %}</a></li>
+                <li><a href="{% url 'orders.views.outdated' %}">{% trans "Outdated" %}</a></li>
+                <li><a href="{% url 'orders.views.executed' %}">{% trans "Executed" %}</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="{% url 'sellers.views.index' %}">
+                <span class="glyphicon glyphicon-user"></span> <h4>{% trans "Sellers with unaccepted books" %}</h4>
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'stats.views.index' %}">
+                <span class="glyphicon glyphicon-stats"></span> <h4>{% trans "Statistics" %}</h4>
+            </a>
+            <ul>
+                <li><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></li>
+                <li><a href="{% url 'stats.views.users' %}">{% trans "Users" %}</a></li>
+                <li><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="{% url 'books.views.index' %}">
+                <span class="glyphicon glyphicon-book"></span> <h4>{% trans "Books" %}</h4>
+            </a>
+            <ul>
+                <li><a href="{% url 'books.views.add_book' %}">{% trans "Add new" %}</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="{% url 'categories.views.index' %}">
+                <span class="glyphicon glyphicon-tag"></span> <h4>{% trans "Categories" %}</h4>
+            </a>
+            <ul>
+                <li><a href="{% url 'categories.views.add_category' %}">{% trans "Add new" %}</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="{% url 'settings.views.index' %}">
+                <span class="glyphicon glyphicon-wrench"></span> <h4>{% trans "Settings" %}</h4>
+            </a>
+        </li>
+    </ul>
 {% endblock %}
