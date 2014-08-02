@@ -63,9 +63,14 @@ def accept_books(request, user_pk):
         set_success_msg(request, 'books_accepted')
         return HttpResponseRedirect(reverse(index))
     else:
+        show_actions = False
+        for book_type in book_type_list:
+            if not book_type.visible:
+                show_actions = True
+                break
         return render(request, 'sellers/accept.html',
-                      {'user_name': user.user_name(), 'book_type_list': book_type_list, 'student_pk': user_pk,
-                       'currency': getattr(settings, 'CURRENCY', 'USD')})
+                      {'user_name': user.user_name(), 'book_type_list': book_type_list, 'show_actions': show_actions,
+                       'student_pk': user_pk, 'currency': getattr(settings, 'CURRENCY', 'USD')})
 
 
 @user_passes_test(user_is_admin)

@@ -21,7 +21,7 @@
     <div class="alert alert-info">{% trans "If you want to delete some book, just pass 0 as amount." %}</div>
     <form action="{{ request.path }}" method="post">
         {% csrf_token %}
-        {% include 'sellers/accept_book_list.html' with show_actions=True %}
+        {% include 'sellers/accept_book_list.html' %}
 
         <a href="{% url 'sellers.views.index' %}" class="btn btn-default" role="button">
             <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}
