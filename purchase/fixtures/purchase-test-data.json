@@ -1,0 +1,131 @@
+[
+    {
+        "model": "common.appuser",
+        "pk": 1,
+        "fields": {
+            "last_name": "Test1",
+            "phone_number": "111222333",
+            "student_class": "1A",
+            "first_name": "User1"
+        }
+    },
+    {
+        "model": "books.booktype",
+        "pk": 1,
+        "fields": {
+            "publication_year": 2005,
+            "isbn": "9788375940794",
+            "price": "120",
+            "publisher": "Some",
+            "categories": [],
+            "visible": true,
+            "title": "Test book"
+        }
+    },
+    {
+        "model": "books.booktype",
+        "pk": 2,
+        "fields": {
+            "publication_year": 2010,
+            "isbn": "9788362482108",
+            "price": "45.5",
+            "publisher": "Other",
+            "categories": [],
+            "visible": true,
+            "title": "Another test book"
+        }
+    },
+    {
+        "model": "books.booktype",
+        "pk": 3,
+        "fields": {
+            "publication_year": 2014,
+            "isbn": "9788376804538",
+            "price": "99.99",
+            "publisher": "Some other",
+            "categories": [],
+            "visible": true,
+            "title": "Yet Another Test Book"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 1,
+        "fields": {
+            "reserver": null,
+            "sold_date": null,
+            "owner": 1,
+            "book_type": 2,
+            "order": null,
+            "reserved_until": null,
+            "sold": false,
+            "accepted": true,
+            "accept_date": "2014-08-02T08:54:11.099Z",
+            "purchaser": null
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 2,
+        "fields": {
+            "reserver": null,
+            "sold_date": null,
+            "owner": 1,
+            "book_type": 1,
+            "order": null,
+            "reserved_until": null,
+            "sold": false,
+            "accepted": true,
+            "accept_date": "2014-08-02T08:54:11.099Z",
+            "purchaser": null
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 3,
+        "fields": {
+            "reserver": null,
+            "sold_date": null,
+            "owner": 1,
+            "book_type": 1,
+            "order": null,
+            "reserved_until": null,
+            "sold": false,
+            "accepted": true,
+            "accept_date": "2014-08-02T08:54:11.099Z",
+            "purchaser": null
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 4,
+        "fields": {
+            "reserver": null,
+            "sold_date": null,
+            "owner": 1,
+            "book_type": 3,
+            "order": null,
+            "reserved_until": null,
+            "sold": false,
+            "accepted": false,
+            "accept_date": null,
+            "purchaser": null
+        }
+    },
+    {
+        "model": "settings.setting",
+        "pk": 3,
+        "fields": {
+            "name": "start_purchase",
+            "value": "1111-11-11 11:11:00+01:24"
+        }
+    },
+    {
+        "model": "settings.setting",
+        "pk": 4,
+        "fields": {
+            "name": "end_purchase",
+            "value": "3333-03-31 15:33:00+01:00"
+        }
+    }
+]
