@@ -1,11 +1,12 @@
 from datetime import timedelta
-from decimal import Decimal
+from collections import Counter
 
 from django.shortcuts import render
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.db.models import Count
 
-from books.models import BookType, Book
+from books.models import Book
 from common.bookchooserwizard import BookChooserWizard
 from orders.models import Order
 from utils.books import get_available_books
@@ -28,7 +29,7 @@ class PurchaseWizard(BookChooserWizard):
     def feature_books_in_stock(self):
         return True
 
-    def process_books_summary(self, user, book_list):
+    def process_books_summary(self, session, user, book_list):
         book_type_list = [book['pk'] for book in book_list]  # List of Book primary keys
 
         # Select the Books which are available for purchasing and match the BookTypes we're looking for
@@ -59,10 +60,21 @@ class PurchaseWizard(BookChooserWizard):
             # Reserve the Books and create our Order
             order = Order(user=user, valid_until=timezone.now() + timedelta(1))
             order.save()
+            session['order_id'] = order.pk
             Book.objects.filter(pk__in=[book.pk for l in books_by_id.values() for book in l]).update(
                 reserved_until=timezone.now() + timedelta(1), reserver=user, order=order)
 
         return not error_occurred, correct_book_list
 
     def success(self, request):
-        return render(request, 'purchase/success.html')
+        order = Order.objects.select_related('user', 'book_set').annotate(books_count=Count('book')).get(
+            pk=request.session['order_id'])
+        ID = order.valid_until.strftime("%Y%m%d") + "-" + str(order.pk) + "-" + str(order.user.pk) + "-" + str(
+            order.books_count)
+
+        amounts = Counter([book.book_type for book in order.book_set.all()])
+        for book_type in amounts.keys():
+            book_type.amount = amounts[book_type]
+
+        return render(request, 'purchase/success.html',
+                      {'order': order, 'order_ID': ID, 'chosen_book_list': amounts.keys()})

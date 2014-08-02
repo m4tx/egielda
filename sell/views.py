@@ -24,7 +24,7 @@ class SellWizard(BookChooserWizard):
     def feature_add_new(self):
         return True
 
-    def process_books_summary(self, user, book_list):
+    def process_books_summary(self, session, user, book_list):
         for book in book_list:
             amount = book['amount']
             del book['amount']

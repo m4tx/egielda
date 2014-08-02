@@ -55,7 +55,7 @@ class BookChooserWizard:
         pass
 
     @abstractmethod
-    def process_books_summary(self, user: AppUser, book_list: list):
+    def process_books_summary(self, session, user: AppUser, book_list: list):
         """
         Processes the data provided by user after clicking "Accept" button on the summary page. In other words, saves
         the data from the user to the database. The method is called inside ``transaction.atomic()``.
@@ -176,7 +176,7 @@ class BookChooserWizard:
                     with transaction.atomic():
                         user = AppUser(**request.session['personal_data'])
                         user.save()
-                        success, book_list = self.process_books_summary(user, book_list)
+                        success, book_list = self.process_books_summary(request.session, user, book_list)
 
                     if success:
                         del request.session[self.session_var_name]  # Prevent from adding the same books multiple times
