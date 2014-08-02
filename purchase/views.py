@@ -58,6 +58,7 @@ class PurchaseWizard(BookChooserWizard):
 
         if not error_occurred:
             # Reserve the Books and create our Order
+            user.save()
             order = Order(user=user, valid_until=timezone.now() + timedelta(1))
             order.save()
             session['order_id'] = order.pk

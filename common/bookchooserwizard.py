@@ -59,7 +59,8 @@ class BookChooserWizard:
         """
         Processes the data provided by user after clicking "Accept" button on the summary page. In other words, saves
         the data from the user to the database. The method is called inside ``transaction.atomic()``.
-        :param user: the AppUser that is performing the operation (selling/purchasing)
+        :param user: the AppUser that is performing the operation (selling/purchasing). Note that you should save it
+                     before using
         :param book_list: list of dict objects retrieved from the user as json
         """
         pass
@@ -175,16 +176,16 @@ class BookChooserWizard:
                 else:
                     with transaction.atomic():
                         user = AppUser(**request.session['personal_data'])
-                        user.save()
                         success, book_list = self.process_books_summary(request.session, user, book_list)
 
-                    if success:
-                        del request.session[self.session_var_name]  # Prevent from adding the same books multiple times
-                        return self.success(request)
-                    else:
-                        request.session[self.session_var_name] = json.dumps(book_list)
-                        set_warning_msg(request, 'purchase_incomplete')
-                        return HttpResponseRedirect(reverse(self.url_namespace + ':summary'))
+                        if success:
+                            # Prevent from adding the same books multiple times
+                            del request.session[self.session_var_name]
+                            return self.success(request)
+                        else:
+                            request.session[self.session_var_name] = json.dumps(book_list)
+                            set_warning_msg(request, 'purchase_incomplete')
+                            return HttpResponseRedirect(reverse(self.url_namespace + ':summary'))
 
             else:
                 return render(request, 'book_chooser_wizard/summary.html',

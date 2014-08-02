@@ -29,6 +29,7 @@ class SellWizard(BookChooserWizard):
             amount = book['amount']
             del book['amount']
 
+            user.save()
             dbbook = Book(owner=user, accepted=False, sold=False)
             if 'pk' in book:
                 dbbook.book_type_id = book['pk']
