@@ -23,6 +23,20 @@ def alerts(request: HttpRequest, args: dict):
             'order_executed': _("The order was executed successfully."),
         }[request.session['success_msg']]
         del request.session['success_msg']
+
+    if 'warning_msg' in request.session:
+        args['warning_msg'] = {
+            'purchase_incomplete': _("An error occurred while processing your query. It was most likely the result " +
+                                     "of someone else who just bought the last copies of books you've chosen. " +
+                                     "Your order was modified thus; review it and click Accept again afterwards."),
+        }[request.session['warning_msg']]
+        del request.session['warning_msg']
+
+    if 'error_msg' in request.session:
+        args['error_msg'] = {
+        }[request.session['error_msg']]
+        del request.session['error_msg']
+
     return args
 
 
@@ -33,3 +47,21 @@ def set_success_msg(request: HttpRequest, msg_id: str):
     :param msg_id: message id to set
     """
     request.session['success_msg'] = msg_id
+
+
+def set_warning_msg(request: HttpRequest, msg_id: str):
+    """
+    Sets success message id to display.
+    :param request: HttpRequest object from the view
+    :param msg_id: message id to set
+    """
+    request.session['warning_msg'] = msg_id
+
+
+def set_error_msg(request: HttpRequest, msg_id: str):
+    """
+    Sets success message id to display.
+    :param request: HttpRequest object from the view
+    :param msg_id: message id to set
+    """
+    request.session['error_msg'] = msg_id

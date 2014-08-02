@@ -1,5 +1,3 @@
-from decimal import Decimal
-
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 
@@ -44,26 +42,6 @@ class SellWizard(BookChooserWizard):
             for i in range(0, amount):
                 dbbook.pk = None
                 dbbook.save()
-
-    def get_book_list(self, book_list):
-        existing_dict = {}
-        types = []
-        for book in book_list:
-            if 'pk' in book:
-                existing_dict[book['pk']] = book['amount']
-            else:
-                book['price'] = Decimal(book['price'])
-                amount = book['amount']
-                del book['amount']
-                types.append(BookType(**book))
-                types[-1].amount = amount
-
-        existing_list = BookType.objects.filter(pk__in=existing_dict.keys())
-        for book in existing_list:
-            book.amount = existing_dict[book.pk]
-            types.append(book)
-
-        return types
 
     def success(self, request):
         return render(request, 'sell/success.html')

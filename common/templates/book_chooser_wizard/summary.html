@@ -4,6 +4,7 @@
 {% block title %}{{ page_title }}{% endblock %}
 
 {% block content %}
+    {% include "common/alerts.html" %}
     <h1>{{ page_title }}
         <small>{% trans "Step 3 of 3: summary" %}</small>
     </h1>

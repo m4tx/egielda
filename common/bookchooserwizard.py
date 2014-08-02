@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from collections import Counter
 import json
+from decimal import Decimal
 
 from django.conf.urls import url
 
@@ -17,6 +18,7 @@ from common.forms import PersonalDataForm
 from common.models import AppUser
 from egielda import settings
 from utils.books import get_available_books
+from utils.alerts import alerts, set_warning_msg
 
 
 class BookChooserWizard:
@@ -41,15 +43,6 @@ class BookChooserWizard:
     def session_var_name(self) -> str:
         """
         :return: session variable name list of chosen books should be stored in
-        """
-        return None
-
-    @abstractmethod
-    def get_book_list(self, book_list: list) -> list:
-        """
-        Returns list of BookType objects created based on json from the user.
-        :param book_list: list of dict objects retrieved from the user as json
-        :return: list of BookType objects
         """
         return None
 
@@ -92,6 +85,31 @@ class BookChooserWizard:
             url(r'^books/$', self.books, name='books'),
             url(r'^summary/$', self.summary, name='summary'),
         ]
+
+    def get_book_list(self, book_list: list) -> list:
+        """
+        Returns list of BookType objects created based on json from the user.
+        :param book_list: list of dict objects retrieved from the user as json
+        :return: list of BookType objects
+        """
+        existing_dict = {}
+        types = []
+        for book in book_list:
+            if 'pk' in book:
+                existing_dict[book['pk']] = book['amount']
+            else:
+                book['price'] = Decimal(book['price'])
+                amount = book['amount']
+                del book['amount']
+                types.append(BookType(**book))
+                types[-1].amount = amount
+
+        existing_list = BookType.objects.filter(pk__in=existing_dict.keys())
+        for book in existing_list:
+            book.amount = existing_dict[book.pk]
+            types.append(book)
+
+        return types
 
     def personal_data(self, request):
         if request.method == 'POST':
@@ -159,13 +177,21 @@ class BookChooserWizard:
                     with transaction.atomic():
                         user = AppUser(**request.session['personal_data'])
                         user.save()
-                        self.process_books_summary(user, book_list)
-                    del request.session[self.session_var_name]  # Prevent from adding the same books multiple times
-                    return self.success(request)
+                        success, book_list = self.process_books_summary(user, book_list)
+
+                    if success:
+                        del request.session[self.session_var_name]  # Prevent from adding the same books multiple times
+                        return self.success(request)
+                    else:
+                        request.session[self.session_var_name] = json.dumps(book_list)
+                        set_warning_msg(request, 'purchase_incomplete')
+                        return HttpResponseRedirect(reverse(self.url_namespace + ':summary'))
+
             else:
                 return render(request, 'book_chooser_wizard/summary.html',
-                              {'page_title': self.page_title, 'personal_data': request.session['personal_data'],
-                               'chosen_book_list': sorted(self.get_book_list(book_list),
-                                                          key=lambda x: x.title.lower())})
+                              alerts(request,
+                                     {'page_title': self.page_title, 'personal_data': request.session['personal_data'],
+                                      'chosen_book_list': sorted(self.get_book_list(book_list),
+                                                                 key=lambda x: x.title.lower())}))
         except ValueError:
             return HttpResponseBadRequest()

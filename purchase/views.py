@@ -32,30 +32,37 @@ class PurchaseWizard(BookChooserWizard):
         book_type_list = [book['pk'] for book in book_list]  # List of Book primary keys
 
         # Select the Books which are available for purchasing and match the BookTypes we're looking for
-        books = get_available_books().filter(book_type__in=book_type_list).order_by('-pk')
+        books = get_available_books().select_for_update().filter(book_type__in=book_type_list).order_by('-pk')
 
         # Remove duplicated Books. Thanks to order_by('-pk'), we'll have firstly added book as a value here
-        book_dict = dict((book.book_type, book.pk) for book in books)
 
-        # Reserve the Books and create our Order
-        order = Order(user=user, valid_until=timezone.now() + timedelta(1))
-        order.save()
-        Book.objects.filter(pk__in=book_dict.values()).update(reserved_until=timezone.now() + timedelta(1),
-                                                              reserver=user, order=order)
+        books_by_id = dict()
+        for book in books:
+            books_by_id.setdefault(book.book_type.pk, []).append(book)
 
-    def get_book_list(self, book_list):
-        existing_list = []
-        types = []
+        error_occurred = False
+        correct_book_list = []
+
         for book in book_list:
-            if 'pk' in book:
-                existing_list.append(book['pk'])
-            else:
-                if book['price'] != "":
-                    book['price'] = Decimal(book['price'])
-                types.append(BookType(**book))
-        types.extend(BookType.objects.filter(pk__in=existing_list))
+            if book['pk'] in books_by_id:
+                if len(books_by_id[book['pk']]) >= book['amount']:
+                    books_by_id[book['pk']] = books_by_id[book['pk']][:book['amount']]
+                else:
+                    book['amount'] = len(books_by_id[book['pk']])
+                    error_occurred = True
 
-        return types
+                correct_book_list.append(book)
+            else:
+                error_occurred = True
+
+        if not error_occurred:
+            # Reserve the Books and create our Order
+            order = Order(user=user, valid_until=timezone.now() + timedelta(1))
+            order.save()
+            Book.objects.filter(pk__in=[book.pk for l in books_by_id.values() for book in l]).update(
+                reserved_until=timezone.now() + timedelta(1), reserver=user, order=order)
+
+        return not error_occurred, correct_book_list
 
     def success(self, request):
         return render(request, 'purchase/success.html')
