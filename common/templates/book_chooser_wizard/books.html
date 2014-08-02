@@ -62,7 +62,7 @@
 
     <div class="hidden" id="chosen-book-list-div">
         <h2>{% trans "Chosen books" %}</h2>
-        {% include "book_chooser_wizard/books_chosen_list.html" %}
+        {% include "book_chooser_wizard/books_chosen_list.html" with book_list=chosen_book_list %}
     </div>
 
     <div class="btn-toolbar">
