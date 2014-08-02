@@ -22,12 +22,13 @@ def index(request):
             Settings().end_purchase = form.cleaned_data['end_purchase']
             Settings().profit_per_book = form.cleaned_data['profit_per_book']
             Settings().validity_time = form.cleaned_data['validity_time']
+            Settings().homepage_info = form.cleaned_data['homepage_info']
             set_success_msg(request, 'settings_updated')
             return HttpResponseRedirect("")
     else:
         try:
             settings = Settings('start_sell', 'end_sell', 'start_purchase', 'end_purchase', 'profit_per_book',
-                                'validity_time')
+                                'validity_time', 'homepage_info')
             # Pack the retrieved values into new dictionary, formatting them as HTML datetime first
             values = dict(
                 filter(lambda x: x is not None,
@@ -36,7 +37,8 @@ def index(request):
                         add_date_value('start_purchase', settings),
                         add_date_value('end_purchase', settings),
                         ('profit_per_book', settings.profit_per_book if settings.exists('profit_per_book') else 1),
-                        ('validity_time', settings.validity_time if settings.exists('validity_time') else 24)]))
+                        ('validity_time', settings.validity_time if settings.exists('validity_time') else 24),
+                        ('homepage_info', settings.homepage_info if settings.exists('homepage_info') else "")]))
             form = SettingsForm(initial=values)
         except KeyError:
             form = SettingsForm(initial={'profit_per_book': 1})

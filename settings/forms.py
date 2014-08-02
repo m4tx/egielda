@@ -33,3 +33,6 @@ class SettingsForm(forms.Form):
     validity_time = forms.IntegerField(label=_("Order validity time (h)"),
                                        min_value=1,
                                        widget=forms.NumberInput(attrs={'required': 'required'}))
+    homepage_info = forms.CharField(label=_("Homepage information"),
+                                    required=False,
+                                    widget=forms.Textarea())
