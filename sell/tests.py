@@ -1,13 +1,11 @@
 from datetime import timedelta
 
 from django.contrib.staticfiles.testing import StaticLiveServerCase
-
 from django.utils import timezone
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 
 from books.models import BookType, Book
-
 from settings.settings import Settings
 
 

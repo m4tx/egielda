@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 
@@ -42,6 +44,8 @@ class SellWizard(BookChooserWizard):
             for i in range(0, amount):
                 dbbook.pk = None
                 dbbook.save()
+
+        return True, None
 
     def success(self, request):
         return render(request, 'sell/success.html')
