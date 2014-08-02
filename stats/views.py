@@ -51,7 +51,6 @@ def get_given_books_chart_data():
     first_day = min(books_by_date.keys())
     last_day = max(books_by_date.keys())
 
-    print(books_by_date)
     given_book_counts = list((date, len(books_by_date[date])) for date in date_range(first_day, last_day))
 
     return {'given_book_counts': given_book_counts}
