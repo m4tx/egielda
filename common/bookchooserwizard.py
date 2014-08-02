@@ -188,9 +188,8 @@ class BookChooserWizard:
 
             else:
                 return render(request, 'book_chooser_wizard/summary.html',
-                              {'page_title': self.page_title,
-                               'personal_data': request.session['personal_data'],
-                               'chosen_book_list': sorted(self.get_book_list(book_list), key=lambda x: x.title.lower())}
-                )
+                              {'page_title': self.page_title, 'personal_data': request.session['personal_data'],
+                               'chosen_book_list': sorted(self.get_book_list(book_list),
+                                                          key=lambda x: x.title.lower())})
         except ValueError:
             return HttpResponseBadRequest()
