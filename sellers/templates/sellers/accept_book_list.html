@@ -1,56 +1,35 @@
+{% extends "books/book_list_base.html" %}
 {% load i18n %}
 {% load price %}
 
-<div class="table-responsive">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>{% trans "ISBN" %}</th>
-            <th>{% trans "Publisher" %}</th>
-            <th>{% trans "Title" %}</th>
-            <th>{% trans "Publication" %}</th>
-            <th>{% trans "Price" %}</th>
-            <th>{% trans "Amount" %}</th>
-            {% if show_actions %}
-                <th>{% trans "Actions" %}</th>
-            {% endif %}
-        </tr>
-        </thead>
+{% block thead_footer %}
+    <th>{% trans "Amount" %}</th>
+{% endblock %}
 
-        {% for book_type in book_type_list %}
-            <tr{% block tr_attributes %}{% endblock %}>
-                {% block tr_header %}{% endblock %}
-                <td>{{ book_type.isbn }}</td>
-                <td>{{ book_type.publisher }}</td>
-                <td>{{ book_type.title }}</td>
-                <td>{{ book_type.publication_year }}</td>
-                <td>
-                    {% if not book_type.visible %}
-                        <div class="input-group input-group-sm">
-                            <input type="number" step="0.01" max="999.99" class="form-control" name="price-{{ book_type.pk }}" value="{{ book_type.price }}">
-                            <span class="input-group-addon">{{ currency }}</span>
-                        </div>
-                    {% else %}
-                        {{ book_type.price|price }}
-                {% endif %}
-                </td>
-                <td>
-                    <input type="number" step="1" class="form-control input-sm" name="amount-{{ book_type.pk }}" value="{{ book_type.amount }}">
-                </td>
-                {% if show_actions %}
-                    <td>
-                        <div class="btn-toolbar" role="toolbar">
-                            {% if not book_type.visible %}
-                                <a href="{% url 'sellers.views.accept_edit_book' student_pk book_type.pk %}" class="btn btn-xs btn-link" role="button">
-                                    <span class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}
-                                </a>
-                            {% endif %}
-                        </div>
-                    </td>
-                {% endif %}
-            </tr>
-        {% endfor %}
+{% block book_price %}
+    {% if not book.visible %}
+        <div class="input-group input-group-sm">
+            <input type="number" step="0.01" max="999.99" class="form-control" name="price-{{ book.pk }}"
+                   value="{{ book.price }}">
+            <span class="input-group-addon">{{ currency }}</span>
+        </div>
+    {% else %}
+        {{ book.price|price }}
+    {% endif %}
+{% endblock %}
 
-        {% block footer %}{% endblock %}
-    </table>
-</div>
+{% block tr_footer %}
+    <td>
+        <input type="number" step="1" class="form-control input-sm" name="amount-{{ book.pk }}"
+               value="{{ book.amount }}">
+    </td>
+{% endblock %}
+
+{% block actions %}
+    {% if not book.visible %}
+        <a href="{% url 'sellers.views.accept_edit_book' student_pk book.pk %}" class="btn btn-xs btn-link"
+           role="button">
+            <span class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}
+        </a>
+    {% endif %}
+{% endblock %}

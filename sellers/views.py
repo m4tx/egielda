@@ -69,8 +69,9 @@ def accept_books(request, user_pk):
                 show_actions = True
                 break
         return render(request, 'sellers/accept.html',
-                      {'user_name': user.user_name(), 'book_type_list': book_type_list, 'show_actions': show_actions,
-                       'student_pk': user_pk, 'currency': getattr(settings, 'CURRENCY', 'USD')})
+                      {'user_name': user.user_name(), 'book_list': book_type_list,
+                       'hide_actions': not show_actions, 'student_pk': user_pk,
+                       'currency': getattr(settings, 'CURRENCY', 'USD')})
 
 
 @user_passes_test(user_is_admin)

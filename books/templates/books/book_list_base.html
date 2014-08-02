@@ -25,7 +25,7 @@
                 <td>{{ book.publisher }}</td>
                 <td>{{ book.title }}</td>
                 <td>{{ book.publication_year }}</td>
-                <td>{{ book.price|price }}</td>
+                <td>{% block book_price %}{{ book.price|price }}{% endblock %}</td>
                 {% block tr_footer %}{% endblock %}
                 {% if not hide_actions %}
                     <td>
