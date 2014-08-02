@@ -30,3 +30,6 @@ class SettingsForm(forms.Form):
                                          decimal_places=2,
                                          min_value=0,
                                          widget=forms.NumberInput(attrs={'required': 'required'}))
+    validity_time = forms.IntegerField(label=_("Order validity time (h)"),
+                                       min_value=1,
+                                       widget=forms.NumberInput(attrs={'required': 'required'}))

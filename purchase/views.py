@@ -9,6 +9,7 @@ from django.db.models import Count
 from books.models import Book
 from common.bookchooserwizard import BookChooserWizard
 from orders.models import Order
+from settings.settings import Settings
 from utils.books import get_available_books
 
 
@@ -57,13 +58,16 @@ class PurchaseWizard(BookChooserWizard):
                 error_occurred = True
 
         if not error_occurred:
+            settings = Settings('validity_time')
+            validity_time = settings.validity_time if settings.exists('validity_time') else 24
+            validity_time = timedelta(hours=int(validity_time))
             # Reserve the Books and create our Order
             user.save()
-            order = Order(user=user, valid_until=timezone.now() + timedelta(1))
+            order = Order(user=user, valid_until=timezone.now() + validity_time)
             order.save()
             session['order_id'] = order.pk
             Book.objects.filter(pk__in=[book.pk for l in books_by_id.values() for book in l]).update(
-                reserved_until=timezone.now() + timedelta(1), reserver=user, order=order)
+                reserved_until=timezone.now() + validity_time, reserver=user, order=order)
 
         return not error_occurred, correct_book_list
 
