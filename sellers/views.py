@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponseRedirect, Http404
@@ -9,14 +9,13 @@ from django.utils import timezone
 
 from books.forms import BookForm
 from books.models import BookType, Book
-from common.auth import user_is_admin
 from common.models import AppUser
 from utils.alerts import set_success_msg
 from egielda import settings
 from utils.books import books_by_types
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_sellers_index', raise_exception=True)
 def index(request):
     book_list = Book.objects.filter(accepted=False).select_related('owner')
     student_list = []
@@ -27,7 +26,7 @@ def index(request):
     return render(request, 'sellers/index.html', {'student_list': student_list})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_sellers_accept_books', raise_exception=True)
 def accept_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
     books = Book.objects.filter(owner=user, accepted=False).select_related('book_type')
@@ -74,7 +73,7 @@ def accept_books(request, user_pk):
                        'currency': getattr(settings, 'CURRENCY', 'USD')})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_accept_edit_book', raise_exception=True)
 def accept_edit_book(request, user_pk, book_id):
     book = get_object_or_404(BookType, id=book_id)
 

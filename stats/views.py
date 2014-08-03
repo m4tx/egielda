@@ -1,12 +1,9 @@
 from collections import defaultdict
 from decimal import Decimal
 
-from django.contrib.auth.decorators import user_passes_test
-
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
-
-from common.auth import user_is_admin
 
 from common.models import AppUser
 from books.models import BookType, Book
@@ -14,7 +11,7 @@ from settings.settings import Settings
 from utils.dates import date_range
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_stats_index', raise_exception=True)
 def index(request):
     args = get_sold_books_chart_data()
     args.update(get_given_books_chart_data())
@@ -56,7 +53,7 @@ def get_given_books_chart_data():
     return {'given_book_counts': given_book_counts}
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_stats_books_sold', raise_exception=True)
 def books_sold(request):
     books = Book.objects.filter(sold=True).order_by('-sold_date').select_related('book_type', 'purchaser')
 
@@ -75,14 +72,14 @@ def books_sold(request):
     return render(request, 'stats/books_sold.html', {'stats': list(reversed(sorted(stats.items())))})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_stats_users', raise_exception=True)
 def users(request):
     student_list = AppUser.objects.annotate(count=Count('appuser_owner')).exclude(count=0)
 
     return render(request, 'stats/users.html', {'student_list': student_list})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_stats_list_books', raise_exception=True)
 def list_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
     book_list = Book.objects.select_related('book_type', 'purchaser', 'order').filter(owner=user)
@@ -98,7 +95,7 @@ def list_books(request, user_pk):
                                                      'unsold_book_list': unsold_book_list})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_stats_books', raise_exception=True)
 def books(request):
     book_list = BookType.objects.annotate(received=Count('book')).annotate(
         sold=Count('book', field='CASE WHEN books_book.sold THEN 1 END'))

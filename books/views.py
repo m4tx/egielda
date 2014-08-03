@@ -1,21 +1,20 @@
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 
 from books.forms import BookForm
-from common.auth import user_is_admin
 from books.models import BookType
 from utils.alerts import set_success_msg
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_books_index', raise_exception=True)
 def index(request):
     book_list = BookType.objects.all()
     return render(request, 'books/index.html', {'book_list': book_list})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_books_add_book', raise_exception=True)
 def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
@@ -31,7 +30,7 @@ def add_book(request):
     return render(request, 'books/add.html', {'form': form})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_books_edit_book', raise_exception=True)
 def edit_book(request, book_id):
     book = get_object_or_404(BookType, id=book_id)
     if request.method == 'POST':
@@ -48,7 +47,7 @@ def edit_book(request, book_id):
     return render(request, 'books/edit.html', {'form': form})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_books_remove_book', raise_exception=True)
 def remove_book(request, book_ids):
     book_list = get_list_or_404(BookType, id__in=book_ids.split(','))
     if request.method == 'POST':
@@ -59,14 +58,14 @@ def remove_book(request, book_ids):
         return render(request, 'books/remove.html', {'book_list': book_list})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_books_book_details', raise_exception=True)
 def book_details(request, book_id):
     book = get_object_or_404(BookType, id=book_id)
     book.categories_str = ", ".join([category.name for category in book.categories.all()])
     return render(request, 'books/details.html', {'book': book})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_books_bulk_actions', raise_exception=True)
 def bulk_actions(request, action_name):
     book_list = []
     if action_name == 'remove' and request.method == 'POST':

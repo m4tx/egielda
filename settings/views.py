@@ -1,9 +1,8 @@
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 from django.http.response import HttpResponseRedirect
 
-from common.auth import user_is_admin
 from settings.forms import SettingsForm
 from settings.settings import Settings
 from settings.settings import string_to_datetime
@@ -11,7 +10,7 @@ from utils.alerts import set_success_msg
 from utils.dates import datetime_html_format
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_settings_index', raise_exception=True)
 def index(request):
     if request.method == 'POST':
         form = SettingsForm(request.POST)

@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404
@@ -6,11 +6,10 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from books.models import BookType
 from categories.forms import CategoryForm
 from categories.models import Category
-from common.auth import user_is_admin
 from utils.alerts import set_success_msg
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_categories_index', raise_exception=True)
 def index(request):
     book_list = BookType.objects.all().prefetch_related('categories')
     category_list = Category.objects.all()
@@ -23,7 +22,7 @@ def index(request):
     return render(request, 'categories/index.html', {'category_list': sorted(count.items(), key=lambda o: o[0].name)})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_categories_add_category', raise_exception=True)
 def add_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -36,7 +35,7 @@ def add_category(request):
     return render(request, 'categories/add.html', {'form': form})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_categories_edit_category', raise_exception=True)
 def edit_category(request, cat_pk):
     category = get_object_or_404(Category, pk=cat_pk)
     if request.method == 'POST':
@@ -50,7 +49,7 @@ def edit_category(request, cat_pk):
     return render(request, 'categories/edit.html', {'form': form})
 
 
-@user_passes_test(user_is_admin)
+@permission_required('common.view_categories_remove_category', raise_exception=True)
 def remove_category(request, cat_pk):
     category = get_object_or_404(Category, pk=cat_pk)
     if request.method == 'POST':
@@ -60,6 +59,7 @@ def remove_category(request, cat_pk):
         return render(request, 'categories/remove.html', {'category': category, 'book_count': book_count})
 
 
+@permission_required('common.view_categories_list_books', raise_exception=True)
 def list_books(request, cat_pk):
     category = get_object_or_404(Category, pk=cat_pk)
     book_list = get_list_or_404(BookType, categories=category)
