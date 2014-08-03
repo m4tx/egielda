@@ -1,9 +1,9 @@
 from django.test import LiveServerTestCase
+from django.utils import timezone
 
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from books.models import BookType, Book
-
 from common.models import AppUser
 from utils.tests import create_test_superuser, login
 
@@ -18,7 +18,7 @@ class SellersLiveTests(LiveServerTestCase):
                          price=65.5, visible=True)
         type1.save()
         type2.save()
-        Book(book_type=type1, owner=user, accepted=True).save()
+        Book(book_type=type1, owner=user, accepted=True, accept_date=timezone.now()).save()
         Book(book_type=type1, owner=user, accepted=False).save()
         Book(book_type=type2, owner=user, accepted=False).save()
         Book(book_type=type2, owner=user, accepted=False).save()
@@ -68,6 +68,7 @@ class SellersLiveTests(LiveServerTestCase):
         books = Book.objects.all()
         # Check if we actually created and deleted Books by modifying quantities
         self.assertEqual(len(books), 4)
-        self.assertEqual(len(books.filter(accepted=True)), 4)  # Check if the Books are accepted now
+        # Check if the Books are accepted now
+        self.assertEqual(len(books.filter(accepted=True, accept_date__isnull=False)), 4)
         # Check whether the BookType which was not visible, is visible now
         self.assertEqual(len(BookType.objects.filter(visible=True)), 2)
