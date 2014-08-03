@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect, Http404
-from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 
 from books.forms import BookForm
 from books.models import BookType
@@ -49,7 +49,10 @@ def edit_book(request, book_id):
 
 @permission_required('common.view_books_remove_book', raise_exception=True)
 def remove_book(request, book_ids):
-    book_list = get_list_or_404(BookType, id__in=book_ids.split(','))
+    book_list = BookType.objects.filter(pk__in=book_ids.split(','))
+    if len(book_list) == 0:
+        raise Http404
+
     if request.method == 'POST':
         set_success_msg(request, 'book_removed' if len(book_list) == 1 else 'books_removed')
         book_list.delete()
