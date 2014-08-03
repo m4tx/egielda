@@ -89,7 +89,6 @@ DATABASES = {
 
 SITE_NAME = "e-Giełda"
 LOGIN_REDIRECT_URL = 'egielda.views.home'
-LOGIN_URL = '/accounts/login/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
