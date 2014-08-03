@@ -14,7 +14,7 @@
             <span class="input-group-addon">{{ currency }}</span>
         </div>
     {% else %}
-        {{ book.price|price }}
+        {{ block.super }}
     {% endif %}
 {% endblock %}
 
