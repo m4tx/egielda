@@ -74,7 +74,8 @@ class PurchaseWizard(BookChooserWizard):
     def success(self, request):
         order = Order.objects.select_related('user', 'book_set').annotate(books_count=Count('book')).get(
             pk=request.session['order_id'])
-        ID = order.valid_until.strftime("%Y%m%d") + "-" + str(order.pk) + "-" + str(order.user.pk) + "-" + str(
+        # Order id shown to the user
+        order_id = order.valid_until.strftime("%Y%m%d") + "-" + str(order.pk) + "-" + str(order.user.pk) + "-" + str(
             order.books_count)
 
         amounts = Counter([book.book_type for book in order.book_set.all()])
@@ -82,4 +83,4 @@ class PurchaseWizard(BookChooserWizard):
             book_type.amount = amounts[book_type]
 
         return render(request, 'purchase/success.html',
-                      {'order': order, 'order_ID': ID, 'chosen_book_list': amounts.keys()})
+                      {'order': order, 'order_ID': order_id, 'chosen_book_list': amounts.keys()})
