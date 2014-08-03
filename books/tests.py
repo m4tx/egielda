@@ -9,7 +9,7 @@ from books.models import BookType
 from utils.tests import create_test_superuser, login
 
 
-class SellWizardTests(StaticLiveServerCase):
+class BooksTests(StaticLiveServerCase):
     def setUp(self):
         BookType(isbn="9788375940794", publisher="Some", title="A book", publication_year=1995, price=20.50,
                  visible=False).save()
@@ -18,12 +18,12 @@ class SellWizardTests(StaticLiveServerCase):
     @classmethod
     def setUpClass(cls):
         cls.selenium = WebDriver()
-        super(SellWizardTests, cls).setUpClass()
+        super(BooksTests, cls).setUpClass()
 
     @classmethod
     def tearDownClass(cls):
         cls.selenium.quit()
-        super(SellWizardTests, cls).tearDownClass()
+        super(BooksTests, cls).tearDownClass()
 
     def test_books(self):
         login(self.selenium, self.live_server_url, "test", "test")
