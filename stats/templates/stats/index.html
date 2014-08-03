@@ -6,6 +6,11 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/nv.d3.css' %}">
+    <style>
+        .col-lg-6 {
+            page-break-inside: avoid;
+        }
+    </style>
 {% endblock %}
 
 {% block title %}{% trans "Statistics" %}{% endblock %}
