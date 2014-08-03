@@ -34,6 +34,13 @@ class DummyPermissions(models.Model):
 
             ("view_managemenu_index", "View managemenu.index"),
 
+            ("view_orders_order_details", "View orders.order_details"),
+            ("view_orders_not_executed", "View orders.not_executed"),
+            ("view_orders_outdated", "View orders.outdated"),
+            ("view_orders_executed", "View orders.executed"),
+            ("view_orders_execute", "View orders.execute"),
+            ("view_orders_execute_accept", "View orders.execute_accept"),
+
             ("view_sellers_index", "View sellers.index"),
             ("view_sellers_accept_books", "View sellers.accept_books"),
             ("view_sellers_accept_edit_book", "View sellers.accept_edit_book"),
