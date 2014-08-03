@@ -9,7 +9,7 @@ from utils.dates import datetime_html_format
 from utils.tests import login, create_test_superuser
 
 
-class SettingsTests(TestCase):
+class SettingsTest(TestCase):
     def test_settings(self):
         Settings().int_val = 15
         self.assertEqual(Settings('int_val').int_val, '15')
@@ -20,17 +20,17 @@ class SettingsTests(TestCase):
         self.assertEqual(settings.str_val, "test")
 
 
-class SettingsLiveTests(LiveServerTestCase):
+class SettingsLiveTest(LiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         create_test_superuser()
         cls.selenium = WebDriver()
-        super(SettingsLiveTests, cls).setUpClass()
+        super(SettingsLiveTest, cls).setUpClass()
 
     @classmethod
     def tearDownClass(cls):
         cls.selenium.quit()
-        super(SettingsLiveTests, cls).tearDownClass()
+        super(SettingsLiveTest, cls).tearDownClass()
 
     def test_dates(self):
         # Check if there're no Sell/Purchase buttons on homepage

@@ -8,7 +8,7 @@ from categories.models import Category
 from utils.tests import create_test_superuser, login
 
 
-class CategoriesTests(StaticLiveServerCase):
+class CategoriesLiveTest(StaticLiveServerCase):
     def setUp(self):
         category = Category(name="Test category")
         category.save()
@@ -21,12 +21,12 @@ class CategoriesTests(StaticLiveServerCase):
     @classmethod
     def setUpClass(cls):
         cls.selenium = WebDriver()
-        super(CategoriesTests, cls).setUpClass()
+        super(CategoriesLiveTest, cls).setUpClass()
 
     @classmethod
     def tearDownClass(cls):
         cls.selenium.quit()
-        super(CategoriesTests, cls).tearDownClass()
+        super(CategoriesLiveTest, cls).tearDownClass()
 
     def test_categories(self):
         login(self.selenium, self.live_server_url, "test", "test")

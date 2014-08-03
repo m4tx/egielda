@@ -8,7 +8,7 @@ from common.models import AppUser
 from utils.tests import create_test_superuser, login
 
 
-class SellersLiveTests(LiveServerTestCase):
+class SellersLiveTest(LiveServerTestCase):
     def setUp(self):
         user = AppUser(first_name="Test", last_name="Test", student_class="1A", phone_number="111222333")
         user.save()
@@ -28,12 +28,12 @@ class SellersLiveTests(LiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         cls.selenium = WebDriver()
-        super(SellersLiveTests, cls).setUpClass()
+        super(SellersLiveTest, cls).setUpClass()
 
     @classmethod
     def tearDownClass(cls):
         cls.selenium.quit()
-        super(SellersLiveTests, cls).tearDownClass()
+        super(SellersLiveTest, cls).tearDownClass()
 
     def test_accept(self):
         login(self.selenium, self.live_server_url, "test", "test")

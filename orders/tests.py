@@ -6,7 +6,7 @@ from books.models import Book
 from utils.tests import create_test_superuser, login
 
 
-class SellWizardTests(StaticLiveServerCase):
+class OrdersLiveTest(StaticLiveServerCase):
     fixtures = ['execute-test-data.json']
 
     def setUp(self):
@@ -15,14 +15,14 @@ class SellWizardTests(StaticLiveServerCase):
     @classmethod
     def setUpClass(cls):
         cls.selenium = WebDriver()
-        super(SellWizardTests, cls).setUpClass()
+        super(OrdersLiveTest, cls).setUpClass()
 
     @classmethod
     def tearDownClass(cls):
         cls.selenium.quit()
-        super(SellWizardTests, cls).tearDownClass()
+        super(OrdersLiveTest, cls).tearDownClass()
 
-    def test_sell_wizard(self):
+    def test_orders(self):
         login(self.selenium, self.live_server_url, "test", "test")
         self.selenium.get(self.live_server_url + "/manage/orders/notexecuted")
         self.selenium.find_element_by_xpath('//td//a[contains(@href, "execute")]').click()

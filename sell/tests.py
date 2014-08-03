@@ -9,7 +9,7 @@ from books.models import BookType, Book
 from settings.settings import Settings
 
 
-class SellWizardTests(StaticLiveServerCase):
+class SellWizardLiveTest(StaticLiveServerCase):
     def setUp(self):
         Settings().start_sell = timezone.now().replace(microsecond=0)
         Settings().end_sell = timezone.now().replace(microsecond=0) + timedelta(1)
@@ -21,12 +21,12 @@ class SellWizardTests(StaticLiveServerCase):
     @classmethod
     def setUpClass(cls):
         cls.selenium = WebDriver()
-        super(SellWizardTests, cls).setUpClass()
+        super(SellWizardLiveTest, cls).setUpClass()
 
     @classmethod
     def tearDownClass(cls):
         cls.selenium.quit()
-        super(SellWizardTests, cls).tearDownClass()
+        super(SellWizardLiveTest, cls).tearDownClass()
 
     def test_sell_wizard(self):
         # # Personal data

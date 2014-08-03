@@ -9,18 +9,18 @@ from common.models import AppUser
 from orders.models import Order
 
 
-class PurchaseWizardTests(StaticLiveServerCase):
+class PurchaseWizardLiveTest(StaticLiveServerCase):
     fixtures = ['purchase-test-data.json']
 
     @classmethod
     def setUpClass(cls):
         cls.selenium = WebDriver()
-        super(PurchaseWizardTests, cls).setUpClass()
+        super(PurchaseWizardLiveTest, cls).setUpClass()
 
     @classmethod
     def tearDownClass(cls):
         cls.selenium.quit()
-        super(PurchaseWizardTests, cls).tearDownClass()
+        super(PurchaseWizardLiveTest, cls).tearDownClass()
 
     def test_purchase_wizard(self):
         self.selenium.get(self.live_server_url + "/purchase/")
