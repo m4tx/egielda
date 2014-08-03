@@ -57,6 +57,7 @@ def accept_books(request, user_pk):
                     for i in range(0, amount_difference):
                         book.pk = None
                         book.accepted = True
+                        book.accept_date = timezone.now()
                         book.save()
 
         set_success_msg(request, 'books_accepted')
@@ -65,7 +66,7 @@ def accept_books(request, user_pk):
         hide_actions = True
         for book_type in book_type_list:
             if not book_type.visible:
-                show_actions = False
+                hide_actions = False
                 break
         return render(request, 'sellers/accept.html',
                       {'user_name': user.user_name(), 'book_list': book_type_list,
