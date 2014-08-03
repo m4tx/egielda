@@ -53,7 +53,9 @@ def edit_category(request, cat_pk):
 def remove_category(request, cat_pk):
     category = get_object_or_404(Category, pk=cat_pk)
     if request.method == 'POST':
-        pass
+        category.delete()
+        set_success_msg(request, 'category_remove')
+        return HttpResponseRedirect(reverse(index))
     else:
         book_count = BookType.objects.filter(categories=category).count()
         return render(request, 'categories/remove.html', {'category': category, 'book_count': book_count})
