@@ -58,4 +58,3 @@ class SettingsLiveTests(LiveServerTestCase):
         self.assertEqual(len(sell_buttons), 1)
         purchase_buttons = self.selenium.find_elements_by_css_selector("a[href^='/purchase/']")
         self.assertEqual(len(purchase_buttons), 1)
-        print(Setting.objects.all())
