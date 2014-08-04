@@ -72,7 +72,7 @@ def execute(request, order_pk):
                                                                     reserved_until=book_instance.reserved_until,
                                                                     reserver=book_instance.reserver)
 
-        return HttpResponseRedirect(reverse(execute_accept, args=order_pk))
+        return HttpResponseRedirect(reverse(execute_accept, args=(order_pk,)))
     else:
         return render(request, 'orders/execute.html', {'order': order, 'book_list': book_types})
 
