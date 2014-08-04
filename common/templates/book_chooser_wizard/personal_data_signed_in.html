@@ -1,0 +1,51 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ page_title }}
+        <small>{% trans "Step 1 of 3: provide personal info" %}</small>
+    </h1>
+
+    <form class="form-horizontal" action="{{ request.path }}" method="post">
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "First name" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ user.first_name }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "Last name" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ user.last_name }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "Class" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ user.student_class }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "Phone number" %}:</label>
+
+            <div class="col-sm-9 col-md-10">
+                <p class="form-control-static">{{ user.phone_number }}</p>
+            </div>
+        </div>
+
+        <div class="text-center">
+            {% trans "It is not you?" %}<button class="btn btn-link" name="signout">
+                                            <strong>{% trans "Fill out the data manually." %}</strong>
+                                        </button>
+        </div>
+
+        {% csrf_token %}
+        <button class="btn btn-primary pull-right" type="submit">{% trans "Next" %} <span
+                class="glyphicon glyphicon-chevron-right"></span></button>
+    </form>
+{% endblock %}

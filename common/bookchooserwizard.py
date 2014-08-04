@@ -113,12 +113,26 @@ class BookChooserWizard:
 
     def personal_data(self, request):
         if request.method == 'POST':
-            form = PersonalDataForm(request.POST)
-            if form.is_valid():
-                request.session['personal_data'] = model_to_dict(form.save(commit=False))
+            if 'signout' in request.POST:
+                del request.session['app_user']
+                del request.session['personal_data']
+                return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
+
+            if 'app_user' in request.session:
+                user = AppUser.objects.get(pk=int(request.session['app_user']))
+                request.session['personal_data'] = model_to_dict(user)
                 return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
+            else:
+                form = PersonalDataForm(request.POST)
+                if form.is_valid():
+                    request.session['personal_data'] = model_to_dict(form.save(commit=False))
+                    return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
         else:
-            if 'personal_data' in request.session:
+            if 'app_user' in request.session:
+                user = AppUser.objects.get(pk=int(request.session['app_user']))
+                return render(request, 'book_chooser_wizard/personal_data_signed_in.html',
+                              {'page_title': self.page_title, 'user': user})
+            elif 'personal_data' in request.session:
                 form = PersonalDataForm(instance=AppUser(**request.session['personal_data']))
             else:
                 form = PersonalDataForm()
@@ -175,12 +189,17 @@ class BookChooserWizard:
                     return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
                 else:
                     with transaction.atomic():
-                        user = AppUser(**request.session['personal_data'])
+                        if 'app_user' in request.session:
+                            user = AppUser.objects.get(pk=int(request.session['app_user']))
+                        else:
+                            user = AppUser(**request.session['personal_data'])
                         success, book_list = self.process_books_summary(request.session, user, book_list)
 
                         if success:
                             # Prevent from adding the same books multiple times
                             del request.session[self.session_var_name]
+                            # "Sign in" the user
+                            request.session['app_user'] = user.pk
                             return self.success(request)
                         else:
                             request.session[self.session_var_name] = json.dumps(book_list)
