@@ -74,7 +74,7 @@ def accept_books(request, user_pk):
                        'currency': getattr(settings, 'CURRENCY', 'USD')})
 
 
-@permission_required('common.view_accept_edit_book', raise_exception=True)
+@permission_required('common.view_sellers_accept_edit_book', raise_exception=True)
 def accept_edit_book(request, user_pk, book_id):
     book = get_object_or_404(BookType, id=book_id)
 
