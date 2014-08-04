@@ -26,7 +26,7 @@
 {% endblock %}
 
 {% block actions %}
-    {% if not book.visible %}
+    {% if not book.visible and perms.common.view_sellers_accept_edit_book %}
         <a href="{% url 'sellers.views.accept_edit_book' student_pk book.pk %}" class="btn btn-xs btn-link"
            role="button">
             <span class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}
