@@ -16,9 +16,12 @@
     {% include 'orders/execute_accept_book_list.html' with book_list=order.book_set.all %}
 
     <form action="{{ request.path }}" method="post">
-        <a href="{% url 'orders.views.execute' order.pk %}" class="btn btn-default" role="button">
-            <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
-        </a>
+        {% if perms.common.view_orders_execute %}
+            <a href="{% url 'orders.views.execute' order.pk %}" class="btn btn-default" role="button">
+                <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+            </a>
+        {% endif %}
+
         {% csrf_token %}
         <button class="btn btn-primary pull-right" type="submit">
             <span class="glyphicon glyphicon-ok"></span> {% trans "Execute" %}

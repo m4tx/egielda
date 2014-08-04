@@ -18,11 +18,16 @@
         {% csrf_token %}
         {% include 'orders/execute_book_list.html' with hide_actions=True %}
 
-        <a href="{% url 'orders.views.not_executed' %}" class="btn btn-default" role="button">
-            <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}
-        </a>
-        <button class="btn btn-primary pull-right" type="submit">
-            {% trans "Next" %} <span class="glyphicon glyphicon-chevron-right"></span>
-        </button>
+        {% if perms.common.view_orders_not_executed %}
+            <a href="{% url 'orders.views.not_executed' %}" class="btn btn-default" role="button">
+                <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}
+            </a>
+        {% endif %}
+
+        {% if perms.common.view_orders_execute_accept %}
+            <button class="btn btn-primary pull-right" type="submit">
+                {% trans "Next" %} <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
+        {% endif %}
     </form>
 {% endblock %}

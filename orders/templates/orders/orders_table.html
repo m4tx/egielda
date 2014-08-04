@@ -9,7 +9,9 @@
                 <th>{% trans "Valid until" %}</th>
                 <th>{% trans "User" %}</th>
                 <th>{% trans "Books" %}</th>
-                <th>{% trans "Actions" %}</th>
+                {% if perms.common.view_orders_execute or perms.common.view_orders_order_details %}
+                    <th>{% trans "Actions" %}</th>
+                {% endif %}
             </tr>
             </thead>
             {% for order in orders %}
@@ -18,18 +20,23 @@
                     <td>{{ order.valid_until }}</td>
                     <td>{{ order.user }}</td>
                     <td>{{ order.book_set.count }}</td>
-                    <td>
-                        {% if show_execute %}
-                            <a class="btn btn-xs btn-link" role="button"
-                               href="{% url 'orders.views.execute' order.pk %}">
-                                <span class="glyphicon glyphicon-ok"></span> {% trans "Execute" %}
-                            </a>
-                        {% endif %}
-                        <a class="btn btn-xs btn-link" role="button"
-                           href="{% url 'orders.views.order_details' order.pk %}">
-                            <span class="glyphicon glyphicon-list-alt"></span> {% trans "Show order" %}
-                        </a>
-                    </td>
+                    {% if perms.common.view_orders_execute or perms.common.view_orders_order_details %}
+                        <td>
+                            {% if show_execute and perms.common.view_orders_execute %}
+                                <a class="btn btn-xs btn-link" role="button"
+                                   href="{% url 'orders.views.execute' order.pk %}">
+                                    <span class="glyphicon glyphicon-ok"></span> {% trans "Execute" %}
+                                </a>
+                            {% endif %}
+
+                            {% if perms.common.view_orders_order_details %}
+                                <a class="btn btn-xs btn-link" role="button"
+                                   href="{% url 'orders.views.order_details' order.pk %}">
+                                    <span class="glyphicon glyphicon-list-alt"></span> {% trans "Show order" %}
+                                </a>
+                            {% endif %}
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>

@@ -37,7 +37,9 @@
 
     {% include "books/book_list_base.html" with hide_actions=True %}
 
-    <a class="btn btn-default" role="button" href="{% url 'orders.views.index' %}">
-        <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
-    </a>
+    {% if perms.common.view_orders_index %}
+        <a class="btn btn-default" role="button" href="{% url 'orders.views.index' %}">
+            <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+        </a>
+    {% endif %}
 {% endblock %}
