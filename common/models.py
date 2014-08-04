@@ -34,6 +34,7 @@ class DummyPermissions(models.Model):
 
             ('view_managemenu_index', "View managemenu.index"),
 
+            ('view_orders_index', 'View orders.index'),
             ('view_orders_order_details', "View orders.order_details"),
             ('view_orders_not_executed', "View orders.not_executed"),
             ('view_orders_outdated', "View orders.outdated"),
