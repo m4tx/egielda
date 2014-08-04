@@ -7,6 +7,10 @@
         table th {
             width: 20%;
         }
+
+        .nav-tabs {
+            margin-bottom: 10px;
+        }
     </style>
 {% endblock %}
 
@@ -15,6 +19,13 @@
 {% block content %}
     <h1>{% trans "Books" %}</h1>
     {% manage_header "stats/books" %}
+
+    <ul class="nav nav-tabs">
+        <li><a href="{% url 'stats.views.index' %}">{% trans "Charts" %}</a></li>
+        <li><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></li>
+        <li><a href="{% url 'stats.views.users' %}">{% trans "Users" %}</a></li>
+        <li class="active"><a href="#">{% trans "Books" %}</a></li>
+    </ul>
 
     {% if book_list %}
         <div class="table-responsive">

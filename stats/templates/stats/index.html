@@ -10,6 +10,10 @@
         .col-lg-6 {
             page-break-inside: avoid;
         }
+
+        .nav-tabs {
+            margin-bottom: 10px;
+        }
     </style>
 {% endblock %}
 
@@ -19,7 +23,8 @@
     <h1>{% trans "Statistics" %}</h1>
     {% manage_header "stats" %}
 
-    <ul class="nav nav-pills">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#">{% trans "Charts" %}</a></li>
         <li><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></li>
         <li><a href="{% url 'stats.views.users' %}">{% trans "Users" %}</a></li>
         <li><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></li>
