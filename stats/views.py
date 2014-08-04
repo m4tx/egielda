@@ -28,15 +28,18 @@ def get_sold_books_chart_data():
         for category in book.book_type.categories.all():
             sold_book_categories[category] += 1
 
-    first_day = min(books_by_date.keys())
-    last_day = max(books_by_date.keys())
+    if len(books_by_date) != 0:
+        first_day = min(books_by_date.keys())
+        last_day = max(books_by_date.keys())
 
-    sold_book_counts = list((date, len(books_by_date[date])) for date in date_range(first_day, last_day))
-    sold_book_prices = list(
-        (date, sum(book.book_type.price for book in books_by_date[date])) for date in date_range(first_day, last_day))
+        sold_book_counts = list((date, len(books_by_date[date])) for date in date_range(first_day, last_day))
+        sold_book_prices = list(
+            (date,
+             sum(book.book_type.price for book in books_by_date[date])) for date in date_range(first_day, last_day))
+        return {'sold_book_counts': sold_book_counts, 'sold_book_prices': sold_book_prices,
+                'sold_book_categories': sold_book_categories.items()}
 
-    return {'sold_book_counts': sold_book_counts, 'sold_book_prices': sold_book_prices,
-            'sold_book_categories': sold_book_categories.items()}
+    return {}
 
 
 def get_given_books_chart_data():
@@ -45,12 +48,14 @@ def get_given_books_chart_data():
     for book in given_books:
         books_by_date[book.accept_date.date()].append(book)
 
-    first_day = min(books_by_date.keys())
-    last_day = max(books_by_date.keys())
+    if len(books_by_date) != 0:
+        first_day = min(books_by_date.keys())
+        last_day = max(books_by_date.keys())
 
-    given_book_counts = list((date, len(books_by_date[date])) for date in date_range(first_day, last_day))
+        given_book_counts = list((date, len(books_by_date[date])) for date in date_range(first_day, last_day))
+        return {'given_book_counts': given_book_counts}
 
-    return {'given_book_counts': given_book_counts}
+    return {}
 
 
 @permission_required('common.view_stats_books_sold', raise_exception=True)
