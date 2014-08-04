@@ -16,12 +16,9 @@ from utils.alerts import set_success_msg
 from utils.books import books_by_types, get_available_books
 
 
-@permission_required('common.view_orders_order_details', raise_exception=True)
-def order_details(request, order_pk):
-    order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
-                              pk=order_pk)
-    return render(request, 'orders/details.html',
-                  {'order': order, 'book_list': [book.book_type for book in order.book_set.all()]})
+@permission_required('common.view_orders_index', raise_exception=True)
+def index(request):
+    return HttpResponseRedirect(reverse(not_executed))
 
 
 @permission_required('common.view_orders_not_executed', raise_exception=True)
@@ -40,6 +37,14 @@ def outdated(request):
 def executed(request):
     orders = get_orders().exclude(sold_count=0)
     return render(request, 'orders/executed.html', {'orders': orders})
+
+
+@permission_required('common.view_orders_order_details', raise_exception=True)
+def order_details(request, order_pk):
+    order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
+                              pk=order_pk)
+    return render(request, 'orders/details.html',
+                  {'order': order, 'book_list': [book.book_type for book in order.book_set.all()]})
 
 
 @permission_required('common.view_orders_execute', raise_exception=True)
