@@ -1,5 +1,6 @@
 from collections import Counter
 
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.db.models import Count
@@ -15,6 +16,7 @@ from utils.alerts import set_success_msg
 from utils.books import books_by_types, get_available_books
 
 
+@permission_required('common.view_orders_order_details', raise_exception=True)
 def order_details(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
                               pk=order_pk)
@@ -22,21 +24,25 @@ def order_details(request, order_pk):
                   {'order': order, 'book_list': [book.book_type for book in order.book_set.all()]})
 
 
+@permission_required('common.view_orders_not_executed', raise_exception=True)
 def not_executed(request):
     orders = get_orders().filter(valid_until__gt=timezone.now(), sold_count=0)
     return render(request, 'orders/not_executed.html', {'orders': orders})
 
 
+@permission_required('common.view_orders_outdated', raise_exception=True)
 def outdated(request):
     orders = get_orders().filter(valid_until__lte=timezone.now(), sold_count=0)
     return render(request, 'orders/outdated.html', {'orders': orders})
 
 
+@permission_required('common.view_orders_executed', raise_exception=True)
 def executed(request):
     orders = get_orders().exclude(sold_count=0)
     return render(request, 'orders/executed.html', {'orders': orders})
 
 
+@permission_required('common.view_orders_execute', raise_exception=True)
 def execute(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
                               pk=order_pk)
@@ -71,6 +77,7 @@ def execute(request, order_pk):
         return render(request, 'orders/execute.html', {'order': order, 'book_list': book_types})
 
 
+@permission_required('common.view_orders_execute_accept', raise_exception=True)
 def execute_accept(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
                               pk=order_pk)
