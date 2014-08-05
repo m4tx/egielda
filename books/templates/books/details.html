@@ -6,7 +6,18 @@
 {% block title %}{% trans "Book's details" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Book's details" %}</h1>
+    <h1>{% trans "Book's details" %}
+        <div class="btn-toolbar pull-right">
+            {% if perms.common.view_books_edit_book %}
+                <a class="btn btn-sm btn-default" role="button" href="{% url 'books.views.edit_book' book.pk %}"><span
+                    class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}</a>
+            {% endif %}
+            {% if perms.common.view_books_remove_book %}
+                <a class="btn btn-sm btn-default" role="button" href="{% url 'books.views.remove_book' book.pk %}"><span
+                    class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}</a>
+            {% endif %}
+        </div>
+    </h1>
     {% manage_header "books/details" %}
 
     <div class="form-horizontal">
