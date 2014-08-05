@@ -19,8 +19,10 @@
         <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
     {% endif %}
 
-    <a href="{% url 'categories.views.index' %}" class="btn btn-primary" role="button">
-        <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
-    </a>
+    {% if perms.common.view_categories_index %}
+        <a href="{% url 'categories.views.index' %}" class="btn btn-primary" role="button">
+            <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+        </a>
+    {% endif %}
 {% endblock %}
 

@@ -11,9 +11,10 @@
     <form class="form-horizontal" method="post" action="">
         {% include 'common/default_form.html' %}
         {% csrf_token %}
-        <a href="{% url 'categories.views.index' %}" class="btn btn-default">
-            <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}
-        </a>
+        {% if perms.common.view_categories_index %}
+            <a href="{% url 'categories.views.index' %}" class="btn btn-default" role="button"><span
+                class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
+        {% endif %}
         <button type="submit" class="btn btn-primary pull-right">
             <span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}
         </button>
