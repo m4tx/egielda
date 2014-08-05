@@ -25,22 +25,19 @@ def index(request):
             set_success_msg(request, 'settings_updated')
             return HttpResponseRedirect("")
     else:
-        try:
-            settings = Settings('start_sell', 'end_sell', 'start_purchase', 'end_purchase', 'profit_per_book',
-                                'validity_time', 'homepage_info')
-            # Pack the retrieved values into new dictionary, formatting them as HTML datetime first
-            values = dict(
-                filter(lambda x: x is not None,
-                       [add_date_value('start_sell', settings),
-                        add_date_value('end_sell', settings),
-                        add_date_value('start_purchase', settings),
-                        add_date_value('end_purchase', settings),
-                        ('profit_per_book', settings.profit_per_book if settings.exists('profit_per_book') else 1),
-                        ('validity_time', settings.validity_time if settings.exists('validity_time') else 24),
-                        ('homepage_info', settings.homepage_info if settings.exists('homepage_info') else "")]))
-            form = SettingsForm(initial=values)
-        except KeyError:
-            form = SettingsForm(initial={'profit_per_book': 1})
+        settings = Settings('start_sell', 'end_sell', 'start_purchase', 'end_purchase', 'profit_per_book',
+                            'validity_time', 'homepage_info')
+        # Pack the retrieved values into new dictionary, formatting them as HTML datetime first
+        values = dict(
+            filter(lambda x: x is not None,
+                   [add_date_value('start_sell', settings),
+                    add_date_value('end_sell', settings),
+                    add_date_value('start_purchase', settings),
+                    add_date_value('end_purchase', settings),
+                    ('profit_per_book', settings.profit_per_book if settings.exists('profit_per_book') else 1),
+                    ('validity_time', settings.validity_time if settings.exists('validity_time') else 24),
+                    ('homepage_info', settings.homepage_info if settings.exists('homepage_info') else "")]))
+        form = SettingsForm(initial=values)
 
     return render(request, 'settings/index.html', {'page_title': _("Settings"), 'form': form})
 
