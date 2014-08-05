@@ -31,7 +31,10 @@
     {% else %}
         <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
     {% endif %}
-    <a class="btn btn-primary pull-right" href="{% url 'books.views.add_book' %}" role="button">
-        <span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}
-    </a>
+
+    {% if perms.common.view_books_add_book %}
+        <a class="btn btn-primary pull-right" href="{% url 'books.views.add_book' %}" role="button">
+            <span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}
+        </a>
+    {% endif %}
 {% endblock %}

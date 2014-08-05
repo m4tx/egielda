@@ -23,7 +23,13 @@
                 {% block tr_header %}{% endblock %}
                 <td>{{ book.isbn }}</td>
                 <td>{{ book.publisher }}</td>
-                <td>{{ book.title }}</td>
+                <td>
+                    {% if perms.common.view_books_book_details %}
+                        <a href="{% url 'books.views.book_details' book.pk %}">{{ book.title }}</a>
+                    {% else %}
+                        {{ book.title }}
+                    {% endif %}
+                </td>
                 <td>{{ book.publication_year }}</td>
                 <td>{% block book_price %}{{ book.price|price }}{% endblock %}</td>
                 {% block tr_footer %}{% endblock %}

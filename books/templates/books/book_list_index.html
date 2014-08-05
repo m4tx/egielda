@@ -2,29 +2,39 @@
 {% load i18n %}
 
 {% block actions %}
-    <a class="btn btn-xs btn-link" href="{% url 'books.views.edit_book' book.pk %}" role="button"><span
+    {% if perms.common.view_books_edit_book %}
+        <a class="btn btn-xs btn-link" href="{% url 'books.views.edit_book' book.pk %}" role="button"><span
             class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}</a>
-    <a class="btn btn-xs btn-link" href="{% url 'books.views.remove_book' book.pk %}" role="button"><span
+    {% endif %}
+    {% if perms.common.view_books_remove_book %}
+        <a class="btn btn-xs btn-link" href="{% url 'books.views.remove_book' book.pk %}" role="button"><span
             class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}</a>
+    {% endif %}
 {% endblock %}
 
 {% block thead_header %}
-    <th><input type="checkbox" id="select-all"></th>
+    {% if perms.common.view_books_remove_book %}
+        <th><input type="checkbox" id="select-all"></th>
+    {% endif %}
 {% endblock %}
 
 {% block tr_header %}
-    <td><input type="checkbox" name="select-{{ book.pk }}"></td>
+    {% if perms.common.view_books_remove_book %}
+        <td><input type="checkbox" name="select-{{ book.pk }}"></td>
+    {% endif %}
 {% endblock %}
 
 {% block footer %}
-    <tr class="info">
-        <td colspan="6" class="text-right text-muted">{% trans "Bulk actions:" %}</td>
-        <td>
-            <div class="btn-toolbar" role="toolbar">
-                <button class="btn btn-xs btn-link" type="submit">
-                    <span class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}
-                </button>
-            </div>
-        </td>
-    </tr>
+    {% if perms.common.view_books_remove_book %}
+        <tr class="info">
+            <td colspan="6" class="text-right text-muted">{% trans "Bulk actions:" %}</td>
+            <td>
+                <div class="btn-toolbar" role="toolbar">
+                    <button class="btn btn-xs btn-link" type="submit">
+                        <span class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}
+                    </button>
+                </div>
+            </td>
+        </tr>
+    {% endif %}
 {% endblock %}

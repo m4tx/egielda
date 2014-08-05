@@ -19,8 +19,10 @@
     {% endif %}
     {% include "books/book_list_base.html" with hide_actions=True %}
     <form action="{{ request.path }}" method="post">
-        <a href="{% url 'books.views.index' %}" class="btn btn-default" role="button"><span
+        {% if perms.common.view_books_index %}
+            <a href="{% url 'books.views.index' %}" class="btn btn-default" role="button"><span
                 class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
+        {% endif %}
         <button type="submit" class="btn btn-danger pull-right"><span
                 class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}</button>
         {% csrf_token %}
