@@ -36,7 +36,7 @@ def alerts(context):
         args['warning_msg'] = {
             'purchase_incomplete': _("An error occurred while processing your query. It was most likely the result " +
                                      "of someone else who just bought the last copies of books you've chosen. " +
-                                     "Your order was modified thus; review it and click Accept again afterwards."),
+                                     "Your order was modified thus; review it and click \"Accept\" again afterwards."),
         }[request.session['warning_msg']]
         del request.session['warning_msg']
 
