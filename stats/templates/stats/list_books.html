@@ -71,12 +71,19 @@
         <ul class="list-group">
             {% for book in sold_book_list %}
                 <li class="list-group-item">
-                    <a href="{% url 'orders.views.order_details' book.order.pk %}" title="{% trans "Show order" %}"
-                       class="show-order">
-                        <span class="glyphicon glyphicon-list-alt"></span>
-                    </a>
+                    {% if perms.common.view_orders_order_details %}
+                        <a href="{% url 'orders.views.order_details' book.order.pk %}" title="{% trans "Show order" %}"
+                            class="show-order">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                        </a>
+                    {% endif %}
                     <h5>
-                        <a href="{% url 'books.views.book_details' book.book_type.pk %}">{{ book.book_type.title }}</a>
+                        {% if perms.common.view_books_book_details %}
+                            <a href="{% url 'books.views.book_details' book.book_type.pk %}">{{ book.book_type.title }}
+                            </a>
+                        {% else %}
+                            {{ book.book_type.title }}
+                        {% endif %}
                     </h5>
                     <span class="text-muted pull-right">{{ book.book_type.price|price }}</span>
                 </li>
@@ -100,7 +107,12 @@
             {% for book in unsold_book_list %}
                 <li class="list-group-item">
                     <h5>
-                        <a href="{% url 'books.views.book_details' book.book_type.pk %}">{{ book.book_type.title }}</a>
+                        {% if perms.common.view_books_book_details %}
+                            <a href="{% url 'books.views.book_details' book.book_type.pk %}">{{ book.book_type.title }}
+                            </a>
+                        {% else %}
+                            {{ book.book_type.title }}
+                        {% endif %}
                     </h5>
                     <span class="text-muted pull-right">{{ book.book_type.price|price }}</span>
                 </li>

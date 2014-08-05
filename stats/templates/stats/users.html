@@ -4,10 +4,6 @@
 
 {% block head %}
     <style>
-        table th {
-            width: 20%;
-        }
-
         .nav-tabs {
             margin-bottom: 10px;
         }
@@ -21,10 +17,22 @@
     {% manage_header "stats/users" %}
 
     <ul class="nav nav-tabs">
-        <li><a href="{% url 'stats.views.index' %}">{% trans "Charts" %}</a></li>
-        <li><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></li>
+        {% if perms.common.view_stats_index %}
+            <li><a href="{% url 'stats.views.index' %}">{% trans "Charts" %}</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">{% trans "Charts" %}</a></li>
+        {% endif %}
+        {% if perms.common.view_stats_books_sold %}
+            <li><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">{% trans "Books sold" %}</a></li>
+        {% endif %}
         <li class="active"><a href="#">{% trans "Users" %}</a></li>
-        <li><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></li>
+        {% if perms.common.view_stats_books %}
+            <li><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">{% trans "Books" %}</a></li>
+        {% endif %}
     </ul>
 
     {% if student_list %}
@@ -48,8 +56,11 @@
                         <td>{{ student.phone_number }}</td>
                         <td>{{ student.count }}</td>
                         <td>
-                            <a class="btn btn-xs btn-link" href="{% url 'stats.views.list_books' student.pk %}"
-                               role="button"><span class="glyphicon glyphicon-list"></span> {% trans "Book list" %}</a>
+                            {% if perms.common.view_stats_list_books %}
+                                <a class="btn btn-xs btn-link" href="{% url 'stats.views.list_books' student.pk %}"
+                                    role="button"><span class="glyphicon glyphicon-list"></span>
+                                {% trans "Book list" %}</a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
