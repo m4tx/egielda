@@ -1,0 +1,5 @@
+https://www.djangoproject.com/download/1.7c2/tarball/
+django-widget-tweaks
+selenium
+django-debug-toolbar
+sqlparse
