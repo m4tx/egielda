@@ -70,3 +70,13 @@
         <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
     {% endif %}
 {% endblock %}
+
+{% block footer %}
+    {% load staticfiles %}
+    <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
+    <script type="text/javascript">
+        window.addEventListener("load", function(){
+            $(".table-responsive table").tablesorter();
+        });
+    </script>
+{% endblock %}

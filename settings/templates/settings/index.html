@@ -47,7 +47,7 @@
 
                 $("<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>").insertAfter($(this));
                 $(this).next().addBack().wrapAll("<div class=\"input-group\" data-date-format=\"YYYY-MM-DD HH:mm\"></div>");
-                $(this).parent().datetimepicker();
+                $(this).parent().datetimepicker({language: 'pl'});
             });
         });
     </script>

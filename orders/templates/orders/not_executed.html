@@ -16,3 +16,14 @@
 
     {% include "orders/orders_table.html" with show_execute=True %}
 {% endblock %}
+
+{% block footer %}
+    {% load staticfiles %}
+    <script src="{% static "js/moment.js" %}"></script>
+    <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
+    <script type="text/javascript">
+        window.addEventListener("load", function(){
+            $(".table-responsive table").tablesorter();
+        });
+    </script>
+{% endblock %}
