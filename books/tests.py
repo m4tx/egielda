@@ -77,8 +77,9 @@ class BooksLiveTest(StaticLiveServerCase):
             '//table//tbody//tr[contains(@class, "active")]//input[@type="checkbox"]')
         self.assertEqual(len(trs), 2)  # Ensure everything is selected
 
+        # Bulk remove button
         self.selenium.find_element_by_xpath(
-            '//table//tbody//tr[contains(@class, "info")]//button[@type="submit"]').click()
+            '//table//tfoot//tr[contains(@class, "info")]//button[@type="submit"]').click()
         trs = self.selenium.find_elements_by_xpath('//table//tbody//tr')
         self.assertEqual(len(trs), 2)
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
