@@ -46,7 +46,7 @@ class PurchaseWizard(BookChooserWizard):
         correct_book_list = []
 
         for book in book_list:
-            if book['pk'] in books_by_id:
+            if book['pk'] in books_by_id and book['amount'] > 0:
                 if len(books_by_id[book['pk']]) >= book['amount']:
                     books_by_id[book['pk']] = books_by_id[book['pk']][:book['amount']]
                 else:

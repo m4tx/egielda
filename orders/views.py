@@ -62,7 +62,7 @@ def execute(request, order_pk):
         with transaction.atomic():
             for book_type in book_types:
                 new_amount = int(request.POST['amount-' + str(book_type.pk)])
-                if book_type.in_stock < new_amount:
+                if book_type.in_stock < new_amount or new_amount < 0:
                     return HttpResponseBadRequest()
 
                 if new_amount < book_type.amount:

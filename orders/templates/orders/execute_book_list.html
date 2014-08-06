@@ -8,7 +8,7 @@
 
 {% block tr_footer %}
     <td>
-        <input type="number" step="1" class="form-control input-sm" name="amount-{{ book.pk }}"
+        <input type="number" step="1" class="form-control input-sm" min="0" max="{{ book.in_stock }}" name="amount-{{ book.pk }}"
                value="{{ book.amount }}">
     </td>
     <td>
