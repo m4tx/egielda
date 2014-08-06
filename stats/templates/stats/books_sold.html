@@ -74,30 +74,34 @@
         {% endif %}
     </ul>
 
-    {% for key, value in stats %}
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <b>
-                    {{ key }}
-                    <span class="pull-right">{{ value.1|price }}</span>
-                </b>
+    {% if stats %}
+        {% for key, value in stats %}
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <b>
+                        {{ key }}
+                        <span class="pull-right">{{ value.1|price }}</span>
+                    </b>
+                </div>
+                <ul class="list-group">
+                    {% for el in value.0 %}
+                        <li class="list-group-item">
+                            <h5>
+                                {% if perms.common.view_books_book_details %}
+                                    <a href="{% url 'books.views.book_details' el.book_type.pk %}">{{ el.book_type.title }}</a>
+                                {% else %}
+                                    {{ el.book_type.title }}
+                                {% endif %}
+                                <span class="text-muted pull-right">{{ el.book_type.price|price }}</span>
+                            </h5>
+                            <span class="text-muted">{% blocktrans with purchaser=el.purchaser sold_date=el.sold_date|date:'H:i' %}{{ purchaser }} at {{ sold_date }}{% endblocktrans %}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-            <ul class="list-group">
-                {% for el in value.0 %}
-                    <li class="list-group-item">
-                        <h5>
-                            {% if perms.common.view_books_book_details %}
-                                <a href="{% url 'books.views.book_details' el.book_type.pk %}">{{ el.book_type.title }}</a>
-                            {% else %}
-                                {{ el.book_type.title }}
-                            {% endif %}
-                            <span class="text-muted pull-right">{{ el.book_type.price|price }}</span>
-                        </h5>
-                        <span class="text-muted">{% blocktrans with purchaser=el.purchaser sold_date=el.sold_date|date:'H:i' %}{{ purchaser }} at {{ sold_date }}{% endblocktrans %}</span>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+    {% endif %}
 
 {% endblock %}
