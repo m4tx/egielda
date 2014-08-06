@@ -17,7 +17,7 @@ from utils.books import books_by_types
 
 @permission_required('common.view_sellers_index', raise_exception=True)
 def index(request):
-    book_list = Book.objects.filter(accepted=False).select_related('owner')
+    book_list = Book.objects.filter(accepted=False).select_related('owner').order_by('-pk')
     student_list = []
     for book in book_list:
         if book.owner not in student_list:

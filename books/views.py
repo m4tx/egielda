@@ -10,7 +10,7 @@ from utils.alerts import set_success_msg
 
 @permission_required('common.view_books_index', raise_exception=True)
 def index(request):
-    book_list = BookType.objects.all()
+    book_list = BookType.objects.all().order_by('title')
     return render(request, 'books/index.html', {'book_list': book_list})
 
 

@@ -101,4 +101,4 @@ def get_orders() -> QuerySet:
     :return: the QuerySet of Order model
     """
     return Order.objects.select_related('user').prefetch_related('book_set').annotate(
-        sold_count=Count('book', field='CASE WHEN books_book.sold THEN 1 END'))
+        sold_count=Count('book', field='CASE WHEN books_book.sold THEN 1 END')).order_by('-pk')

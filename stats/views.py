@@ -79,7 +79,8 @@ def books_sold(request):
 
 @permission_required('common.view_stats_users', raise_exception=True)
 def users(request):
-    student_list = AppUser.objects.annotate(count=Count('appuser_owner')).exclude(count=0)
+    student_list = AppUser.objects.annotate(count=Count('appuser_owner')).exclude(count=0).order_by('first_name',
+                                                                                                    'last_name')
 
     return render(request, 'stats/users.html', {'student_list': student_list})
 
@@ -103,6 +104,6 @@ def list_books(request, user_pk):
 @permission_required('common.view_stats_books', raise_exception=True)
 def books(request):
     book_list = BookType.objects.annotate(received=Count('book')).annotate(
-        sold=Count('book', field='CASE WHEN books_book.sold THEN 1 END'))
+        sold=Count('book', field='CASE WHEN books_book.sold THEN 1 END')).order_by('title')
 
     return render(request, 'stats/books.html', {'book_list': book_list})
