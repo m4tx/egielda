@@ -29,6 +29,8 @@ def alerts(context):
             'category_remove': _("The category was removed successfully."),
             'settings_updated': _("Settings were updated successfully."),
             'order_executed': _("The order was executed successfully."),
+            'seller_removed': _("The seller's books were removed successfully."),
+            'sellers_removed': _("The sellers' books were removed successfully."),
         }[request.session['success_msg']]
         del request.session['success_msg']
 

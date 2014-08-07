@@ -68,13 +68,12 @@ def book_details(request, book_id):
     return render(request, 'books/details.html', {'book': book})
 
 
-@permission_required('common.view_books_bulk_actions', raise_exception=True)
 def bulk_actions(request, action_name):
     book_list = []
     if action_name == 'remove' and request.method == 'POST':
         for key, value in request.POST.items():
             if value == 'on':
-                # Form field names are in format "select-id", so item[0][7:] will leave us id
+                # Form field names are in format "select-id", so key[7:] will leave us id
                 book_list.append(key[7:])
         if book_list:
             return HttpResponseRedirect(reverse(remove_book, args=[",".join(book_list)]))

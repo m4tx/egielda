@@ -18,12 +18,12 @@ from utils.books import books_by_types
 @permission_required('common.view_sellers_index', raise_exception=True)
 def index(request):
     book_list = Book.objects.filter(accepted=False).select_related('owner').order_by('-pk')
-    student_list = []
+    seller_list = []
     for book in book_list:
-        if book.owner not in student_list:
-            student_list.append(book.owner)
+        if book.owner not in seller_list:
+            seller_list.append(book.owner)
 
-    return render(request, 'sellers/index.html', {'student_list': student_list})
+    return render(request, 'sellers/index.html', {'seller_list': seller_list})
 
 
 @permission_required('common.view_sellers_accept_books', raise_exception=True)
@@ -86,3 +86,32 @@ def accept_edit_book(request, user_pk, book_id):
     else:
         form = BookForm(instance=book)
     return render(request, 'books/edit.html', {'form': form})
+
+
+@permission_required('common.view_sellers_remove_seller', raise_exception=True)
+def remove_seller(request, seller_ids):
+    seller_list = AppUser.objects.filter(pk__in=seller_ids.split(','))
+    if len(seller_list) == 0:
+        raise Http404
+
+    if request.method == 'POST':
+        set_success_msg(request, 'seller_removed' if len(seller_list) == 1 else 'sellers_removed')
+        Book.objects.filter(owner__pk_in=seller_list).delete()
+        return HttpResponseRedirect(reverse(index))
+    else:
+        return render(request, 'sellers/remove.html', {'seller_list': seller_list})
+
+
+def bulk_actions(request, action_name):
+    seller_list = []
+    if action_name == 'remove' and request.method == 'POST':
+        for key, value in request.POST.items():
+            if value == 'on':
+                # Form field names are in format "select-id", so key[7:] will leave us id
+                seller_list.append(key[7:])
+        if seller_list:
+            return HttpResponseRedirect(reverse(remove_seller, args=[",".join(seller_list)]))
+        else:
+            return HttpResponseRedirect(reverse(index))
+    else:
+        raise Http404

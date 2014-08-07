@@ -31,6 +31,7 @@ def manage_header(*args):
         }],
         'sellers': ['sellers.views.index', _("Sellers with unaccepted books"), {
             'accept_books': ['sellers.views.accept_books', _("Accept books")],
+            'remove': ['sellers.views.remove_seller', _("Remove")],
         }],
         'stats': ['stats.views.index', _("Statistics"), {
             'sold': ['stats.views.sold', _("Books sold")],

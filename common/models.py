@@ -24,7 +24,6 @@ class DummyPermissions(models.Model):
             ('view_books_edit_book', "View books.edit_book"),
             ('view_books_remove_book', "View books.remove_book"),
             ('view_books_book_details', "View books.book_details"),
-            ('view_books_bulk_actions', "View books.bulk_actions"),
 
             ('view_categories_index', "View categories.index"),
             ('view_categories_add_category', "View categories.add_category"),
@@ -45,6 +44,7 @@ class DummyPermissions(models.Model):
             ('view_sellers_index', "View sellers.index"),
             ('view_sellers_accept_books', "View sellers.accept_books"),
             ('view_sellers_accept_edit_book', "View sellers.accept_edit_book"),
+            ('view_sellers_remove_seller', "View sellers.remove_seller"),
 
             ('view_settings_index', "View settings.index"),
 

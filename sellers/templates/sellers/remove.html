@@ -1,0 +1,51 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load manage_header %}
+
+{% block title %}{% trans "Manage sellers" %}{% endblock %}
+
+{% block content %}
+    {% if seller_list|length == 1 %}
+        <h1>{% trans "Remove seller's books" %}</h1>
+    {% else %}
+        <h1>{% trans "Remove sellers' books" %}</h1>
+    {% endif %}
+    {% manage_header "sellers/remove" %}
+
+    {% if seller_list|length == 1 %}
+        <div class="alert alert-danger">{% trans "Are you sure you want to remove this seller's books?" %}</div>
+    {% else %}
+        <div class="alert alert-danger">{% trans "Are you sure you want to remove these sellers' books?" %}</div>
+    {% endif %}
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>{% trans "First name" %}</th>
+                <th>{% trans "Last name" %}</th>
+                <th>{% trans "Class" %}</th>
+                <th>{% trans "Phone number" %}</th>
+            </tr>
+            </thead>
+
+            {% for seller in seller_list %}
+                <tr>
+                    <td>{{ seller.first_name }}</td>
+                    <td>{{ seller.last_name }}</td>
+                    <td>{{ seller.student_class }}</td>
+                    <td>{{ seller.phone_number }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <form action="{{ request.path }}" method="post">
+        {% if perms.common.view_sellers_index %}
+            <a href="{% url 'books.views.index' %}" class="btn btn-default" role="button"><span
+                class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
+        {% endif %}
+        <button type="submit" class="btn btn-danger pull-right"><span
+                class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}</button>
+        {% csrf_token %}
+    </form>
+{% endblock %}

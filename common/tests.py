@@ -31,11 +31,6 @@ class ManagePermissionsTest(TestCase):
         self.check_permission('view_books_book_details',
                               reverse('books.views.book_details', args=(create_test_book_type().pk,)))
 
-    def test_view_books_bulk_actions(self):
-        book_type = create_test_book_type()
-        self.check_permission('view_books_bulk_actions', reverse('books.views.bulk_actions', args=('remove',)),
-                              response_func=lambda url: self.client.post(url, {'select-' + str(book_type.pk): 'on'}))
-
     def test_view_categories_index(self):
         self.check_permission('view_categories_index', reverse('categories.views.index'))
 
@@ -99,6 +94,10 @@ class ManagePermissionsTest(TestCase):
         create_test_book(book_type, app_user, False)
         self.check_permission('view_sellers_accept_edit_book',
                               reverse('sellers.views.accept_edit_book', args=(app_user.pk, book_type.pk)))
+
+    def test_view_books_remove_seller(self):
+        self.check_permission('view_sellers_remove_seller',
+                              reverse('sellers.views.remove_seller', args=(create_test_app_user().pk,)))
 
     def test_view_settings_index(self):
         self.check_permission('view_settings_index', reverse('settings.views.index'))
