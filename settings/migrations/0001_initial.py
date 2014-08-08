@@ -7,17 +7,15 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('common', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Order',
+            name='Setting',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('date', models.DateTimeField(auto_now_add=True)),
-                ('valid_until', models.DateTimeField()),
-                ('user', models.ForeignKey(to='common.AppUser')),
+                ('name', models.CharField(max_length=100)),
+                ('value', models.CharField(max_length=1000)),
             ],
             options={
             },

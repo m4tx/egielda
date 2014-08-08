@@ -7,9 +7,9 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('categories', '__first__'),
-        ('common', '__first__'),
-        ('orders', '__first__'),
+        ('categories', '0001_initial'),
+        ('orders', '0001_initial'),
+        ('common', '0001_initial'),
     ]
 
     operations = [
@@ -17,9 +17,10 @@ class Migration(migrations.Migration):
             name='Book',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('accepted', models.BooleanField()),
+                ('accepted', models.BooleanField(default=False)),
+                ('accept_date', models.DateTimeField(null=True, blank=True)),
                 ('reserved_until', models.DateTimeField(null=True, blank=True)),
-                ('sold', models.BooleanField()),
+                ('sold', models.BooleanField(default=False)),
                 ('sold_date', models.DateTimeField(null=True, blank=True)),
                 ('order', models.ForeignKey(blank=True, to='orders.Order', null=True)),
                 ('owner', models.ForeignKey(to='common.AppUser')),

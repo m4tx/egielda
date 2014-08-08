@@ -15,13 +15,13 @@ def create_groups(apps, schema_editor):
         'view_books_add_book',
         'view_books_edit_book',
         'view_books_book_details',
-        'view_books_bulk_actions',
 
         'view_categories_index',
         'view_categories_list_books',
 
         'view_managemenu_index',
 
+        'view_orders_index',
         'view_orders_order_details',
         'view_orders_not_executed',
         'view_orders_outdated',
@@ -32,6 +32,7 @@ def create_groups(apps, schema_editor):
         'view_sellers_index',
         'view_sellers_accept_books',
         'view_sellers_accept_edit_book',
+        'view_sellers_remove_seller',
 
         'view_stats_index',
     ]
@@ -75,7 +76,7 @@ def create_groups(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('common', '0003_auto_20140803_1841'),
+        ('common', '0001_initial'),
     ]
 
     operations = [
