@@ -40,7 +40,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar.apps.DebugToolbarConfig',
     'widget_tweaks',
     'common',
     'books',
@@ -93,7 +92,7 @@ LOGIN_REDIRECT_URL = 'egielda.views.home'
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'pl-pl'
+LANGUAGE_CODE = 'pl'
 CURRENCY = 'zł'
 
 TIME_ZONE = 'Europe/Warsaw'
