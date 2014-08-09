@@ -42,9 +42,9 @@ e-Giełda uses a few thirt-party components contained in vendor/ directory. It i
 * [Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker/) by Stefan Petre licensed under Apache License 2.0
 * [NVD3.js](http://nvd3.org/) by [Novus Partners](https://www.novus.com/) licensed under Apache License 2.0
 * Slightly modified version of [jQuery Tablesorter](http://tablesorter.com/docs/) by [Christian Bach](https://twitter.com/lovepeacenukes) dual licensed under MIT License or GNU GPL v2/v3
-* [Moment.js](http://momentjs.com/) by Tim Wood and Iskren Chernev licensed under MIT License
+* Slightly modified (removed all languages but Polish and English) [Moment.js](http://momentjs.com/) by Tim Wood and Iskren Chernev licensed under MIT License. *Please note that this is version 2.6.1 since newer versions does not work with Bootstrap Datepicker.*
 
-Also, it uses following components that loaded from CDN:
+Also, it uses following components that are loaded from CDN:
 * [Bootstrap](http://getbootstrap.com/) by [@mdo](http://twitter.com/mdo) and [@fat](http://twitter.com/fat) licensed under MIT License
 * [Bootstrap Select](http://silviomoreto.github.io/bootstrap-select/3/) by [@caseyjhol](https://github.com/caseyjhol) licensed under MIT License
 * [D3.js](http://d3js.org/) by [Mike Bostock](http://bost.ocks.org/mike/) licensed under BSD License
@@ -70,7 +70,7 @@ python manage.py createsuperuser
 ```
 ...yup, that's all. It uses SQLite database by default.
 
-Please note that our migration script automatically creates three groups (mod, admin, sysadmin) and gives them some permissions. If you change anything and want to restore default permissions for these groups, you have to remove *all* permissions from at least one group, then run migrate.
+Please note that our migration script automatically creates three groups (mod, admin, sysadmin) and gives them some permissions. If you change anything and want to restore default permissions for these groups, you have to remove **all** permissions from at least one group, then run migrate.
 
 ## License
 Copyright (C) 2014 Mateusz Maćkowski and Tomasz Zieliński 
