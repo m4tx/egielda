@@ -31,12 +31,6 @@ In e-Giełda, there are two models with "Book" in name: BookType and Book. The d
 For running tests:
 * Selenium
 
-Default settings.py also comes with these as installed apps:
-* Django Debug Toolbar
-* sqlparse
-
-They are just development time helpers, though (Django Debug Toolbar provides very convenient way to find the redundant SQL queries).
-
 ## Third party components
 e-Giełda uses a few thirt-party components contained in vendor/ directory. It includes:
 * [Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker/) by Stefan Petre licensed under Apache License 2.0
