@@ -24,7 +24,7 @@
                 <td>{{ book.isbn }}</td>
                 <td>{{ book.publisher }}</td>
                 <td>
-                    {% if perms.common.view_books_book_details %}
+                    {% if book.pk and perms.common.view_books_book_details %}
                         <a href="{% url 'books.views.book_details' book.pk %}">{{ book.title }}</a>
                     {% else %}
                         {{ book.title }}
