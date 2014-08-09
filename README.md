@@ -37,7 +37,7 @@ Default settings.py also comes with these as installed apps:
 
 They are just development time helpers, though (Django Debug Toolbar provides very convenient way to find the redundant SQL queries).
 
-# Third party components
+## Third party components
 e-Giełda uses a few thirt-party components contained in vendor/ directory. It includes:
 * [Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker/) by Stefan Petre licensed under Apache License 2.0
 * [NVD3.js](http://nvd3.org/) by [Novus Partners](https://www.novus.com/) licensed under Apache License 2.0
@@ -69,3 +69,19 @@ python manage.py syncdb
 ...yup, that's all. It uses SQLite database by default.
 
 Please note that our migration script automatically creates three groups (mod, admin, sysadmin) and gives them some permissions. If you change anything and want to restore default permissions for these groups, you have to remove *all* permissions from at least one group, then run migrate.
+
+## License
+Copyright (C) 2014 Mateusz Maćkowski and Tomasz Zieliński 
+
+e-Giełda is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+e-Giełda is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/.
