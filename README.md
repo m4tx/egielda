@@ -42,7 +42,7 @@ e-Giełda uses a few thirt-party components contained in vendor/ directory. It i
 * [Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker/) by Stefan Petre licensed under Apache License 2.0
 * [NVD3.js](http://nvd3.org/) by [Novus Partners](https://www.novus.com/) licensed under Apache License 2.0
 * Slightly modified version of [jQuery Tablesorter](http://tablesorter.com/docs/) by [Christian Bach](https://twitter.com/lovepeacenukes) dual licensed under MIT License or GNU GPL v2/v3
-* Slightly modified (removed all languages but Polish and English) [Moment.js](http://momentjs.com/) by Tim Wood and Iskren Chernev licensed under MIT License. *Please note that this is version 2.6.1 since newer versions does not work with Bootstrap Datepicker.*
+* Slightly modified (removed all languages but Polish and English) [Moment.js](http://momentjs.com/) by Tim Wood and Iskren Chernev licensed under MIT License. *Please note that this is version 2.6.0 since newer versions does not work with Bootstrap Datepicker.*
 
 Also, it uses following components that are loaded from CDN:
 * [Bootstrap](http://getbootstrap.com/) by [@mdo](http://twitter.com/mdo) and [@fat](http://twitter.com/fat) licensed under MIT License
