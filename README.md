@@ -31,8 +31,8 @@ In e-Giełda, there are two models with "Book" in name: BookType and Book. The d
 For running tests:
 * Selenium
 
-## Third party components
-e-Giełda uses a few thirt-party components contained in vendor/ directory. It includes:
+## Third-party components
+e-Giełda uses a few third-party components contained in vendor/ directory. It includes:
 * [Bootstrap Datepicker](http://www.eyecon.ro/bootstrap-datepicker/) by Stefan Petre licensed under Apache License 2.0
 * [NVD3.js](http://nvd3.org/) by [Novus Partners](https://www.novus.com/) licensed under Apache License 2.0
 * Slightly modified version of [jQuery Tablesorter](http://tablesorter.com/docs/) by [Christian Bach](https://twitter.com/lovepeacenukes) dual licensed under MIT License or GNU GPL v2/v3
