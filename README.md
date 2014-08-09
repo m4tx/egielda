@@ -61,6 +61,8 @@ pip install -r requirements.txt
 python manage.py migrate
 # Superuser may be useful
 python manage.py createsuperuser
+# In order to make translations working
+python manage.py compilemessages
 ```
 ...yup, that's all. It uses SQLite database by default.
 
