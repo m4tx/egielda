@@ -73,7 +73,7 @@ python manage.py createsuperuser
 Please note that our migration script automatically creates three groups (mod, admin, sysadmin) and gives them some permissions. If you change anything and want to restore default permissions for these groups, you have to remove **all** permissions from at least one group, then run `migrate`.
 
 ## License
-Copyright (C) 2014 Mateusz Maćkowski and Tomasz Zieliński 
+Copyright (C) 2014 [Mateusz Maćkowski](http://m4tx.pl) and Tomasz Zieliński 
 
 e-Giełda is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
