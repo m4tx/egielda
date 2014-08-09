@@ -64,7 +64,9 @@ source bin/activate
 git clone https://github.com/m4tx/egielda.git
 cd egielda
 pip install -r requirements.txt
-python manage.py syncdb
+python manage.py migrate
+# Superuser may be useful
+python manage.py createsuperuser
 ```
 ...yup, that's all. It uses SQLite database by default.
 
