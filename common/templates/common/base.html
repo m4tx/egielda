@@ -64,7 +64,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     {% if user.is_authenticated %}
-                                        {% if user.is_staff %}
+                                        {% if perms.common.view_managemenu_index %}
                                             <li>
                                                 <a href="{% url 'managemenu.views.index' %}" role="menuitem">
                                                     <span class="glyphicon glyphicon-cog"></span> {% trans "Manage" %}
