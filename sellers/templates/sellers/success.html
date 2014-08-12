@@ -1,44 +1,50 @@
 {% extends "common/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Purchase books" %}{% endblock %}
+{% block title %}{% trans "Manage sellers" %}{% endblock %}
 
 {% block content %}
     <div class="alert alert-success hidden-print">
-        {% trans "Your request was accepted. You can claim your books now. Make sure you have printed this page, to speed up executing your order." %}
+        {% trans "The books were accepted successfully." %}
     </div>
 
-    <h1>{% trans "Order summary" %}<span class="text-muted pull-right"><small>#{{ order_ID }}</small></span></h1>
+    <h1>{% trans "Books transfer evidence" %}<span class="text-muted pull-right"><small>#{{ seller_ID }}</small></span></h1>
     <div class="form-horizontal">
         <div class="form-group">
             <label class="col-sm-3 col-md-2 control-label">{% trans "First name" %}:</label>
 
             <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.user.first_name }}</p>
+                <p class="form-control-static">{{ seller.first_name }}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 col-md-2 control-label">{% trans "Last name" %}:</label>
 
             <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.user.last_name }}</p>
+                <p class="form-control-static">{{ seller.last_name }}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 col-md-2 control-label">{% trans "Class" %}:</label>
 
             <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.user.student_class }}</p>
+                <p class="form-control-static">{{ seller.student_class }}</p>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 col-md-2 control-label">{% trans "Phone number" %}:</label>
 
             <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.user.phone_number }}</p>
+                <p class="form-control-static">{{ seller.phone_number }}</p>
             </div>
         </div>
     </div>
 
-    {% include "book_chooser_wizard/books_chosen_list.html" with hide_actions=True book_list=chosen_book_list %}
+    {% include "book_chooser_wizard/books_chosen_list.html" with hide_actions=True book_list=given_book_list %}
+
+    {% if perms.common.view_sellers_index %}
+        <a href="{% url 'sellers.views.index' %}" class="btn btn-primary pull-right hidden-print" role="button">
+            <span class="glyphicon glyphicon-chevron-right"></span> {% trans "Next" %}
+        </a>
+    {% endif %}
 {% endblock %}

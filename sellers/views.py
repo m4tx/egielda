@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.db import transaction
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
@@ -39,6 +39,8 @@ def accept_books(request, user_pk):
 
     if request.method == 'POST':
         with transaction.atomic():
+            books_count = 0
+
             books.update(accepted=True, accept_date=timezone.now())
             for book_type in book_type_list:
                 if not book_type.visible:
@@ -47,21 +49,31 @@ def accept_books(request, user_pk):
                     book_type.save()
 
                 new_amount = int(request.POST['amount-' + str(book_type.pk)])
+                if new_amount < 0:
+                    return HttpResponseBadRequest()
+
                 if new_amount < book_type.amount:
                     books_list = Book.objects.filter(owner=user, book_type=book_type)
                     books_to_keep = books_list[:new_amount]
                     books_list.exclude(pk__in=books_to_keep).delete()
+
                 elif new_amount > book_type.amount:
                     amount_difference = new_amount - book_type.amount
                     book = d[book_type]
+
                     for i in range(0, amount_difference):
                         book.pk = None
                         book.accepted = True
                         book.accept_date = timezone.now()
                         book.save()
 
-        set_success_msg(request, 'books_accepted')
-        return HttpResponseRedirect(reverse(index))
+                book_type.amount = new_amount
+                books_count += new_amount
+
+        # Seller id shown to the user
+        seller_id = timezone.now().strftime("%Y%m%d") + "-" + str(user.pk) + "-" + str(books_count)
+        return render(request, 'sellers/success.html',
+                      {'seller': user, 'seller_ID': seller_id, 'given_book_list': book_type_list})
     else:
         hide_actions = True
         for book_type in book_type_list:

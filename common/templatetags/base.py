@@ -23,7 +23,6 @@ def alerts(context):
             'book_edited': _("The book was edited successfully."),
             'book_removed': _("The book was removed successfully."),
             'books_removed': _("The books were removed successfully."),
-            'books_accepted': _("The books were accepted successfully."),
             'category_added': _("The category was added successfully."),
             'category_edited': _("The category was edited successfully."),
             'category_remove': _("The category was removed successfully."),
