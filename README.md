@@ -51,7 +51,7 @@ These are commands used to properly install development version of e-Giełda:
 
 ```bash
 # We recommend creating a virtualenv first
-virtualenv egielda
+virtualenv -p python3 egielda
 cd egielda
 source bin/activate
 # Actual installing
@@ -64,7 +64,7 @@ python manage.py compilemessages
 # Superuser may be useful
 python manage.py createsuperuser
 ```
-...yup, that's all. It uses SQLite database by default.
+It uses SQLite database by default.
 
 Please note that our migration script automatically creates three groups (moderator, admin, sysadmin) and gives them some permissions. If you change anything and want to restore default permissions for these groups, you have to remove **all** permissions from at least one group, then run `migrate`.
 
