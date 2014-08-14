@@ -3,7 +3,7 @@ from collections import Counter
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.db import transaction
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
 from django.http.response import HttpResponseBadRequest
@@ -50,7 +50,7 @@ def order_details(request, order_pk):
 @permission_required('common.view_orders_execute', raise_exception=True)
 def execute(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
-                              pk=order_pk)
+                              ~Q(valid_until__lte=timezone.now()), pk=order_pk)
     book_types_dict = books_by_types(order.book_set.all())
     book_types = book_types_dict.keys()
     available = get_available_books()
@@ -85,7 +85,7 @@ def execute(request, order_pk):
 @permission_required('common.view_orders_execute_accept', raise_exception=True)
 def execute_accept(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
-                              pk=order_pk)
+                              ~Q(valid_until__lte=timezone.now()), pk=order_pk)
     if request.method == 'POST':
         order.book_set.all().update(sold=True, sold_date=timezone.now(), purchaser=order.user)
         set_success_msg(request, 'order_executed')
