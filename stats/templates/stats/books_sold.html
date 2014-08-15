@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load manage_header %}
 {% load price %}
+{% load humanize %}
 
 {% block title %}{% trans "Books sold" %}{% endblock %}
 
@@ -94,7 +95,10 @@
                                 {% endif %}
                                 <span class="text-muted pull-right">{{ el.book_type.price|price }}</span>
                             </h5>
-                            <span class="text-muted">{% blocktrans with purchaser=el.purchaser sold_date=el.sold_date|date:'H:i' %}{{ purchaser }} at {{ sold_date }}{% endblocktrans %}</span>
+                            <span class="text-muted">{{ el.purchaser }},
+                                <span class="hidden-print" title="{{ el.sold_date }}">{{ el.sold_date|naturaltime }}</span>
+                                <span class="visible-print-inline">{{ el.sold_date|date:"H:i" }}</span>
+                            </span>
                         </li>
                     {% endfor %}
                 </ul>
