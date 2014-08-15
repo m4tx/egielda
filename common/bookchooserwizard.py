@@ -131,7 +131,7 @@ class BookChooserWizard:
             if 'app_user' in request.session:
                 user = AppUser.objects.get(pk=int(request.session['app_user']))
                 return render(request, 'book_chooser_wizard/personal_data_signed_in.html',
-                              {'page_title': self.page_title, 'user': user})
+                              {'page_title': self.page_title, 'appuser': user})
             elif 'personal_data' in request.session:
                 form = PersonalDataForm(instance=AppUser(**request.session['personal_data']))
             else:
