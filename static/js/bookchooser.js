@@ -20,8 +20,8 @@ $('.btn-add-book').on('click', function () {
 });
 
 $('#btn-add-new-book').on('click', function () {
-    var isbn = $.trim($('input[name="isbn"]').val())
-    var title = $.trim($('input[name="title"]').val())
+    var isbn = $('input[name="isbn"]').val().replace(/[\D]/g, '');
+    var title = $.trim($('input[name="title"]').val());
 
     var existingTr = $('#chosen-book-list tr td:first-child').filter(function() {
         return $(this).text() == isbn && $(this).next().next().text() == title
@@ -36,7 +36,7 @@ $('#btn-add-new-book').on('click', function () {
             return n.isbn == isbn && n.title == title;
         })[0].amount += 1;
     } else {
-        var len = $('input[name="isbn"]').val().replace(/[\D]/g, '').length;
+        var len = isbn.length;
         if(len != 13 && len != 10) {
             return showMessage(gettext("Please enter valid ISBN number."));
         }
@@ -110,6 +110,10 @@ function addNewBook(amount) {
     for (var prid in ids) {
         var input = $('input[name="' + ids[prid] + '"]');
         book[ids[prid]] = $.trim(input.val());
+
+        if(ids[prid] === 'isbn')
+            book[ids[prid]] = book[ids[prid]].replace(/[\D]/g, '');
+
         vals.push(book[ids[prid]]);
 
         if (book[ids[prid]] != "") {
