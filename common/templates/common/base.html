@@ -93,6 +93,12 @@
         </nav>
         <div class="container">
             {% alerts %}
+            <noscript>
+                <div class="alert alert-danger">
+                    {% trans "You don't seem to have JavaScript enabled. This website <strong>does not work properly</strong> without JavaScript, so please enable it in your browser." %}
+                </div>
+            </noscript>
+
             {% block content %}{% endblock %}
         </div>
 
