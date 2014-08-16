@@ -1,6 +1,15 @@
 from django.http import HttpRequest
 
 
+def set_info_msg(request: HttpRequest, msg_id: str):
+    """
+    Sets info message id to display.
+    :param request: HttpRequest object from the view
+    :param msg_id: message id to set
+    """
+    request.session['info_msg'] = msg_id
+
+
 def set_success_msg(request: HttpRequest, msg_id: str):
     """
     Sets success message id to display.

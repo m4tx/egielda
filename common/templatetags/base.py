@@ -17,6 +17,13 @@ def alerts(context):
     request = context['request']
 
     args = {}
+
+    if 'info_msg' in request.session:
+        args['info_msg'] = {
+            'order_removed': _("The order was removed."),
+        }[request.session['info_msg']]
+        del request.session['info_msg']
+
     if 'success_msg' in request.session:
         args['success_msg'] = {
             'book_added': _("The book was added successfully."),

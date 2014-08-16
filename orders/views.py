@@ -5,13 +5,13 @@ from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.db.models import Count, Q
 from django.db.models.query import QuerySet
-from django.http.response import HttpResponseBadRequest, HttpResponseRedirect, Http404
+from django.http.response import HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
 from books.models import Book
 from orders.models import Order
-from utils.alerts import set_success_msg
+from utils.alerts import set_success_msg, set_info_msg
 from utils.books import books_by_types, get_available_books
 
 
@@ -88,7 +88,8 @@ def execute_accept(request, order_pk):
 
     if order.book_set.count() == 0:
         order.delete()
-        raise Http404
+        set_info_msg(request, 'order_removed')
+        return HttpResponseRedirect(reverse(not_executed))
 
     if request.method == 'POST':
         order.book_set.all().update(sold=True, sold_date=timezone.now(), purchaser=order.user)
