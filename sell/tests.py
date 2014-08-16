@@ -48,7 +48,7 @@ class SellWizardLiveTest(StaticLiveServerCase):
         self.selenium.find_element_by_name('phone_number').send_keys("111222333")
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
 
-        ## Books
+        # # Books
         # Book list
         book_trs = self.selenium.find_elements_by_xpath('//div[@id="bookList"]//table//tbody//tr')
         self.assertEqual(len(book_trs), 1)  # Ensure we only see the book with visible=True
@@ -62,7 +62,7 @@ class SellWizardLiveTest(StaticLiveServerCase):
         self.selenium.find_element_by_name('publication_year').send_keys("2010")
         self.selenium.find_element_by_xpath('//button[@id="btn-add-new-book"]').click()
         # Next
-        self.selenium.find_element_by_xpath('//button[@id="btn-next"]').click()
+        self.selenium.find_element_by_name('btn-next').click()
 
         ## Summary
         book_trs = self.selenium.find_elements_by_xpath('//table[@id="chosen-book-list"]//tbody//tr')

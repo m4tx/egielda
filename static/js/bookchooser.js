@@ -44,9 +44,8 @@ $('#btn-add-new-book').on('click', function () {
         addNewBook(1);
     }
 });
-$('button#btn-next,button#btn-back').on('click', function () {
+$('button[name="btn-next"],button[name="btn-back"]').on('click', function () {
     $('form').append($('<input type="hidden" name="book_data">').attr('value', JSON.stringify(chosenBooks)))
-        .append($('<input type="hidden" name="' + this.id + '">'))
         .submit();
 });
 
@@ -155,7 +154,7 @@ function addBookTr(tr) {
 
     $('#chosen-book-list-div').removeClass('hidden');
     var chosenTable = $('#chosen-book-list');
-    $('button#btn-next').removeAttr('disabled');
+    $('button[name=btn-next]').removeAttr('disabled');
 
     chosenTable.append(tr);
 }
@@ -180,7 +179,7 @@ function removeBook(id) {
 
         if (chosenBooks.length == 0) {
             $('#chosen-book-list-div').addClass('hidden');
-            $('button#btn-next').attr('disabled', 'disabled');
+            $('button[name="btn-next"]').attr('disabled', 'disabled');
         }
     }
 }

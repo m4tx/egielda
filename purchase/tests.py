@@ -47,7 +47,7 @@ class PurchaseWizardLiveTest(StaticLiveServerCase):
         trs = self.selenium.find_elements_by_xpath('//div[@id="bookList"]//table//tbody//tr[contains('
                                                    '@class, "bg-danger")]')
         self.assertEqual(len(trs), 3)  # Check if the user see 3 "disabled" book types
-        self.selenium.find_element_by_id('btn-next').click()
+        self.selenium.find_element_by_name('btn-next').click()
 
         trs = self.selenium.find_elements_by_xpath('//table[@id="chosen-book-list"]//tbody//tr')
         self.assertEqual(len(trs), 2)  # Ensure user actually see 2 book types
@@ -56,7 +56,7 @@ class PurchaseWizardLiveTest(StaticLiveServerCase):
         # Remove one book
         self.selenium.find_element_by_xpath('//table[@id="chosen-book-list"]//tbody//tr[@data-pk="1"]//button[contains'
                                             '(@class, "btn-remove-book")]').click()
-        self.selenium.find_element_by_id('btn-next').click()
+        self.selenium.find_element_by_name('btn-next').click()
 
         trs = self.selenium.find_elements_by_xpath('//table[@id="chosen-book-list"]//tbody//tr')
         self.assertEqual(len(trs), 2)  # Check if after removing a book we still have 2 book types

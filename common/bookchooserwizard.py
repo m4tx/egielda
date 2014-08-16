@@ -154,7 +154,8 @@ class BookChooserWizard:
             return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
 
         if request.method == 'POST':
-            request.session[self.session_var_name] = request.POST['book_data']
+            if 'book_data' in request.POST:
+                request.session[self.session_var_name] = request.POST['book_data']
             if 'btn-back' in request.POST:
                 return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
             elif 'btn-next' in request.POST:

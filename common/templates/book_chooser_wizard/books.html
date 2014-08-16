@@ -81,9 +81,9 @@
     <div class="btn-toolbar">
         <form action="{{ request.path }}" method="post">
             {% csrf_token %}
-            <button class="btn btn-default" id="btn-back"><span
+            <button class="btn btn-default" name="btn-back"><span
                     class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</button>
-            <button class="btn btn-primary pull-right" id="btn-next" disabled="disabled">{% trans "Next" %} <span
+            <button class="btn btn-primary pull-right" name="btn-next" disabled="disabled">{% trans "Next" %} <span
                     class="glyphicon glyphicon-chevron-right"></span></button>
         </form>
     </div>
