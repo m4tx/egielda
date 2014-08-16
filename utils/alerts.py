@@ -21,7 +21,7 @@ def set_success_msg(request: HttpRequest, msg_id: str):
 
 def set_warning_msg(request: HttpRequest, msg_id: str):
     """
-    Sets success message id to display.
+    Sets warning message id to display.
     :param request: HttpRequest object from the view
     :param msg_id: message id to set
     """
@@ -30,7 +30,7 @@ def set_warning_msg(request: HttpRequest, msg_id: str):
 
 def set_error_msg(request: HttpRequest, msg_id: str):
     """
-    Sets success message id to display.
+    Sets error message id to display.
     :param request: HttpRequest object from the view
     :param msg_id: message id to set
     """
