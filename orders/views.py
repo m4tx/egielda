@@ -5,8 +5,7 @@ from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.db.models import Count, Q
 from django.db.models.query import QuerySet
-from django.http import HttpResponseRedirect
-from django.http.response import HttpResponseBadRequest
+from django.http.response import HttpResponseBadRequest, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
@@ -86,6 +85,11 @@ def execute(request, order_pk):
 def execute_accept(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
                               ~Q(valid_until__lte=timezone.now()), pk=order_pk)
+
+    if order.book_set.count() == 0:
+        order.delete()
+        raise Http404
+
     if request.method == 'POST':
         order.book_set.all().update(sold=True, sold_date=timezone.now(), purchaser=order.user)
         set_success_msg(request, 'order_executed')
