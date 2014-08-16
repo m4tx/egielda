@@ -7,7 +7,7 @@
 # License, or (at your option) any later version.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.auth.models import Group, Permission, ContentType
 from django.db.models.signals import post_migrate
