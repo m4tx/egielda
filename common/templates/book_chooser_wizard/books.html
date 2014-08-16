@@ -1,6 +1,19 @@
 {% extends "common/base.html" %}
 {% load i18n %}
 
+{% block head %}
+    <style>
+        .has-feedback.input-group .form-control-feedback{
+            right: 40px;
+        }
+
+        .has-error .input-group-btn button {
+            border-color: #a94442;
+            background: linear-gradient(to bottom, rgba(255, 222, 218, 1) 0%, rgba(198, 132, 132, 1) 100%) repeat scroll 0% 0% transparent;
+        }
+    </style>
+{% endblock %}
+
 {% block title %}{{ page_title }}{% endblock %}
 
 {% block content %}
