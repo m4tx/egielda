@@ -1,4 +1,5 @@
 from decimal import Decimal
+import re
 
 from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
@@ -34,6 +35,7 @@ class SellWizard(BookChooserWizard):
             if 'pk' in book:
                 dbbook.book_type_id = book['pk']
             else:
+                book['isbn'] = re.sub(r'[^\d.]+', '', book['isbn'])
                 book['price'] = Decimal(book['price'])
                 if book['publication_year'] == "":
                     book['publication_year'] = 1970
