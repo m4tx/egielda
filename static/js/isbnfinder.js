@@ -17,7 +17,7 @@ var isbnInput = $('input[name="isbn"]');
 
 function checkIsbn() {
     $(this).parent().removeClass('has-error');
-    $(this).next().removeClass('glyphicon-warning-sign glyphicon-ok')
+    $(this).next().removeClass('glyphicon-warning-sign glyphicon-ok').attr('title', '').attr('data-original-title', '');
     var len = $(this).val().replace(/[\D]/g, '').length;
     if (len != 10 && len != 13) {
         button.attr("disabled", "disabled");
@@ -34,7 +34,7 @@ button.on('click', function () {
         .success(function (data) {
             if (data.totalItems == 0) {
                 isbnInput.parent().addClass('has-error has-feedback');
-                isbnInput.next().removeClass('glyphicon-ok').addClass("glyphicon-warning-sign").attr("title",
+                isbnInput.next().removeClass('glyphicon-ok').addClass("glyphicon-warning-sign").attr('title',
                     gettext("The book wasn't found. Please check the ISBN or fill out the form manually."))
                     .tooltip('fixTitle');
                 $('input[name="title"]').val('');
@@ -46,8 +46,8 @@ button.on('click', function () {
             $.ajax(data.items[0].selfLink + "?projection=lite")
                 .success(function (data) {
                     isbnInput.parent().removeClass('has-error');
-                    isbnInput.next().removeClass('glyphicon-warning-sign').addClass("glyphicon-ok").attr("title", "")
-                        .attr("data-original-title", "");
+                    isbnInput.next().removeClass('glyphicon-warning-sign').addClass('glyphicon-ok').attr('title', '')
+                        .attr('data-original-title', '');
                     $('input[name="publisher"]').val(data.volumeInfo.publisher);
                     var title = data.volumeInfo.title;
                     if (data.volumeInfo.subtitle != undefined) {
@@ -59,7 +59,7 @@ button.on('click', function () {
 
                 .fail(function () {
                     isbnInput.parent().addClass('has-error has-feedback');
-                    isbnInput.next().removeClass('glyphicon-ok').addClass("glyphicon-warning-sign").attr("title",
+                    isbnInput.next().removeClass('glyphicon-ok').addClass('glyphicon-warning-sign').attr('title',
                         gettext("The book wasn't found. Please check the ISBN or fill out the form manually."))
                         .tooltip('fixTitle');
                     $('input[name="title"]').val('');
@@ -71,7 +71,7 @@ button.on('click', function () {
 
         .fail(function () {
             isbnInput.parent().addClass('has-error has-feedback');
-            isbnInput.next().removeClass('glyphicon-ok').addClass("glyphicon-warning-sign").attr("title",
+            isbnInput.next().removeClass('glyphicon-ok').addClass('glyphicon-warning-sign').attr('title',
                 gettext("The book wasn't found. Please check the ISBN or fill out the form manually."))
                 .tooltip('fixTitle');
             $('input[name="title"]').val('');
