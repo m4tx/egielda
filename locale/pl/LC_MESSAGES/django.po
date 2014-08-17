@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e-Giełda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-17 12:36+0200\n"
-"PO-Revision-Date: 2014-08-17 12:40+0200\n"
+"POT-Creation-Date: 2014-08-17 17:02+0200\n"
+"PO-Revision-Date: 2014-08-17 17:02+0200\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language: pl\n"
@@ -29,6 +29,10 @@ msgstr ""
 #: orders/templates/orders/execute_accept_book_list.html:8
 msgid "ISBN"
 msgstr "ISBN"
+
+#: books/forms.py:24
+msgid "ISBN number"
+msgstr "Numer ISBN"
 
 #: books/forms.py:31 books/templates/books/book_list_base.html:10
 #: books/templates/books/details.html:39
@@ -71,12 +75,12 @@ msgid "%(book_type)s from %(owner)s, accepted: %(accepted)s, sold: %(sold)s"
 msgstr ""
 "%(book_type)s od %(owner)s, zaakceptowana: %(accepted)s, sprzedana: %(sold)s"
 
-#: books/templates/books/add.html:9 books/templates/books/add.html.py:12
+#: books/templates/books/add.html:19 books/templates/books/add.html.py:22
 #: books/templates/books/index.html:23
 msgid "Add book"
 msgstr "Dodaj książkę"
 
-#: books/templates/books/add.html:20 books/templates/books/edit.html:20
+#: books/templates/books/add.html:30 books/templates/books/edit.html:20
 #: books/templates/books/remove.html:24
 #: categories/templates/categories/add.html:16
 #: categories/templates/categories/edit.html:16
@@ -87,7 +91,7 @@ msgstr "Dodaj książkę"
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: books/templates/books/add.html:23
+#: books/templates/books/add.html:33
 #: categories/templates/categories/add.html:19
 #: common/templates/book_chooser_wizard/books.html:69
 #: common/templates/book_chooser_wizard/books_book_list.html:23

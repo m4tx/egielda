@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e-Giełda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-17 12:36+0200\n"
-"PO-Revision-Date: 2014-08-17 12:40+0200\n"
+"POT-Creation-Date: 2014-08-17 17:02+0200\n"
+"PO-Revision-Date: 2014-08-17 17:02+0200\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language: pl\n"
@@ -24,8 +24,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: static/js/bookchooser.js:54 static/js/isbnfinder.js:35
-#: static/js/isbnfinder.js.c:59 static/js/isbnfinder.js:70
+#: static/js/bookchooser.js:54
 msgid "Please enter valid ISBN number."
 msgstr "Proszę wprowadzić poprawny numer ISBN."
 
@@ -40,6 +39,13 @@ msgstr "Zaznaczono {0} z {1}"
 #: static/js/bookeditor.js:17
 msgid "Nothing selected"
 msgstr "Nic nie zaznaczono"
+
+#: static/js/isbnfinder.js:38 static/js/isbnfinder.js.c:63
+#: static/js/isbnfinder.js:75
+msgid ""
+"The book wasn't found. Please check the ISBN or fill out the form manually."
+msgstr ""
+"Książka nie została znaleziona. Sprawdź ISBN lub wypełnij formularz ręcznie."
 
 #: static/js/statscharts.js:28 static/js/statscharts.js.c:82
 msgid "No data"
