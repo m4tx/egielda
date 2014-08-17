@@ -1,9 +1,9 @@
 egielda
 =======
 
-e-Giełda is a project that aims to create easy and convenient way to trade books between students. e-Giełda is a webapp that has a purpose to provide user-friendly interface for various actions like actual buying, generating reports and summaries, etc.
+e-Giełda is a project that aims to create easy and convenient way to trade books between students, both user-friendly and featureful.
 
-The app is written in Python using Django. It makes use of HTML5 and CSS3 by using Bootstrap v3 as a framework for the whole user interface.
+The app is written in Python using Django. It makes use of HTML5 and CSS3 by using Bootstrap v3 as a framework for user interface.
 
 ## Features
 * Selling, buying books
@@ -46,6 +46,8 @@ Also, it uses following components that are loaded from CDN:
 * [jQuery](http://jquery.com/) by jQuery Foundation, Inc. licensed under MIT License
 * [Respond.js](https://github.com/scottjehl/Respond) by [Scott Jehl](scottjehl.com) licensed under MIT License
 
+e-Giełda uses Google Books API ([Terms of Service](https://developers.google.com/books/terms)) as well.
+
 ## Installation
 These are commands used to properly install development version of e-Giełda:
 
@@ -64,7 +66,7 @@ python manage.py compilemessages
 # Superuser may be useful
 python manage.py createsuperuser
 ```
-Please note that you shouldn't use default `settings.py` on production. Also, bear in mind that SQLite is unsuitable for anything but e-Giełda development.
+Remember that you shouldn't use default `settings.py` on production. Also, bear in mind that SQLite is unsuitable for anything but e-Giełda development.
 
 Please note that our migration script automatically creates three groups (moderator, admin, sysadmin) and gives them some permissions. If you change anything and want to restore default permissions for these groups, you have to remove **all** permissions from at least one group, then run `migrate`.
 
