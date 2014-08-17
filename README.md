@@ -64,7 +64,7 @@ python manage.py compilemessages
 # Superuser may be useful
 python manage.py createsuperuser
 ```
-Please note that you shouldn't use default `settings.py` on production. Also, bear in mind that SQLite in unsuitable for anything but e-Giełda development.
+Please note that you shouldn't use default `settings.py` on production. Also, bear in mind that SQLite is unsuitable for anything but e-Giełda development.
 
 Please note that our migration script automatically creates three groups (moderator, admin, sysadmin) and gives them some permissions. If you change anything and want to restore default permissions for these groups, you have to remove **all** permissions from at least one group, then run `migrate`.
 
