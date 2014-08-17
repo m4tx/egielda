@@ -24,7 +24,8 @@ function createSimpleBarChart() {
         .tooltips(false)
         .showValues(true)
         .transitionDuration(350)
-        .color(['steelblue']);
+        .color(['steelblue'])
+        .noData(gettext("No data"));
 }
 
 // Sold book amounts chart
@@ -77,7 +78,8 @@ nv.addGraph(function () {
             return d.value
         })
         .showLabels(true)
-        .valueFormat(d3.format('d'));
+        .valueFormat(d3.format('d'))
+        .noData(gettext("No data"));
 
     d3.select("#sold-book-categories-chart svg")
         .datum(soldBookCategoriesData())
