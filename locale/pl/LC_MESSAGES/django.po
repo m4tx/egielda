@@ -346,7 +346,7 @@ msgid ""
 "the list above and is it included in the school textbook list."
 msgstr ""
 "Przed dodaniem książki sprawdź, czy nie ma jej już na liście, oraz czy "
-"znajduje się ona na wykazie podręczników."
+"znajduje się ona w wykazie podręczników."
 
 #: common/templates/book_chooser_wizard/books.html:64
 msgid ""
@@ -856,7 +856,7 @@ msgstr "Książki zostały pomyślnie zaakceptowane."
 
 #: sellers/templates/sellers/success.html:11
 msgid "Books transfer evidence"
-msgstr "Dowód oddania książek"
+msgstr "Potwierdzenie oddania książek"
 
 #: settings/forms.py:19
 msgid "Selling start date"
