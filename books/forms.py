@@ -21,7 +21,7 @@ class BookForm(ModelForm):
     # Different max_length than in model (to allow dashes in ISBN)
     isbn = forms.CharField(max_length=20, label=_("ISBN"),
                            widget=forms.TextInput(
-                               attrs={'required': 'required', 'pattern': '[0-9-]+', 'title': 'ISBN number'}))
+                               attrs={'required': 'required', 'pattern': '[0-9-]+', 'title': _("ISBN number")}))
 
     class Meta:
         model = BookType
