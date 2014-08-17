@@ -1,36 +1,46 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# This file is part of e-Giełda.
+# Copyright (C) 2014  Mateusz Maćkowski and Tomasz Zieliński
 #
-#, fuzzy
+# e-Giełda is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: e-Giełda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-13 10:24+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2014-08-17 12:36+0200\n"
+"PO-Revision-Date: 2014-08-17 12:40+0200\n"
+"Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
+"Language-Team: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: static/js/bookchooser.js:36
+#: static/js/bookchooser.js:54 static/js/isbnfinder.js:35
+#: static/js/isbnfinder.js.c:59 static/js/isbnfinder.js:70
 msgid "Please enter valid ISBN number."
 msgstr "Proszę wprowadzić poprawny numer ISBN."
 
-#: static/js/bookchooser.js:118
+#: static/js/bookchooser.js:162
 msgid "Remove"
 msgstr "Usuń"
 
-#: static/js/bookeditor.js:3
+#: static/js/bookeditor.js:16
 msgid "{0} of {1} selected"
 msgstr "Zaznaczono {0} z {1}"
 
-#: static/js/bookeditor.js:4
+#: static/js/bookeditor.js:17
 msgid "Nothing selected"
 msgstr "Nic nie zaznaczono"
+
+#: static/js/statscharts.js:28 static/js/statscharts.js.c:82
+msgid "No data"
+msgstr "Brak danych"
