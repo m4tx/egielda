@@ -11,6 +11,7 @@
 
 from django.contrib.auth.models import Group, Permission, ContentType
 from django.db.models.signals import post_migrate
+import common.postgresqlfix
 
 
 def create_groups(sender, **kwargs):

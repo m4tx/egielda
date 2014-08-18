@@ -44,6 +44,7 @@ def accept_books(request, user_pk):
 
     d = books_by_types(books)
     book_type_list = list(d.keys())
+    correct_book_list = []
 
     if not books:
         raise Http404("There's no books of that user.")
@@ -78,13 +79,16 @@ def accept_books(request, user_pk):
                         book.accept_date = timezone.now()
                         book.save()
 
+                if new_amount > 0:
+                    correct_book_list.append(book_type)
+
                 book_type.amount = new_amount
                 books_count += new_amount
 
         # Seller id shown to the user
         seller_id = timezone.now().strftime("%Y%m%d") + "-" + str(user.pk) + "-" + str(books_count)
         return render(request, 'sellers/success.html',
-                      {'seller': user, 'seller_ID': seller_id, 'given_book_list': book_type_list})
+                      {'seller': user, 'seller_ID': seller_id, 'given_book_list': correct_book_list})
     else:
         hide_actions = True
         for book_type in book_type_list:
