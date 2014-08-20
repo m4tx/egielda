@@ -18,10 +18,7 @@ def new_exclude(self, *args, **kwargs):
         if not ((isinstance(value, list) and not value) or (isinstance(value, QuerySet) and not value)):
             new_kwargs[key] = value
 
-    if len(new_kwargs):
-        return old_exclude(self, *args, **new_kwargs)
-    else:
-        return self
+    return old_exclude(self, *args, **new_kwargs)
 
 
 def new_filter(self, *args, **kwargs):
@@ -30,10 +27,7 @@ def new_filter(self, *args, **kwargs):
         if not ((isinstance(value, list) and not value) or (isinstance(value, QuerySet) and not value)):
             new_kwargs[key] = value
 
-    if len(new_kwargs):
-        return old_filter(self, *args, **new_kwargs)
-    else:
-        return self
+    return old_filter(self, *args, **new_kwargs)
 
 
 old_exclude = QuerySet.exclude
