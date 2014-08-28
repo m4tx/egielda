@@ -48,12 +48,12 @@ button.on('click', function () {
                     isbnInput.parent().removeClass('has-error');
                     isbnInput.next().removeClass('glyphicon-warning-sign').addClass('glyphicon-ok').attr('title', '')
                         .attr('data-original-title', '');
-                    $('input[name="publisher"]').val(data.volumeInfo.publisher);
+                    $('input[name="publisher"]').val(data.volumeInfo.publisher.substring(0, 150));
                     var title = data.volumeInfo.title;
                     if (data.volumeInfo.subtitle != undefined) {
                         title += ": " + data.volumeInfo.subtitle;
                     }
-                    $('input[name="title"]').val(title);
+                    $('input[name="title"]').val(title.substring(0, 250));
                     $('input[name="publication_year"]').val(data.volumeInfo.publishedDate.substring(0, 4));
                 })
 

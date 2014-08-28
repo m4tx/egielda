@@ -20,7 +20,7 @@ from common.models import AppUser
 class BookType(models.Model):
     isbn = models.CharField(max_length=13, blank=True)
     publisher = models.CharField(max_length=150, blank=True)
-    title = models.CharField(max_length=150, blank=True)
+    title = models.CharField(max_length=250, blank=True)
     publication_year = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
     visible = models.BooleanField(default=False)
