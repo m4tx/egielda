@@ -11,10 +11,11 @@
 
 from django.contrib.auth.models import Group, Permission, ContentType
 from django.db.models.signals import post_migrate
-import common.postgresqlfix
+
+from common import postgresfix
 
 
-def create_groups(sender, **kwargs):
+def create_groups(verbosity, **kwargs):
     if ContentType.objects.filter(name='dummy permissions').count() > 0:
 
         moderator_group = Group.objects.get_or_create(name='moderator')[0]
@@ -22,10 +23,10 @@ def create_groups(sender, **kwargs):
         sysadmin_group = Group.objects.get_or_create(name='sysadmin')[0]
 
         if moderator_group.permissions.count() > 0 and admin_group.permissions.count() > 0 and \
-                sysadmin_group.permissions.count() > 0:
+                        sysadmin_group.permissions.count() > 0:
             return
 
-        if kwargs['verbosity'] != 0:
+        if verbosity != 0:
             print("Creating groups...")
 
         moderator_permissions = [
@@ -56,7 +57,8 @@ def create_groups(sender, **kwargs):
         ]
 
         moderator_group.permissions.clear()
-        moderator_permissions_objects = Permission.objects.filter(codename__in=moderator_permissions)
+        moderator_permissions_objects = Permission.objects.filter(
+            codename__in=moderator_permissions)
         moderator_permissions_objects_list = [o for o in moderator_permissions_objects]
 
         moderator_group.permissions.add(*moderator_permissions_objects_list)

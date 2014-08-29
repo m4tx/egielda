@@ -18,7 +18,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from books.models import BookType
 
-from utils.tests import create_test_superuser, login
+from utils.test_utils import create_test_superuser, login
 
 
 class BooksLiveTest(StaticLiveServerCase):

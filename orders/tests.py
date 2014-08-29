@@ -8,13 +8,14 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+from time import sleep
 
 from django.contrib.staticfiles.testing import StaticLiveServerCase
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from books.models import Book
 
-from utils.tests import create_test_superuser, login
+from utils.test_utils import create_test_superuser, login
 
 
 class OrdersLiveTest(StaticLiveServerCase):

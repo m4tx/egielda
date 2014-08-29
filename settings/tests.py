@@ -17,7 +17,7 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from settings.models import Setting
 from settings.settings import Settings
 from utils.dates import datetime_html_format
-from utils.tests import login, create_test_superuser
+from utils.test_utils import login, create_test_superuser
 
 
 class SettingsTest(TestCase):

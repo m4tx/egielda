@@ -16,7 +16,7 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from books.models import BookType
 
 from categories.models import Category
-from utils.tests import create_test_superuser, login
+from utils.test_utils import create_test_superuser, login
 
 
 class CategoriesLiveTest(StaticLiveServerCase):

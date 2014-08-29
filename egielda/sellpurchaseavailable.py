@@ -15,7 +15,7 @@ from django.http import Http404
 import re
 
 
-class TransactionsAvailableMiddleware:
+class SellPurchaseAvailableMiddleware:
     def process_request(self, request):
         if re.compile(reverse("sell:index")).match(request.path_info) and not is_sell_available():
             raise Http404

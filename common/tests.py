@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
 from settings.settings import Settings
-from utils.tests import create_test_book_type, create_test_category, create_test_app_user, create_test_book, \
+from utils.test_utils import create_test_book_type, create_test_category, create_test_app_user, create_test_book, \
     create_test_order
 
 
