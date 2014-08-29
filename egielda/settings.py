@@ -77,6 +77,7 @@ INSTALLED_APPS = (
     'stats',
     'settings',
     'orders',
+    'utils',
 )
 
 MIDDLEWARE_CLASSES = (

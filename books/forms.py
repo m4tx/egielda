@@ -10,18 +10,41 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 
 from books.models import BookType
 from egielda import settings
+from utils.isbn import is_isbn_valid
+
+
+class ISBNField(forms.CharField):
+    default_error_messages = {
+        'isbn_invalid': _("This ISBN is not valid."),
+    }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(max_length=20, *args, **kwargs)
+
+    def widget_attrs(self, widget):
+        attrs = super(ISBNField, self).widget_attrs(widget)
+        attrs.update({'required': 'required', 'pattern': '[0-9-]+', 'title': _("ISBN number")})
+        return attrs
+
+    def clean(self, value):
+        val = super(ISBNField, self).clean(value)
+        val = ''.join(filter(lambda x: x.isdigit(), val))
+        return val
+
+    def validate(self, value):
+        super(ISBNField, self).validate(value)
+        if not is_isbn_valid(value):
+            raise ValidationError(self.error_messages['isbn_invalid'])
 
 
 class BookForm(ModelForm):
-    # Different max_length than in model (to allow dashes in ISBN)
-    isbn = forms.CharField(max_length=20, label=_("ISBN"),
-                           widget=forms.TextInput(
-                               attrs={'required': 'required', 'pattern': '[0-9-]+', 'title': _("ISBN number")}))
+    isbn = ISBNField(label=_("ISBN"))
 
     class Meta:
         model = BookType
@@ -40,8 +63,3 @@ class BookForm(ModelForm):
             'publication_year': forms.NumberInput(attrs={'required': 'required', 'min': '1900', 'max': '2100'}),
             'price': forms.NumberInput(attrs={'required': 'required', 'max': '999.99'}),
         }
-
-    def clean_isbn(self):
-        data = self.cleaned_data['isbn']
-        data = ''.join(filter(lambda x: x.isdigit(), data))
-        return data
