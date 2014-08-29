@@ -23,8 +23,9 @@ from utils.test_utils import create_test_superuser, login
 
 class BooksLiveTest(StaticLiveServerCase):
     def setUp(self):
-        BookType(pk=1, isbn="9788375940794", publisher="Some", title="A book",
-                 publication_year=1995, price=20.50, visible=False).save()
+        self.test_book = BookType(isbn="9788375940794", publisher="Some", title="A book",
+                                  publication_year=1995, price=20.50, visible=False)
+        self.test_book.save()
         create_test_superuser()
 
     @classmethod
@@ -58,7 +59,7 @@ class BooksLiveTest(StaticLiveServerCase):
 
         # Create one more book
         self.selenium.find_element_by_xpath('//a[contains(@href, "books/add")]').click()
-        self.selenium.find_element_by_name('isbn').send_keys("9780262033840")
+        self.selenium.find_element_by_name('isbn').send_keys("9780262631853")
         self.selenium.find_element_by_name('publisher').send_keys("Test publisher")
         self.selenium.find_element_by_name('title').send_keys("Test book")
         self.selenium.find_element_by_name('publication_year').send_keys("2000")
@@ -68,15 +69,15 @@ class BooksLiveTest(StaticLiveServerCase):
         trs = self.selenium.find_elements_by_xpath('//table//tbody//tr[not(contains(@class, "info"))]')
         self.assertEqual(len(trs), 3)  # Ensure admin sees 3 book types
 
-        self.assertEqual(BookType.objects.get(pk=1).visible, False)
+        self.assertEqual(BookType.objects.get(pk=self.test_book.pk).visible, False)
         self.selenium.find_element_by_xpath('//a[contains(@href, "1/edit")]').click()
         self.selenium.find_element_by_name('title').clear()
         self.selenium.find_element_by_name('title').send_keys("Brand new title!")
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
         # Ensure the title was changed
-        self.assertEqual(BookType.objects.get(pk=1).title, "Brand new title!")
+        self.assertEqual(BookType.objects.get(pk=self.test_book.pk).title, "Brand new title!")
         # Ensure that visible was set to true
-        self.assertEqual(BookType.objects.get(pk=1).visible, True)
+        self.assertEqual(BookType.objects.get(pk=self.test_book.pk).visible, True)
 
         self.selenium.find_element_by_xpath('//a[contains(@href, "1/remove")]').click()
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
