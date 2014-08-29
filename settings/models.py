@@ -14,7 +14,7 @@ from django.utils.translation import ugettext as _
 
 
 class Setting(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, primary_key=True)
     value = models.CharField(max_length=1000)
 
     def __str__(self):
