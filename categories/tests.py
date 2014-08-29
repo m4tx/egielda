@@ -43,7 +43,7 @@ class CategoriesLiveTest(StaticLiveServerCase):
         login(self.selenium, self.live_server_url, "test", "test")
         self.selenium.get('%s%s' % (self.live_server_url, '/manage/categories/'))
 
-        book_list_a = self.selenium.find_element_by_xpath('//a[contains(@href, "1/list")]')
+        book_list_a = self.selenium.find_element_by_xpath('//a[contains(@href, "/list")]')
         self.assertEqual(book_list_a.text, "1")  # Ensure the list says there's 1 book in category
         book_list_a.click()
         trs = self.selenium.find_elements_by_xpath('//table//tbody//tr')

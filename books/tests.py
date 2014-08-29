@@ -8,6 +8,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+from decimal import Decimal
 
 from django.contrib.staticfiles.testing import StaticLiveServerCase
 
@@ -22,8 +23,8 @@ from utils.tests import create_test_superuser, login
 
 class BooksLiveTest(StaticLiveServerCase):
     def setUp(self):
-        BookType(isbn="9788375940794", publisher="Some", title="A book", publication_year=1995, price=20.50,
-                 visible=False).save()
+        BookType(pk=1, isbn="9788375940794", publisher="Some", title="A book",
+                 publication_year=1995, price=20.50, visible=False).save()
         create_test_superuser()
 
     @classmethod
@@ -52,7 +53,7 @@ class BooksLiveTest(StaticLiveServerCase):
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
 
         BookType.objects.get(isbn="9780262033848", publisher="MIT Press", title="Introduction to Algorithms",
-                             publication_year=2009, price=60.99, visible=True)
+                             publication_year=2009, price=Decimal("60.99"), visible=True)
         self.assertEqual(BookType.objects.count(), 2)
 
         # Create one more book
