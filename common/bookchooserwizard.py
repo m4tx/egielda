@@ -180,7 +180,7 @@ class BookChooserWizard:
         del form.fields['categories']
         return render(request, 'book_chooser_wizard/books.html',
                       {'page_title': self.page_title, 'form': form, 'book_list': book_list,
-                       'category_list': category_list,
+                       'category_list': sorted(category_list, key=lambda o: o.name),
                        'chosen_books': request.session[
                            self.session_var_name] if self.session_var_name in request.session else None,
                        'currency': getattr(settings, 'CURRENCY', 'USD'), 'feature_add_new': self.feature_add_new,
