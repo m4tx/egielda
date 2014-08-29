@@ -93,5 +93,7 @@ class PurchaseWizard(BookChooserWizard):
         for book_type in amounts.keys():
             book_type.amount = amounts[book_type]
 
+        del request.session['order_id']
+
         return render(request, 'purchase/success.html',
                       {'order': order, 'order_ID': order_id, 'chosen_book_list': amounts.keys()})

@@ -11,11 +11,14 @@
 
 from decimal import Decimal
 import re
+import json
 
 from django.shortcuts import render
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from books.models import BookType, Book
+from common.models import AppUser
 from common.bookchooserwizard import BookChooserWizard
 
 
@@ -37,6 +40,9 @@ class SellWizard(BookChooserWizard):
         return True
 
     def process_books_summary(self, session, user, book_list):
+        seller_book_list = []
+        amounts = {}
+
         for book in book_list:
             amount = book['amount']
             del book['amount']
@@ -45,6 +51,8 @@ class SellWizard(BookChooserWizard):
             dbbook = Book(owner=user, accepted=False, sold=False)
             if 'pk' in book:
                 dbbook.book_type_id = book['pk']
+                seller_book_list.append(book['pk'])
+                amounts[book['pk']] = amount
             else:
                 book['isbn'] = re.sub(r'[^\d.]+', '', book['isbn'])
                 book['price'] = Decimal(book['price'])
@@ -55,11 +63,26 @@ class SellWizard(BookChooserWizard):
                 book_type.save()
                 dbbook.book_type = book_type
 
+                seller_book_list.append(book_type.pk)
+                amounts[book_type.pk] = amount
+
             for i in range(0, amount):
                 dbbook.pk = None
                 dbbook.save()
 
+        session['seller_books'] = (seller_book_list, amounts)
         return True, None
 
     def success(self, request):
-        return render(request, 'sell/success.html')
+        book_list, amounts = request.session['seller_books']
+        books_count = 0
+
+        booktype_list = BookType.objects.filter(pk__in=[pk for pk in book_list])
+        for book in booktype_list:
+            book.amount = amounts[book.pk]
+            books_count += amounts[book.pk]
+
+        seller_id = timezone.now().strftime("%Y%m%d") + "-" + str(request.session['app_user']) + "-" + str(books_count)
+
+        return render(request, 'sell/success.html', {'seller': AppUser.objects.get(pk=int(request.session['app_user'])),
+                                                     'seller_ID': seller_id, 'given_book_list': booktype_list})
