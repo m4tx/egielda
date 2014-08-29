@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e-Giełda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-17 17:02+0200\n"
-"PO-Revision-Date: 2014-08-17 17:02+0200\n"
+"POT-Creation-Date: 2014-08-29 23:05+0200\n"
+"PO-Revision-Date: 2014-08-29 23:11+0100\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language: pl\n"
@@ -23,39 +23,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: books/forms.py:22 books/templates/books/book_list_base.html:9
+#: books/forms.py:24
+msgid "This ISBN is not valid."
+msgstr "Ten ISBN nie jest prawidłowy."
+
+#: books/forms.py:32
+msgid "ISBN number"
+msgstr "Numer ISBN"
+
+#: books/forms.py:47 books/templates/books/book_list_base.html:9
 #: books/templates/books/details.html:25
 #: orders/templates/orders/execute_accept_book_list.html:8
 msgid "ISBN"
 msgstr "ISBN"
 
-#: books/forms.py:24
-msgid "ISBN number"
-msgstr "Numer ISBN"
-
-#: books/forms.py:31 books/templates/books/book_list_base.html:10
+#: books/forms.py:54 books/templates/books/book_list_base.html:10
 #: books/templates/books/details.html:39
 #: orders/templates/orders/execute_accept_book_list.html:9
 msgid "Publisher"
 msgstr "Wydawnictwo"
 
-#: books/forms.py:32 books/templates/books/book_list_base.html:11
+#: books/forms.py:55 books/templates/books/book_list_base.html:11
 #: books/templates/books/details.html:32
 #: orders/templates/orders/execute_accept_book_list.html:10
 msgid "Title"
 msgstr "Tytuł"
 
-#: books/forms.py:33 books/templates/books/details.html:46
+#: books/forms.py:56 books/templates/books/details.html:46
 msgid "Publication year"
 msgstr "Rok wydania"
 
-#: books/forms.py:34
+#: books/forms.py:57
 #, python-format
 msgid "Price (%s)"
 msgstr "Cena (%s)"
 
-#: books/forms.py:35 books/templates/books/details.html:60
+#: books/forms.py:58 books/templates/books/details.html:60
 #: categories/templates/categories/index.html:16
 #: categories/templates/categories/list.html:9
 #: common/templates/book_chooser_wizard/books.html:35
@@ -274,7 +279,7 @@ msgstr "W tej kategorii nie ma żadnych książek."
 #: common/templates/book_chooser_wizard/personal_data_signed_in.html:13
 #: common/templates/book_chooser_wizard/summary.html:16
 #: purchase/templates/purchase/success.html:14 sell/forms.py:31
-#: sellers/templates/sellers/index.html:21
+#: sell/templates/sell/success.html:14 sellers/templates/sellers/index.html:21
 #: sellers/templates/sellers/remove.html:25
 #: sellers/templates/sellers/success.html:14
 #: stats/templates/stats/users.html:43
@@ -285,7 +290,7 @@ msgstr "Imię"
 #: common/templates/book_chooser_wizard/personal_data_signed_in.html:20
 #: common/templates/book_chooser_wizard/summary.html:23
 #: purchase/templates/purchase/success.html:21 sell/forms.py:32
-#: sellers/templates/sellers/index.html:22
+#: sell/templates/sell/success.html:21 sellers/templates/sellers/index.html:22
 #: sellers/templates/sellers/remove.html:26
 #: sellers/templates/sellers/success.html:21
 #: stats/templates/stats/users.html:44
@@ -296,7 +301,7 @@ msgstr "Nazwisko"
 #: common/templates/book_chooser_wizard/personal_data_signed_in.html:27
 #: common/templates/book_chooser_wizard/summary.html:30
 #: purchase/templates/purchase/success.html:28 sell/forms.py:33
-#: sellers/templates/sellers/index.html:23
+#: sell/templates/sell/success.html:28 sellers/templates/sellers/index.html:23
 #: sellers/templates/sellers/remove.html:27
 #: sellers/templates/sellers/success.html:28
 #: stats/templates/stats/users.html:45
@@ -307,7 +312,7 @@ msgstr "Klasa"
 #: common/templates/book_chooser_wizard/personal_data_signed_in.html:34
 #: common/templates/book_chooser_wizard/summary.html:37
 #: purchase/templates/purchase/success.html:35 sell/forms.py:34
-#: sellers/templates/sellers/index.html:24
+#: sell/templates/sell/success.html:35 sellers/templates/sellers/index.html:24
 #: sellers/templates/sellers/remove.html:28
 #: sellers/templates/sellers/success.html:35
 #: stats/templates/stats/users.html:46
@@ -416,35 +421,40 @@ msgstr "Dane osobiste"
 msgid "Accept"
 msgstr "Akceptuj"
 
-#: common/templates/common/base.html:49
+#: common/templates/common/base.html:50
 msgid "Toggle navigation"
 msgstr "Nawigacja"
 
-#: common/templates/common/base.html:62
+#: common/templates/common/base.html:63
 msgid "Anonymous"
 msgstr "Anonimowy"
 
-#: common/templates/common/base.html:70
+#: common/templates/common/base.html:71
 #: common/templatetags/manage_header.py:23
 #: managemenu/templates/managemenu/index.html:74
 #: managemenu/templates/managemenu/index.html:77
 msgid "Manage"
 msgstr "Zarządzaj"
 
-#: common/templates/common/base.html:77
+#: common/templates/common/base.html:78
+#| msgid "Password"
+msgid "Change password"
+msgstr "Zmień hasło"
+
+#: common/templates/common/base.html:83
 #: egielda/templates/registration/logged_out.html:4
 #: egielda/templates/registration/logged_out.html:8
 msgid "Sign out"
 msgstr "Wyloguj się"
 
-#: common/templates/common/base.html:83
+#: common/templates/common/base.html:89
 #: egielda/templates/registration/login.html:4
 #: egielda/templates/registration/login.html:8
 #: egielda/templates/registration/login.html:42
 msgid "Sign in"
 msgstr "Zaloguj się"
 
-#: common/templates/common/base.html:98
+#: common/templates/common/base.html:104
 msgid ""
 "You don't seem to have JavaScript enabled. This website <strong>does not "
 "work properly</strong> without JavaScript, so please enable it in your "
@@ -730,6 +740,20 @@ msgstr "Nazwa użytkownika"
 msgid "Password"
 msgstr "Hasło"
 
+#: egielda/templates/registration/password_change_done.html:4
+#: egielda/templates/registration/password_change_done.html:8
+#| msgid "Password"
+msgid "Password change"
+msgstr "Zmiana hasła"
+
+#: egielda/templates/registration/password_change_done.html:12
+msgid "Your password was changed."
+msgstr "Twoje hasło zostało zmienione."
+
+#: egielda/templates/registration/password_change_form.html:16
+msgid "Change"
+msgstr "Zmień"
+
 #: orders/models.py:24
 #, python-format
 msgid "Order from %(user)s made at %(date)s valid until %(valid_until)s"
@@ -798,27 +822,41 @@ msgid "Purchase books"
 msgstr "Kup książki"
 
 #: purchase/templates/purchase/success.html:8
-msgid ""
-"Your request was accepted. You can claim your books now. Make sure you have "
-"printed this page, to speed up executing your order."
+#| msgid "Your request was accepted. You can deliver your books now."
+msgid "Your request was accepted. You can claim your books now."
 msgstr ""
-"Podane dane zostały zaakceptowane. Możesz teraz zgłosić się po swoje "
-"książki. Upewnij się, że wydrukowałeś tę stronę, by przyśpieszyć "
-"realizowanie zamówienia."
+"Podane dane zostały zaakceptowane. Możesz teraz zgłosić się po swoje książki."
 
 #: purchase/templates/purchase/success.html:11
 msgid "Order summary"
 msgstr "Podsumowanie zamówienia"
 
-#: sell/templates/sell/success.html:4 sell/templates/sell/success.html.py:7
-#: sell/views.py:25
+#: sell/templates/sell/success.html:4 sellers/templates/sellers/remove.html:5
+#: sellers/templates/sellers/success.html:4
+msgid "Manage sellers"
+msgstr "Zarządzaj sprzedającymi"
+
+#: sell/templates/sell/success.html:8
+#| msgid ""
+#| "Your request was accepted. You can claim your books now. Make sure you "
+#| "have printed this page, to speed up executing your order."
+msgid ""
+"Your request was accepted. You can deliver your books now. Please ensure you "
+"have printed this page <strong>twice</strong> - the first copy is a book "
+"transfer evidence for you, and the second one for us."
+msgstr ""
+"Podane dane zostały zaakceptowane. Możesz teraz dostarczyć swoje książki. "
+"Upewnij się, że wydrukowałeś tę stronę <strong>dwa razy</strong> - jedna "
+"kopia jest dowodem oddania książek dla Ciebie, druga dla nas."
+
+#: sell/templates/sell/success.html:11
+#: sellers/templates/sellers/success.html:11
+msgid "Books transfer evidence"
+msgstr "Potwierdzenie oddania książek"
+
+#: sell/views.py:28
 msgid "Sell books"
 msgstr "Sprzedaj książki"
-
-#: sell/templates/sell/success.html:9
-msgid "Your request was accepted. You can deliver your books now."
-msgstr ""
-"Podane dane zostały zaakceptowane. Możesz teraz dostarczyć swoje książki."
 
 #: sellers/templates/sellers/accept.html:5
 msgid "Sellers with unaccepted books - Accept books"
@@ -828,11 +866,6 @@ msgstr "Sprzedający z niezaakceptowanymi książkami - Zaakceptuj książki"
 #, python-format
 msgid "Accept %(user_name)s's books"
 msgstr "Zaakceptuj książki użytkownika %(user_name)s"
-
-#: sellers/templates/sellers/remove.html:5
-#: sellers/templates/sellers/success.html:4
-msgid "Manage sellers"
-msgstr "Zarządzaj sprzedającymi"
 
 #: sellers/templates/sellers/remove.html:9
 msgid "Remove seller's books"
@@ -853,10 +886,6 @@ msgstr "Czy jesteś pewien, że chcesz usunąć książki tych sprzedających?"
 #: sellers/templates/sellers/success.html:8
 msgid "The books were accepted successfully."
 msgstr "Książki zostały pomyślnie zaakceptowane."
-
-#: sellers/templates/sellers/success.html:11
-msgid "Books transfer evidence"
-msgstr "Potwierdzenie oddania książek"
 
 #: settings/forms.py:19
 msgid "Selling start date"
