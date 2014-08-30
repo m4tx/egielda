@@ -26,7 +26,6 @@ In e-Giełda, there are two models with "Book" in name: BookType and Book. The d
 ## Dependencies
 * Python 3.2 or newer (may also work with 3.0, though it wasn't tested)
 * Django 1.7 or newer
-* Django Widget Tweaks
 
 For running tests:
 * Selenium

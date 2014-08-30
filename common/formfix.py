@@ -10,7 +10,9 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-Adds required="required" attribute wherever required is set to True in form field.
+Fixes some issues in forms:
+* adds required="required" attribute wherever required is set to True in form field
+* adds "form-control" class so fields look nicely with Bootstrap
 """
 
 from django.forms import Field
@@ -22,6 +24,11 @@ def new_widget_attrs(self, widget):
     attrs = old_widget_attrs(self, widget)
     if self.required:
         attrs.update({'required': 'required'})
+
+    if 'class' in attrs:
+        attrs['class'] += ' form-control'
+    else:
+        attrs.update({'class': 'form-control'})
     return attrs
 
 
