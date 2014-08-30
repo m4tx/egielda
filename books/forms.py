@@ -34,7 +34,7 @@ class ISBNField(forms.CharField):
 
     def clean(self, value):
         val = super(ISBNField, self).clean(value)
-        val = ''.join(filter(lambda x: x.isdigit(), val))
+        val = ''.join(filter(lambda c: c != '-', val))
         return val
 
     def validate(self, value):
