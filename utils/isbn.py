@@ -27,12 +27,10 @@ def is_isbn_valid(isbn: str):
     if len(isbn) == 10:
         if not isbn[:-1].isdigit() or not (isbn[-1].isdigit() or isbn[-1] == 'X'):
             return False
-        check_digit = str(calc_isbn10_check_digit(isbn))
-        if isbn[-1] != check_digit:
+        if isbn[-1] != str(calc_isbn10_check_digit(isbn)):
             return False
     elif len(isbn) == 13:
-        check_digit = str(calc_isbn13_check_digit(isbn))
-        if isbn[-1] != check_digit:
+        if isbn[-1] != str(calc_isbn13_check_digit(isbn)):
             return False
     else:
         return False

@@ -29,7 +29,7 @@ class ISBNField(forms.CharField):
 
     def widget_attrs(self, widget):
         attrs = super(ISBNField, self).widget_attrs(widget)
-        attrs.update({'required': 'required', 'pattern': '[0-9-]+', 'title': _("ISBN number")})
+        attrs.update({'required': 'required', 'pattern': '[0-9-X]+', 'title': _("ISBN number")})
         return attrs
 
     def clean(self, value):
