@@ -29,7 +29,7 @@ class ISBNField(forms.CharField):
 
     def widget_attrs(self, widget):
         attrs = super(ISBNField, self).widget_attrs(widget)
-        attrs.update({'required': 'required', 'pattern': '[0-9-X]+', 'title': _("ISBN number")})
+        attrs.update({'pattern': '[0-9-X]+', 'title': _("ISBN number")})
         return attrs
 
     def clean(self, value):
@@ -58,8 +58,6 @@ class BookForm(ModelForm):
             'categories': _("Categories")
         }
         widgets = {
-            'publisher': forms.TextInput(attrs={'required': 'required'}),
-            'title': forms.TextInput(attrs={'required': 'required'}),
-            'publication_year': forms.NumberInput(attrs={'required': 'required', 'min': '1900', 'max': '2100'}),
-            'price': forms.NumberInput(attrs={'required': 'required', 'max': '999.99'}),
+            'publication_year': forms.NumberInput(attrs={'min': '1900', 'max': '2100'}),
+            'price': forms.NumberInput(attrs={'max': '999.99'}),
         }

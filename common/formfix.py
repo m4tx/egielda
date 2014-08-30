@@ -9,16 +9,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django import forms
-from django.utils.translation import ugettext_lazy as _
+"""
+Adds required="required" attribute wherever required is set to True in form field.
+"""
 
-from categories.models import Category
+from django.forms import Field
+
+old_widget_attrs = Field.widget_attrs
 
 
-class CategoryForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = '__all__'
-        labels = {
-            'name': _("Name")
-        }
+def new_widget_attrs(self, widget):
+    attrs = old_widget_attrs(self, widget)
+    if self.required:
+        attrs.update({'required': 'required'})
+    return attrs
+
+
+Field.widget_attrs = new_widget_attrs

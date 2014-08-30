@@ -14,8 +14,6 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout, password_change, \
     password_change_done
 
-from egielda.forms import PasswordChangeForm
-
 admin.autodiscover()
 
 js_info_dict = {
@@ -30,8 +28,7 @@ urlpatterns = patterns(
 
     url(r'^accounts/login/', login, name='login'),
     url(r'^accounts/logout/', logout, name='logout'),
-    url(r'^accounts/change_password/$', password_change,
-        {'password_change_form': PasswordChangeForm}, name='password_change'),
+    url(r'^accounts/change_password/$', password_change, name='password_change'),
     url(r'^accounts/change_password/done/$', password_change_done, name='password_change_done'),
 
     url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),

@@ -26,10 +26,7 @@ class PersonalDataForm(ModelForm):
         model = AppUser
         fields = ['first_name', 'last_name', 'student_class', 'phone_number']
         widgets = {
-            'first_name': forms.TextInput(attrs={'required': 'required'}),
-            'last_name': forms.TextInput(attrs={'required': 'required'}),
-            'student_class': forms.TextInput(attrs={'required': 'required'}),
-            'phone_number': PhoneNumberInput(attrs={'required': 'required', 'maxlength': '9'}),
+            'phone_number': PhoneNumberInput(attrs={'maxlength': '9'}),
         }
         labels = {
             'first_name': _("First name"),
