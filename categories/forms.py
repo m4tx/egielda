@@ -22,3 +22,6 @@ class CategoryForm(forms.ModelForm):
         labels = {
             'name': _("Name")
         }
+        widgets = {
+            'name': forms.TextInput(attrs={'required': 'required'}),
+        }
