@@ -105,7 +105,7 @@ button.on('click', function () {
         return;
     }
 
-    var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn + "&projection=lite";
+    var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn + "&fields=items(selfLink)";
     $.ajax(url)
         .success(function (data) {
             if (data.totalItems == 0) {
@@ -113,7 +113,7 @@ button.on('click', function () {
                 return;
             }
 
-            $.ajax(data.items[0].selfLink + "?projection=lite")
+            $.ajax(data.items[0].selfLink + "?fields=volumeInfo(title,subtitle,publisher,publishedDate)")
                 .success(function (data) {
                     setSuccess();
                     $('input[name="publisher"]').val(data.volumeInfo.publisher.substring(0, 150));
