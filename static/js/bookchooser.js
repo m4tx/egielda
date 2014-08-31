@@ -33,11 +33,12 @@ $('.btn-add-book').on('click', function () {
 });
 
 $('#btn-add-new-book').on('click', function () {
-    var isbn = $('input[name="isbn"]').val().replace(/[\D]/g, '');
+    var isbn = $('input[name="isbn"]').val().toUpperCase().replace(/[^\dX]/g, ''); // remove all chars which are not
+                                                                                   // allowed in ISBN
     var title = $.trim($('input[name="title"]').val());
 
-    var existingTr = $('#chosen-book-list tr td:first-child').filter(function() {
-        return $(this).text() == isbn && $(this).next().next().text() == title
+    var existingTr = $('#chosen-book-list tr td:first-child').filter(function () {
+        return $(this).text() == isbn
     });
     existingTr = existingTr.parent();
 
@@ -46,11 +47,11 @@ $('#btn-add-new-book').on('click', function () {
         var amount = parseInt(amountTr.text());
         amountTr.text(amount + 1);
         $.grep(chosenBooks, function (n, i) {
-            return n.isbn == isbn && n.title == title;
+            return n.isbn == isbn
         })[0].amount += 1;
     } else {
         var len = isbn.length;
-        if(len != 13 && len != 10) {
+        if (len != 13 && len != 10) {
             return showMessage(gettext("Please enter valid ISBN number."));
         }
 
@@ -123,8 +124,8 @@ function addNewBook(amount) {
         var input = $('input[name="' + ids[prid] + '"]');
         book[ids[prid]] = $.trim(input.val());
 
-        if(ids[prid] === 'isbn')
-            book[ids[prid]] = book[ids[prid]].replace(/[\D]/g, '');
+        if (ids[prid] === 'isbn')
+            book[ids[prid]] = book[ids[prid]].toUpperCase().replace(/[^\dX]/g, '');
 
         vals.push(book[ids[prid]]);
 
@@ -148,7 +149,7 @@ function createNewBookTr(vals) {
     var tr = $('<tr/>');
 
     for (var id in vals) {
-        if(id === 'amount') {
+        if (id === 'amount') {
             tr = tr.append($('<td data-type="amount"/>').text(vals[id]));
         } else {
             tr = tr.append($('<td/>').text(vals[id]));
@@ -198,7 +199,7 @@ function removeBook(id) {
 }
 
 addRetrievedBooks();
-$('table tbody tr', '#bookList').each(function(index, value) {
+$('table tbody tr', '#bookList').each(function (index, value) {
     checkInStock(value);
 });
 
@@ -208,12 +209,12 @@ function sortTable() {
 
     rows.sort(function (a, b) {
         var aAmount = 0;
-        if(typeof $(a).attr("data-id") != 'undefined') {
+        if (typeof $(a).attr("data-id") != 'undefined') {
             aAmount = chosenBooks[parseInt($(a).attr("data-id"))].amount;
         }
 
         var bAmount = 0;
-        if(typeof $(b).attr("data-id") != 'undefined') {
+        if (typeof $(b).attr("data-id") != 'undefined') {
             bAmount = chosenBooks[parseInt($(b).attr("data-id"))].amount;
         }
 
@@ -231,27 +232,27 @@ function sortTable() {
         return 0;
     });
 
-    $.each(rows, function(index, row) {
+    $.each(rows, function (index, row) {
         $('#bookList tbody').append(row);
     });
 }
 sortTable();
 
-$("#category_filter").on("change", function(){
+$("#category_filter").on("change", function () {
     var category = parseInt($(this).val());
-    $("#bookList table > tbody > tr").each(function(){
+    $("#bookList table > tbody > tr").each(function () {
         var bookCategories = $(this).attr("data-categories").split(",");
         var visible = false;
 
-        for(var categoryID in bookCategories) {
-            if(parseInt(bookCategories[categoryID]) === category || category === 0) {
+        for (var categoryID in bookCategories) {
+            if (parseInt(bookCategories[categoryID]) === category || category === 0) {
                 $(this).attr("style", "display: table-row");
                 visible = true;
                 break;
             }
         }
 
-        if(!visible) {
+        if (!visible) {
             $(this).attr("style", "display: none");
         }
     });

@@ -75,7 +75,7 @@ var isbnInput = $('input[name="isbn"]');
 function checkIsbnLength() {
     $(this).parent().removeClass('has-error');
     $(this).next().removeClass('glyphicon-warning-sign glyphicon-ok').attr('title', '').attr('data-original-title', '');
-    var len = $(this).val().replace(/[^0-9X]/g, '').length;
+    var len = $(this).val().toUpperCase().replace(/[^\dX]/g, '').length;
     if (len != 10 && len != 13) {
         button.attr("disabled", "disabled");
     } else {
@@ -99,7 +99,7 @@ function setFail(text) {
 }
 
 button.on('click', function () {
-    var isbn = isbnInput.val().replace(/[^0-9X]/g, ''); // remove all non-digit characters
+    var isbn = isbnInput.val().toUpperCase().replace(/[^\dX]/g, ''); // remove all chars which are not allowed in ISBN
     if (!isIsbnValid(isbn)) {
         setFail(gettext("This ISBN is invalid."));
         return;
