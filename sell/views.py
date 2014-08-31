@@ -54,7 +54,7 @@ class SellWizard(BookChooserWizard):
                 seller_book_list.append(book['pk'])
                 amounts[book['pk']] = amount
             else:
-                book['isbn'] = re.sub(r'[^\d.]+', '', book['isbn'])
+                book['isbn'] = re.sub(r'[^\dX]+', '', book['isbn'].upper())
                 book['price'] = Decimal(book['price'])
                 if book['publication_year'] == "":
                     book['publication_year'] = 1970
