@@ -161,7 +161,7 @@ class BookChooserWizard:
             elif 'btn-next' in request.POST:
                 return HttpResponseRedirect(reverse(self.url_namespace + ':summary'))
 
-        book_list = BookType.objects.filter(visible=True).prefetch_related('categories')
+        book_list = BookType.objects.filter(visible=True).order_by('title').prefetch_related('categories')
         if self.feature_books_in_stock:
             books_available = get_available_books().filter(book_type__in=book_list)
             countdict = Counter(book.book_type for book in books_available)
