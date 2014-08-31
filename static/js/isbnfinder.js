@@ -89,19 +89,22 @@ function setSuccess() {
         .attr('data-original-title', '');
 }
 
-function setFail(text) {
+function setFail(text, clearFields) {
     isbnInput.parent().addClass('has-error has-feedback');
     isbnInput.next().removeClass('glyphicon-ok').addClass('glyphicon-warning-sign').attr('title',
         text).tooltip('fixTitle');
-    $('input[name="title"]').val('');
-    $('input[name="publication_year"]').val('');
-    $('input[name="publisher"]').val('');
+
+    if (clearFields) {
+        $('input[name="title"]').val('');
+        $('input[name="publication_year"]').val('');
+        $('input[name="publisher"]').val('');
+    }
 }
 
 button.on('click', function () {
     var isbn = isbnInput.val().toUpperCase().replace(/[^\dX]/g, ''); // remove all chars which are not allowed in ISBN
     if (!isIsbnValid(isbn)) {
-        setFail(gettext("This ISBN is invalid."));
+        setFail(gettext("This ISBN is invalid."), true);
         return;
     }
 
@@ -109,7 +112,7 @@ button.on('click', function () {
     $.ajax(url)
         .success(function (data) {
             if (data.totalItems == 0) {
-                setFail(gettext("The book wasn't found. Please check the ISBN or fill out the form manually."));
+                setFail(gettext("The book wasn't found. Please check the ISBN or fill out the form manually."), true);
                 return;
             }
 
@@ -125,11 +128,12 @@ button.on('click', function () {
                     $('input[name="publication_year"]').val(data.volumeInfo.publishedDate.substring(0, 4));
                 })
                 .fail(function () {
-                    setFail(gettext("The book wasn't found. Please check the ISBN or fill out the form manually."));
+                    setFail(gettext("The book wasn't found. Please check the ISBN" +
+                                    "or fill out the form manually."), true);
                 });
         })
         .fail(function () {
-            setFail(gettext("The book wasn't found. Please check the ISBN or fill out the form manually."));
+            setFail(gettext("The book wasn't found. Please check the ISBN or fill out the form manually."), true);
         });
 });
 

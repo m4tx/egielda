@@ -36,7 +36,7 @@ $('#btn-add-new-book').on('click', function () {
     var isbn = $('input[name="isbn"]').val().toUpperCase().replace(/[^\dX]/g, ''); // remove all chars which are not
                                                                                    // allowed in ISBN
     if (!isIsbnValid(isbn)) {
-        setFail(gettext("This ISBN is invalid."));
+        setFail(gettext("This ISBN is invalid."), false);
         return;
     }
 
@@ -55,11 +55,6 @@ $('#btn-add-new-book').on('click', function () {
             return n.isbn == isbn
         })[0].amount += 1;
     } else {
-        var len = isbn.length;
-        if (len != 13 && len != 10) {
-            return showMessage(gettext("Please enter valid ISBN number."));
-        }
-
         addNewBook(1);
     }
 });
