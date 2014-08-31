@@ -96,8 +96,8 @@
         var chosenBooks = {% if chosen_books %}{{ chosen_books|safe }}{% else %}[]{% endif %};
         var currency = '{{ currency|safe }}';
     </script>
-    <script src="{% static "js/bookchooser.js" %}"></script>
     {% if feature_add_new %}
         <script src="{% static "js/isbnfinder.js" %}"></script>
     {% endif %}
+    <script src="{% static "js/bookchooser.js" %}"></script>
 {% endblock %}

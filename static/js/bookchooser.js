@@ -35,6 +35,11 @@ $('.btn-add-book').on('click', function () {
 $('#btn-add-new-book').on('click', function () {
     var isbn = $('input[name="isbn"]').val().toUpperCase().replace(/[^\dX]/g, ''); // remove all chars which are not
                                                                                    // allowed in ISBN
+    if (!isIsbnValid(isbn)) {
+        setFail(gettext("This ISBN is invalid."));
+        return;
+    }
+
     var title = $.trim($('input[name="title"]').val());
 
     var existingTr = $('#chosen-book-list tr td:first-child').filter(function () {
