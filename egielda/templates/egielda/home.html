@@ -14,7 +14,7 @@
         }
 
         #homepage-info p {
-font-size: 14px;
+            font-size: 14px;
             margin-bottom: 8px;
         }
     </style>
@@ -47,7 +47,7 @@ font-size: 14px;
         {% if homepage_info %}
             <div id="homepage-info">
                 <strong>{% trans "Information:" %}</strong>
-                {{ homepage_info|linebreaks }}
+                {{ homepage_info|safe|linebreaks }}
             </div>
         {% endif %}
     </div>
