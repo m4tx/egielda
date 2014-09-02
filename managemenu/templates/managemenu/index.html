@@ -145,6 +145,7 @@
                     <ul>
                         {% if perms.common.view_books_add_book %}
                             <li><a href="{% url 'books.views.add_book' %}">{% trans "Add new" %}</a></li>
+                            <li><a href="{% url 'books.views.duplicated' %}">{% trans "Duplicated" %}</a></li>
                         {% endif %}
                     </ul>
                 {% endif %}

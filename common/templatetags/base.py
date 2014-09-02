@@ -32,6 +32,7 @@ def alerts(context):
     if 'info_msg' in request.session:
         args['info_msg'] = {
             'order_removed': _("The order was removed."),
+            'merge_no_books_chosen': _("No books were chosen. Merged nothing."),
         }[request.session['info_msg']]
         del request.session['info_msg']
 
@@ -41,6 +42,7 @@ def alerts(context):
             'book_edited': _("The book was edited successfully."),
             'book_removed': _("The book was removed successfully."),
             'books_removed': _("The books were removed successfully."),
+            'books_merged': _("The books were merged successfully."),
             'category_added': _("The category was added successfully."),
             'category_edited': _("The category was edited successfully."),
             'category_remove': _("The category was removed successfully."),
@@ -61,6 +63,7 @@ def alerts(context):
 
     if 'error_msg' in request.session:
         args['error_msg'] = {
+            'merge_dest_not_chosen': _("You haven't chosen the book to merge to!"),
         }[request.session['error_msg']]
         del request.session['error_msg']
 

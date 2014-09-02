@@ -35,6 +35,7 @@ class DummyPermissions(models.Model):
             ('view_books_edit_book', "View books.edit_book"),
             ('view_books_remove_book', "View books.remove_book"),
             ('view_books_book_details', "View books.book_details"),
+            ('view_books_duplicated', "View books.duplicated"),
 
             ('view_categories_index', "View categories.index"),
             ('view_categories_add_category', "View categories.add_category"),

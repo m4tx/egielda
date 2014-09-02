@@ -8,6 +8,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+from collections import defaultdict
 
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
@@ -15,8 +16,8 @@ from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 
 from books.forms import BookForm
-from books.models import BookType
-from utils.alerts import set_success_msg
+from books.models import BookType, Book
+from utils.alerts import set_success_msg, set_error_msg, set_info_msg
 
 
 @permission_required('common.view_books_index', raise_exception=True)
@@ -92,3 +93,33 @@ def bulk_actions(request, action_name):
             return HttpResponseRedirect(reverse(index))
     else:
         raise Http404
+
+
+@permission_required('common.view_books_duplicated', raise_exception=True)
+def duplicated(request):
+    if request.method == 'POST':
+        if 'merge_isbn' not in request.POST or 'to_merge' not in request.POST:
+            set_info_msg(request, 'merge_no_books_chosen')
+            return HttpResponseRedirect(reverse(duplicated))
+        elif 'merge_dest' not in request.POST:
+            set_error_msg(request, 'merge_dest_not_chosen')
+            return HttpResponseRedirect(reverse(duplicated))
+        pk_list = [int(pk) for pk in request.POST.getlist('to_merge')]
+        new_pk = int(request.POST['merge_dest'])
+        to_merge = BookType.objects.filter(isbn=request.POST['merge_isbn'],
+                                           pk__in=pk_list).exclude(pk=new_pk)
+        Book.objects.filter(book_type__in=to_merge).update(book_type=new_pk)
+        to_merge.delete()
+
+        set_success_msg(request, 'books_merged')
+        return HttpResponseRedirect(reverse(duplicated))
+    else:
+        book_types = BookType.objects.all().order_by('title')
+        duplicated_tmp = defaultdict(list)
+        for book_type in book_types:
+            duplicated_tmp[book_type.isbn].append(book_type)
+        duplicated_by_isbn = {}
+        for isbn, l in duplicated_tmp.items():
+            if len(l) > 1:
+                duplicated_by_isbn[isbn] = l
+        return render(request, 'books/duplicated.html', {'duplicated': duplicated_by_isbn})

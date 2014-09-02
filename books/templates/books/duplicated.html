@@ -1,0 +1,43 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load manage_header %}
+
+{% block title %}{% trans "Manage books" %}{% endblock %}
+
+{% block head %}
+    <style>
+        th.isbn {
+            text-align: center;
+        }
+
+        button.merge, button.merge:hover, button.merge:focus {
+            padding: 0;
+            color: #fff;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>
+        {% trans "Books" %}
+        <small>{% trans "Duplicated" %}</small>
+    </h1>
+    {% manage_header "books/duplicated" %}
+
+    {% if duplicated %}
+        <form method="post" action="">
+        {% csrf_token %}
+        {% for isbn, l in duplicated.items %}
+            {% include "books/duplicated_book_list.html" with book_list=l hide_actions=True %}
+        {% endfor %}
+        </form>
+    {% else %}
+        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+    {% endif %}
+
+    {% if perms.common.view_books_index %}
+        <a class="btn btn-default pull-left" href="{% url 'books.views.index' %}" role="button">
+            <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+        </a>
+    {% endif %}
+{% endblock %}

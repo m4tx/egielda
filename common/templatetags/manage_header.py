@@ -32,6 +32,7 @@ def manage_header(*args):
             'edit': ['books.views.edit_book', _("Edit")],
             'remove': ['books.views.remove_book', _("Remove")],
             'details': ['books.views.book_details', _("Book's details")],
+            'duplicated': ['books.views.duplicated', _("Duplicated")],
         }],
         'orders': ['orders.views.index', _("Orders"), {
             'not_executed': ['orders.views.not_executed', _("Not executed")],

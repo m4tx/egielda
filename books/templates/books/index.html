@@ -18,11 +18,19 @@
         <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
     {% endif %}
 
-    {% if perms.common.view_books_add_book %}
-        <a class="btn btn-primary pull-right" href="{% url 'books.views.add_book' %}" role="button">
-            <span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}
-        </a>
-    {% endif %}
+    <div class="btn-toolbar" role="toolbar">
+        {% if perms.common.view_books_add_book %}
+            <a class="btn btn-primary pull-right" href="{% url 'books.views.add_book' %}" role="button">
+                <span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}
+            </a>
+        {% endif %}
+
+        {% if perms.common.view_books_duplicated %}
+            <a class="btn btn-default pull-right" href="{% url 'books.views.duplicated' %}" role="button">
+                <span class="glyphicon glyphicon-random"></span> {% trans "Duplicated" %}
+            </a>
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% block footer %}

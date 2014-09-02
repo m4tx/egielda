@@ -4,6 +4,7 @@
 <div class="table-responsive">
     <table class="table table-hover"{% block table_attributes %}{% endblock %}>
         <thead>
+        {% block thead_tr %}{% endblock %}
         <tr>
             {% block thead_header %}{% endblock %}
             <th>{% trans "ISBN" %}</th>

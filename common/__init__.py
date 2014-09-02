@@ -35,6 +35,7 @@ def create_groups(verbosity, **kwargs):
             'view_books_add_book',
             'view_books_edit_book',
             'view_books_book_details',
+            'view_books_duplicated',
 
             'view_categories_index',
             'view_categories_list_books',

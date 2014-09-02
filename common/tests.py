@@ -42,6 +42,9 @@ class ManagePermissionsTest(TestCase):
         self.check_permission('view_books_book_details',
                               reverse('books.views.book_details', args=(create_test_book_type().pk,)))
 
+    def test_view_books_duplicated(self):
+        self.check_permission('view_books_duplicated', reverse('books.views.duplicated'))
+
     def test_view_categories_index(self):
         self.check_permission('view_categories_index', reverse('categories.views.index'))
 

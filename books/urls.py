@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^([0-9,]+)/remove/$', views.remove_book),
     url(r'^([0-9]+)/$', views.book_details),
     url(r'^bulk/(\w+)/$', views.bulk_actions),
+    url(r'^duplicated/$', views.duplicated),
 ]

@@ -1,0 +1,30 @@
+{% extends "books/book_list_base.html" %}
+{% load i18n %}
+
+{% block thead_tr %}
+    <tr class="bg-info">
+        <th colspan="7" class="isbn">{{ isbn }}</th>
+    </tr>
+{% endblock %}
+
+{% block thead_header %}
+    <th></th>
+    <th></th>
+{% endblock %}
+
+{% block tr_header %}
+    {% if perms.common.view_books_remove_book %}
+        <td><input type="checkbox" name="to_merge" value="{{ book.pk }}" checked></td>
+        <td><input type="radio" name="merge_dest" value="{{ book.pk }}"></td>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+    <tr class="bg-primary">
+        <td colspan="7">
+            <button type="submit" class="btn btn-link btn-block merge" name="merge_isbn" value="{{ isbn }}">
+                <span class="glyphicon glyphicon-random"></span> {% trans "Merge" %}
+            </button>
+        </td>
+    </tr>
+{% endblock %}
