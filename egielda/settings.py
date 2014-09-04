@@ -66,7 +66,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
-    'widget_tweaks',
     'common',
     'books',
     'sell',
