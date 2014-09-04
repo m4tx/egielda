@@ -128,8 +128,8 @@ button.on('click', function () {
                     $('input[name="publication_year"]').val(data.volumeInfo.publishedDate.substring(0, 4));
                 })
                 .fail(function () {
-                    setFail(gettext("The book wasn't found. Please check the ISBN" +
-                                    "or fill out the form manually."), true);
+                    setFail(gettext("The book wasn't found. Please check the ISBN or fill out the form manually."),
+                            true);
                 });
         })
         .fail(function () {

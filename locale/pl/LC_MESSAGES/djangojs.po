@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e-Giełda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-17 17:02+0200\n"
-"PO-Revision-Date: 2014-08-17 17:02+0200\n"
+"POT-Creation-Date: 2014-09-04 13:56+0200\n"
+"PO-Revision-Date: 2014-09-04 13:56+0100\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language: pl\n"
@@ -23,12 +23,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: static/js/bookchooser.js:54
-msgid "Please enter valid ISBN number."
-msgstr "Proszę wprowadzić poprawny numer ISBN."
+#: static/js/bookchooser.js:39 static/js/isbnfinder.js:107
+msgid "This ISBN is invalid."
+msgstr "Ten ISBN jest nieprawidłowy."
 
-#: static/js/bookchooser.js:162
+#: static/js/bookchooser.js:163
 msgid "Remove"
 msgstr "Usuń"
 
@@ -40,8 +41,8 @@ msgstr "Zaznaczono {0} z {1}"
 msgid "Nothing selected"
 msgstr "Nic nie zaznaczono"
 
-#: static/js/isbnfinder.js:38 static/js/isbnfinder.js.c:63
-#: static/js/isbnfinder.js:75
+#: static/js/isbnfinder.js:115 static/js/isbnfinder.js.c:131
+#: static/js/isbnfinder.js:136
 msgid ""
 "The book wasn't found. Please check the ISBN or fill out the form manually."
 msgstr ""
@@ -50,3 +51,15 @@ msgstr ""
 #: static/js/statscharts.js:28 static/js/statscharts.js.c:82
 msgid "No data"
 msgstr "Brak danych"
+
+#, fuzzy
+#~| msgid ""
+#~| "The book wasn't found. Please check the ISBN or fill out the form "
+#~| "manually."
+#~ msgid "The book wasn't found. Please check the ISBN"
+#~ msgstr ""
+#~ "Książka nie została znaleziona. Sprawdź ISBN lub wypełnij formularz "
+#~ "ręcznie."
+
+#~ msgid "Please enter valid ISBN number."
+#~ msgstr "Proszę wprowadzić poprawny numer ISBN."

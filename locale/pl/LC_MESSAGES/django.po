@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e-Giełda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-29 23:05+0200\n"
-"PO-Revision-Date: 2014-08-29 23:11+0100\n"
+"POT-Creation-Date: 2014-09-04 13:57+0200\n"
+"PO-Revision-Date: 2014-09-04 13:57+0100\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language: pl\n"
@@ -33,19 +33,19 @@ msgstr "Ten ISBN nie jest prawidłowy."
 msgid "ISBN number"
 msgstr "Numer ISBN"
 
-#: books/forms.py:47 books/templates/books/book_list_base.html:9
+#: books/forms.py:47 books/templates/books/book_list_base.html:10
 #: books/templates/books/details.html:25
 #: orders/templates/orders/execute_accept_book_list.html:8
 msgid "ISBN"
 msgstr "ISBN"
 
-#: books/forms.py:54 books/templates/books/book_list_base.html:10
+#: books/forms.py:54 books/templates/books/book_list_base.html:11
 #: books/templates/books/details.html:39
 #: orders/templates/orders/execute_accept_book_list.html:9
 msgid "Publisher"
 msgstr "Wydawnictwo"
 
-#: books/forms.py:55 books/templates/books/book_list_base.html:11
+#: books/forms.py:55 books/templates/books/book_list_base.html:12
 #: books/templates/books/details.html:32
 #: orders/templates/orders/execute_accept_book_list.html:10
 msgid "Title"
@@ -65,7 +65,7 @@ msgstr "Cena (%s)"
 #: categories/templates/categories/list.html:9
 #: common/templates/book_chooser_wizard/books.html:35
 #: common/templatetags/manage_header.py:24
-#: managemenu/templates/managemenu/index.html:157
+#: managemenu/templates/managemenu/index.html:158
 msgid "Categories"
 msgstr "Kategorie"
 
@@ -81,11 +81,11 @@ msgstr ""
 "%(book_type)s od %(owner)s, zaakceptowana: %(accepted)s, sprzedana: %(sold)s"
 
 #: books/templates/books/add.html:19 books/templates/books/add.html.py:22
-#: books/templates/books/index.html:23
+#: books/templates/books/index.html:24
 msgid "Add book"
 msgstr "Dodaj książkę"
 
-#: books/templates/books/add.html:30 books/templates/books/edit.html:20
+#: books/templates/books/add.html:30 books/templates/books/edit.html:30
 #: books/templates/books/remove.html:24
 #: categories/templates/categories/add.html:16
 #: categories/templates/categories/edit.html:16
@@ -103,18 +103,18 @@ msgstr "Anuluj"
 msgid "Add"
 msgstr "Dodaj"
 
-#: books/templates/books/book_list_base.html:12
+#: books/templates/books/book_list_base.html:13
 #: orders/templates/orders/execute_accept_book_list.html:11
 msgid "Publication"
 msgstr "Wydanie"
 
-#: books/templates/books/book_list_base.html:13
+#: books/templates/books/book_list_base.html:14
 #: books/templates/books/details.html:53
 #: orders/templates/orders/execute_accept_book_list.html:12
 msgid "Price"
 msgstr "Cena"
 
-#: books/templates/books/book_list_base.html:16
+#: books/templates/books/book_list_base.html:17
 #: categories/templates/categories/index.html:26
 #: orders/templates/orders/orders_table.html:12
 #: sellers/templates/sellers/index.html:25 stats/templates/stats/users.html:48
@@ -137,7 +137,7 @@ msgstr "Edytuj"
 #: categories/templates/categories/remove.html:29
 #: common/templatetags/manage_header.py:27
 #: common/templatetags/manage_header.py:33
-#: common/templatetags/manage_header.py:45
+#: common/templatetags/manage_header.py:46
 #: sellers/templates/sellers/index.html:44
 #: sellers/templates/sellers/index.html:57
 #: sellers/templates/sellers/remove.html:48
@@ -154,25 +154,16 @@ msgstr "Masowe działania:"
 msgid "Book's details"
 msgstr "Szczegóły książki"
 
-#: books/templates/books/edit.html:9 books/templates/books/edit.html.py:12
-msgid "Edit book"
-msgstr "Edytuj książkę"
-
-#: books/templates/books/edit.html:23
-#: categories/templates/categories/edit.html:19
-#: settings/templates/settings/index.html:20
-msgid "Save"
-msgstr "Zapisz"
-
-#: books/templates/books/index.html:5 books/templates/books/remove.html:5
+#: books/templates/books/duplicated.html:5 books/templates/books/index.html:5
+#: books/templates/books/remove.html:5
 msgid "Manage books"
 msgstr "Zarządzaj książkami"
 
-#: books/templates/books/index.html:8
+#: books/templates/books/duplicated.html:22 books/templates/books/index.html:8
 #: categories/templates/categories/index.html:25
 #: common/templates/book_chooser_wizard/summary.html:44
 #: common/templatetags/manage_header.py:30
-#: common/templatetags/manage_header.py:52
+#: common/templatetags/manage_header.py:53
 #: managemenu/templates/managemenu/index.html:131
 #: managemenu/templates/managemenu/index.html:141
 #: orders/templates/orders/orders_table.html:11
@@ -186,6 +177,13 @@ msgstr "Zarządzaj książkami"
 msgid "Books"
 msgstr "Książki"
 
+#: books/templates/books/duplicated.html:23
+#: books/templates/books/index.html:30 common/templatetags/manage_header.py:35
+#: managemenu/templates/managemenu/index.html:148
+msgid "Duplicated"
+msgstr "Zduplikowane"
+
+#: books/templates/books/duplicated.html:35
 #: books/templates/books/index.html:18
 #: categories/templates/categories/index.html:60
 #: categories/templates/categories/list.html:19
@@ -197,6 +195,29 @@ msgstr "Książki"
 #: stats/templates/stats/users.html:70
 msgid "There's nothing to display."
 msgstr "Nie ma nic do wyświetlenia."
+
+#: books/templates/books/duplicated.html:40
+#: categories/templates/categories/list.html:24
+#: common/templates/book_chooser_wizard/books.html:85
+#: common/templates/book_chooser_wizard/summary.html:49
+#: orders/templates/orders/details.html:42
+#: orders/templates/orders/execute_accept.html:21
+msgid "Back"
+msgstr "Powrót"
+
+#: books/templates/books/duplicated_book_list.html:26
+msgid "Merge"
+msgstr "Połącz"
+
+#: books/templates/books/edit.html:19 books/templates/books/edit.html.py:22
+msgid "Edit book"
+msgstr "Edytuj książkę"
+
+#: books/templates/books/edit.html:33
+#: categories/templates/categories/edit.html:19
+#: settings/templates/settings/index.html:20
+msgid "Save"
+msgstr "Zapisz"
 
 #: books/templates/books/remove.html:9
 msgid "Remove book"
@@ -242,14 +263,6 @@ msgstr "Lista książek w kategorii"
 msgid "List of books in %(cat_name)s category"
 msgstr "Lista książek w kategorii %(cat_name)s"
 
-#: categories/templates/categories/list.html:24
-#: common/templates/book_chooser_wizard/books.html:85
-#: common/templates/book_chooser_wizard/summary.html:49
-#: orders/templates/orders/details.html:42
-#: orders/templates/orders/execute_accept.html:21
-msgid "Back"
-msgstr "Powrót"
-
 #: categories/templates/categories/remove.html:5
 #: categories/templates/categories/remove.html:8
 msgid "Remove category"
@@ -275,10 +288,10 @@ msgstr[2] ""
 msgid "This category does not contain any books."
 msgstr "W tej kategorii nie ma żadnych książek."
 
-#: common/forms.py:35
+#: common/forms.py:32
 #: common/templates/book_chooser_wizard/personal_data_signed_in.html:13
 #: common/templates/book_chooser_wizard/summary.html:16
-#: purchase/templates/purchase/success.html:14 sell/forms.py:31
+#: purchase/templates/purchase/success.html:14 sell/forms.py:28
 #: sell/templates/sell/success.html:14 sellers/templates/sellers/index.html:21
 #: sellers/templates/sellers/remove.html:25
 #: sellers/templates/sellers/success.html:14
@@ -286,10 +299,10 @@ msgstr "W tej kategorii nie ma żadnych książek."
 msgid "First name"
 msgstr "Imię"
 
-#: common/forms.py:36
+#: common/forms.py:33
 #: common/templates/book_chooser_wizard/personal_data_signed_in.html:20
 #: common/templates/book_chooser_wizard/summary.html:23
-#: purchase/templates/purchase/success.html:21 sell/forms.py:32
+#: purchase/templates/purchase/success.html:21 sell/forms.py:29
 #: sell/templates/sell/success.html:21 sellers/templates/sellers/index.html:22
 #: sellers/templates/sellers/remove.html:26
 #: sellers/templates/sellers/success.html:21
@@ -297,10 +310,10 @@ msgstr "Imię"
 msgid "Last name"
 msgstr "Nazwisko"
 
-#: common/forms.py:37
+#: common/forms.py:34
 #: common/templates/book_chooser_wizard/personal_data_signed_in.html:27
 #: common/templates/book_chooser_wizard/summary.html:30
-#: purchase/templates/purchase/success.html:28 sell/forms.py:33
+#: purchase/templates/purchase/success.html:28 sell/forms.py:30
 #: sell/templates/sell/success.html:28 sellers/templates/sellers/index.html:23
 #: sellers/templates/sellers/remove.html:27
 #: sellers/templates/sellers/success.html:28
@@ -308,10 +321,10 @@ msgstr "Nazwisko"
 msgid "Class"
 msgstr "Klasa"
 
-#: common/forms.py:38
+#: common/forms.py:35
 #: common/templates/book_chooser_wizard/personal_data_signed_in.html:34
 #: common/templates/book_chooser_wizard/summary.html:37
-#: purchase/templates/purchase/success.html:35 sell/forms.py:34
+#: purchase/templates/purchase/success.html:35 sell/forms.py:31
 #: sell/templates/sell/success.html:35 sellers/templates/sellers/index.html:24
 #: sellers/templates/sellers/remove.html:28
 #: sellers/templates/sellers/success.html:35
@@ -341,7 +354,7 @@ msgstr "Wszystkie"
 #: common/templatetags/manage_header.py:25
 #: common/templatetags/manage_header.py:31
 #: managemenu/templates/managemenu/index.html:147
-#: managemenu/templates/managemenu/index.html:162
+#: managemenu/templates/managemenu/index.html:163
 msgid "Add new"
 msgstr "Dodaj nową"
 
@@ -437,7 +450,6 @@ msgid "Manage"
 msgstr "Zarządzaj"
 
 #: common/templates/common/base.html:78
-#| msgid "Password"
 msgid "Change password"
 msgstr "Zmień hasło"
 
@@ -468,51 +480,59 @@ msgstr ""
 msgid "The order was removed."
 msgstr "Zamówienie zostało usunięte."
 
-#: common/templatetags/base.py:40
+#: common/templatetags/base.py:35
+msgid "No books were chosen. Merged nothing."
+msgstr "Nie wybrano książek. Nic nie połączono."
+
+#: common/templatetags/base.py:41
 msgid "The book was added successfully."
 msgstr "Książka została pomyślnie dodana."
 
-#: common/templatetags/base.py:41
+#: common/templatetags/base.py:42
 msgid "The book was edited successfully."
 msgstr "Książka została pomyślnie zedytowana."
 
-#: common/templatetags/base.py:42
+#: common/templatetags/base.py:43
 msgid "The book was removed successfully."
 msgstr "Książka została pomyślnie usunięta."
 
-#: common/templatetags/base.py:43
+#: common/templatetags/base.py:44
 msgid "The books were removed successfully."
 msgstr "Książki zostały pomyślnie usunięte."
 
-#: common/templatetags/base.py:44
+#: common/templatetags/base.py:45
+msgid "The books were merged successfully."
+msgstr "Książki zostały pomyślnie połączone."
+
+#: common/templatetags/base.py:46
 msgid "The category was added successfully."
 msgstr "Kategoria została pomyślnie dodana."
 
-#: common/templatetags/base.py:45
+#: common/templatetags/base.py:47
 msgid "The category was edited successfully."
 msgstr "Kategoria została pomyślnie zedytowana."
 
-#: common/templatetags/base.py:46
+#: common/templatetags/base.py:48
 msgid "The category was removed successfully."
 msgstr "Kategoria została pomyślnie usunięta."
 
-#: common/templatetags/base.py:47
+#: common/templatetags/base.py:49
 msgid "Settings were updated successfully."
 msgstr "Ustawienia zostały pomyślnie zapisane."
 
-#: common/templatetags/base.py:48
+#: common/templatetags/base.py:50
 msgid "The order was executed successfully."
 msgstr "Zamówienie zostało pomyślnie zrealizowane."
 
-#: common/templatetags/base.py:49
+#: common/templatetags/base.py:51
 msgid "The seller's books were removed successfully."
 msgstr "Książki sprzedającego zostały pomyślnie usunięte."
 
-#: common/templatetags/base.py:50
+#: common/templatetags/base.py:52
 msgid "The sellers' books were removed successfully."
 msgstr "Książki sprzedających zostały pomyślnie usunięte."
 
-#: common/templatetags/base.py:56
+#: common/templatetags/base.py:58
 msgid ""
 "An error occurred while processing your query. It was most likely the result "
 "of someone else who just bought the last copies of books you've chosen. Your "
@@ -523,11 +543,15 @@ msgstr ""
 "przez Ciebie książek. Twoje zamówienie zostało zmodyfikowane – przejrzyj je, "
 "a następnie kliknij przycisk Akceptuj ponownie."
 
+#: common/templatetags/base.py:66
+msgid "You haven't chosen the book to merge to!"
+msgstr "Nie wybrałeś docelowej książki do połączenia!"
+
 #: common/templatetags/manage_header.py:28 stats/templates/stats/users.html:62
 msgid "Book list"
 msgstr "Lista książek"
 
-#: common/templatetags/manage_header.py:36
+#: common/templatetags/manage_header.py:37
 #: managemenu/templates/managemenu/index.html:85
 #: orders/templates/orders/execute.html:9
 #: orders/templates/orders/execute_accept.html:9
@@ -540,7 +564,7 @@ msgstr "Lista książek"
 msgid "Orders"
 msgstr "Zamówienia"
 
-#: common/templatetags/manage_header.py:37
+#: common/templatetags/manage_header.py:38
 #: managemenu/templates/managemenu/index.html:91
 #: orders/templates/orders/executed.html:12
 #: orders/templates/orders/not_executed.html:5
@@ -549,13 +573,13 @@ msgstr "Zamówienia"
 msgid "Not executed"
 msgstr "Niezrealizowane"
 
-#: common/templatetags/manage_header.py:38
+#: common/templatetags/manage_header.py:39
 #: orders/templates/orders/execute_accept.html:27
 #: orders/templates/orders/orders_table.html:25
 msgid "Execute"
 msgstr "Zrealizuj"
 
-#: common/templatetags/manage_header.py:39
+#: common/templatetags/manage_header.py:40
 #: managemenu/templates/managemenu/index.html:95
 #: orders/templates/orders/executed.html:13
 #: orders/templates/orders/not_executed.html:13
@@ -564,7 +588,7 @@ msgstr "Zrealizuj"
 msgid "Outdated"
 msgstr "Nieważne"
 
-#: common/templatetags/manage_header.py:40
+#: common/templatetags/manage_header.py:41
 #: managemenu/templates/managemenu/index.html:99
 #: orders/templates/orders/executed.html:5
 #: orders/templates/orders/executed.html:14
@@ -573,11 +597,11 @@ msgstr "Nieważne"
 msgid "Executed"
 msgstr "Zrealizowane"
 
-#: common/templatetags/manage_header.py:41
+#: common/templatetags/manage_header.py:42
 msgid "Details"
 msgstr "Szczegóły"
 
-#: common/templatetags/manage_header.py:43
+#: common/templatetags/manage_header.py:44
 #: managemenu/templates/managemenu/index.html:109
 #: sellers/templates/sellers/accept.html:16
 #: sellers/templates/sellers/index.html:5
@@ -585,11 +609,11 @@ msgstr "Szczegóły"
 msgid "Sellers with unaccepted books"
 msgstr "Sprzedający z niezaakceptowanymi książkami"
 
-#: common/templatetags/manage_header.py:44
+#: common/templatetags/manage_header.py:45
 msgid "Accept books"
 msgstr "Zaakceptuj książki"
 
-#: common/templatetags/manage_header.py:47
+#: common/templatetags/manage_header.py:48
 #: managemenu/templates/managemenu/index.html:117
 #: stats/templates/stats/index.html:20 stats/templates/stats/index.html:23
 #: stats/templates/stats/list_books.html:59
@@ -597,7 +621,7 @@ msgstr "Zaakceptuj książki"
 msgid "Statistics"
 msgstr "Statystyki"
 
-#: common/templatetags/manage_header.py:48
+#: common/templatetags/manage_header.py:49
 #: managemenu/templates/managemenu/index.html:123
 #: stats/templates/stats/books.html:30 stats/templates/stats/books.html:32
 #: stats/templates/stats/books_sold.html:7
@@ -608,7 +632,7 @@ msgstr "Statystyki"
 msgid "Books sold"
 msgstr "Sprzedane książki"
 
-#: common/templatetags/manage_header.py:49
+#: common/templatetags/manage_header.py:50
 #: managemenu/templates/managemenu/index.html:127
 #: stats/templates/stats/books.html:35 stats/templates/stats/books.html:37
 #: stats/templates/stats/books_sold.html:67
@@ -619,12 +643,12 @@ msgstr "Sprzedane książki"
 msgid "Users"
 msgstr "Użytkownicy"
 
-#: common/templatetags/manage_header.py:50
+#: common/templatetags/manage_header.py:51
 msgid "User's books"
 msgstr "Książki użytkownika"
 
-#: common/templatetags/manage_header.py:54
-#: managemenu/templates/managemenu/index.html:172 settings/views.py:53
+#: common/templatetags/manage_header.py:55
+#: managemenu/templates/managemenu/index.html:173 settings/views.py:53
 msgid "Settings"
 msgstr "Ustawienia"
 
@@ -742,7 +766,6 @@ msgstr "Hasło"
 
 #: egielda/templates/registration/password_change_done.html:4
 #: egielda/templates/registration/password_change_done.html:8
-#| msgid "Password"
 msgid "Password change"
 msgstr "Zmiana hasła"
 
@@ -822,7 +845,6 @@ msgid "Purchase books"
 msgstr "Kup książki"
 
 #: purchase/templates/purchase/success.html:8
-#| msgid "Your request was accepted. You can deliver your books now."
 msgid "Your request was accepted. You can claim your books now."
 msgstr ""
 "Podane dane zostały zaakceptowane. Możesz teraz zgłosić się po swoje książki."
@@ -837,9 +859,6 @@ msgid "Manage sellers"
 msgstr "Zarządzaj sprzedającymi"
 
 #: sell/templates/sell/success.html:8
-#| msgid ""
-#| "Your request was accepted. You can claim your books now. Make sure you "
-#| "have printed this page, to speed up executing your order."
 msgid ""
 "Your request was accepted. You can deliver your books now. Please ensure you "
 "have printed this page <strong>twice</strong> - the first copy is a book "
@@ -891,28 +910,28 @@ msgstr "Książki zostały pomyślnie zaakceptowane."
 msgid "Selling start date"
 msgstr "Początek sprzedaży"
 
-#: settings/forms.py:24
+#: settings/forms.py:23
 msgid "Selling end date"
 msgstr "Koniec sprzedaży"
 
-#: settings/forms.py:29
+#: settings/forms.py:27
 msgid "Purchasing start date"
 msgstr "Początek kupowania"
 
-#: settings/forms.py:34
+#: settings/forms.py:31
 msgid "Purchasing end date"
 msgstr "Koniec kupowania"
 
-#: settings/forms.py:39
+#: settings/forms.py:35
 #, python-format
 msgid "Profit per book (%(currency)s)"
 msgstr "Zysk za książkę (%(currency)s)"
 
-#: settings/forms.py:44
+#: settings/forms.py:39
 msgid "Order validity time (h)"
 msgstr "Czas ważności zamówienia (h)"
 
-#: settings/forms.py:47
+#: settings/forms.py:41
 msgid "Homepage information"
 msgstr "Informacja na stronie głównej"
 
