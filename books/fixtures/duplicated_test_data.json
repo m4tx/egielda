@@ -1,0 +1,202 @@
+[
+{
+    "fields": {
+        "categories": [],
+        "publication_year": 2009,
+        "publisher": "MIT Press",
+        "title": "Introduction to Algorithms",
+        "isbn": "9780262033848",
+        "visible": true,
+        "price": "20"
+    },
+    "model": "books.booktype",
+    "pk": 1
+},
+{
+    "fields": {
+        "categories": [],
+        "publication_year": 2009,
+        "publisher": "MIT Press",
+        "title": "Introduction to Algorithms",
+        "isbn": "9780262033848",
+        "visible": true,
+        "price": "15"
+    },
+    "model": "books.booktype",
+    "pk": 2
+},
+{
+    "fields": {
+        "categories": [],
+        "publication_year": 1970,
+        "publisher": "Totally",
+        "title": "Random Book",
+        "isbn": "9780262033848",
+        "visible": true,
+        "price": "99"
+    },
+    "model": "books.booktype",
+    "pk": 3
+},
+{
+    "fields": {
+        "categories": [],
+        "publication_year": 2011,
+        "publisher": "Akademia Ignatianum",
+        "title": "Ja i m\u00f3j \u015bwiat: scenariusze godzin wychowawczych",
+        "isbn": "9788375059014",
+        "visible": true,
+        "price": "60"
+    },
+    "model": "books.booktype",
+    "pk": 4
+},
+{
+    "fields": {
+        "categories": [],
+        "publication_year": 2013,
+        "publisher": "Liber Electronicus",
+        "title": "Ch\u0142opi",
+        "isbn": "8363720534",
+        "visible": true,
+        "price": "12"
+    },
+    "model": "books.booktype",
+    "pk": 5
+},
+{
+    "fields": {
+        "categories": [],
+        "publication_year": 2013,
+        "publisher": "Liber Electronicus",
+        "title": "Ch\u0142opi",
+        "isbn": "8363720534",
+        "visible": true,
+        "price": "80"
+    },
+    "model": "books.booktype",
+    "pk": 6
+},
+{
+    "fields": {
+        "owner": 1,
+        "accepted": false,
+        "book_type": 5,
+        "accept_date": null,
+        "sold_date": null,
+        "order": null,
+        "reserved_until": null,
+        "purchaser": null,
+        "reserver": null,
+        "sold": false
+    },
+    "model": "books.book",
+    "pk": 1
+},
+{
+    "fields": {
+        "owner": 1,
+        "accepted": false,
+        "book_type": 5,
+        "accept_date": null,
+        "sold_date": null,
+        "order": null,
+        "reserved_until": null,
+        "purchaser": null,
+        "reserver": null,
+        "sold": false
+    },
+    "model": "books.book",
+    "pk": 2
+},
+{
+    "fields": {
+        "owner": 1,
+        "accepted": false,
+        "book_type": 6,
+        "accept_date": null,
+        "sold_date": null,
+        "order": null,
+        "reserved_until": null,
+        "purchaser": null,
+        "reserver": null,
+        "sold": false
+    },
+    "model": "books.book",
+    "pk": 3
+},
+{
+    "fields": {
+        "owner": 1,
+        "accepted": false,
+        "book_type": 1,
+        "accept_date": null,
+        "sold_date": null,
+        "order": null,
+        "reserved_until": null,
+        "purchaser": null,
+        "reserver": null,
+        "sold": false
+    },
+    "model": "books.book",
+    "pk": 4
+},
+{
+    "fields": {
+        "owner": 1,
+        "accepted": false,
+        "book_type": 2,
+        "accept_date": null,
+        "sold_date": null,
+        "order": null,
+        "reserved_until": null,
+        "purchaser": null,
+        "reserver": null,
+        "sold": false
+    },
+    "model": "books.book",
+    "pk": 5
+},
+{
+    "fields": {
+        "owner": 1,
+        "accepted": false,
+        "book_type": 4,
+        "accept_date": null,
+        "sold_date": null,
+        "order": null,
+        "reserved_until": null,
+        "purchaser": null,
+        "reserver": null,
+        "sold": false
+    },
+    "model": "books.book",
+    "pk": 6
+},
+{
+    "fields": {
+        "owner": 1,
+        "accepted": false,
+        "book_type": 3,
+        "accept_date": null,
+        "sold_date": null,
+        "order": null,
+        "reserved_until": null,
+        "purchaser": null,
+        "reserver": null,
+        "sold": false
+    },
+    "model": "books.book",
+    "pk": 7
+},
+{
+    "fields": {
+        "phone_number": "111333222",
+        "first_name": "Test",
+        "student_class": "1A",
+        "last_name": "Test"
+    },
+    "model": "common.appuser",
+    "pk": 1
+}
+]

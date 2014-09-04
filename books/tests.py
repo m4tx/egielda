@@ -11,13 +11,10 @@
 from decimal import Decimal
 
 from django.contrib.staticfiles.testing import StaticLiveServerCase
-
 from selenium.webdriver.firefox.webdriver import WebDriver
-
 from selenium.webdriver.support.wait import WebDriverWait
 
-from books.models import BookType
-
+from books.models import BookType, Book
 from utils.test_utils import create_test_superuser, login
 
 
@@ -47,13 +44,15 @@ class BooksLiveTest(StaticLiveServerCase):
         # "Find by ISBN" button
         self.selenium.find_element_by_name('isbn').find_element_by_xpath('..//button').click()
         self.selenium.find_element_by_name('price').send_keys("60.99")
-        WebDriverWait(self.selenium, 15).until(lambda driver: self.get_input_value('title', driver) != "")
+        WebDriverWait(self.selenium, 15).until(
+            lambda driver: self.get_input_value('title', driver) != "")
         self.assertEqual(self.get_input_value('publisher'), "MIT Press")
         self.assertEqual(self.get_input_value('title'), "Introduction to Algorithms")
         self.assertEqual(self.get_input_value('publication_year'), "2009")
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
 
-        BookType.objects.get(isbn="9780262033848", publisher="MIT Press", title="Introduction to Algorithms",
+        BookType.objects.get(isbn="9780262033848", publisher="MIT Press",
+                             title="Introduction to Algorithms",
                              publication_year=2009, price=Decimal("60.99"), visible=True)
         self.assertEqual(BookType.objects.count(), 2)
 
@@ -66,7 +65,8 @@ class BooksLiveTest(StaticLiveServerCase):
         self.selenium.find_element_by_name('price').send_keys("30")
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
 
-        trs = self.selenium.find_elements_by_xpath('//table//tbody//tr[not(contains(@class, "info"))]')
+        trs = self.selenium.find_elements_by_xpath(
+            '//table//tbody//tr[not(contains(@class, "info"))]')
         self.assertEqual(len(trs), 3)  # Ensure admin sees 3 book types
 
         self.assertEqual(BookType.objects.get(pk=self.test_book.pk).visible, False)
@@ -81,7 +81,8 @@ class BooksLiveTest(StaticLiveServerCase):
 
         self.selenium.find_element_by_xpath('//a[contains(@href, "1/remove")]').click()
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
-        trs = self.selenium.find_elements_by_xpath('//table//tbody//tr[not(contains(@class, "info"))]')
+        trs = self.selenium.find_elements_by_xpath(
+            '//table//tbody//tr[not(contains(@class, "info"))]')
         self.assertEqual(len(trs), 2)
         self.assertEqual(BookType.objects.count(), 2)
 
@@ -106,3 +107,55 @@ class BooksLiveTest(StaticLiveServerCase):
         if driver is None:
             driver = self.selenium
         return driver.find_element_by_name(name).get_attribute('value')
+
+
+class DuplicatedBooksLiveTest(StaticLiveServerCase):
+    fixtures = ['duplicated_test_data.json']
+
+    def setUp(self):
+        create_test_superuser()
+
+    @classmethod
+    def setUpClass(cls):
+        cls.selenium = WebDriver()
+        super(DuplicatedBooksLiveTest, cls).setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super(DuplicatedBooksLiveTest, cls).tearDownClass()
+
+    def test_duplicated(self):
+        login(self.selenium, self.live_server_url, "test", "test")
+        self.selenium.get('%s%s' % (self.live_server_url, '/manage/books/'))
+        self.selenium.find_element_by_xpath('//a[contains(@href, "duplicated")]').click()
+
+        tables = self.selenium.find_elements_by_xpath('//table')
+        self.assertEqual(len(tables), 2)  # Ensure there are 2 groups of duplicates
+
+        table = self.selenium.find_element_by_xpath(
+            '//table//th[contains(@class, "isbn") and text()="8363720534"]/../../..')
+        table.find_element_by_xpath('//input[@value="5" and @type="radio"]').click()
+        self.selenium.find_element_by_xpath('//button[@value="8363720534"]').click()
+
+        tables = self.selenium.find_elements_by_xpath('//table')
+        self.assertEqual(len(tables), 1)  # Ensure there is 1 group of duplicates
+
+        # Deselect BookType
+        self.selenium.find_element_by_xpath('//input[@value="1" and @type="checkbox"]').click()
+        self.selenium.find_element_by_xpath('//input[@value="2" and @type="radio"]').click()
+        self.selenium.find_element_by_xpath('//button[@value="9780262033848"]').click()
+
+        tables = self.selenium.find_elements_by_xpath('//table')
+        self.assertEqual(len(tables), 1)  # Ensure there is 1 group of duplicates
+        trs = tables[0].find_elements_by_xpath('//tbody/tr')
+        self.assertEqual(len(trs), 2)  # Ensure there are still 2 duplicated books
+
+        self.selenium.find_element_by_xpath('//input[@value="1" and @type="radio"]').click()
+        self.selenium.find_element_by_xpath('//button[@value="9780262033848"]').click()
+        # There's nothing to display alert
+        self.selenium.find_element_by_xpath('//div[contains(@class, "alert-info")]')
+
+        # Check whether there is actually no references to non-existing BookTypes
+        self.assertEqual({1, 4, 5}, set([book.book_type.pk for book in Book.objects.all()]))
+        self.assertEqual(Book.objects.count(), 7)
