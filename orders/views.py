@@ -53,8 +53,9 @@ def executed(request):
 def order_details(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
                               pk=order_pk)
+    price_sum = sum(book.book_type.price for book in order.book_set.all())
     return render(request, 'orders/details.html',
-                  {'order': order, 'book_list': [book.book_type for book in order.book_set.all()]})
+                  {'order': order, 'book_list': order.book_set.all(), 'price_sum': price_sum})
 
 
 @permission_required('common.view_orders_execute', raise_exception=True)

@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    {% include "books/book_list_base.html" with hide_actions=True %}
+    {% include "orders/execute_accept_book_list.html" %}
 
     {% if perms.common.view_orders_index %}
         <a class="btn btn-default" role="button" href="{% url 'orders.views.index' %}">
