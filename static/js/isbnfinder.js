@@ -11,6 +11,17 @@
  * along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+var INVALID_ISBN = gettext("This ISBN is invalid.");
+var BOOK_NOT_FOUND = gettext("The book wasn't found. Please check the ISBN or fill out the form manually.");
+
+function getInputByName(name) {
+    return get('input[name="' + name + '"]');
+}
+
+var searchIsbnButton = get('<button class="btn btn-default" type="button" disabled="disabled">' +
+    '<span class="glyphicon glyphicon-search"></span></button>');
+var isbnInput = getInputByName('isbn');
+
 // Ported from utils/isbn.py
 function isIsbnValid(isbn) {
     function isbnToDigitArray(isbn) {
@@ -68,43 +79,29 @@ function isIsbnValid(isbn) {
     return true;
 }
 
-var button = $('<button class="btn btn-default" type="button" disabled="disabled">' +
-    '<span class="glyphicon glyphicon-search"></span></button>');
-var isbnInput = $('input[name="isbn"]');
+function setSearchIsbnStatus(success, text, clearFields) {
+    if(success) {
+        isbnInput.parent().removeClass('has-error');
+        isbnInput.next().removeClass('glyphicon-warning-sign').addClass('glyphicon-ok').attr('title', '')
+            .attr('data-original-title', '');
+    }
+    else {
+        isbnInput.parent().addClass('has-error has-feedback');
+        isbnInput.next().removeClass('glyphicon-ok').addClass('glyphicon-warning-sign').attr('title', text)
+            .tooltip('fixTitle');
 
-function checkIsbnLength() {
-    $(this).parent().removeClass('has-error');
-    $(this).next().removeClass('glyphicon-warning-sign glyphicon-ok').attr('title', '').attr('data-original-title', '');
-    var len = $(this).val().toUpperCase().replace(/[^\dX]/g, '').length;
-    if (len != 10 && len != 13) {
-        button.attr("disabled", "disabled");
-    } else {
-        button.removeAttr("disabled");
+        if (clearFields) {
+            $.each(['title', 'publication_year', 'publisher'], function(){
+                getInputByName(this).setText('');
+            });
+        }
     }
 }
 
-function setSuccess() {
-    isbnInput.parent().removeClass('has-error');
-    isbnInput.next().removeClass('glyphicon-warning-sign').addClass('glyphicon-ok').attr('title', '')
-        .attr('data-original-title', '');
-}
-
-function setFail(text, clearFields) {
-    isbnInput.parent().addClass('has-error has-feedback');
-    isbnInput.next().removeClass('glyphicon-ok').addClass('glyphicon-warning-sign').attr('title',
-        text).tooltip('fixTitle');
-
-    if (clearFields) {
-        $('input[name="title"]').val('');
-        $('input[name="publication_year"]').val('');
-        $('input[name="publisher"]').val('');
-    }
-}
-
-button.on('click', function () {
-    var isbn = isbnInput.val().toUpperCase().replace(/[^\dX]/g, ''); // remove all chars which are not allowed in ISBN
+searchIsbnButton.on('click', function () {
+    var isbn = isbnInput.getText().toUpperCase().replace(/[^\dX]/g, ''); // remove all chars which are not allowed
     if (!isIsbnValid(isbn)) {
-        setFail(gettext("This ISBN is invalid."), true);
+        setSearchIsbnStatus(false, INVALID_ISBN, true);
         return;
     }
 
@@ -112,34 +109,60 @@ button.on('click', function () {
     $.ajax(url)
         .success(function (data) {
             if (data.totalItems == 0) {
-                setFail(gettext("The book wasn't found. Please check the ISBN or fill out the form manually."), true);
+                setSearchIsbnStatus(false, BOOK_NOT_FOUND, true);
                 return;
             }
 
             $.ajax(data.items[0].selfLink + "?fields=volumeInfo(title,subtitle,publisher,publishedDate)")
                 .success(function (data) {
-                    setSuccess();
-                    $('input[name="publisher"]').val(data.volumeInfo.publisher.substring(0, 150));
-                    var title = data.volumeInfo.title;
+                    setSearchIsbnStatus(true);
+
+                    var title = data.volumeInfo.title || "";
                     if (data.volumeInfo.subtitle != undefined) {
                         title += ": " + data.volumeInfo.subtitle;
                     }
-                    $('input[name="title"]').val(title.substring(0, 250));
-                    $('input[name="publication_year"]').val(data.volumeInfo.publishedDate.substring(0, 4));
+                    var publisher = data.volumeInfo.publisher || "";
+                    var publication_year = data.volumeInfo.publishedDate || "";
+
+                    getInputByName('publisher').setText(publisher.substring(0, 150));
+                    getInputByName('title').setText(title.substring(0, 250));
+                    getInputByName('publication_year').setText(publication_year.substring(0, 4));
                 })
                 .fail(function () {
-                    setFail(gettext("The book wasn't found. Please check the ISBN or fill out the form manually."),
-                            true);
+                    setSearchIsbnStatus(false, BOOK_NOT_FOUND, true);
                 });
         })
         .fail(function () {
-            setFail(gettext("The book wasn't found. Please check the ISBN or fill out the form manually."), true);
+            setSearchIsbnStatus(false, BOOK_NOT_FOUND, true);
         });
 });
 
-checkIsbnLength.call(isbnInput);
-isbnInput.on('input', checkIsbnLength);
+function clearSearchIsbnStatus() {
+    isbnInput.parent().removeClass('has-error');
+    isbnInput.next().removeClass('glyphicon-warning-sign glyphicon-ok').attr('title', '')
+        .attr('data-original-title', '');
+}
+
+function checkSearchAvailability() {
+    var isbn = isbnInput.getText();
+    isbn = isbn.toUpperCase().replace(/[^\dX]/g, ''); // remove all chars which are not allowed
+
+    if (isbn.length != 10 && isbn.length != 13) {
+        searchIsbnButton.disable();
+    } else {
+        searchIsbnButton.enable();
+    }
+}
+
+// track user input to disable or enable search's button when applicable
+checkSearchAvailability.call(isbnInput);
+isbnInput.on('input', function() {
+    clearSearchIsbnStatus();
+    checkSearchAvailability();
+});
+
+// append controls to document
 isbnInput.wrap('<div class="input-group has-feedback"/>').parent().append($('<span class="input-group-btn"/>')
-    .append(button));
+    .append(searchIsbnButton));
 isbnInput.after('<span class="glyphicon form-control-feedback"></span>');
 isbnInput.next().tooltip();
