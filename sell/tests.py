@@ -11,7 +11,7 @@
 
 from datetime import timedelta
 
-from django.contrib.staticfiles.testing import StaticLiveServerCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.utils import timezone
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
@@ -20,7 +20,7 @@ from books.models import BookType, Book
 from settings.settings import Settings
 
 
-class SellWizardLiveTest(StaticLiveServerCase):
+class SellWizardLiveTest(StaticLiveServerTestCase):
     def setUp(self):
         Settings().start_sell = timezone.now().replace(microsecond=0)
         Settings().end_sell = timezone.now().replace(microsecond=0) + timedelta(1)

@@ -11,7 +11,7 @@
 
 from datetime import timedelta
 
-from django.contrib.staticfiles.testing import StaticLiveServerCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.utils import timezone
 from selenium.webdriver.firefox.webdriver import WebDriver
 
@@ -20,7 +20,7 @@ from common.models import AppUser
 from orders.models import Order
 
 
-class PurchaseWizardLiveTest(StaticLiveServerCase):
+class PurchaseWizardLiveTest(StaticLiveServerTestCase):
     fixtures = ['purchase-test-data.json']
 
     @classmethod

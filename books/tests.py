@@ -10,7 +10,7 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 from decimal import Decimal
 
-from django.contrib.staticfiles.testing import StaticLiveServerCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -18,7 +18,7 @@ from books.models import BookType, Book
 from utils.test_utils import create_test_superuser, login
 
 
-class BooksLiveTest(StaticLiveServerCase):
+class BooksLiveTest(StaticLiveServerTestCase):
     def setUp(self):
         self.test_book = BookType(isbn="9788375940794", publisher="Some", title="A book",
                                   publication_year=1995, price=20.50, visible=False)
@@ -109,7 +109,7 @@ class BooksLiveTest(StaticLiveServerCase):
         return driver.find_element_by_name(name).get_attribute('value')
 
 
-class DuplicatedBooksLiveTest(StaticLiveServerCase):
+class DuplicatedBooksLiveTest(StaticLiveServerTestCase):
     fixtures = ['duplicated_test_data.json']
 
     def setUp(self):

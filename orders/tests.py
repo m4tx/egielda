@@ -10,7 +10,7 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 from time import sleep
 
-from django.contrib.staticfiles.testing import StaticLiveServerCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from books.models import Book
@@ -18,7 +18,7 @@ from books.models import Book
 from utils.test_utils import create_test_superuser, login
 
 
-class OrdersLiveTest(StaticLiveServerCase):
+class OrdersLiveTest(StaticLiveServerTestCase):
     fixtures = ['execute-test-data.json']
 
     def setUp(self):

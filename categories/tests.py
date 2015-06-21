@@ -9,7 +9,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib.staticfiles.testing import StaticLiveServerCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from selenium.webdriver.firefox.webdriver import WebDriver
 
@@ -19,7 +19,7 @@ from categories.models import Category
 from utils.test_utils import create_test_superuser, login
 
 
-class CategoriesLiveTest(StaticLiveServerCase):
+class CategoriesLiveTest(StaticLiveServerTestCase):
     def setUp(self):
         category = Category(name="Test category")
         category.save()

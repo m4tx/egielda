@@ -1,2 +1,2 @@
-https://www.djangoproject.com/download/1.7c3/tarball/#egg=Django
-selenium==2.42.1
+Django==1.8.2
+selenium==2.46.0
