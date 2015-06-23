@@ -74,6 +74,11 @@
                                             <li role="presentation" class="divider"></li>
                                         {% endif %}
                                         <li>
+                                            <a href="{% url 'profile_page' %}" role="menuitem">
+                                                <span class="glyphicon glyphicon-user"></span> {% trans "Your profile" %}
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a href="{% url 'password_change' %}" role="menuitem">
                                                 <span class="glyphicon glyphicon-asterisk"></span> {% trans "Change password" %}
                                             </a>

@@ -1,0 +1,20 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Your profile" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Your profile" %}</h1> <h4>
+            {% if user.verified %}
+                {%  trans "Account verified" %}
+            {% else %}
+                {%  trans "Account not verified" %}
+            {% endif %}
+        </h4>
+    <br>
+    <form class="form-horizontal" enctype="multipart/form-data" action="{{ request.path }}" method="post">
+        {% include "common/default_form.html" %}
+        {% csrf_token %}
+        <button class="btn btn-primary pull-right" type="submit"><span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}</button>
+    </form>
+{% endblock %}

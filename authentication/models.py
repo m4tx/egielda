@@ -15,7 +15,7 @@ from django.utils.translation import ugettext as _
 
 
 class AppUserManager(BaseUserManager):
-    def create_user(self, username, first_name, last_name, student_class, phone_number, email, document, password):
+    def create_user(self, username, first_name, last_name, student_class, phone_number, email, password):
 
         if not username or not password:
             raise ValueError('Users must have a username and a password')
@@ -27,16 +27,14 @@ class AppUserManager(BaseUserManager):
             student_class=student_class,
             phone_number=phone_number,
             email=AppUserManager.normalize_email(email),
-            document=document,
-            awaiting_verification=True,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, first_name, last_name, student_class, phone_number, email, document, password):
-        u = self.create_user(username, first_name, last_name, student_class, phone_number, email, document, password)
+    def create_superuser(self, username, first_name, last_name, student_class, phone_number, email, password):
+        u = self.create_user(username, first_name, last_name, student_class, phone_number, email, password)
         u.awaiting_verification = False
         u.verified = True
         u.is_superuser = True
@@ -56,12 +54,12 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     student_class = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=9)
     email = models.CharField(max_length=100)
-    document = models.ImageField(upload_to=new_document_filename)
+    document = models.ImageField(upload_to=new_document_filename, blank=True)
     awaiting_verification = models.BooleanField(default=False)
     verified = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'student_class', 'phone_number', 'email', 'document']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'student_class', 'phone_number', 'email']
 
     objects = AppUserManager()
 

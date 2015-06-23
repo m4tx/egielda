@@ -46,8 +46,8 @@ DATABASES = {
 SITE_NAME = "e-Giełda"
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = 'upload'
-MEDIA_URL = '/upload/'
+MEDIA_ROOT = 'upload/upload'
+MEDIA_URL = '/static/upload/'
 
 AUTH_USER_MODEL = 'authentication.AppUser'
 
@@ -106,6 +106,7 @@ LOCALE_PATHS = (
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "vendor"),
+    os.path.join(BASE_DIR, "upload"),
 )
 
 ROOT_URLCONF = 'egielda.urls'
