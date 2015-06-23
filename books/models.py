@@ -14,7 +14,7 @@ from django.utils.translation import ugettext as _
 
 from categories.models import Category
 from orders.models import Order
-from common.models import AppUser
+from authentication.models import AppUser
 
 
 class BookType(models.Model):

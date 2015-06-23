@@ -46,6 +46,11 @@ DATABASES = {
 SITE_NAME = "e-Giełda"
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = 'upload'
+MEDIA_URL = '/upload/'
+
+AUTH_USER_MODEL = 'authentication.AppUser'
+
 # Internationalization
 USE_I18N = True
 USE_L10N = True
@@ -66,6 +71,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
+    'authentication',
     'common',
     'books',
     'sell',

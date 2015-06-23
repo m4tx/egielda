@@ -17,7 +17,7 @@ from django.utils import timezone
 
 from books.models import BookType, Book
 from categories.models import Category
-from common.models import AppUser
+from authentication.models import AppUser
 from orders.models import Order
 
 

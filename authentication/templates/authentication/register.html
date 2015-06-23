@@ -1,0 +1,20 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Register new account" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Register new account" %}
+    </h1>
+
+    <div class="alert alert-info">
+        {% trans "Aby móc sprzedawać i kupować książki, musisz posiadać zweryfikowane konto. W tym celu wymagamy skanu <strong>dowolnego dokumentu tożsamości</strong> (nie musi zawierać zdjęcia) i <strong>potwierdzenia bycia uczniem bądź absolwentem</strong> tej szkoły. Przykładem poprawnego skanu jest przednia strona legitymacji szkolnej." %}
+    </div>
+
+    <form class="form-horizontal" enctype="multipart/form-data" action="{{ request.path }}" method="post">
+        {% include "common/default_form.html" %}
+        {% csrf_token %}
+        <button class="btn btn-primary pull-right" type="submit">{% trans "Next" %} <span
+                class="glyphicon glyphicon-chevron-right"></span></button>
+    </form>
+{% endblock %}

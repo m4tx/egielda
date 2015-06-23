@@ -9,6 +9,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib import admin
+from django.test import TestCase
 
-# Register your models here.
+# Create your tests here.

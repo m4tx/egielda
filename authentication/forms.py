@@ -9,24 +9,30 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django import forms
 from django.forms import ModelForm
 from django.utils.translation import ugettext as _
 
 from authentication.models import AppUser
 from common.widgets import PhoneNumberInput
+from django.forms import PasswordInput
 
 
-class PersonalDataForm(ModelForm):
+class UserDataForm(ModelForm):
     class Meta:
         model = AppUser
-        fields = ['first_name', 'last_name', 'student_class', 'phone_number']
+        fields = ['username', 'password', 'first_name', 'last_name', 'student_class', 'phone_number', 'email',
+                  'document']
+        exclude = ['awaiting_verification', 'verified', 'is_superuser', 'groups', 'user_permissions', 'last_login']
+
         widgets = {
             'phone_number': PhoneNumberInput(attrs={'maxlength': '9'}),
+            'password': PasswordInput,
         }
         labels = {
             'first_name': _("First name"),
             'last_name': _("Last name"),
             'student_class': _("Class"),
             'phone_number': _("Phone number"),
+            'email': _("E-mail"),
+            'document': _("Identity card"),
         }

@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
 
-from common.models import AppUser
+from authentication.models import AppUser
 from books.models import BookType, Book
 from settings.settings import Settings
 from utils.dates import date_range

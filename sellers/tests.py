@@ -15,7 +15,7 @@ from django.utils import timezone
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from books.models import BookType, Book
-from common.models import AppUser
+from authentication.models import AppUser
 from utils.test_utils import create_test_superuser, login
 
 

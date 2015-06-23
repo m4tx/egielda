@@ -13,7 +13,7 @@ from django import forms
 from django.forms import ModelForm
 from django.utils.translation import ugettext as _
 
-from common.models import AppUser
+from authentication.models import AppUser
 from common.widgets import PhoneNumberInput
 
 

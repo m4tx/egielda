@@ -18,7 +18,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from books.models import BookType, Book
-from common.models import AppUser
+from authentication.models import AppUser
 from common.bookchooserwizard import BookChooserWizard
 
 

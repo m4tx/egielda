@@ -1,0 +1,11 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Registration completed" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Registration completed" %}
+    </h1>
+
+    {% trans "Twoje konto zostało założone. Możesz się już zalogować, nie będziesz jednak w stanie wykonać żadnej akcji do czasu zweryfikowania konta. " %}
+{% endblock %}

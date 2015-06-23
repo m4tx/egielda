@@ -20,7 +20,7 @@ from django.utils import timezone
 
 from books.forms import BookForm
 from books.models import BookType, Book
-from common.models import AppUser
+from authentication.models import AppUser
 from utils.alerts import set_success_msg
 from egielda import settings
 from utils.books import books_by_types

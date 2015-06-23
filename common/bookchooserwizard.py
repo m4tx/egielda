@@ -25,7 +25,7 @@ from django.views.generic import RedirectView
 from books.forms import BookForm
 from books.models import BookType
 from common.forms import PersonalDataForm
-from common.models import AppUser
+from authentication.models import AppUser
 from egielda import settings
 from utils.books import get_available_books
 from utils.alerts import set_warning_msg

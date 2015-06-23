@@ -16,7 +16,7 @@ from django.utils import timezone
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from books.models import Book
-from common.models import AppUser
+from authentication.models import AppUser
 from orders.models import Order
 
 
