@@ -19,18 +19,30 @@ from common import formfix
 def create_groups(verbosity, **kwargs):
     if ContentType.objects.filter(model='dummypermissions').count() > 0:
 
+        user_group = Group.objects.get_or_create(name='user')[0]
         moderator_group = Group.objects.get_or_create(name='moderator')[0]
         admin_group = Group.objects.get_or_create(name='admin')[0]
         sysadmin_group = Group.objects.get_or_create(name='sysadmin')[0]
 
-        if moderator_group.permissions.count() > 0 and admin_group.permissions.count() > 0 and \
-                sysadmin_group.permissions.count() > 0:
+        if user_group.permissions.count() > 0 and moderator_group.permissions.count() > 0 and \
+                admin_group.permissions.count() > 0 and sysadmin_group.permissions.count() > 0:
             return
 
         if verbosity != 0:
             print("Creating groups...")
 
-        moderator_permissions = [
+        user_permissions = [
+            'view_authentication_profile'
+        ]
+
+        user_group.permissions.clear()
+        user_permissions_objects = Permission.objects.filter(
+            codename__in=user_permissions)
+        user_permissions_objects_list = [o for o in user_permissions_objects]
+
+        user_group.permissions.add(*user_permissions_objects_list)
+
+        moderator_permissions = user_permissions + [
             'view_books_index',
             'view_books_add_book',
             'view_books_edit_book',

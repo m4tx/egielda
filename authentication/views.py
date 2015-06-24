@@ -12,6 +12,7 @@
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
+from django.contrib.auth.decorators import permission_required
 
 from authentication.forms import UserDataForm
 
@@ -30,6 +31,7 @@ def register(request):
 
     return render(request, 'authentication/register.html', {'form': form})
 
+@permission_required('common.view_authentication_profile', raise_exception=True)
 def profile(request):
     disabled_fields_post = ['username', 'password']
     disabled_fields_files = []

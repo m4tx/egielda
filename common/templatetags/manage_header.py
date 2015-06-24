@@ -16,7 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 register = template.Library()
 
 
-@register.inclusion_tag('templatetags/manage_header.html')
+@register.inclusion_tag('templatetags/header.html')
 def manage_header(*args):
     # Manage pages tree
     # Each item is a list of following: [view class, (display) name, (optional) children]

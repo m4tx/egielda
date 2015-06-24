@@ -50,4 +50,6 @@ class DummyPermissions(models.Model):
             ('view_stats_users', "View stats.users"),
             ('view_stats_list_books', "View stats.list_books"),
             ('view_stats_books', "View stats.books"),
+
+            ('view_authentication_profile', 'View authentication.profile')
         )

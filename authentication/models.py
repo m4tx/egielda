@@ -31,6 +31,9 @@ class AppUserManager(BaseUserManager):
 
         user.set_password(password)
         user.save(using=self._db)
+        group = Group.objects.get(name='user')
+        user.groups.add(group)
+        user.save()
         return user
 
     def create_superuser(self, username, first_name, last_name, student_class, phone_number, email, password):

@@ -1,5 +1,52 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load profile_header %}
+
+{% block head %}
+    <style>
+        .panel-info h5 a {
+            color: #333;
+        }
+
+        .panel-info > .panel-heading {
+            color: #3A505B;
+            background-image: linear-gradient(to bottom, #E6F1F6 0%, #E6F1F6 100%);
+            background-color: #E6F1F6;
+            padding: 5px 13px;
+            line-height: 1.1;
+            font-size: 13px;
+        }
+
+        .list-group {
+            background-color: #F7FBFC;
+        }
+
+        .list-group-item {
+            background: inherit;
+        }
+
+        .list-group-item:nth-child(2n+1) {
+            background-color: #FFF;
+        }
+
+        .list-group-item:hover {
+            background-color: #FCFCE2;
+        }
+
+        .text-muted {
+            font-size: 12px;
+        }
+
+        h5 {
+            font-weight: bold;
+            margin: 7px 0;
+        }
+
+        .nav-tabs {
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}
 
 {% block title %}{% trans "Your profile" %}{% endblock %}
 
@@ -11,7 +58,16 @@
                 {%  trans "Account not verified" %}
             {% endif %}
         </h4>
-    <br>
+    {% profile_header %}
+
+    <ul class="nav nav-tabs">
+        {% if perms.common.view_stats_index %}
+            <li class="active"><a href="{% url 'authentication.views.profile' %}">{% trans "Profile data" %}</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">{% trans "Profile data" %}</a></li>
+        {% endif %}
+    </ul>
+
     <form class="form-horizontal" enctype="multipart/form-data" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}
