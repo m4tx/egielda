@@ -10,9 +10,9 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-Passing empty list or QuerySet to exlude() or filter() (which produces
+Passing empty list or QuerySet to exclude() or filter() (which produces
 empty IN () in SQL request) causes django.db.utils.ProgrammingError (syntax
-error) when using PostgreSQL. The functions are overriden here to avoid that.
+error) when using PostgreSQL. The functions are overridden here to avoid that.
 """
 
 from django.db.models import QuerySet
