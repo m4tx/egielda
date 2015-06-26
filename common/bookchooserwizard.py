@@ -17,14 +17,13 @@ from decimal import Decimal
 from django.conf.urls import url
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import transaction
-from django.forms import model_to_dict
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render
 from django.views.generic import RedirectView
+from django.contrib.auth.decorators import permission_required
 
 from books.forms import BookForm
 from books.models import BookType
-from common.forms import PersonalDataForm
 from authentication.models import AppUser
 from egielda import settings
 from utils.books import get_available_books
@@ -91,10 +90,11 @@ class BookChooserWizard:
     @property
     def url_patterns(self):
         return [
-            url(r'^$', RedirectView.as_view(url=reverse_lazy(self.url_namespace + ':personal_data')), name='index'),
-            url(r'^personal/$', self.personal_data, name='personal_data'),
-            url(r'^books/$', self.books, name='books'),
-            url(r'^summary/$', self.summary, name='summary'),
+            url(r'^$', RedirectView.as_view(url=reverse_lazy(self.url_namespace + ':books')), name='index'),
+            url(r'^books/$', permission_required('common.purchase_sell_books', raise_exception=True)(self.books),
+                name='books'),
+            url(r'^summary/$', permission_required('common.purchase_sell_books', raise_exception=True)(self.summary),
+                name='summary'),
         ]
 
     def get_book_list(self, book_list: list) -> list:
@@ -122,43 +122,11 @@ class BookChooserWizard:
 
         return types
 
-    def personal_data(self, request):
-        if request.method == 'POST':
-            if 'signout' in request.POST:
-                del request.session['app_user']
-                del request.session['personal_data']
-                return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
-
-            if 'app_user' in request.session:
-                user = AppUser.objects.get(pk=int(request.session['app_user']))
-                request.session['personal_data'] = model_to_dict(user)
-                return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
-            else:
-                form = PersonalDataForm(request.POST)
-                if form.is_valid():
-                    request.session['personal_data'] = model_to_dict(form.save(commit=False))
-                    return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
-        else:
-            if 'app_user' in request.session:
-                user = AppUser.objects.get(pk=int(request.session['app_user']))
-                return render(request, 'book_chooser_wizard/personal_data_signed_in.html',
-                              {'page_title': self.page_title, 'appuser': user})
-            elif 'personal_data' in request.session:
-                form = PersonalDataForm(instance=AppUser(**request.session['personal_data']))
-            else:
-                form = PersonalDataForm()
-        return render(request, 'book_chooser_wizard/personal_data.html', {'page_title': self.page_title, 'form': form})
-
     def books(self, request):
-        if 'personal_data' not in request.session:
-            return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
-
         if request.method == 'POST':
             if 'book_data' in request.POST:
                 request.session[self.session_var_name] = request.POST['book_data']
-            if 'btn-back' in request.POST:
-                return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
-            elif 'btn-next' in request.POST:
+            if 'btn-next' in request.POST:
                 return HttpResponseRedirect(reverse(self.url_namespace + ':summary'))
 
         book_list = BookType.objects.filter(visible=True).order_by('title').prefetch_related('categories')
@@ -187,9 +155,7 @@ class BookChooserWizard:
                        'feature_books_in_stock': self.feature_books_in_stock})
 
     def summary(self, request):
-        if 'personal_data' not in request.session:
-            return HttpResponseRedirect(reverse(self.url_namespace + ':personal_data'))
-        elif self.session_var_name not in request.session:
+        if self.session_var_name not in request.session:
             return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
 
         try:
@@ -201,17 +167,12 @@ class BookChooserWizard:
                     return HttpResponseRedirect(reverse(self.url_namespace + ':books'))
                 else:
                     with transaction.atomic():
-                        if 'app_user' in request.session:
-                            user = AppUser.objects.get(pk=int(request.session['app_user']))
-                        else:
-                            user = AppUser(**request.session['personal_data'])
+                        user = request.user
                         success, book_list = self.process_books_summary(request.session, user, book_list)
 
                         if success:
                             # Prevent from adding the same books multiple times
                             del request.session[self.session_var_name]
-                            # "Sign in" the user
-                            request.session['app_user'] = user.pk
                             return self.success(request)
                         else:
                             request.session[self.session_var_name] = json.dumps(book_list)
@@ -220,7 +181,7 @@ class BookChooserWizard:
 
             else:
                 return render(request, 'book_chooser_wizard/summary.html',
-                              {'page_title': self.page_title, 'personal_data': request.session['personal_data'],
+                              {'page_title': self.page_title, 'personal_data': request.user,
                                'chosen_book_list': sorted(self.get_book_list(book_list),
                                                           key=lambda x: x.title.lower())})
         except ValueError:

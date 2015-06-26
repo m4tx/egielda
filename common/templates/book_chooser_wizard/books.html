@@ -18,7 +18,7 @@
 
 {% block content %}
     <h1>{{ page_title }}
-        <small>{% trans "Step 2 of 3: choose the books" %}</small>
+        <small>{% trans "Step 1 of 2: choose the books" %}</small>
     </h1>
 
     <div class="panel-group" id="accordion">
@@ -81,8 +81,6 @@
     <div class="btn-toolbar">
         <form action="{{ request.path }}" method="post">
             {% csrf_token %}
-            <button class="btn btn-default" name="btn-back"><span
-                    class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</button>
             <button class="btn btn-primary pull-right" name="btn-next" disabled="disabled">{% trans "Next" %} <span
                     class="glyphicon glyphicon-chevron-right"></span></button>
         </form>

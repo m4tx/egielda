@@ -5,7 +5,7 @@
 
 {% block content %}
     <h1>{{ page_title }}
-        <small>{% trans "Step 3 of 3: summary" %}</small>
+        <small>{% trans "Step 2 of 2: summary" %}</small>
     </h1>
     <div class="alert alert-info">
         {% blocktrans %}Check now if all of the data displayed here are correct. If there is anything you want to modify, just click the "Back" button.{% endblocktrans %}
@@ -38,6 +38,14 @@
 
             <div class="col-sm-9">
                 <p class="form-control-static">{{ personal_data.phone_number }}</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 col-md-2 control-label">{% trans "E-mail" %}:</label>
+
+            <div class="col-sm-9">
+                <p class="form-control-static">{{ personal_data.email }}</p>
             </div>
         </div>
     </div>

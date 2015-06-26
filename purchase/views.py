@@ -83,7 +83,7 @@ class PurchaseWizard(BookChooserWizard):
         return not error_occurred, correct_book_list
 
     def success(self, request):
-        order = Order.objects.select_related('user', 'book_set').annotate(books_count=Count('book')).get(
+        order = Order.objects.prefetch_related('user', 'book_set').annotate(books_count=Count('book')).get(
             pk=request.session['order_id'])
         # Order id shown to the user
         order_id = order.valid_until.strftime("%Y%m%d") + "-" + str(order.pk) + "-" + str(order.user.pk) + "-" + str(

@@ -47,7 +47,6 @@ class SellWizard(BookChooserWizard):
             amount = book['amount']
             del book['amount']
 
-            user.save()
             dbbook = Book(owner=user, accepted=False, sold=False)
             if 'pk' in book:
                 dbbook.book_type_id = book['pk']
@@ -82,7 +81,7 @@ class SellWizard(BookChooserWizard):
             book.amount = amounts[book.pk]
             books_count += amounts[book.pk]
 
-        seller_id = timezone.now().strftime("%Y%m%d") + "-" + str(request.session['app_user']) + "-" + str(books_count)
+        seller_id = timezone.now().strftime("%Y%m%d") + "-" + str(request.user.pk) + "-" + str(books_count)
 
-        return render(request, 'sell/success.html', {'seller': AppUser.objects.get(pk=int(request.session['app_user'])),
-                                                     'seller_ID': seller_id, 'given_book_list': booktype_list})
+        return render(request, 'sell/success.html', {'seller': request.user, 'seller_ID': seller_id,
+                                                     'given_book_list': booktype_list})
