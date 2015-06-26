@@ -15,6 +15,7 @@ from django.http.response import HttpResponseRedirect
 from django.contrib.auth.decorators import permission_required
 
 from authentication.forms import UserDataForm
+from utils.alerts import set_success_msg
 
 def register(request):
     if request.method == 'POST':
@@ -53,9 +54,10 @@ def profile(request):
             elif 'document' not in request.FILES and user.awaiting_verification is True:
                 user.awaiting_verification = False
             user.save()
+            set_success_msg(request, 'profile_saved')
             return HttpResponseRedirect(reverse(profile))
-
-    form = UserDataForm(instance=request.user)
+    else:
+        form = UserDataForm(instance=request.user)
 
     for field in disabled_fields_post + disabled_fields_files:
         form.fields[field].widget.attrs['readonly'] = True

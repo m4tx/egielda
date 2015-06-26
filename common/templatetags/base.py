@@ -50,6 +50,7 @@ def alerts(context):
             'order_executed': _("The order was executed successfully."),
             'seller_removed': _("The seller's books were removed successfully."),
             'sellers_removed': _("The sellers' books were removed successfully."),
+            'profile_saved': _("Your profile data was successfully updated."),
         }[request.session['success_msg']]
         del request.session['success_msg']
 
