@@ -39,10 +39,8 @@ class AppUserManager(BaseUserManager):
     def create_superuser(self, username, first_name, last_name, student_class, phone_number, email, password):
         u = self.create_user(username, first_name, last_name, student_class, phone_number, email, password)
         u.awaiting_verification = False
-        u.verified = True
         u.is_superuser = True
-        group = Group.objects.get(name='sysadmin')
-        u.groups.add(group)
+        u.groups.add(Group.objects.get(name='sysadmin'))
         u.save(using=self._db)
         return u
 
@@ -59,7 +57,6 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(max_length=100)
     document = models.ImageField(upload_to=new_document_filename, blank=True)
     awaiting_verification = models.BooleanField(default=False)
-    verified = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'student_class', 'phone_number', 'email']

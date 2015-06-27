@@ -20,20 +20,22 @@ def create_groups(verbosity, **kwargs):
     if ContentType.objects.filter(model='dummypermissions').count() > 0:
 
         user_group = Group.objects.get_or_create(name='user')[0]
+        verified_user_group = Group.objects.get_or_create(name='verified_user')[0]
         moderator_group = Group.objects.get_or_create(name='moderator')[0]
         admin_group = Group.objects.get_or_create(name='admin')[0]
         sysadmin_group = Group.objects.get_or_create(name='sysadmin')[0]
 
-        if user_group.permissions.count() > 0 and moderator_group.permissions.count() > 0 and \
-                admin_group.permissions.count() > 0 and sysadmin_group.permissions.count() > 0:
+        if user_group.permissions.count() > 0 and verified_user_group.permissions.count() > 0 and \
+                moderator_group.permissions.count() > 0 and admin_group.permissions.count() > 0 and \
+                sysadmin_group.permissions.count() > 0:
             return
 
         if verbosity != 0:
             print("Creating groups...")
 
+        # User
         user_permissions = [
             'view_authentication_profile',
-            'view_purchase_sell_books',
         ]
 
         user_group.permissions.clear()
@@ -43,7 +45,20 @@ def create_groups(verbosity, **kwargs):
 
         user_group.permissions.add(*user_permissions_objects_list)
 
-        moderator_permissions = user_permissions + [
+        # Verified user
+        verified_user_permissions = user_permissions + [
+            'purchase_sell_books',
+        ]
+
+        verified_user_group.permissions.clear()
+        verified_user_permissions_objects = Permission.objects.filter(
+            codename__in=verified_user_permissions)
+        verified_user_permissions_objects_list = [o for o in verified_user_permissions_objects]
+
+        verified_user_group.permissions.add(*verified_user_permissions_objects_list)
+
+        # Moderator
+        moderator_permissions = verified_user_permissions + [
             'view_books_index',
             'view_books_add_book',
             'view_books_edit_book',
@@ -78,6 +93,7 @@ def create_groups(verbosity, **kwargs):
 
         moderator_group.permissions.add(*moderator_permissions_objects_list)
 
+        # Admin
         admin_permissions = moderator_permissions + [
             'view_books_remove_book',
 
@@ -99,6 +115,7 @@ def create_groups(verbosity, **kwargs):
 
         admin_group.permissions.add(*admin_permissions_objects_list)
 
+        # Sysadmin
         sysadmin_permissions = admin_permissions
 
         sysadmin_group.permissions.clear()

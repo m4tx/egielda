@@ -13,6 +13,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import Group
 
 from authentication.forms import UserDataForm
 from utils.alerts import set_success_msg
@@ -25,6 +26,8 @@ def register(request):
             if 'document' in request.FILES:
                 user.awaiting_verification = True
             user.set_password(user.password)
+            group = Group.objects.get(name='user')
+            user.groups.add(group)
             user.save()
             return render(request, 'authentication/registration_complete.html', {})
     else:
@@ -36,6 +39,7 @@ def register(request):
 def profile(request):
     disabled_fields_post = ['username', 'password']
     disabled_fields_files = []
+    request.user.verified = request.user.groups.filter(name='verified_user').exists()
     if request.user.verified:
         disabled_fields_post += ['first_name', 'last_name', 'student_class']
         disabled_fields_files += ['document']

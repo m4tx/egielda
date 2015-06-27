@@ -10,11 +10,14 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.forms import ModelForm
+from django.forms import PasswordInput, TextInput
+from django.forms import ValidationError
 from django.utils.translation import ugettext as _
+
+import re
 
 from authentication.models import AppUser
 from common.widgets import PhoneNumberInput
-from django.forms import PasswordInput
 
 
 class UserDataForm(ModelForm):
@@ -22,11 +25,13 @@ class UserDataForm(ModelForm):
         model = AppUser
         fields = ['username', 'password', 'first_name', 'last_name', 'student_class', 'phone_number', 'email',
                   'document']
-        exclude = ['awaiting_verification', 'verified', 'is_superuser', 'groups', 'user_permissions', 'last_login']
+        exclude = ['awaiting_verification', 'is_superuser', 'groups', 'user_permissions', 'last_login']
 
         widgets = {
             'phone_number': PhoneNumberInput(attrs={'maxlength': '9'}),
             'password': PasswordInput,
+            'student_class': TextInput(attrs={
+                'placeholder': _("graduate or [grade as an arabic numeral][capital class letter], e.g. 2A")}),
         }
         labels = {
             'first_name': _("First name"),
@@ -36,3 +41,20 @@ class UserDataForm(ModelForm):
             'email': _("E-mail"),
             'document': _("Identity card"),
         }
+
+    def clean_student_class(self):
+        student_class = self.cleaned_data['student_class']
+
+        if not re.match('^[123][A-Z]$', student_class) and student_class != _("graduate"):
+            raise ValidationError(
+                _("Invalid data. Use \"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A"))
+
+        return student_class
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if AppUser.objects.filter(username=username).exclude(pk=self.instance.id).exists():
+            raise ValidationError(_("This username already does exist in the database."))
+
+        return username
+
