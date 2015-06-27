@@ -36,8 +36,6 @@ class SettingsForm(forms.Form):
         'currency': getattr(settings, 'CURRENCY', "USD")},
                                          decimal_places=2,
                                          min_value=0)
-    validity_time = forms.IntegerField(label=_("Order validity time (h)"),
-                                       min_value=1)
     homepage_info = forms.CharField(label=_("Homepage information"),
                                     required=False,
                                     widget=forms.Textarea())

@@ -10,7 +10,6 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 from abc import abstractmethod
-from collections import Counter
 import json
 from decimal import Decimal
 
@@ -26,7 +25,7 @@ from books.forms import BookForm
 from books.models import BookType
 from authentication.models import AppUser
 from egielda import settings
-from utils.books import get_available_books
+from utils.books import get_available_books, books_by_types
 from utils.alerts import set_warning_msg
 
 
@@ -131,10 +130,7 @@ class BookChooserWizard:
 
         book_list = BookType.objects.filter(visible=True).order_by('title').prefetch_related('categories')
         if self.feature_books_in_stock:
-            books_available = get_available_books().filter(book_type__in=book_list)
-            countdict = Counter(book.book_type for book in books_available)
-            for book_type in book_list:
-                book_type.count = countdict[book_type]
+            book_list = books_by_types(get_available_books().filter(book_type__in=book_list))
 
         category_list = []
         for book in book_list:

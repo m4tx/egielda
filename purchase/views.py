@@ -9,19 +9,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import timedelta
-from collections import Counter
-
 from django.shortcuts import render
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django.db.models import Count
+from django.db.models import Sum
 
-from books.models import Book
+from books.models import BookType
 from common.bookchooserwizard import BookChooserWizard
-from orders.models import Order
-from settings.settings import Settings
-from utils.books import get_available_books
+from orders.models import Order, OrderedBook
+from utils.books import get_available_books, get_available_amount
 
 
 class PurchaseWizard(BookChooserWizard):
@@ -46,22 +41,26 @@ class PurchaseWizard(BookChooserWizard):
 
         # Select the Books which are available for purchasing and match the BookTypes we're looking for
         books = get_available_books().select_for_update().filter(book_type__in=book_type_list).order_by('-pk')
+        amounts = get_available_amount(books)
 
         # Remove duplicated Books. Thanks to order_by('-pk'), we'll have firstly added book as a value here
-
         books_by_id = dict()
         for book in books:
             books_by_id.setdefault(book.book_type.pk, []).append(book)
 
+        order = Order(user=user)
+        order.save()
+
         error_occurred = False
         correct_book_list = []
-
+        parts_of_order = []
         for book in book_list:
             if book['pk'] in books_by_id and book['amount'] > 0:
-                if len(books_by_id[book['pk']]) >= book['amount']:
-                    books_by_id[book['pk']] = books_by_id[book['pk']][:book['amount']]
+                if amounts[book['pk']] >= book['amount']:
+                    parts_of_order.append(OrderedBook(book_type=BookType.objects.get(pk=book['pk']),
+                                                      count=book['amount'], order=order))
                 else:
-                    book['amount'] = len(books_by_id[book['pk']])
+                    book['amount'] = amounts[book['pk']]
                     error_occurred = True
 
                 correct_book_list.append(book)
@@ -69,27 +68,20 @@ class PurchaseWizard(BookChooserWizard):
                 error_occurred = True
 
         if not error_occurred:
-            settings = Settings('validity_time')
-            validity_time = settings.validity_time if settings.exists('validity_time') else 24
-            validity_time = timedelta(hours=int(validity_time))
-            # Reserve the Books and create our Order
-            user.save()
-            order = Order(user=user, valid_until=timezone.now() + validity_time)
-            order.save()
+            OrderedBook.objects.bulk_create(parts_of_order)
             session['order_id'] = order.pk
-            Book.objects.filter(pk__in=[book.pk for l in books_by_id.values() for book in l]).update(
-                reserved_until=timezone.now() + validity_time, reserver=user, order=order)
 
         return not error_occurred, correct_book_list
 
     def success(self, request):
-        order = Order.objects.prefetch_related('user', 'book_set').annotate(books_count=Count('book')).get(
-            pk=request.session['order_id'])
+        order = Order.objects.prefetch_related('user', 'orderedbook_set', 'orderedbook_set__book_type').annotate(
+            books_count=Sum('orderedbook__count')).get(pk=request.session['order_id'])
+
         # Order id shown to the user
-        order_id = order.valid_until.strftime("%Y%m%d") + "-" + str(order.pk) + "-" + str(order.user.pk) + "-" + str(
+        order_id = str(order.pk) + "-" + str(order.user.pk) + "-" + str(
             order.books_count)
 
-        amounts = Counter([book.book_type for book in order.book_set.all()])
+        amounts = dict((orderedbook.book_type, orderedbook.count) for orderedbook in order.orderedbook_set.all())
         for book_type in amounts.keys():
             book_type.amount = amounts[book_type]
 

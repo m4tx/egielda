@@ -13,7 +13,6 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 from categories.models import Category
-from orders.models import Order
 from authentication.models import AppUser
 
 
@@ -39,9 +38,6 @@ class Book(models.Model):
     accepted = models.BooleanField(default=False)
     """Is the book physically available for buying"""
     accept_date = models.DateTimeField(null=True, blank=True)
-    order = models.ForeignKey(Order, null=True, blank=True)
-    reserved_until = models.DateTimeField(null=True, blank=True)
-    reserver = models.ForeignKey(AppUser, related_name='appuser_reserver', null=True, blank=True)
     sold = models.BooleanField(default=False)
     sold_date = models.DateTimeField(null=True, blank=True)
     purchaser = models.ForeignKey(AppUser, related_name='appuser_purchaser', null=True, blank=True)
