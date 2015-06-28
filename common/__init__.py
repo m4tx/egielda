@@ -36,6 +36,8 @@ def create_groups(verbosity, **kwargs):
         # User
         user_permissions = [
             'view_authentication_profile',
+            'view_authentication_profile_purchased',
+            'view_authentication_profile_sold',
         ]
 
         user_group.permissions.clear()

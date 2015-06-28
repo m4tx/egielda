@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^change_password/done/$', password_change_done, name='password_change_done'),
     url(r'^register/$', views.register, name='register'),
     url(r'^profile/$', views.profile, name='profile_page'),
+    url(r'^profile/purchased/$', views.purchased),
+    url(r'^profile/sold/$', views.sold),
 ]

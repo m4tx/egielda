@@ -20,7 +20,10 @@ register = template.Library()
 def profile_header(*args):
     # Profile pages tree
     # Each item is a list of following: [view class, (display) name, (optional) children]
-    tree = ['authentication.views.profile', _("Your profile"), {}]
+    tree = ['authentication.views.profile', _("Your profile"), {
+        'purchased': ['authentication.views.purchased', _("Purchased books")],
+        'sold': ['authentication.views.sold', _("Sold books")],
+    }]
 
     # Split the path
     if len(args) == 0 or args[0] == "":

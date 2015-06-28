@@ -1,0 +1,127 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load profile_header %}
+{% load price %}
+
+{% block head %}
+    <style>
+        .panel-info h5 a {
+            color: #333;
+        }
+
+        .panel-info > .panel-heading {
+            color: #3A505B;
+            background-image: linear-gradient(to bottom, #E6F1F6 0%, #E6F1F6 100%);
+            background-color: #E6F1F6;
+            padding: 5px 13px;
+            line-height: 1.1;
+            font-size: 13px;
+        }
+
+        .list-group {
+            background-color: #F7FBFC;
+        }
+
+        .list-group-item {
+            background: inherit;
+        }
+
+        .list-group-item:nth-child(2n+1) {
+            background-color: #FFF;
+        }
+
+        tbody > tr.list-group-item:hover > td {
+            background-color: #FCFCE2;
+        }
+
+        .text-muted {
+            font-size: 12px;
+        }
+
+        h5 {
+            font-weight: bold;
+            margin: 7px 0;
+        }
+
+        .nav-tabs {
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}{% trans "Purchased books" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Your profile" %}</h1> <h4>
+            {% if user.verified %}
+                {%  trans "Account verified" %}
+            {% else %}
+                {%  trans "Account not verified" %}
+            {% endif %}
+        </h4>
+    {% profile_header "purchased" %}
+
+    <ul class="nav nav-tabs">
+        {% if perms.common.view_authentication_profile %}
+            <li><a href="{% url 'authentication.views.profile' %}">{% trans "Profile data" %}</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">{% trans "Profile data" %}</a></li>
+        {% endif %}
+        {% if perms.common.view_authentication_profile_purchased %}
+            <li class="active"><a href="{% url 'authentication.views.purchased' %}">{% trans "Purchased books" %}</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">{% trans "Purchased books" %}</a></li>
+        {% endif %}
+        {% if perms.common.view_authentication_profile_sold %}
+            <li><a href="{% url 'authentication.views.sold' %}">{% trans "Sold books" %}</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">{% trans "Sold books" %}</a></li>
+        {% endif %}
+    </ul>
+
+    {% if stats %}
+        {% for key, value in stats.items %}
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <b>
+                        {{ key.0 }}
+                        <span class="pull-right">#{{ key.1 }}</span>
+                    </b>
+                </div>
+                <!-- <ul class="list-group"> -->
+                <table class="list-group table table-hover">
+                     <thead>
+                        <tr>
+                            <th>{% trans "ISBN" %}</th>
+                            <th>{% trans "Publisher" %}</th>
+                            <th style="width: 40%;">{% trans "Title" %}</th>
+                            <th>{% trans "Publication" %}</th>
+                            <th>{% trans "Price" %}</th>
+                            <th>{% trans "Amount" %}</th>
+                            <th>{% trans "Fulfilled" %}</th>
+                        </tr>
+                    </thead>
+                    {% for book in value %}
+                        <tr class="list-group-item" style="display: table-row; position: initial;">
+                            <td>{{ book.0.isbn }}</td>
+                            <td>{{ book.0.publisher }}</td>
+                            <td>{{ book.0.title }}</td>
+                            <td>{{ book.0.publication_year }}</td>
+                            <td>{{ book.0.price | price }}</td>
+                            <td>{{ book.1 }}</td>
+                            <td>
+                                {% if book.2 %}
+                                    ✔
+                                {% else %}
+                                    ✘
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+    {% endif %}
+{% endblock %}

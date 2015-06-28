@@ -19,10 +19,11 @@ from books.models import BookType
 class Order(models.Model):
     user = models.ForeignKey(AppUser)
     date = models.DateTimeField(auto_now_add=True)
+    fulfilled = models.BooleanField(default=False)
 
     def __str__(self):
-        return _("Order from %(user)s made at %(date)s") % {
-            'user': self.user, 'date': self.date
+        return _("Order from %(user)s made at %(date)s, fulfilled: %(fulfilled)s") % {
+            'user': self.user, 'date': self.date, 'fulfilled': self.fulfilled
         }
 
 class OrderedBook(models.Model):

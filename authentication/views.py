@@ -14,9 +14,12 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
+from django.db.models import Sum
+
 
 from authentication.forms import UserDataForm
 from utils.alerts import set_success_msg
+from orders.models import Order
 
 def register(request):
     if request.method == 'POST':
@@ -39,7 +42,7 @@ def register(request):
 def profile(request):
     disabled_fields_post = ['username', 'password']
     disabled_fields_files = []
-    request.user.verified = request.user.groups.filter(name='verified_user').exists()
+
     if request.user.verified:
         disabled_fields_post += ['first_name', 'last_name', 'student_class']
         disabled_fields_files += ['document']
@@ -69,4 +72,26 @@ def profile(request):
 
     del form.fields['password']
 
-    return render(request, 'authentication/profile.html', {'form': form, 'user': request.user})
+    return render(request, 'authentication/profile.html', {'form': form})
+
+@permission_required('common.view_authentication_profile_purchased', raise_exception=True)
+def purchased(request):
+    orders = Order.objects.filter(user=request.user).prefetch_related(
+        'user', 'orderedbook_set', 'orderedbook_set__book_type').annotate(books_count=Sum('orderedbook__count'))
+
+    stats = dict()
+    for order in orders:
+        order_id = order.date.strftime("%Y%m%d") + "-" + str(order.pk) + "-" + str(order.user.pk) + "-" + str(
+            order.books_count)
+
+        order_book_list = []
+        for orderedbook in order.orderedbook_set.all():
+            order_book_list.append((orderedbook.book_type, orderedbook.count, order.fulfilled))
+
+        stats[(order.user.get_full_name(), order_id)] = order_book_list
+
+    return render(request, 'authentication/purchased.html', {'stats': stats})
+
+@permission_required('common.view_authentication_profile_sold', raise_exception=True)
+def sold(request):
+    return render(request, 'authentication/profile.html', {})

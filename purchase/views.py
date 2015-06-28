@@ -78,7 +78,7 @@ class PurchaseWizard(BookChooserWizard):
             books_count=Sum('orderedbook__count')).get(pk=request.session['order_id'])
 
         # Order id shown to the user
-        order_id = str(order.pk) + "-" + str(order.user.pk) + "-" + str(
+        order_id = order.date.strftime("%Y%m%d") + "-" + str(order.pk) + "-" + str(order.user.pk) + "-" + str(
             order.books_count)
 
         amounts = dict((orderedbook.book_type, orderedbook.count) for orderedbook in order.orderedbook_set.all())

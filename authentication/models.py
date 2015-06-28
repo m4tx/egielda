@@ -12,7 +12,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Group, ContentType, PermissionsMixin
 from django.utils.translation import ugettext as _
-
+from django.db.models import Q
 
 class AppUserManager(BaseUserManager):
     def create_user(self, username, first_name, last_name, student_class, phone_number, email, password):
@@ -67,15 +67,27 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         return self.groups.filter(name='sysadmin').exists()
 
+    @property
+    def verified(self):
+        return self.groups.filter(Q(name='verified_user') | Q(name='moderator')
+                                                       | Q(name='admin') | Q(name='sysadmin')).exists()
+
     def user_name(self):
         return self.first_name + " " + self.last_name
 
     def __str__(self):
-        return _("%(first_name)s %(last_name)s, %(student_class)s" %
-                 {'first_name': self.first_name, 'last_name': self.last_name, 'student_class': self.student_class})
+        return _("%(first_name)s %(last_name)s, %(student_class)s") % {
+            'first_name': self.first_name, 'last_name': self.last_name, 'student_class': self.student_class
+        }
 
     def get_short_name(self):
         return str(self)
 
     def get_full_name(self):
-        return str(self)
+        return _("%(first_name)s %(last_name)s, %(student_class)s, %(phone_number)s, %(email)s") % {
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'student_class': self.student_class,
+            'phone_number': self.phone_number,
+            'email': self.email
+        }
