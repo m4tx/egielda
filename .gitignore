@@ -48,3 +48,6 @@ db.sqlite3
 
 # PyCharm project
 .idea/
+
+# Upload folder
+upload/
