@@ -18,6 +18,7 @@ from django.db.models import Sum
 
 
 from authentication.forms import UserDataForm
+from books.models import Book
 from utils.alerts import set_success_msg
 from orders.models import Order
 
@@ -94,4 +95,14 @@ def purchased(request):
 
 @permission_required('common.view_authentication_profile_sold', raise_exception=True)
 def sold(request):
-    return render(request, 'authentication/profile.html', {})
+    books = Book.objects.filter(owner=request.user).select_related("book_type")
+
+    stats = dict()  # Dictionary indexed with the book string, valued with the list containing 4 values: a book itself,
+                    # amount of books declared to bring, books actually brought and books already sold
+    for book in books:
+        stats[str(book)] = stats.setdefault(str(book), [book, 0, 0, 0])
+        stats[str(book)][1] += 1
+        stats[str(book)][2] += 1 if book.accepted else 0
+        stats[str(book)][3] += 1 if book.sold else 0
+
+    return render(request, 'authentication/sold.html', {'stats': stats})

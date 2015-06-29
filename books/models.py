@@ -27,7 +27,8 @@ class BookType(models.Model):
 
     def __str__(self):
         return _(
-            "%(publisher)s %(title)s" % {
+            "%(isbn)s %(publisher)s %(title)s" % {
+                'isbn': self.isbn,
                 'publisher': self.publisher,
                 'title': self.title})
 
