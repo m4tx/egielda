@@ -35,10 +35,10 @@ def manage_header(*args):
             'duplicated': ['books.views.duplicated', _("Duplicated")],
         }],
         'orders': ['orders.views.index', _("Orders"), {
-            'not_executed': ['orders.views.not_executed', _("Not executed")],
-            'execute': ['orders.views.execute', _("Execute")],
+            'not_fulfilled': ['orders.views.not_fulfilled', _("Not fulfilled")],
+            'fulfill': ['orders.views.fulfill', _("Fulfill")],
             'outdated': ['orders.views.outdated', _("Outdated")],
-            'executed': ['orders.views.executed', _("Executed")],
+            'fulfilled': ['orders.views.fulfilled', _("Fulfilled")],
             'details': ['orders.views.details', _("Details")]
         }],
         'sellers': ['sellers.views.index', _("Sellers with unaccepted books"), {

@@ -1,0 +1,30 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load manage_header %}
+
+{% block title %}{% trans "Orders - Fulfill" %}{% endblock %}
+
+{% block content %}
+    <h1>
+        {% trans "Orders" %}
+        <small>
+            {% blocktrans with user_name=order.user.user_name %}Fulfill {{ user_name }}'s order{% endblocktrans %}
+        </small>
+    </h1>
+    {% manage_header "orders/fulfill" %}
+
+    {% include 'orders/fulfill_accept_book_list.html' with book_list=order.book_set.all %}
+
+    <form action="{{ request.path }}" method="post">
+        {% if perms.common.view_orders_fulfill %}
+            <a href="{% url 'orders.views.fulfill' order.pk %}" class="btn btn-default" role="button">
+                <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+            </a>
+        {% endif %}
+
+        {% csrf_token %}
+        <button class="btn btn-primary pull-right" type="submit">
+            <span class="glyphicon glyphicon-ok"></span> {% trans "Fulfill" %}
+        </button>
+    </form>
+{% endblock %}

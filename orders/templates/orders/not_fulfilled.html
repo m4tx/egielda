@@ -2,19 +2,19 @@
 {% load i18n %}
 {% load manage_header %}
 
-{% block title %}{% trans "Orders" %} – {% trans "Executed" %}{% endblock %}
+{% block title %}{% trans "Orders" %} – {% trans "Not fulfilled" %}{% endblock %}
 
 {% block content %}
     <h1>{% trans "Orders" %}</h1>
-    {% manage_header "orders/executed" %}
+    {% manage_header "orders/not_fulfilled" %}
 
     <ul class="nav nav-tabs" role="tablist">
-        <li><a href="{% url 'orders.views.not_executed' %}">{% trans "Not executed" %}</a></li>
+        <li class="active"><a href="#">{% trans "Not fulfilled" %}</a></li>
         <li><a href="{% url 'orders.views.outdated' %}">{% trans "Outdated" %}</a></li>
-        <li class="active"><a href="#">{% trans "Executed" %}</a></li>
+        <li><a href="{% url 'orders.views.fulfilled' %}">{% trans "Fulfilled" %}</a></li>
     </ul>
 
-    {% include "orders/orders_table.html" %}
+    {% include "orders/orders_table.html" with show_fulfill=True %}
 {% endblock %}
 
 {% block footer %}

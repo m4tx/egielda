@@ -32,11 +32,11 @@ class DummyPermissions(models.Model):
 
             ('view_orders_index', "View orders.index"),
             ('view_orders_order_details', "View orders.order_details"),
-            ('view_orders_not_executed', "View orders.not_executed"),
+            ('view_orders_not_fulfilled', "View orders.not_fulfilled"),
             ('view_orders_outdated', "View orders.outdated"),
-            ('view_orders_executed', "View orders.executed"),
-            ('view_orders_execute', "View orders.execute"),
-            ('view_orders_execute_accept', "View orders.execute_accept"),
+            ('view_orders_fulfilled', "View orders.fulfilled"),
+            ('view_orders_fulfill', "View orders.fulfill"),
+            ('view_orders_fulfill_accept', "View orders.fulfill_accept"),
 
             ('view_sellers_index', "View sellers.index"),
             ('view_sellers_accept_books', "View sellers.accept_books"),

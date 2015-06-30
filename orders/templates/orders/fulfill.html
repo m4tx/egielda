@@ -2,29 +2,29 @@
 {% load i18n %}
 {% load manage_header %}
 
-{% block title %}{% trans "Orders - Execute" %}{% endblock %}
+{% block title %}{% trans "Orders - Fulfill" %}{% endblock %}
 
 {% block content %}
     <h1>
         {% trans "Orders" %}
         <small>
-            {% blocktrans with user_name=order.user.user_name %}Execute {{ user_name }}'s order{% endblocktrans %}
+            {% blocktrans with user_name=order.user.user_name %}Fulfill {{ user_name }}'s order{% endblocktrans %}
         </small>
     </h1>
-    {% manage_header "orders/execute" %}
+    {% manage_header "orders/fulfill" %}
 
     <div class="alert alert-info">{% trans "If you want to delete some book, just pass 0 as amount." %}</div>
     <form action="{{ request.path }}" method="post">
         {% csrf_token %}
-        {% include 'orders/execute_book_list.html' with hide_actions=True %}
+        {% include 'orders/fulfill_book_list.html' with hide_actions=True %}
 
-        {% if perms.common.view_orders_not_executed %}
-            <a href="{% url 'orders.views.not_executed' %}" class="btn btn-default" role="button">
+        {% if perms.common.view_orders_not_fulfill %}
+            <a href="{% url 'orders.views.not_fulfill' %}" class="btn btn-default" role="button">
                 <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}
             </a>
         {% endif %}
 
-        {% if perms.common.view_orders_execute_accept %}
+        {% if perms.common.view_orders_fulfill_accept %}
             <button class="btn btn-primary pull-right" type="submit">
                 {% trans "Next" %} <span class="glyphicon glyphicon-chevron-right"></span>
             </button>

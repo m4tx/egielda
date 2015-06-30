@@ -28,13 +28,13 @@ from utils.books import books_by_types, get_available_books
 
 @permission_required('common.view_orders_index', raise_exception=True)
 def index(request):
-    return HttpResponseRedirect(reverse(not_executed))
+    return HttpResponseRedirect(reverse(not_fulfilled))
 
 
-@permission_required('common.view_orders_not_executed', raise_exception=True)
-def not_executed(request):
+@permission_required('common.view_orders_not_fulfilled', raise_exception=True)
+def not_fulfilled(request):
     orders = get_orders().filter(valid_until__gt=timezone.now(), sold_count=0)
-    return render(request, 'orders/not_executed.html', {'orders': orders})
+    return render(request, 'orders/not_fulfilled.html', {'orders': orders})
 
 
 @permission_required('common.view_orders_outdated', raise_exception=True)
@@ -43,10 +43,10 @@ def outdated(request):
     return render(request, 'orders/outdated.html', {'orders': orders})
 
 
-@permission_required('common.view_orders_executed', raise_exception=True)
-def executed(request):
+@permission_required('common.view_orders_fulfilled', raise_exception=True)
+def fulfilled(request):
     orders = get_orders().exclude(sold_count=0)
-    return render(request, 'orders/executed.html', {'orders': orders})
+    return render(request, 'orders/fulfilled.html', {'orders': orders})
 
 
 @permission_required('common.view_orders_order_details', raise_exception=True)
@@ -58,8 +58,8 @@ def order_details(request, order_pk):
                   {'order': order, 'book_list': order.book_set.all(), 'price_sum': price_sum})
 
 
-@permission_required('common.view_orders_execute', raise_exception=True)
-def execute(request, order_pk):
+@permission_required('common.view_orders_fulfill', raise_exception=True)
+def fulfill(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
                               ~Q(valid_until__lte=timezone.now()), pk=order_pk)
     book_types_dict = books_by_types(order.book_set.all())
@@ -88,28 +88,28 @@ def execute(request, order_pk):
                                                                     reserved_until=book_instance.reserved_until,
                                                                     reserver=book_instance.reserver)
 
-        return HttpResponseRedirect(reverse(execute_accept, args=(order_pk,)))
+        return HttpResponseRedirect(reverse(fulfill_accept, args=(order_pk,)))
     else:
-        return render(request, 'orders/execute.html', {'order': order, 'book_list': book_types})
+        return render(request, 'orders/fulfill.html', {'order': order, 'book_list': book_types})
 
 
-@permission_required('common.view_orders_execute_accept', raise_exception=True)
-def execute_accept(request, order_pk):
+@permission_required('common.view_orders_fulfill_accept', raise_exception=True)
+def fulfill_accept(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
                               ~Q(valid_until__lte=timezone.now()), pk=order_pk)
 
     if order.book_set.count() == 0:
         order.delete()
         set_info_msg(request, 'order_removed')
-        return HttpResponseRedirect(reverse(not_executed))
+        return HttpResponseRedirect(reverse(not_fulfilled))
 
     if request.method == 'POST':
         order.book_set.all().update(sold=True, sold_date=timezone.now(), purchaser=order.user)
-        set_success_msg(request, 'order_executed')
-        return HttpResponseRedirect(reverse(not_executed))
+        set_success_msg(request, 'order_fulfilled')
+        return HttpResponseRedirect(reverse(not_fulfilled))
     else:
         price_sum = sum(book.book_type.price for book in order.book_set.all())
-        return render(request, 'orders/execute_accept.html', {'order': order, 'price_sum': price_sum})
+        return render(request, 'orders/fulfill_accept.html', {'order': order, 'price_sum': price_sum})
 
 
 def get_orders() -> QuerySet:

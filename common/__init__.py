@@ -74,11 +74,11 @@ def create_groups(verbosity, **kwargs):
 
             'view_orders_index',
             'view_orders_order_details',
-            'view_orders_not_executed',
+            'view_orders_not_fulfilled',
             'view_orders_outdated',
-            'view_orders_executed',
-            'view_orders_execute',
-            'view_orders_execute_accept',
+            'view_orders_fulfilled',
+            'view_orders_fulfill',
+            'view_orders_fulfill_accept',
 
             'view_sellers_index',
             'view_sellers_accept_books',

@@ -19,10 +19,10 @@
                     <td>{{ order.user }}</td>
                     <td>{{ order.book_set.count }}</td>
                     <td>
-                        {% if show_execute and perms.common.view_orders_execute %}
+                        {% if show_fulfill and perms.common.view_orders_fulfill %}
                             <a class="btn btn-xs btn-link" role="button"
-                               href="{% url 'orders.views.execute' order.pk %}">
-                                <span class="glyphicon glyphicon-ok"></span> {% trans "Execute" %}
+                               href="{% url 'orders.views.fulfill' order.pk %}">
+                                <span class="glyphicon glyphicon-ok"></span> {% trans "Fulfill" %}
                             </a>
                         {% endif %}
 
