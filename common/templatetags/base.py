@@ -22,6 +22,9 @@ register = template.Library()
 def site_name():
     return getattr(settings, 'SITE_NAME', 'e-Giełda')
 
+@register.filter
+def keyvalue(dict, key):
+    return dict[key]
 
 @register.inclusion_tag('templatetags/alerts.html', takes_context=True)
 def alerts(context):
@@ -65,6 +68,10 @@ def alerts(context):
     if 'error_msg' in request.session:
         args['error_msg'] = {
             'merge_dest_not_chosen': _("You haven't chosen the book to merge to!"),
+            'amount_and_length_of_owners_differ': _("Amount of books being purchased and count of provided books' " +
+                                                    "owners are not equal. You'll need to fill in the form again."),
+            'owner_doesnt_have_enough_books_in_db': _("Some of the users you have provided don't have enough books in" +
+                                                      " the database."),
         }[request.session['error_msg']]
         del request.session['error_msg']
 

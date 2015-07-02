@@ -50,8 +50,7 @@ def get_available_amount(books):
     books_by_id = dict()
     for book in books:
         books_by_id.setdefault(book.book_type.pk, []).append(book)
-    orders = Order.objects.filter(orderedbook__book_type__in=book_type_list, fulfilled=True).distinct()
-
+    orders = Order.objects.filter(orderedbook__book_type__in=book_type_list, fulfilled=False).distinct()
     orders_dict = dict()
     for order in orders:
         for orderedbook in order.orderedbook_set.all():

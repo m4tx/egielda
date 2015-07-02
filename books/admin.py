@@ -11,8 +11,8 @@
 
 from django.contrib import admin
 
-from books.models import BookType, Book
-
+from books.models import BookType, Book, OrderedBook
 
 admin.site.register(BookType)
 admin.site.register(Book)
+admin.site.register(OrderedBook)

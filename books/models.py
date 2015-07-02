@@ -14,6 +14,7 @@ from django.utils.translation import ugettext as _
 
 from categories.models import Category
 from authentication.models import AppUser
+from orders.models import Order
 
 
 class BookType(models.Model):
@@ -42,7 +43,13 @@ class Book(models.Model):
     sold = models.BooleanField(default=False)
     sold_date = models.DateTimeField(null=True, blank=True)
     purchaser = models.ForeignKey(AppUser, related_name='appuser_purchaser', null=True, blank=True)
+    order = models.ForeignKey(Order, null=True, blank=True)
 
     def __str__(self):
         return _("%(book_type)s from %(owner)s, accepted: %(accepted)s, sold: %(sold)s" %
                  {'book_type': self.book_type, 'owner': self.owner, 'accepted': self.accepted, 'sold': self.sold})
+
+class OrderedBook(models.Model):
+    book_type = models.ForeignKey(BookType)
+    count = models.IntegerField()
+    order = models.ForeignKey(Order)

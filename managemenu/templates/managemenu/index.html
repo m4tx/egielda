@@ -91,10 +91,6 @@
                             <li><a href="{% url 'orders.views.not_fulfilled' %}">{% trans "Not fulfilled" %}</a></li>
                         {% endif %}
 
-                        {% if perms.common.view_orders_outdated %}
-                            <li><a href="{% url 'orders.views.outdated' %}">{% trans "Outdated" %}</a></li>
-                        {% endif %}
-
                         {% if perms.common.view_orders_fulfilled %}
                             <li><a href="{% url 'orders.views.fulfilled' %}">{% trans "Fulfilled" %}</a></li>
                         {% endif %}

@@ -4,6 +4,14 @@
 
 {% block title %}{% trans "Orders - Fulfill" %}{% endblock %}
 
+{% block head %}
+    {% load staticfiles %}
+    <link href="//code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.min.css" type="text/css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/tokenfield-typeahead.css" %}"></link>
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-tokenfield.css" %}"></link>
+{% endblock %}
+
 {% block content %}
     <h1>
         {% trans "Orders" %}
@@ -18,8 +26,8 @@
         {% csrf_token %}
         {% include 'orders/fulfill_book_list.html' with hide_actions=True %}
 
-        {% if perms.common.view_orders_not_fulfill %}
-            <a href="{% url 'orders.views.not_fulfill' %}" class="btn btn-default" role="button">
+        {% if perms.common.view_orders_not_fulfilled %}
+            <a href="{% url 'orders.views.not_fulfilled' %}" class="btn btn-default" role="button">
                 <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}
             </a>
         {% endif %}
@@ -33,11 +41,21 @@
 {% endblock %}
 
 {% block footer %}
-    {% load staticfiles %}
     <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
     <script type="text/javascript">
         window.addEventListener("load", function(){
             $(".table-responsive table").tablesorter();
         });
     </script>
+    <script type="text/javascript" src="{% static "js/cache.js" %}"></script>
+    <script type="text/javascript">
+        var users = new Array();
+        {% for user in users %}
+            users[{{ user.0 }}] = "{{ user.1 }}";
+        {% endfor %}
+        //alert(users);
+    </script>
+    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/bootstrap-tokenfield.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/userchooser.js" %}"></script>
 {% endblock %}

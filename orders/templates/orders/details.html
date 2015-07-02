@@ -26,13 +26,6 @@
                 <p class="form-control-static">{{ order.date }}</p>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "Valid until" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.valid_until }}</p>
-            </div>
-        </div>
     </div>
 
     {% include "orders/fulfill_accept_book_list.html" %}

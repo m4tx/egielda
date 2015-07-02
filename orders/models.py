@@ -13,7 +13,6 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 from authentication.models import AppUser
-from books.models import BookType
 
 
 class Order(models.Model):
@@ -25,8 +24,3 @@ class Order(models.Model):
         return _("Order from %(user)s made at %(date)s, fulfilled: %(fulfilled)s") % {
             'user': self.user, 'date': self.date, 'fulfilled': self.fulfilled
         }
-
-class OrderedBook(models.Model):
-    book_type = models.ForeignKey(BookType)
-    count = models.IntegerField()
-    order = models.ForeignKey(Order)

@@ -13,9 +13,9 @@ from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Sum
 
-from books.models import BookType
+from books.models import BookType, OrderedBook
 from common.bookchooserwizard import BookChooserWizard
-from orders.models import Order, OrderedBook
+from orders.models import Order
 from utils.books import get_available_books, get_available_amount
 
 

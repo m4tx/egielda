@@ -6,7 +6,6 @@
             <thead>
             <tr>
                 <th>{% trans "Date" %}</th>
-                <th>{% trans "Valid until" %}</th>
                 <th>{% trans "User" %}</th>
                 <th>{% trans "Books" %}</th>
                 <th>{% trans "Actions" %}</th>
@@ -15,9 +14,8 @@
             {% for order in orders %}
                 <tr>
                     <td>{{ order.date }}</td>
-                    <td>{{ order.valid_until }}</td>
                     <td>{{ order.user }}</td>
-                    <td>{{ order.book_set.count }}</td>
+                    <td>{{ order.books_count }}</td>
                     <td>
                         {% if show_fulfill and perms.common.view_orders_fulfill %}
                             <a class="btn btn-xs btn-link" role="button"
@@ -26,7 +24,7 @@
                             </a>
                         {% endif %}
 
-                        {% if perms.common.view_orders_order_details %}
+                        {% if show_order and perms.common.view_orders_order_details %}
                             <a class="btn btn-xs btn-link" role="button"
                                href="{% url 'orders.views.order_details' order.pk %}">
                                 <span class="glyphicon glyphicon-list-alt"></span> {% trans "Show order" %}

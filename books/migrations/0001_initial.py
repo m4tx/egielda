@@ -8,8 +8,9 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('categories', '0001_initial'),
+        ('orders', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('categories', '__first__'),
     ]
 
     operations = [
@@ -36,10 +37,24 @@ class Migration(migrations.Migration):
                 ('categories', models.ManyToManyField(to='categories.Category', blank=True)),
             ],
         ),
+        migrations.CreateModel(
+            name='OrderedBook',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('count', models.IntegerField()),
+                ('book_type', models.ForeignKey(to='books.BookType')),
+                ('order', models.ForeignKey(to='orders.Order')),
+            ],
+        ),
         migrations.AddField(
             model_name='book',
             name='book_type',
             field=models.ForeignKey(to='books.BookType'),
+        ),
+        migrations.AddField(
+            model_name='book',
+            name='order',
+            field=models.ForeignKey(blank=True, to='orders.Order', null=True),
         ),
         migrations.AddField(
             model_name='book',

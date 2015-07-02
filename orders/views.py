@@ -9,21 +9,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from collections import Counter
-
 from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.db import transaction
-from django.db.models import Count, Q
+from django.db.models import Sum
 from django.db.models.query import QuerySet
 from django.http.response import HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
+from authentication.models import AppUser
 from books.models import Book
 from orders.models import Order
-from utils.alerts import set_success_msg, set_info_msg
-from utils.books import books_by_types, get_available_books
+from utils.alerts import set_success_msg, set_info_msg, set_error_msg
+from utils.books import get_available_amount, get_available_books
 
 
 @permission_required('common.view_orders_index', raise_exception=True)
@@ -33,83 +32,158 @@ def index(request):
 
 @permission_required('common.view_orders_not_fulfilled', raise_exception=True)
 def not_fulfilled(request):
-    orders = get_orders().filter(valid_until__gt=timezone.now(), sold_count=0)
+    orders = get_orders().filter(fulfilled=False)
     return render(request, 'orders/not_fulfilled.html', {'orders': orders})
-
-
-@permission_required('common.view_orders_outdated', raise_exception=True)
-def outdated(request):
-    orders = get_orders().filter(valid_until__lte=timezone.now(), sold_count=0)
-    return render(request, 'orders/outdated.html', {'orders': orders})
 
 
 @permission_required('common.view_orders_fulfilled', raise_exception=True)
 def fulfilled(request):
-    orders = get_orders().exclude(sold_count=0)
+    orders = get_orders().exclude(fulfilled=False)
     return render(request, 'orders/fulfilled.html', {'orders': orders})
 
 
 @permission_required('common.view_orders_order_details', raise_exception=True)
 def order_details(request, order_pk):
-    order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
-                              pk=order_pk)
-    price_sum = sum(book.book_type.price for book in order.book_set.all())
+    order = get_object_or_404(Order.objects
+                              .prefetch_related('book_set', 'orderedbook_set', 'orderedbook_set__book_type')
+                              .select_related('user'), pk=order_pk)
+    price_sum = sum(book.book_type.price for book in order.orderedbook_set.all())
     return render(request, 'orders/details.html',
                   {'order': order, 'book_list': order.book_set.all(), 'price_sum': price_sum})
 
 
 @permission_required('common.view_orders_fulfill', raise_exception=True)
 def fulfill(request, order_pk):
-    order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
-                              ~Q(valid_until__lte=timezone.now()), pk=order_pk)
-    book_types_dict = books_by_types(order.book_set.all())
-    book_types = book_types_dict.keys()
+    order = get_object_or_404(Order.objects.prefetch_related('orderedbook_set', 'orderedbook_set__book_type')
+                              .select_related('user'), pk=order_pk)
+    book_types = dict((orderedbook.book_type, orderedbook) for orderedbook in order.orderedbook_set.all())
+    book_types_to_delete = []
     available = get_available_books()
-    counter = Counter(book.book_type for book in available)
-    for book_type in book_types:
-        book_type.in_stock = counter[book_type] + book_type.amount
+    amounts = get_available_amount(available)
+    for book_type in book_types.keys():
+        book_type.amount = book_types[book_type].count
+        book_type.in_stock = amounts[book_type.pk] + book_type.amount
+
+    users = AppUser.objects.all()
+    users = [user for user in users if user.verified]
+    users = [(user.pk, str(user)) for user in users]
 
     if request.method == 'POST':
+        request.session['owners_by_book'] = request.session.setdefault('owners_by_book', dict())
+        request.session['books_to_purchase'] = request.session.setdefault('books_to_purchase', dict())
+        request.session['owners_by_book'][str(order_pk)] = dict()
         with transaction.atomic():
-            for book_type in book_types:
+            error = False
+            owners_by_book = dict()
+            for book_type in book_types.keys():
                 new_amount = int(request.POST['amount-' + str(book_type.pk)])
                 if book_type.in_stock < new_amount or new_amount < 0:
                     return HttpResponseBadRequest()
 
-                if new_amount < book_type.amount:
-                    book_list = Book.objects.filter(order=order, book_type=book_type)
-                    books_to_keep = book_list[:new_amount]
-                    book_list.exclude(pk__in=books_to_keep).update(order=None, reserved_until=timezone.now())
-                elif new_amount > book_type.amount:
-                    amount = new_amount - book_type.amount
-                    book_instance = book_types_dict[book_type]
-                    books_to_add = get_available_books().filter(book_type=book_type)[:amount]
-                    Book.objects.filter(pk__in=books_to_add).update(order=order,
-                                                                    reserved_until=book_instance.reserved_until,
-                                                                    reserver=book_instance.reserver)
+                if new_amount == 0:
+                    book_types[book_type].delete()  # delete orderedbook which points to that book type
+                    book_types_to_delete.append(book_type)
+                    continue
+                elif new_amount != book_type.amount:
+                    book_types[book_type].count = new_amount
+                    book_types[book_type].save()
+
+                book_type.amount = new_amount
+
+                book_type.owners = request.POST['owners-' + str(book_type.pk)]
+                owners = book_type.owners.split(',')
+
+                valid_data = True
+                try:
+                    owners = [int(owner) for owner in owners]
+                except ValueError:
+                    valid_data = False
+
+                if len(owners) != new_amount or not valid_data:
+                    set_error_msg(request, 'amount_and_length_of_owners_differ')
+                    book_type.error = True
+                    error = True
+                    continue
+
+                request.session['owners_by_book'][str(order_pk)][book_type.pk] = owners
+
+                owners_dict = dict()
+                for owner in owners:
+                    owners_dict[owner] = owners_dict.setdefault(owner, 0) + 1
+
+                owners_by_book[book_type] = owners_dict
+
+            if error:
+                for el in book_types_to_delete:
+                    book_types.pop(el)
+                return render(request, 'orders/fulfill.html', {'order': order, 'book_list': book_types.keys(),
+                                                               'users': users})
+            else:
+                books_to_purchase = []
+                for book_type, owners in owners_by_book.items():
+                    books = Book.objects.filter(book_type=book_type, sold=False, accepted=True)
+                    for owner, amount in owners.items():
+                        owner_books = books.filter(owner__pk=owner)
+                        if len(owner_books) < amount:
+                            set_error_msg(request, 'owner_doesnt_have_enough_books_in_db')
+                            book_type.error = True
+                            error = True
+                            continue
+
+                        books_to_purchase += owner_books[:amount]
+
+                if error:
+                    for el in book_types_to_delete:
+                        book_types.pop(el)
+                    return render(request, 'orders/fulfill.html', {'order': order, 'book_list': book_types.keys(),
+                                                                   'users': users})
+                else:
+                    request.session['books_to_purchase'][str(order_pk)] = [book.pk for book in books_to_purchase]
 
         return HttpResponseRedirect(reverse(fulfill_accept, args=(order_pk,)))
     else:
-        return render(request, 'orders/fulfill.html', {'order': order, 'book_list': book_types})
+        for el in book_types_to_delete:
+            book_types.pop(el)
+        return render(request, 'orders/fulfill.html', {'order': order, 'book_list': book_types.keys(), 'users': users})
 
 
 @permission_required('common.view_orders_fulfill_accept', raise_exception=True)
 def fulfill_accept(request, order_pk):
-    order = get_object_or_404(Order.objects.prefetch_related('book_set', 'book_set__book_type').select_related('user'),
-                              ~Q(valid_until__lte=timezone.now()), pk=order_pk)
+    order = get_object_or_404(Order.objects.prefetch_related('orderedbook_set', 'orderedbook_set__book_type')
+                              .select_related('user'), pk=order_pk)
 
-    if order.book_set.count() == 0:
+    if order.orderedbook_set.count() == 0:
         order.delete()
         set_info_msg(request, 'order_removed')
+        del request.session['books_to_purchase'][str(order_pk)]
+        del request.session['owners_by_book'][str(order_pk)]
         return HttpResponseRedirect(reverse(not_fulfilled))
 
     if request.method == 'POST':
-        order.book_set.all().update(sold=True, sold_date=timezone.now(), purchaser=order.user)
+        books_to_purchase = [int(book) for book in request.session['books_to_purchase'][str(order_pk)]]
+        Book.objects.filter(pk__in=books_to_purchase).update(sold=True, sold_date=timezone.now(), purchaser=order.user)
+        order.fulfilled = True
+        order.save()
         set_success_msg(request, 'order_fulfilled')
+        del request.session['books_to_purchase'][str(order_pk)]
+        del request.session['owners_by_book'][str(order_pk)]
         return HttpResponseRedirect(reverse(not_fulfilled))
-    else:
-        price_sum = sum(book.book_type.price for book in order.book_set.all())
-        return render(request, 'orders/fulfill_accept.html', {'order': order, 'price_sum': price_sum})
+
+    book_types = dict((orderedbook.book_type, orderedbook) for orderedbook in order.orderedbook_set.all())
+
+    book_sum = 0
+    price_sum = 0
+    for book_type in book_types.keys():
+        book_type.amount = book_types[book_type].count
+        book_sum += book_type.amount
+        price_sum += book_type.amount * book_type.price
+        book_type.owners = [int(owner) for owner in request.session['owners_by_book'][str(order_pk)][str(book_type.pk)]]
+
+    users = AppUser.objects.all()
+    users = [user for user in users if user.verified]
+    users = dict((user.pk, "#" + str(user.pk) + ": " + str(user)) for user in users)
+    return render(request, 'orders/fulfill_accept.html', {'order': order, 'book_list': book_types.keys(),
+                                                          'price_sum': price_sum, 'users': users, 'book_sum': book_sum})
 
 
 def get_orders() -> QuerySet:
@@ -117,5 +191,5 @@ def get_orders() -> QuerySet:
     The function returns QuerySet of Order model with all necessary values for displaying also selected/prefetched.
     :return: the QuerySet of Order model
     """
-    return Order.objects.select_related('user').prefetch_related('book_set').annotate(
-        sold_count=Count('book', field='CASE WHEN books_book.sold THEN 1 END')).order_by('-pk')
+    return Order.objects.select_related('user').prefetch_related('orderedbook_set').annotate(
+        books_count=Sum('orderedbook__count')).order_by('-pk')
