@@ -47,9 +47,24 @@ def order_details(request, order_pk):
     order = get_object_or_404(Order.objects
                               .prefetch_related('book_set', 'orderedbook_set', 'orderedbook_set__book_type')
                               .select_related('user'), pk=order_pk)
-    price_sum = sum(book.book_type.price for book in order.orderedbook_set.all())
-    return render(request, 'orders/details.html',
-                  {'order': order, 'book_list': order.book_set.all(), 'price_sum': price_sum})
+    book_types = dict((orderedbook.book_type, orderedbook) for orderedbook in order.orderedbook_set.all())
+
+    book_sum = 0
+    price_sum = 0
+    for book_type in book_types.keys():
+        book_type.amount = book_types[book_type].count
+        book_sum += book_type.amount
+        price_sum += book_type.amount * book_type.price
+        book_type.owners = []
+        for book in order.book_set.all():
+            if book.book_type == book_type:
+                book_type.owners.append(book.owner_id)
+
+    users = AppUser.objects.all()
+    users = [user for user in users if user.verified]
+    users = dict((user.pk, "#" + str(user.pk) + ": " + str(user)) for user in users)
+    return render(request, 'orders/details.html', {'order': order, 'book_list': book_types.keys(),
+                                                   'price_sum': price_sum, 'users': users, 'book_sum': book_sum})
 
 
 @permission_required('common.view_orders_fulfill', raise_exception=True)
@@ -161,7 +176,8 @@ def fulfill_accept(request, order_pk):
 
     if request.method == 'POST':
         books_to_purchase = [int(book) for book in request.session['books_to_purchase'][str(order_pk)]]
-        Book.objects.filter(pk__in=books_to_purchase).update(sold=True, sold_date=timezone.now(), purchaser=order.user)
+        Book.objects.filter(pk__in=books_to_purchase).update(sold=True, sold_date=timezone.now(), purchaser=order.user,
+                                                             order=order)
         order.fulfilled = True
         order.save()
         set_success_msg(request, 'order_fulfilled')

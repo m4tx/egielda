@@ -4,6 +4,14 @@
 
 {% block title %}{% trans "Order details" %}{% endblock %}
 
+{% block head %}
+    {% load staticfiles %}
+    <link href="//code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.min.css" type="text/css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/tokenfield-typeahead.css" %}"></link>
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-tokenfield.css" %}"></link>
+{% endblock %}
+
 {% block content %}
     <h1>
         {% trans "Order details" %}
