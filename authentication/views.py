@@ -97,12 +97,12 @@ def purchased(request):
 def sold(request):
     books = Book.objects.filter(owner=request.user).select_related("book_type")
 
-    stats = dict()  # Dictionary indexed with the book string, valued with the list containing 4 values: a book itself,
-                    # amount of books declared to bring, books actually brought and books already sold
+    stats = dict()  # Dictionary indexed with the book type string, valued with the list containing 4 values: a book
+                    # itself, amount of books declared to bring, books actually brought and books already sold
     for book in books:
-        stats[str(book)] = stats.setdefault(str(book), [book, 0, 0, 0])
-        stats[str(book)][1] += 1
-        stats[str(book)][2] += 1 if book.accepted else 0
-        stats[str(book)][3] += 1 if book.sold else 0
+        stats[str(book.book_type)] = stats.setdefault(str(book.book_type), [book, 0, 0, 0])
+        stats[str(book.book_type)][1] += 1
+        stats[str(book.book_type)][2] += 1 if book.accepted else 0
+        stats[str(book.book_type)][3] += 1 if book.sold else 0
 
     return render(request, 'authentication/sold.html', {'stats': stats})
