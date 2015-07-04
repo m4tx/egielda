@@ -107,6 +107,26 @@
             </li>
         {% endif %}
 
+{#        {% if perms.common.view_users_index %}#}
+            <li>
+                <a href="{% url 'users.views.index' %}">
+                    <span class="glyphicon glyphicon-user"></span> <h4>{% trans "Users" %}</h4>
+                </a>
+
+                {% if perms.common.view_stats_books_sold or perms.common.view_books_users or perms.common.view_books_books %}
+                    <ul>
+                        {% if perms.common.view_stats_books_sold %}
+                            <li><a href="{% url 'users.views.verified' %}">{% trans "Verified" %}</a></li>
+                        {% endif %}
+
+                        {% if perms.common.view_stats_books %}
+{#                            <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>#}
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </li>
+{#        {% endif %}#}
+
         {% if perms.common.view_stats_index %}
             <li>
                 <a href="{% url 'stats.views.index' %}">
@@ -117,10 +137,6 @@
                     <ul>
                         {% if perms.common.view_stats_books_sold %}
                             <li><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></li>
-                        {% endif %}
-
-                        {% if perms.common.view_stats_users %}
-                            <li><a href="{% url 'stats.views.users' %}">{% trans "Users" %}</a></li>
                         {% endif %}
 
                         {% if perms.common.view_stats_books %}

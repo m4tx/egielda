@@ -46,12 +46,13 @@ def manage_header(*args):
         }],
         'stats': ['stats.views.index', _("Statistics"), {
             'sold': ['stats.views.sold', _("Books sold")],
-            'users': ['stats.views.users', _("Users"), {
-                'profile': ['stats.views.user_profile', _("User's profile")],
-                'purchased': ['stats.views.user_profile_purchased', _("User's purchased books")],
-                'sold': ['stats.views.user_profile_sold', _("User's sold books")],
-            }],
             'books': ['stats.views.books', _("Books")],
+        }],
+        'users': ['users.views.index', _("Users"), {
+            'verified': ['users.views.verified', _("Verified")],
+            'profile': ['users.views.profile', _("User's profile")],
+            'purchased': ['users.views.profile_purchased', _("User's purchased books")],
+            'sold': ['users.views.profile_sold', _("User's sold books")],
         }],
         'settings': ['settings.views.index', _("Settings")]
     }]

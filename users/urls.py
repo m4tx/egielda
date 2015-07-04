@@ -11,11 +11,12 @@
 
 from django.conf.urls import url
 
-from stats import views
-
+from users import views
 
 urlpatterns = [
-    url(r'^$', views.index),
-    url(r'^sold/$', views.books_sold),
-    url(r'^books/$', views.books),
+    url(r'^([0-9]+)/$', views.profile),
+    url(r'^([0-9]+)/purchased/$', views.profile_purchased),
+    url(r'^([0-9]+)/sold/$', views.profile_sold),
+    url(r'^verified/$', views.verified),
+    url(r'^/$', views.index)
 ]

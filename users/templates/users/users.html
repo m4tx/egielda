@@ -14,25 +14,10 @@
 
 {% block content %}
     <h1>{% trans "Users" %}</h1>
-    {% manage_header "stats/users" %}
+    {% manage_header "users/verified" %}
 
     <ul class="nav nav-tabs">
-        {% if perms.common.view_stats_index %}
-            <li><a href="{% url 'stats.views.index' %}">{% trans "Charts" %}</a></li>
-        {% else %}
-            <li class="disabled"><a href="#">{% trans "Charts" %}</a></li>
-        {% endif %}
-        {% if perms.common.view_stats_books_sold %}
-            <li><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></li>
-        {% else %}
-            <li class="disabled"><a href="#">{% trans "Books sold" %}</a></li>
-        {% endif %}
-        <li class="active"><a href="#">{% trans "Users" %}</a></li>
-        {% if perms.common.view_stats_books %}
-            <li><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></li>
-        {% else %}
-            <li class="disabled"><a href="#">{% trans "Books" %}</a></li>
-        {% endif %}
+        <li class="active"><a href="#">{% trans "Verified" %}</a></li>
     </ul>
 
     {% if users %}
@@ -52,9 +37,11 @@
                     <tr>
                         <td>
                             {% if perms.common.view_users_profile %}
-                                <a class="btn btn-xs btn-link" href="{% url 'stats.views.user_profile' student.pk %}"
+                                <a class="btn btn-xs btn-link" href="{% url 'users.views.profile' student.pk %}"
                                     role="button"><span class="glyphicon glyphicon-user"></span>
                                 {{ student.username }}</a>
+                            {% else %}
+                                {{ student.username }}
                             {% endif %}
                         </td>
                         <td>{{ student.first_name }}</td>

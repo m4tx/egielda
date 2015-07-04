@@ -46,11 +46,13 @@ class DummyPermissions(models.Model):
 
             ('view_stats_index', "View stats.index"),
             ('view_stats_books_sold', "View stats.books_sold"),
-            ('view_stats_users', "View stats.users"),
-            ('view_stats_user_profile', "View stats.user_profile"),
-            ('view_stats_user_profile_purchased', "View stats.user_profile_purchased"),
-            ('view_stats_user_profile_sold', "View stats.user_profile_sold"),
             ('view_stats_books', "View stats.books"),
+
+            ('view_users_index', "View users.index"),
+            ('view_users_verified', "View users.verified"),
+            ('view_users_profile', "View users.profile"),
+            ('view_users_profile_purchased', "View users.profile_purchased"),
+            ('view_users_profile_sold', "View users.profile_sold"),
 
             ('view_authentication_profile', 'View authentication.profile'),
             ('view_authentication_profile_purchased', 'View authentication.purchased'),

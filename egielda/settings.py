@@ -82,6 +82,7 @@ INSTALLED_APPS = (
     'stats',
     'settings',
     'orders',
+    'users',
     'utils',
 )
 

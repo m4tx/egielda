@@ -63,11 +63,6 @@
             <li class="disabled"><a href="#">{% trans "Charts" %}</a></li>
         {% endif %}
         <li class="active"><a href="#">{% trans "Books sold" %}</a></li>
-        {% if perms.common.view_stats_users %}
-            <li><a href="{% url 'stats.views.users' %}">{% trans "Users" %}</a></li>
-        {% else %}
-            <li class="disabled"><a href="#">{% trans "Users" %}</a></li>
-        {% endif %}
         {% if perms.common.view_stats_books %}
             <li><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></li>
         {% else %}

@@ -59,21 +59,21 @@
                 {%  trans "Account not verified" %}
             {% endif %}
         </h4>
-    {% manage_header "stats/users/sold" %}
+    {% manage_header "users/sold" %}
 
     <ul class="nav nav-tabs">
         {% if perms.common.view_stats_user_profile %}
-            <li><a href="{% url 'stats.views.user_profile' student.pk %}">{% trans "Profile data" %}</a></li>
+            <li><a href="{% url 'users.views.profile' student.pk %}">{% trans "Profile data" %}</a></li>
         {% else %}
             <li class="disabled"><a href="#">{% trans "Profile data" %}</a></li>
         {% endif %}
         {% if perms.common.view_stats_user_profile_purchased %}
-            <li><a href="{% url 'stats.views.user_profile_purchased' student.pk %}">{% trans "Purchased books" %}</a></li>
+            <li><a href="{% url 'users.views.profile_purchased' student.pk %}">{% trans "Purchased books" %}</a></li>
         {% else %}
             <li class="disabled"><a href="#">{% trans "Purchased books" %}</a></li>
         {% endif %}
         {% if perms.common.view_stats_user_profile_sold %}
-            <li class="active"><a href="{% url 'stats.views.user_profile_sold' student.pk %}">{% trans "Sold books" %}</a></li>
+            <li class="active"><a href="{% url 'users.views.profile_sold' student.pk %}">{% trans "Sold books" %}</a></li>
         {% else %}
             <li class="disabled"><a href="#">{% trans "Sold books" %}</a></li>
         {% endif %}

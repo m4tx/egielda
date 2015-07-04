@@ -36,6 +36,7 @@ urlpatterns = patterns(
     url(r'^manage/sellers/', include('sellers.urls')),
     url(r'^manage/orders/', include('orders.urls')),
     url(r'^manage/stats/', include('stats.urls')),
+    url(r'^manage/users/', include('users.urls')),
     url(r'^manage/settings/', include('settings.urls')),
     url(r'^sell/', include('sell.urls', namespace='sell')),
     url(r'^purchase/', include('purchase.urls', namespace='purchase')),
