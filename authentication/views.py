@@ -16,7 +16,6 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.db.models import Sum
 
-
 from authentication.forms import UserDataForm
 from books.models import Book
 from utils.alerts import set_success_msg
@@ -38,6 +37,7 @@ def register(request):
         form = UserDataForm()
 
     return render(request, 'authentication/register.html', {'form': form})
+
 
 @permission_required('common.view_authentication_profile', raise_exception=True)
 def profile(request):
@@ -75,6 +75,7 @@ def profile(request):
 
     return render(request, 'authentication/profile.html', {'form': form})
 
+
 @permission_required('common.view_authentication_profile_purchased', raise_exception=True)
 def purchased(request):
     orders = Order.objects.filter(user=request.user).prefetch_related(
@@ -92,6 +93,7 @@ def purchased(request):
         stats[(order.user.get_full_name(), order_id)] = order_book_list
 
     return render(request, 'authentication/purchased.html', {'stats': stats})
+
 
 @permission_required('common.view_authentication_profile_sold', raise_exception=True)
 def sold(request):

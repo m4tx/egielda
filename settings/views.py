@@ -48,7 +48,7 @@ def index(request):
                     ('homepage_info', settings.homepage_info if settings.exists('homepage_info') else "")]))
         form = SettingsForm(initial=values)
 
-    return render(request, 'settings/index.html', {'page_title': _("Settings"), 'form': form})
+    return render(request, 'settings/index.html', {'form': form})
 
 
 def add_date_value(name, settings):

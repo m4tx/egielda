@@ -37,7 +37,6 @@ def manage_header(*args):
         'orders': ['orders.views.index', _("Orders"), {
             'not_fulfilled': ['orders.views.not_fulfilled', _("Not fulfilled")],
             'fulfill': ['orders.views.fulfill', _("Fulfill")],
-            'outdated': ['orders.views.outdated', _("Outdated")],
             'fulfilled': ['orders.views.fulfilled', _("Fulfilled")],
             'details': ['orders.views.details', _("Details")]
         }],
@@ -48,7 +47,9 @@ def manage_header(*args):
         'stats': ['stats.views.index', _("Statistics"), {
             'sold': ['stats.views.sold', _("Books sold")],
             'users': ['stats.views.users', _("Users"), {
-                'list': ['stats.views.list_books', _("User's books")],
+                'profile': ['stats.views.user_profile', _("User's profile")],
+                'purchased': ['stats.views.user_profile_purchased', _("User's purchased books")],
+                'sold': ['stats.views.user_profile_sold', _("User's sold books")],
             }],
             'books': ['stats.views.books', _("Books")],
         }],

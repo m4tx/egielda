@@ -85,7 +85,7 @@
                     <span class="glyphicon glyphicon-shopping-cart"></span> <h4>{% trans "Orders" %}</h4>
                 </a>
 
-                {% if perms.common.view_orders_not_fulfilled or perms.common.view_orders_outdated or perms.common.view_orders_fulfilled %}
+                {% if perms.common.view_orders_not_fulfilled or perms.common.view_orders_fulfilled %}
                     <ul>
                         {% if perms.common.view_orders_not_fulfilled %}
                             <li><a href="{% url 'orders.views.not_fulfilled' %}">{% trans "Not fulfilled" %}</a></li>
@@ -102,7 +102,7 @@
         {% if perms.common.view_sellers_index %}
             <li>
                 <a href="{% url 'sellers.views.index' %}">
-                    <span class="glyphicon glyphicon-user"></span> <h4>{% trans "Sellers with unaccepted books" %}</h4>
+                    <span class="glyphicon glyphicon-check"></span> <h4>{% trans "Sellers with unaccepted books" %}</h4>
                 </a>
             </li>
         {% endif %}

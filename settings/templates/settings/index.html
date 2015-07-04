@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="{% static "css/bootstrap-datetimepicker.min.css" %}">
 {% endblock %}
 
-{% block title %}{{ page_title }}{% endblock %}
+{% block title %}{% trans "Settings" %}{% endblock %}
 
 {% block content %}
-    <h1>{{ page_title }}</h1>
+    <h1>{% trans "Settings" %}</h1>
     {% manage_header "settings" %}
 
     <form class="form-horizontal" action="{{ request.path }}" method="post">

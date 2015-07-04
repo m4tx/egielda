@@ -75,7 +75,6 @@ def create_groups(verbosity, **kwargs):
             'view_orders_index',
             'view_orders_order_details',
             'view_orders_not_fulfilled',
-            'view_orders_outdated',
             'view_orders_fulfilled',
             'view_orders_fulfill',
             'view_orders_fulfill_accept',
@@ -107,7 +106,9 @@ def create_groups(verbosity, **kwargs):
 
             'view_stats_books_sold',
             'view_stats_users',
-            'view_stats_list_books',
+            'view_stats_user_profile',
+            'view_stats_user_profile_purchased',
+            'view_stats_user_profile_sold',
             'view_stats_books',
         ]
 

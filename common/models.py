@@ -33,7 +33,6 @@ class DummyPermissions(models.Model):
             ('view_orders_index', "View orders.index"),
             ('view_orders_order_details', "View orders.order_details"),
             ('view_orders_not_fulfilled', "View orders.not_fulfilled"),
-            ('view_orders_outdated', "View orders.outdated"),
             ('view_orders_fulfilled', "View orders.fulfilled"),
             ('view_orders_fulfill', "View orders.fulfill"),
             ('view_orders_fulfill_accept', "View orders.fulfill_accept"),
@@ -48,7 +47,9 @@ class DummyPermissions(models.Model):
             ('view_stats_index', "View stats.index"),
             ('view_stats_books_sold', "View stats.books_sold"),
             ('view_stats_users', "View stats.users"),
-            ('view_stats_list_books', "View stats.list_books"),
+            ('view_stats_user_profile', "View stats.user_profile"),
+            ('view_stats_user_profile_purchased', "View stats.user_profile_purchased"),
+            ('view_stats_user_profile_sold', "View stats.user_profile_sold"),
             ('view_stats_books', "View stats.books"),
 
             ('view_authentication_profile', 'View authentication.profile'),

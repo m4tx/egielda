@@ -10,16 +10,19 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 from collections import defaultdict
-from decimal import Decimal
 
 from django.contrib.auth.decorators import permission_required
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Count
+from django.db.models import Count, Sum
 
 from authentication.models import AppUser
 from books.models import BookType, Book
-from settings.settings import Settings
+from orders.models import Order
+from utils.alerts import set_success_msg
 from utils.dates import date_range
+from authentication.forms import UserDataForm
 
 
 @permission_required('common.view_stats_index', raise_exception=True)
@@ -90,26 +93,76 @@ def books_sold(request):
 
 @permission_required('common.view_stats_users', raise_exception=True)
 def users(request):
-    student_list = AppUser.objects.annotate(count=Count('appuser_owner')).exclude(count=0).order_by('first_name',
-                                                                                                    'last_name')
+    users = AppUser.objects.all().order_by('last_name', 'first_name')
+    users = [user for user in users if user.verified]
 
-    return render(request, 'stats/users.html', {'student_list': student_list})
+    return render(request, 'stats/users.html', {'users': users})
 
 
-@permission_required('common.view_stats_list_books', raise_exception=True)
-def list_books(request, user_pk):
-    user = get_object_or_404(AppUser, pk=user_pk)
-    book_list = Book.objects.select_related('book_type', 'purchaser', 'order').filter(owner=user)
+@permission_required('common.view_stats_user_profile', raise_exception=True)
+def user_profile(request, user_pk):
+    user = get_object_or_404(AppUser, id=user_pk)
 
-    sold_book_list = book_list.filter(sold=True)
-    sold_book_list.income = sum(book.book_type.price for book in sold_book_list)
-    sold_book_list.profit = Decimal(Settings('profit_per_book').profit_per_book) * len(sold_book_list)
-    sold_book_list.for_student = sold_book_list.income - sold_book_list.profit
-    unsold_book_list = book_list.filter(sold=False)
+    disabled_fields_post = ['password']
+    disabled_fields_files = ['document']
 
-    return render(request, 'stats/list_books.html', {'user_name': user.user_name(),
-                                                     'sold_book_list': sold_book_list,
-                                                     'unsold_book_list': unsold_book_list})
+    if request.POST:
+        for field in disabled_fields_post:
+            request.POST[field] = getattr(user, field)
+        for field in disabled_fields_files:
+            request.FILES[field] = getattr(user, field)
+        form = UserDataForm(request.POST, request.FILES, instance=user)
+
+        if form.is_valid():
+            form.save()
+            set_success_msg(request, 'user_profile_saved')
+            return HttpResponseRedirect(reverse(users))
+    else:
+        form = UserDataForm(instance=user)
+
+    for field in disabled_fields_post + disabled_fields_files:
+        form.fields[field].widget.attrs['readonly'] = True
+        form.fields[field].widget.attrs['disabled'] = True
+
+    del form.fields['password']
+
+    return render(request, 'stats/user_profile.html', {'form': form, 'student': user})
+
+
+@permission_required('common.view_stats_user_profile_purchased', raise_exception=True)
+def user_profile_purchased(request, user_pk):
+    user = get_object_or_404(AppUser, id=user_pk)
+    orders = Order.objects.filter(user=user).prefetch_related(
+        'user', 'orderedbook_set', 'orderedbook_set__book_type').annotate(books_count=Sum('orderedbook__count'))
+
+    stats = dict()
+    for order in orders:
+        order_id = order.date.strftime("%Y%m%d") + "-" + str(order.pk) + "-" + str(order.user.pk) + "-" + str(
+            order.books_count)
+
+        order_book_list = []
+        for orderedbook in order.orderedbook_set.all():
+            order_book_list.append((orderedbook.book_type, orderedbook.count, order.fulfilled))
+
+        stats[(order.user.get_full_name(), order_id)] = order_book_list
+
+    return render(request, 'stats/purchased.html', {'stats': stats, 'student': user})
+
+
+@permission_required('common.view_stats_user_profile_sold', raise_exception=True)
+def user_profile_sold(request, user_pk):
+    user = get_object_or_404(AppUser, id=user_pk)
+    books = Book.objects.filter(owner=user).select_related("book_type")
+
+    stats = dict()  # Dictionary indexed with the book type string, valued with the list containing 4 values: a book
+                    # itself, amount of books declared to bring, books actually brought and books already sold
+    for book in books:
+        stats[str(book.book_type)] = stats.setdefault(str(book.book_type), [book, 0, 0, 0])
+        stats[str(book.book_type)][1] += 1
+        stats[str(book.book_type)][2] += 1 if book.accepted else 0
+        stats[str(book.book_type)][3] += 1 if book.sold else 0
+
+    return render(request, 'stats/sold.html', {'stats': stats, 'student': user})
 
 
 @permission_required('common.view_stats_books', raise_exception=True)

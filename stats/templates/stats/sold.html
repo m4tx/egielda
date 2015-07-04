@@ -1,0 +1,114 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load manage_header %}
+{% load price %}
+
+{% block head %}
+    <style>
+        .panel-info h5 a {
+            color: #333;
+        }
+
+        .panel-info > .panel-heading {
+            color: #3A505B;
+            background-image: linear-gradient(to bottom, #E6F1F6 0%, #E6F1F6 100%);
+            background-color: #E6F1F6;
+            padding: 5px 13px;
+            line-height: 1.1;
+            font-size: 13px;
+        }
+
+        .list-group {
+            background-color: #F7FBFC;
+        }
+
+        .list-group-item {
+            background: inherit;
+        }
+
+        .list-group-item:nth-child(2n+1) {
+            background-color: #FFF;
+        }
+
+        tbody > tr.list-group-item:hover > td {
+            background-color: #FCFCE2;
+        }
+
+        .text-muted {
+            font-size: 12px;
+        }
+
+        h5 {
+            font-weight: bold;
+            margin: 7px 0;
+        }
+
+        .nav-tabs {
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}{% trans "Sold books" %}{% endblock %}
+
+{% block content %}
+    <h1>{% blocktrans %}{{ student }}'s profile{% endblocktrans %}</h1> <h4>
+            {% if user.verified %}
+                {%  trans "Account verified" %}
+            {% else %}
+                {%  trans "Account not verified" %}
+            {% endif %}
+        </h4>
+    {% manage_header "stats/users/sold" %}
+
+    <ul class="nav nav-tabs">
+        {% if perms.common.view_stats_user_profile %}
+            <li><a href="{% url 'stats.views.user_profile' student.pk %}">{% trans "Profile data" %}</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">{% trans "Profile data" %}</a></li>
+        {% endif %}
+        {% if perms.common.view_stats_user_profile_purchased %}
+            <li><a href="{% url 'stats.views.user_profile_purchased' student.pk %}">{% trans "Purchased books" %}</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">{% trans "Purchased books" %}</a></li>
+        {% endif %}
+        {% if perms.common.view_stats_user_profile_sold %}
+            <li class="active"><a href="{% url 'stats.views.user_profile_sold' student.pk %}">{% trans "Sold books" %}</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">{% trans "Sold books" %}</a></li>
+        {% endif %}
+    </ul>
+
+    {% if stats %}
+            <div class="panel panel-info">
+                <table class="list-group table table-hover">
+                     <thead>
+                        <tr>
+                            <th>{% trans "ISBN" %}</th>
+                            <th>{% trans "Publisher" %}</th>
+                            <th style="width: 40%;">{% trans "Title" %}</th>
+                            <th>{% trans "Publication" %}</th>
+                            <th>{% trans "Price" %}</th>
+                            <th>{% trans "Declared" %}</th>
+                            <th>{% trans "Brought" %}</th>
+                            <th>{% trans "Sold" context "count" %}</th>
+                        </tr>
+                    </thead>
+                    {% for key, value in stats.items %}
+                        <tr class="list-group-item" style="display: table-row; position: initial;">
+                            <td>{{ value.0.book_type.isbn }}</td>
+                            <td>{{ value.0.book_type.publisher }}</td>
+                            <td>{{ value.0.book_type.title }}</td>
+                            <td>{{ value.0.book_type.publication_year }}</td>
+                            <td>{{ value.0.book_type.price | price }}</td>
+                            <td>{{ value.1 }}</td>
+                            <td>{{ value.2 }}</td>
+                            <td>{{ value.3 }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+    {% else %}
+        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+    {% endif %}
+{% endblock %}
