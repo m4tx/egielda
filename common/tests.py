@@ -9,9 +9,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import Permission
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
+from authentication.models import AppUser
 
 from settings.settings import Settings
 from utils.test_utils import create_test_book_type, create_test_category, create_test_app_user, create_test_book, \
@@ -20,7 +21,10 @@ from utils.test_utils import create_test_book_type, create_test_category, create
 
 class ManagePermissionsTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username="test", email="test@localhost", password="test")
+        self.user = AppUser.objects.create_user(username="test", email="test@localhost",
+                                                password="test", first_name="Test",
+                                                last_name="Test", student_class="1A",
+                                                phone_number="111222333")
         self.client = Client()
         self.client.login(username="test", password="test")
 
@@ -76,22 +80,19 @@ class ManagePermissionsTest(TestCase):
         self.check_permission('view_orders_order_details',
                               reverse('orders.views.order_details', args=(self.create_test_order_with_book().pk,)))
 
-    def test_view_orders_not_executed(self):
-        self.check_permission('view_orders_not_executed', reverse('orders.views.not_executed'))
+    def test_view_orders_not_fulfilled(self):
+        self.check_permission('view_orders_not_fulfilled', reverse('orders.views.not_fulfilled'))
 
-    def test_view_orders_outdated(self):
-        self.check_permission('view_orders_outdated', reverse('orders.views.outdated'))
+    def test_view_orders_fulfilled(self):
+        self.check_permission('view_orders_fulfilled', reverse('orders.views.fulfilled'))
 
-    def test_view_orders_executed(self):
-        self.check_permission('view_orders_executed', reverse('orders.views.executed'))
+    def test_view_orders_fulfill(self):
+        self.check_permission('view_orders_fulfill',
+                              reverse('orders.views.fulfill', args=(self.create_test_order_with_book().pk,)))
 
-    def test_view_orders_execute(self):
-        self.check_permission('view_orders_execute',
-                              reverse('orders.views.execute', args=(self.create_test_order_with_book().pk,)))
-
-    def test_view_orders_execute_accept(self):
-        self.check_permission('view_orders_execute_accept',
-                              reverse('orders.views.execute_accept', args=(self.create_test_order_with_book().pk,)))
+    def test_view_orders_fulfill_accept(self):
+        self.check_permission('view_orders_fulfill_accept',
+                              reverse('orders.views.fulfill_accept', args=(self.create_test_order_with_book().pk,)))
 
     def test_view_sellers_index(self):
         self.check_permission('view_sellers_index', reverse('sellers.views.index'))
@@ -124,13 +125,6 @@ class ManagePermissionsTest(TestCase):
 
     def test_view_stats_users(self):
         self.check_permission('view_stats_users', reverse('stats.views.users'))
-
-    def test_view_stats_list_books(self):
-        app_user = create_test_app_user()
-        book_type = create_test_book_type()
-        create_test_book(book_type, app_user)
-        Settings().profit_per_book = 1
-        self.check_permission('view_stats_list_books', reverse('stats.views.list_books', args=(app_user.pk,)))
 
     def test_view_stats_books(self):
         self.check_permission('view_stats_books', reverse('stats.views.books'))

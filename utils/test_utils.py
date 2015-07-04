@@ -22,9 +22,9 @@ from orders.models import Order
 
 
 def create_test_superuser():
-    if User.objects.filter(username="test").count() == 0:
-        User.objects.create_superuser("test", "test@localhost", "test")
-
+    if AppUser.objects.filter(username="test").count() == 0:
+        AppUser.objects.create_superuser("test", "Some", "User", "1A", "111222333",
+                                         "test@localhost", "test")
 
 def login(selenium, live_server_url, username, password):
     selenium.get('%s%s' % (live_server_url, '/accounts/login/'))
@@ -59,6 +59,6 @@ def create_test_book(book_type, owner, accepted=True):
 
 
 def create_test_order(user):
-    order = Order(user=user, date=timezone.now(), valid_until=timezone.now() + timedelta(1))
+    order = Order(user=user, date=timezone.now())
     order.save()
     return order
