@@ -33,13 +33,15 @@ def index(request):
 @permission_required('common.view_orders_not_fulfilled', raise_exception=True)
 def not_fulfilled(request):
     orders = get_orders().filter(fulfilled=False)
-    return render(request, 'orders/not_fulfilled.html', {'orders': orders})
+    class_list = AppUser.objects.order_by('student_class').values_list('student_class', flat=True).distinct()
+    return render(request, 'orders/not_fulfilled.html', {'orders': orders, 'class_list': class_list})
 
 
 @permission_required('common.view_orders_fulfilled', raise_exception=True)
 def fulfilled(request):
     orders = get_orders().exclude(fulfilled=False)
-    return render(request, 'orders/fulfilled.html', {'orders': orders})
+    class_list = AppUser.objects.order_by('student_class').values_list('student_class', flat=True).distinct()
+    return render(request, 'orders/fulfilled.html', {'orders': orders, 'class_list': class_list})
 
 
 @permission_required('common.view_orders_order_details', raise_exception=True)

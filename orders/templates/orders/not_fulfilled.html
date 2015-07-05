@@ -21,6 +21,25 @@
         <li><a href="{% url 'orders.views.fulfilled' %}">{% trans "Fulfilled" %}</a></li>
     </ul>
 
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-3 col-md-2 control-label"
+                       for="category_filter">{% trans "Class" %}:</label>
+
+                <div class="col-sm-9 col-md-10">
+                    <select class="form-control" id="class_filter">
+                        <option value="0">{% trans "All" context "class" %}</option>
+                        <option disabled="disabled">────────</option>
+                        {% for class in class_list %}
+                            <option value="{{ class }}">{{ class }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% include "orders/orders_table.html" with show_fulfill=True show_order=False %}
 {% endblock %}
 
@@ -33,4 +52,5 @@
             $(".table-responsive table").tablesorter();
         });
     </script>
+    <script src="{% static "js/classfilter.js" %}"></script>
 {% endblock %}

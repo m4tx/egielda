@@ -81,7 +81,10 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
         }
 
     def get_short_name(self):
-        return str(self)
+        return _("%(first_name)s %(last_name)s") % {
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+        }
 
     def get_full_name(self):
         return _("%(first_name)s %(last_name)s, %(student_class)s, %(phone_number)s, %(email)s") % {

@@ -256,7 +256,7 @@ $("#category_filter").on("change", function () {
             $(this).attr("style", "display: none");
         }
     });
-})
+});
 
 function showMessage(text) {
     alert(text);
