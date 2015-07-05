@@ -42,10 +42,10 @@ def get_available_books():
 def get_available_amount(books):
     """
     Checks how many books are available in stock
-    :param books: list of BookTypes
+    :param books: list of Books
     :return: dictionary containing BookType -> in stock amount pairs
     """
-    book_type_list = [book.pk for book in books]
+    book_type_list = {book.book_type.pk for book in books}
 
     books_by_id = dict()
     for book in books:
