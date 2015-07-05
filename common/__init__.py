@@ -104,6 +104,8 @@ def create_groups(verbosity, **kwargs):
 
             'view_settings_index',
 
+            'view_orders_remove_order',
+
             'view_stats_books_sold',
             'view_stats_users',
             'view_stats_user_profile',

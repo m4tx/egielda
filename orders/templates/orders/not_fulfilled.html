@@ -40,7 +40,10 @@
         </div>
     </div>
 
-    {% include "orders/orders_table.html" with show_fulfill=True show_order=False %}
+     <form action="{% url 'orders.views.bulk_actions' 'remove' %}" method="post">
+        {% include "orders/orders_table.html" with show_fulfill=True show_order=False show_remove=True %}
+        {% csrf_token %}
+     </form>
 {% endblock %}
 
 {% block footer %}
@@ -50,6 +53,18 @@
     <script type="text/javascript">
         window.addEventListener("load", function(){
             $(".table-responsive table").tablesorter();
+
+            $("input[name^='select-']").on('change', function () {
+                $(this).closest($('tr')).toggleClass('active', this.checked);
+            });
+
+            $("input#select-all").on('change', function () {
+                var checkboxes = $("input[name^='select-']").filter(function(){
+                    return $(this).parent().parent().css('display') !== 'none';
+                });
+                checkboxes.prop('checked', this.checked);
+                checkboxes.closest($('tr')).toggleClass('active', this.checked);
+            });
         });
     </script>
     <script src="{% static "js/classfilter.js" %}"></script>

@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.db.models import Sum
 from django.db.models.query import QuerySet
-from django.http.response import HttpResponseBadRequest, HttpResponseRedirect
+from django.http.response import HttpResponseBadRequest, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
@@ -202,6 +202,35 @@ def fulfill_accept(request, order_pk):
     users = dict((user.pk, "#" + str(user.pk) + ": " + str(user)) for user in users)
     return render(request, 'orders/fulfill_accept.html', {'order': order, 'book_list': book_types.keys(),
                                                           'price_sum': price_sum, 'users': users, 'book_sum': book_sum})
+
+
+@permission_required('common.view_orders_remove_order', raise_exception=True)
+def remove_order(request, order_ids):
+    order_list = get_orders().filter(pk__in=order_ids.split(','))
+    if len(order_list) == 0:
+        raise Http404
+
+    if request.method == 'POST':
+        set_success_msg(request, 'order_removed' if len(order_list) == 1 else 'orders_removed')
+        order_list.delete()
+        return HttpResponseRedirect(reverse(index))
+    else:
+        return render(request, 'orders/remove.html', {'orders': order_list})
+
+
+def bulk_actions(request, action_name):
+    order_list = []
+    if action_name == 'remove' and request.method == 'POST':
+        for key, value in request.POST.items():
+            if value == 'on':
+                # Form field names are in format "select-id", so key[7:] will leave us id
+                order_list.append(key[7:])
+        if order_list:
+            return HttpResponseRedirect(reverse(remove_order, args=[",".join(order_list)]))
+        else:
+            return HttpResponseRedirect(reverse(index))
+    else:
+        raise Http404
 
 
 def get_orders() -> QuerySet:

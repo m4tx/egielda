@@ -51,6 +51,8 @@ def alerts(context):
             'category_remove': _("The category was removed successfully."),
             'settings_updated': _("Settings were updated successfully."),
             'order_fulfilled': _("The order was fulfilled successfully."),
+            'order_removed': _("The order was removed successfully."),
+            'orders_removed': _("The orders were removed successfully."),
             'seller_removed': _("The seller's books were removed successfully."),
             'sellers_removed': _("The sellers' books were removed successfully."),
             'profile_saved': _("Your profile data was successfully updated."),

@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^([0-9]+)/fulfill/$', views.fulfill),
     url(r'^([0-9]+)/fulfill/accept/$', views.fulfill_accept),
     url(r'^([0-9]+)/$', views.order_details),
+    url(r'^bulk/(\w+)/$', views.bulk_actions),
+    url(r'^([0-9,]+)/remove$', views.remove_order),
 ]

@@ -38,7 +38,8 @@ def manage_header(*args):
             'not_fulfilled': ['orders.views.not_fulfilled', _("Not fulfilled")],
             'fulfill': ['orders.views.fulfill', _("Fulfill")],
             'fulfilled': ['orders.views.fulfilled', _("Fulfilled")],
-            'details': ['orders.views.details', _("Details")]
+            'details': ['orders.views.details', _("Details")],
+            'remove': ['orders.views.remove', _("Remove")]
         }],
         'sellers': ['sellers.views.index', _("Sellers with unaccepted books"), {
             'accept_books': ['sellers.views.accept_books', _("Accept books")],

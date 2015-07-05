@@ -36,6 +36,7 @@ class DummyPermissions(models.Model):
             ('view_orders_fulfilled', "View orders.fulfilled"),
             ('view_orders_fulfill', "View orders.fulfill"),
             ('view_orders_fulfill_accept', "View orders.fulfill_accept"),
+            ('view_orders_remove_order', "View orders.remove_order"),
 
             ('view_sellers_index', "View sellers.index"),
             ('view_sellers_accept_books', "View sellers.accept_books"),
