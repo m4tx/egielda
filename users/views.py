@@ -31,7 +31,6 @@ def index(request):
 def verified(request):
     users = AppUser.objects.all().order_by('last_name', 'first_name')
     users = [user for user in users if user.verified]
-    users = filter(lambda user: user.verified, users)
 
     return render(request, 'users/users.html', {'users': users})
 
