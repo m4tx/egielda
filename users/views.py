@@ -10,6 +10,7 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
 from django.db.models import Sum
 from django.http import HttpResponseRedirect
@@ -19,6 +20,7 @@ from authentication.forms import UserDataForm
 from authentication.models import AppUser
 from books.models import Book
 from orders.models import Order
+from utils import alerts
 from utils.alerts import set_success_msg
 
 
@@ -32,7 +34,29 @@ def verified(request):
     users = AppUser.objects.all().order_by('last_name', 'first_name')
     users = [user for user in users if user.verified]
 
-    return render(request, 'users/users.html', {'users': users})
+    return render(request, 'users/users.html', {'users': users, 'tab': 'verified'})
+
+
+@permission_required('common.view_users_unverified', raise_exception=True)
+def unverified(request):
+    users = AppUser.objects.all().order_by('last_name', 'first_name')
+    users = [user for user in users if not user.verified]
+
+    return render(request, 'users/users.html', {'users': users, 'tab': 'unverified'})
+
+
+@permission_required('common.view_users_verify', raise_exception=True)
+def verify(request, user_pk):
+    student = get_object_or_404(AppUser, pk=user_pk)
+    if request.POST:
+        group = Group.objects.get(name='verified_user')
+        student.groups.add(group)
+        student.save()
+
+        alerts.set_success_msg(request, 'user_verified')
+        return HttpResponseRedirect(reverse(unverified))
+    else:
+        return render(request, 'users/verify.html', {'student': student})
 
 
 @permission_required('common.view_users_profile', raise_exception=True)

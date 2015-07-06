@@ -107,25 +107,25 @@
             </li>
         {% endif %}
 
-{#        {% if perms.common.view_users_index %}#}
+        {% if perms.common.view_users_index %}
             <li>
                 <a href="{% url 'users.views.index' %}">
                     <span class="glyphicon glyphicon-user"></span> <h4>{% trans "Users" %}</h4>
                 </a>
 
-                {% if perms.common.view_stats_books_sold or perms.common.view_books_users or perms.common.view_books_books %}
+                {% if perms.common.view_users_verified or perms.common.view_users_unverified %}
                     <ul>
-                        {% if perms.common.view_stats_books_sold %}
+                        {% if perms.common.view_users_verified %}
                             <li><a href="{% url 'users.views.verified' %}">{% trans "Verified" %}</a></li>
                         {% endif %}
 
-                        {% if perms.common.view_stats_books %}
-{#                            <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>#}
+                        {% if perms.common.view_users_unverified %}
+                            <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>
                         {% endif %}
                     </ul>
                 {% endif %}
             </li>
-{#        {% endif %}#}
+        {% endif %}
 
         {% if perms.common.view_stats_index %}
             <li>

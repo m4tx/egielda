@@ -14,10 +14,18 @@
 
 {% block content %}
     <h1>{% trans "Users" %}</h1>
-    {% manage_header "users/verified" %}
+    {% with path="users/"|add:tab %}
+        {% manage_header path %}
+    {% endwith %}
 
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#">{% trans "Verified" %}</a></li>
+        {% if tab == 'verified' %}
+            <li class="active"><a href="#">{% trans "Verified" %}</a></li>
+            <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>
+        {% elif tab == 'unverified' %}
+            <li><a href="{% url 'users.views.verified' %}">{% trans "Verified" %}</a></li>
+            <li class="active"><a href="#">{% trans "Unverified" %}</a></li>
+        {% endif %}
     </ul>
 
     {% if users %}
@@ -31,6 +39,9 @@
                     <th>{% trans "Class" %}</th>
                     <th>{% trans "Phone number" %}</th>
                     <th>{% trans "Email" %}</th>
+                    {% if tab == 'unverified' and perms.common.view_users_verify %}
+                        <th>{% trans "Actions" %}</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 {% for student in users %}
@@ -49,6 +60,14 @@
                         <td>{{ student.student_class }}</td>
                         <td>{{ student.phone_number }}</td>
                         <td>{{ student.email }}</td>
+                        {% if tab == 'unverified' and perms.common.view_users_verify %}
+                            <td>
+                                <a class="btn btn-xs btn-link"
+                                   href="{% url 'users.views.verify' student.pk %}" role="button">
+                                    <span class="glyphicon glyphicon-ok"></span> {% trans "Verify" %}
+                                </a>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </table>

@@ -1,0 +1,101 @@
+{% extends "common/base.html" %}
+{% load i18n %}
+{% load manage_header %}
+
+{% block head %}
+    <style>
+        #identity-card {
+            display: block;
+            max-height: 280px;
+            width: auto;
+            max-width: 100%;
+            margin-bottom: 15px;
+        }
+
+        @media (min-width: 992px) {
+            #identity-card {
+                float: right;
+            }
+        }
+
+        @media (max-width: 991px) {
+            #identity-card {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block title %}{% blocktrans %}Verify {{ student }}'s account{% endblocktrans %}{% endblock %}
+
+{% block content %}
+    <h1>{% blocktrans %}Verify {{ student }}'s account{% endblocktrans %}</h1>
+    {% manage_header "users/unverified/verify" %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-6 col-md-4 control-label">{% trans "Username" %}:</label>
+
+                    <div class="col-sm-6 col-md-8">
+                        <p class="form-control-static">{{ student.username }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 col-md-4 control-label">{% trans "First name" %}:</label>
+
+                    <div class="col-sm-6 col-md-8">
+                        <p class="form-control-static">{{ student.first_name }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 col-md-4 control-label">{% trans "Last name" %}:</label>
+
+                    <div class="col-sm-6 col-md-8">
+                        <p class="form-control-static">{{ student.last_name }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 col-md-4 control-label">{% trans "Class" %}:</label>
+
+                    <div class="col-sm-6 col-md-8">
+                        <p class="form-control-static">{{ student.student_class }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 col-md-4 control-label">{% trans "Phone number" %}:</label>
+
+                    <div class="col-sm-6 col-md-8">
+                        <p class="form-control-static">{{ student.phone_number }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 col-md-4 control-label">{% trans "E-mail" %}:</label>
+
+                    <div class="col-sm-6 col-md-8">
+                        <p class="form-control-static">{{ student.email }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ student.document.url }}">
+                <img id="identity-card" src="{{ student.document.url }}">
+            </a>
+        </div>
+    </div>
+
+    <form class="form-horizontal" action="{{ request.path }}" method="post">
+        {% csrf_token %}
+        <a class="btn btn-default pull-left" href="{% url 'users.views.unverified' %}">
+                <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
+        <div class="btn-toolbar" role="toolbar">
+            <button class="btn btn-primary pull-right" type="submit">
+                <span class="glyphicon glyphicon-ok"></span> {% trans "Verify" %}</button>
+            <a class="btn btn-danger pull-right" href="#" {# TODO #}>
+                <span class="glyphicon glyphicon-trash"></span> {% trans "Delete" %}</a>
+        </div>
+    </form>
+{% endblock %}

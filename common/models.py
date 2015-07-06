@@ -51,6 +51,8 @@ class DummyPermissions(models.Model):
 
             ('view_users_index', "View users.index"),
             ('view_users_verified', "View users.verified"),
+            ('view_users_unverified', "View users.unverified"),
+            ('view_users_verify', "View users.verify"),
             ('view_users_profile', "View users.profile"),
             ('view_users_profile_purchased', "View users.profile_purchased"),
             ('view_users_profile_sold', "View users.profile_sold"),

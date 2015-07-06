@@ -57,6 +57,7 @@ def alerts(context):
             'sellers_removed': _("The sellers' books were removed successfully."),
             'profile_saved': _("Your profile data was successfully updated."),
             'user_profile_saved': _("User's profile data was successfully updated."),
+            'user_verified': _("User was verified successfully."),
         }[request.session['success_msg']]
         del request.session['success_msg']
 

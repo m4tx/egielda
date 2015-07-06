@@ -51,6 +51,9 @@ def manage_header(*args):
         }],
         'users': ['users.views.index', _("Users"), {
             'verified': ['users.views.verified', _("Verified")],
+            'unverified': ['users.views.unverified', _("Unverified"), {
+                'verify': ['users.views.verify', _("Verify")]
+            }],
             'profile': ['users.views.profile', _("User's profile")],
             'purchased': ['users.views.profile_purchased', _("User's purchased books")],
             'sold': ['users.views.profile_sold', _("User's sold books")],

@@ -17,6 +17,8 @@ urlpatterns = [
     url(r'^([0-9]+)/$', views.profile),
     url(r'^([0-9]+)/purchased/$', views.profile_purchased),
     url(r'^([0-9]+)/sold/$', views.profile_sold),
+    url(r'^([0-9]+)/verify/$', views.verify),
     url(r'^verified/$', views.verified),
+    url(r'^unverified/$', views.unverified),
     url(r'^/$', views.index)
 ]
