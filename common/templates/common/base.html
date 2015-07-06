@@ -90,6 +90,11 @@
                                         </li>
                                     {% else %}
                                         <li>
+                                            <a href="{% url 'register' %}" role="menuitem">
+                                                <span class="glyphicon glyphicon-plus"></span> {% trans "Sign up" %}
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a href="{% url 'login' %}" role="menuitem">
                                                 <span class="glyphicon glyphicon-log-in"></span> {% trans "Sign in" %}
                                             </a>
