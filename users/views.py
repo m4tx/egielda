@@ -31,16 +31,14 @@ def index(request):
 
 @permission_required('common.view_users_verified', raise_exception=True)
 def verified(request):
-    users = AppUser.objects.all().order_by('last_name', 'first_name')
-    users = [user for user in users if user.verified]
+    users = AppUser.objects.filter(groups__name__in=AppUser.get_verified_groups()).order_by('last_name', 'first_name')
 
     return render(request, 'users/users.html', {'users': users, 'tab': 'verified'})
 
 
 @permission_required('common.view_users_unverified', raise_exception=True)
 def unverified(request):
-    users = AppUser.objects.all().order_by('last_name', 'first_name')
-    users = [user for user in users if not user.verified]
+    users = AppUser.objects.exclude(groups__name__in=AppUser.get_verified_groups()).order_by('last_name', 'first_name')
 
     return render(request, 'users/users.html', {'users': users, 'tab': 'unverified'})
 

@@ -69,8 +69,14 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 
     @property
     def verified(self):
-        return self.groups.filter(Q(name='verified_user') | Q(name='moderator')
-                                                       | Q(name='admin') | Q(name='sysadmin')).exists()
+        query = Q()
+        for group_name in AppUser.get_verified_groups():
+            query |= Q(name=group_name)
+        return self.groups.filter(query).exists()
+
+    @staticmethod
+    def get_verified_groups():
+        return ['verified_user', 'moderator', 'admin', 'sysadmin']
 
     def user_name(self):
         return self.first_name + " " + self.last_name

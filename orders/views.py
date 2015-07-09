@@ -62,8 +62,7 @@ def order_details(request, order_pk):
             if book.book_type == book_type:
                 book_type.owners.append(book.owner_id)
 
-    users = AppUser.objects.all()
-    users = [user for user in users if user.verified]
+    users = AppUser.objects.filter(groups__name__in=AppUser.get_verified_groups()).order_by('last_name', 'first_name')
     users = dict((user.pk, "#" + str(user.pk) + ": " + str(user)) for user in users)
     return render(request, 'orders/details.html', {'order': order, 'book_list': book_types.keys(),
                                                    'price_sum': price_sum, 'users': users, 'book_sum': book_sum})
@@ -81,8 +80,7 @@ def fulfill(request, order_pk):
         book_type.amount = book_types[book_type].count
         book_type.in_stock = amounts[book_type.pk] + book_type.amount
 
-    users = AppUser.objects.all()
-    users = [user for user in users if user.verified]
+    users = AppUser.objects.filter(groups__name__in=AppUser.get_verified_groups()).order_by('last_name', 'first_name')
     users = [(user.pk, str(user)) for user in users]
 
     if request.method == 'POST':
@@ -197,8 +195,7 @@ def fulfill_accept(request, order_pk):
         price_sum += book_type.amount * book_type.price
         book_type.owners = [int(owner) for owner in request.session['owners_by_book'][str(order_pk)][str(book_type.pk)]]
 
-    users = AppUser.objects.all()
-    users = [user for user in users if user.verified]
+    users = AppUser.objects.filter(groups__name__in=AppUser.get_verified_groups()).order_by('last_name', 'first_name')
     users = dict((user.pk, "#" + str(user.pk) + ": " + str(user)) for user in users)
     return render(request, 'orders/fulfill_accept.html', {'order': order, 'book_list': book_types.keys(),
                                                           'price_sum': price_sum, 'users': users, 'book_sum': book_sum})
