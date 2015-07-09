@@ -9,12 +9,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+
 from django.forms import ModelForm
 from django.forms import PasswordInput, TextInput
 from django.forms import ValidationError
 from django.utils.translation import ugettext as _
-
-import re
 
 from authentication.models import AppUser
 from common.widgets import PhoneNumberInput
@@ -50,11 +50,3 @@ class UserDataForm(ModelForm):
                 _("Invalid data. Use \"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A"))
 
         return student_class
-
-    def clean_username(self):
-        username = self.cleaned_data['username']
-        if AppUser.objects.filter(username=username).exclude(pk=self.instance.id).exists():
-            raise ValidationError(_("This username already does exist in the database."))
-
-        return username
-

@@ -49,7 +49,8 @@ def new_document_filename(instance, filename):
         filename.split('.')[-1]
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=100, unique=True)
+    username = models.CharField(max_length=100, unique=True,
+                                error_messages={'unique': _("This username already does exist in the database.")})
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     student_class = models.CharField(max_length=30)
