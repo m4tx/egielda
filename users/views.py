@@ -50,9 +50,8 @@ def verify(request, user_pk):
     if request.POST:
         group = Group.objects.get(name='verified_user')
         student.groups.add(group)
-        student.save()
-
         alerts.set_success_msg(request, 'user_verified')
+
         return HttpResponseRedirect(reverse(unverified))
     else:
         return render(request, 'users/verify.html', {'student': student})

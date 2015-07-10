@@ -10,8 +10,17 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib import admin
+from django.contrib.auth.models import Permission
 
 from authentication.models import AppUser
 
 
-admin.site.register(AppUser)
+class AppUserAdmin(admin.ModelAdmin):
+    exclude = ('is_superuser',)
+
+    def formfield_for_manytomany(self, db_field, request=None, **kwargs):
+        if db_field.name == 'user_permissions':
+            kwargs['queryset'] = Permission.objects.all().select_related('content_type')
+        return super(AppUserAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+
+admin.site.register(AppUser, AppUserAdmin)

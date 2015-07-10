@@ -11,8 +11,10 @@
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Group, ContentType, PermissionsMixin
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext as _
 from django.db.models import Q
+
 
 class AppUserManager(BaseUserManager):
     def create_user(self, username, first_name, last_name, student_class, phone_number, email, password):
@@ -44,9 +46,11 @@ class AppUserManager(BaseUserManager):
         u.save(using=self._db)
         return u
 
+
 def new_document_filename(instance, filename):
     return '_'.join([instance.username, instance.first_name, instance.last_name, instance.student_class]) + '.' + \
         filename.split('.')[-1]
+
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=100, unique=True,
@@ -64,11 +68,11 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 
     objects = AppUserManager()
 
-    @property
+    @cached_property
     def is_staff(self):
         return self.groups.filter(name='sysadmin').exists()
 
-    @property
+    @cached_property
     def verified(self):
         query = Q()
         for group_name in AppUser.get_verified_groups():
