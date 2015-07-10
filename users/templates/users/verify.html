@@ -24,6 +24,11 @@
                 margin-right: auto;
             }
         }
+
+        #no-id-info {
+            text-align: center;
+            font-style: italic;
+        }
     </style>
 {% endblock %}
 
@@ -81,9 +86,14 @@
             </div>
         </div>
         <div class="col-md-4">
-            <a href="{{ student.document.url }}">
-                <img id="identity-card" src="{{ student.document.url }}">
-            </a>
+            {% if student.document %}
+                <a href="{{ student.document.url }}">
+                    <img id="identity-card" src="{{ student.document.url }}">
+                </a>
+            {% else %}
+                <div id="no-id-info">
+                {% trans "This user has no associated student ID." %}</div>
+            {% endif %}
         </div>
     </div>
 
