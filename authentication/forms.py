@@ -33,7 +33,6 @@ class UserDataForm(ModelForm):
             'student_class': TextInput(attrs={
                 'placeholder': _("\"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A")}
             ),
-            'document': FileFieldLink,
         }
         labels = {
             'first_name': _("First name"),
@@ -52,3 +51,9 @@ class UserDataForm(ModelForm):
                 _("Invalid data. Use \"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A"))
 
         return student_class
+
+
+class UserDataDocumentLinkForm(UserDataForm):
+    def __init__(self, *args, **kwargs):
+        super(UserDataDocumentLinkForm, self).__init__(*args, **kwargs)
+        self.fields['document'].widget = FileFieldLink()
