@@ -27,4 +27,4 @@ class FileFieldLink(Widget):
         return format_html('<a{}><p{}>{}</p></a>',
                            flatatt({'href': value.url}),
                            flatatt({'class': 'form-control-static'}),
-                           value)
+                           value.name)
