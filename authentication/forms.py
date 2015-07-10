@@ -17,7 +17,7 @@ from django.forms import ValidationError
 from django.utils.translation import ugettext as _
 
 from authentication.models import AppUser
-from common.widgets import PhoneNumberInput
+from common.widgets import PhoneNumberInput, FileFieldLink
 
 
 class UserDataForm(ModelForm):
@@ -31,7 +31,9 @@ class UserDataForm(ModelForm):
             'phone_number': PhoneNumberInput(attrs={'maxlength': '9'}),
             'password': PasswordInput,
             'student_class': TextInput(attrs={
-                'placeholder': _("\"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A")}),
+                'placeholder': _("\"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A")}
+            ),
+            'document': FileFieldLink,
         }
         labels = {
             'first_name': _("First name"),

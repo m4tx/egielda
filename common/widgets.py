@@ -9,8 +9,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.forms import TextInput
+from django.forms import TextInput, Widget
+from django.forms.utils import flatatt
+from django.utils.html import format_html
 
 
 class PhoneNumberInput(TextInput):
     input_type = 'tel'
+
+
+class FileFieldLink(Widget):
+    """
+    Widget that displays file from FileField as a link to the uploaded data.
+    """
+
+    def render(self, name, value, attrs=None):
+        return format_html('<a{}><p{}>{}</p></a>',
+                           flatatt({'href': value.url}),
+                           flatatt({'class': 'form-control-static'}),
+                           value)
