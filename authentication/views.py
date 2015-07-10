@@ -16,7 +16,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.db.models import Sum
 
-from authentication.forms import UserDataForm, UserDataDocumentLinkForm
+from authentication.forms import UserDataForm
 from books.models import Book
 from utils.alerts import set_success_msg
 from orders.models import Order
@@ -53,7 +53,7 @@ def profile(request):
             request.POST[field] = getattr(request.user, field)
         for field in disabled_fields_files:
             request.FILES[field] = getattr(request.user, field)
-        form = UserDataDocumentLinkForm(request.POST, request.FILES, instance=request.user)
+        form = UserDataForm(request.POST, request.FILES, instance=request.user)
 
         if form.is_valid():
             user = form.save()
@@ -65,9 +65,9 @@ def profile(request):
             set_success_msg(request, 'profile_saved')
             return HttpResponseRedirect(reverse(profile))
     else:
-        form = UserDataDocumentLinkForm(instance=request.user)
+        form = UserDataForm(instance=request.user)
 
-    for field in disabled_fields_post:
+    for field in disabled_fields_post + disabled_fields_files:
         form.fields[field].widget.attrs['readonly'] = True
         form.fields[field].widget.attrs['disabled'] = True
 

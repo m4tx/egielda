@@ -16,7 +16,7 @@ from django.db.models import Sum, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from authentication.forms import UserDataDocumentLinkForm
+from authentication.forms import UserDataForm
 from authentication.models import AppUser
 from books.models import Book
 from orders.models import Order
@@ -69,14 +69,18 @@ def profile(request, user_pk):
             request.POST[field] = getattr(user, field)
         for field in disabled_fields_files:
             request.FILES[field] = getattr(user, field)
-        form = UserDataDocumentLinkForm(request.POST, request.FILES, instance=user)
+        form = UserDataForm(request.POST, request.FILES, instance=user)
 
         if form.is_valid():
             form.save()
             set_success_msg(request, 'user_profile_saved')
             return HttpResponseRedirect(reverse(verified))
     else:
-        form = UserDataDocumentLinkForm(instance=user)
+        form = UserDataForm(instance=user)
+
+    for field in disabled_fields_post + disabled_fields_files:
+        form.fields[field].widget.attrs['readonly'] = True
+        form.fields[field].widget.attrs['disabled'] = True
 
     del form.fields['password']
 
