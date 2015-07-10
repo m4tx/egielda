@@ -47,7 +47,8 @@ def fulfilled(request):
 @permission_required('common.view_orders_order_details', raise_exception=True)
 def order_details(request, order_pk):
     order = get_object_or_404(Order.objects
-                              .prefetch_related('book_set', 'orderedbook_set', 'orderedbook_set__book_type')
+                              .prefetch_related('book_set', 'book_set__book_type',
+                                                'orderedbook_set', 'orderedbook_set__book_type')
                               .select_related('user'), pk=order_pk)
     book_types = dict((orderedbook.book_type, orderedbook) for orderedbook in order.orderedbook_set.all())
 
