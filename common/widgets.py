@@ -13,6 +13,8 @@ from django.forms import TextInput, Widget
 from django.forms.utils import flatatt
 from django.utils.html import format_html
 
+from django.utils.translation import ugettext as _
+
 
 class PhoneNumberInput(TextInput):
     input_type = 'tel'
@@ -24,7 +26,15 @@ class FileFieldLink(Widget):
     """
 
     def render(self, name, value, attrs=None):
-        return format_html('<a{}><p{}>{}</p></a>',
-                           flatatt({'href': value.url}),
-                           flatatt({'class': 'form-control-static'}),
-                           value.name)
+        outer_attrs = {}
+        if attrs:
+            outer_attrs.update(attrs)
+        if value:
+            outer_attrs['href'] = value.url
+            return format_html('<a{}><p{}>{}</p></a>',
+                               flatatt(outer_attrs),
+                               flatatt({'class': 'form-control-static'}),
+                               value.name)
+        else:
+            outer_attrs['class'] = 'form-control-static'
+            return format_html('<p{}>{}</p>', flatatt(outer_attrs), _("No file uploaded"))
