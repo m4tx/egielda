@@ -12,7 +12,7 @@
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
@@ -45,7 +45,8 @@ def unverified(request):
 
 @permission_required('common.view_users_verify', raise_exception=True)
 def verify(request, user_pk):
-    student = get_object_or_404(AppUser, pk=user_pk)
+    student = get_object_or_404(AppUser,
+                                Q(pk=user_pk) & ~Q(groups__name__in=AppUser.get_verified_groups()))
     if request.POST:
         group = Group.objects.get(name='verified_user')
         student.groups.add(group)
