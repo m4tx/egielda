@@ -22,7 +22,7 @@ from authentication.models import AppUser
 from books.models import Book
 from orders.models import Order
 from utils.alerts import set_success_msg, set_info_msg, set_error_msg
-from utils.books import get_available_amount, get_available_books
+from utils.books import get_available_books
 
 
 @permission_required('common.view_orders_index', raise_exception=True)
@@ -75,8 +75,7 @@ def fulfill(request, order_pk):
                               .select_related('user'), pk=order_pk)
     book_types = dict((orderedbook.book_type, orderedbook) for orderedbook in order.orderedbook_set.all())
     book_types_to_delete = []
-    available = get_available_books()
-    amounts = get_available_amount(available)
+    available, amounts = get_available_books(with_amounts=True)
     for book_type in book_types.keys():
         book_type.amount = book_types[book_type].count
         book_type.in_stock = amounts[book_type.pk] + book_type.amount

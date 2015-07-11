@@ -30,13 +30,19 @@ def books_by_types(books):
     return d
 
 
-def get_available_books():
+def get_available_books(with_amounts=False):
     """
-    :return: QuerySet including books which are available for buying
+    :param: with_amounts: boolean determining whenever amounts of Books should be included in return
+    :return: QuerySet including books which are available for buying if with_amounts is False, or tuple containing that
+    QuerySet and amount of Book Types which belongs to available Books
     """
-    books = Book.objects.prefetch_related('book_type').filter(accepted=True, sold=False)
+    books = Book.objects.select_related('book_type').filter(accepted=True, sold=False)
     amounts = get_available_amount(books)
-    return books.exclude(book_type__pk__in=[pk for pk in amounts.keys() if amounts[pk] == 0])
+    books = books.exclude(book_type__pk__in=[pk for pk in amounts.keys() if amounts[pk] == 0])
+    if with_amounts:
+        return books, amounts
+
+    return books
 
 
 def get_available_amount(books):
@@ -50,7 +56,8 @@ def get_available_amount(books):
     books_by_id = dict()
     for book in books:
         books_by_id.setdefault(book.book_type.pk, []).append(book)
-    orders = Order.objects.filter(orderedbook__book_type__in=book_type_list, fulfilled=False).distinct()
+    orders = Order.objects.prefetch_related('orderedbook_set', 'orderedbook_set__book_type')\
+        .filter(orderedbook__book_type__in=book_type_list, fulfilled=False).distinct()
     orders_dict = dict()
     for order in orders:
         for orderedbook in order.orderedbook_set.all():

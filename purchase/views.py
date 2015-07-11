@@ -40,8 +40,8 @@ class PurchaseWizard(BookChooserWizard):
         book_type_list = [book['pk'] for book in book_list]  # List of Book primary keys
 
         # Select the Books which are available for purchasing and match the BookTypes we're looking for
-        books = get_available_books().select_for_update().filter(book_type__in=book_type_list).order_by('-pk')
-        amounts = get_available_amount(books)
+        books, amounts = get_available_books(with_amounts=True)
+        books = books.filter(book_type__in=book_type_list).order_by('-pk')
 
         # Remove duplicated Books. Thanks to order_by('-pk'), we'll have firstly added book as a value here
         books_by_id = dict()
