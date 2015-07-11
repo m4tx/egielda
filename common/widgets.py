@@ -9,7 +9,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.forms import TextInput, Widget
+from django.forms import TextInput, ClearableFileInput
 from django.forms.utils import flatatt
 from django.utils.html import format_html
 
@@ -20,21 +20,28 @@ class PhoneNumberInput(TextInput):
     input_type = 'tel'
 
 
-class FileFieldLink(Widget):
+class FileFieldLink(ClearableFileInput):
     """
-    Widget that displays file from FileField as a link to the uploaded data.
+    Widget that displays file from FileField as a link to the uploaded data if 'readonly'
+    attribute is set, or as <input type="file"> (ClearableFileInput) otherwise.
     """
 
     def render(self, name, value, attrs=None):
-        outer_attrs = {}
-        if attrs:
-            outer_attrs.update(attrs)
-        if value:
-            outer_attrs['href'] = value.url
-            return format_html('<a{}><p{}>{}</p></a>',
-                               flatatt(outer_attrs),
-                               flatatt({'class': 'form-control-static'}),
-                               value.name)
+        attrs = self.build_attrs(attrs)
+        if attrs.get('readonly'):
+            attrs.pop('readonly')
+            attrs.pop('disabled')
+            if 'class' in attrs:
+                # Avoid displaying the link as input
+                attrs['class'] = attrs['class'].replace('form-control', '')
+
+            p_attrs = {'class': 'form-control-static'}
+            if value:
+                attrs['href'] = value.url
+                return format_html('<a{}><p{}>{}</p></a>',
+                                   flatatt(attrs), flatatt(p_attrs), value.name)
+            else:
+                attrs.update(p_attrs)
+                return format_html('<p{}>{}</p>', flatatt(attrs), _("No file uploaded"))
         else:
-            outer_attrs['class'] = 'form-control-static'
-            return format_html('<p{}>{}</p>', flatatt(outer_attrs), _("No file uploaded"))
+            return super(FileFieldLink, self).render(name, value, attrs)
