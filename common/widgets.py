@@ -22,13 +22,13 @@ class PhoneNumberInput(TextInput):
 
 class FileFieldLink(ClearableFileInput):
     """
-    Widget that displays file from FileField as a link to the uploaded data if 'readonly'
+    Widget that displays file from FileField as a link to the uploaded data if 'disabled'
     attribute is set, or as <input type="file"> (ClearableFileInput) otherwise.
     """
 
     def render(self, name, value, attrs=None):
         attrs = self.build_attrs(attrs)
-        if attrs.get('readonly'):
+        if attrs.get('disabled'):
             attrs.pop('readonly')
             attrs.pop('disabled')
             if 'class' in attrs:
