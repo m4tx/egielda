@@ -135,17 +135,24 @@ def fulfill(request, order_pk):
                                                                'users': users})
             else:
                 books_to_purchase = []
+                books = Book.objects.select_related('book_type', 'owner').filter(sold=False, accepted=True)
+                books_dict = dict()
+
+                for book in books:
+                    books_dict[book.book_type_id] = books_dict.setdefault(book.book_type_id, dict())
+                    books_dict[book.book_type_id][book.owner_id] = books_dict[book.book_type_id]\
+                        .setdefault(book.owner_id, [])
+                    books_dict[book.book_type_id][book.owner_id].append(book)
+
                 for book_type, owners in owners_by_book.items():
-                    books = Book.objects.filter(book_type=book_type, sold=False, accepted=True)
                     for owner, amount in owners.items():
-                        owner_books = books.filter(owner__pk=owner)
-                        if len(owner_books) < amount:
+                        if len(books_dict[book_type.pk][owner]) < amount:
                             set_error_msg(request, 'owner_doesnt_have_enough_books_in_db')
                             book_type.error = True
                             error = True
                             continue
 
-                        books_to_purchase += owner_books[:amount]
+                        books_to_purchase += books_dict[book_type.pk][owner][:amount]
 
                 if error:
                     for el in book_types_to_delete:
