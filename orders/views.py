@@ -49,7 +49,7 @@ def order_details(request, order_pk):
     order = get_object_or_404(Order.objects
                               .prefetch_related('book_set', 'book_set__book_type',
                                                 'orderedbook_set', 'orderedbook_set__book_type')
-                              .select_related('user'), pk=order_pk)
+                              .select_related('user'), pk=order_pk, fulfilled=True)
     book_types = dict((orderedbook.book_type, orderedbook) for orderedbook in order.orderedbook_set.all())
 
     book_sum = 0
@@ -72,7 +72,7 @@ def order_details(request, order_pk):
 @permission_required('common.view_orders_fulfill', raise_exception=True)
 def fulfill(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('orderedbook_set', 'orderedbook_set__book_type')
-                              .select_related('user'), pk=order_pk)
+                              .select_related('user'), pk=order_pk, fulfilled=False)
     book_types = dict((orderedbook.book_type, orderedbook) for orderedbook in order.orderedbook_set.all())
     book_types_to_delete = []
     available, amounts = get_available_books(with_amounts=True)
@@ -172,7 +172,7 @@ def fulfill(request, order_pk):
 @permission_required('common.view_orders_fulfill_accept', raise_exception=True)
 def fulfill_accept(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('orderedbook_set', 'orderedbook_set__book_type')
-                              .select_related('user'), pk=order_pk)
+                              .select_related('user'), pk=order_pk, fulfilled=False)
 
     if order.orderedbook_set.count() == 0:
         order.delete()
@@ -210,7 +210,7 @@ def fulfill_accept(request, order_pk):
 
 @permission_required('common.view_orders_remove_order', raise_exception=True)
 def remove_order(request, order_ids):
-    order_list = get_orders().filter(pk__in=order_ids.split(','))
+    order_list = get_orders().filter(pk__in=order_ids.split(','), fulfilled=False)
     if len(order_list) == 0:
         raise Http404
 
