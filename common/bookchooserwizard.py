@@ -24,6 +24,7 @@ from django.contrib.auth.decorators import permission_required
 from books.forms import BookForm
 from books.models import BookType
 from authentication.models import AppUser
+from categories.models import Category
 from egielda import settings
 from utils.books import get_available_books, books_by_types
 from utils.alerts import set_warning_msg
@@ -130,21 +131,20 @@ class BookChooserWizard:
 
         book_list = BookType.objects.filter(visible=True).order_by('title').prefetch_related('categories')
         if self.feature_books_in_stock:
-            book_list = books_by_types(get_available_books().filter(book_type__in=book_list))
+            books, amounts = get_available_books(with_amounts=True)
+            books = books.filter(book_type__in=book_list).prefetch_related('book_type__categories')
+            book_list = books_by_types(books, amounts)
 
-        category_list = []
+        category_list = Category.objects.order_by('name').values_list('pk', 'name').distinct()
         for book in book_list:
             book.cat_pks_string = ','.join(str(cat.pk) for cat in book.categories.all())
-            for cat in book.categories.all():
-                if cat not in category_list:
-                    category_list.append(cat)
 
         form = BookForm()
         del form.fields['price']
         del form.fields['categories']
         return render(request, 'book_chooser_wizard/books.html',
                       {'page_title': self.page_title, 'form': form, 'book_list': book_list,
-                       'category_list': sorted(category_list, key=lambda o: o.name),
+                       'category_list': category_list,
                        'chosen_books': request.session[
                            self.session_var_name] if self.session_var_name in request.session else None,
                        'currency': getattr(settings, 'CURRENCY', 'USD'), 'feature_add_new': self.feature_add_new,

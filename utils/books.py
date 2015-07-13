@@ -13,13 +13,15 @@ from books.models import Book
 from orders.models import Order
 
 
-def books_by_types(books):
+def books_by_types(books, amounts=None):
     """
     Groups provided books by their book types and adds information about amount of books in each book type.
     :param books: list of Books
+    :param amounts: dictionary containing amounts of books' BookTypes
     :return: dictionary containing BookType -> Book pairs, where Book is the last Book from its BookType in books list
     """
-    amounts = get_available_amount(books)
+    if not amounts:
+        amounts = get_available_amount(books)
 
     d = {}
     for book_type in [book.book_type for book in books]:
@@ -32,7 +34,7 @@ def books_by_types(books):
 
 def get_available_books(with_amounts=False):
     """
-    :param: with_amounts: boolean determining whenever amounts of Books should be included in return
+    :param with_amounts: boolean determining whenever amounts of Books should be included in return
     :return: QuerySet including books which are available for buying if with_amounts is False, or tuple containing that
     QuerySet and amount of Book Types which belongs to available Books
     """

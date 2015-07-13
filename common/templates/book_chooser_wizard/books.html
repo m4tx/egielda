@@ -39,7 +39,7 @@
                                     <option value="0">{% trans "All" context "categories" %}</option>
                                     <option disabled="disabled">────────</option>
                                     {% for category in category_list %}
-                                        <option value="{{ category.pk }}">{{ category.name }}</option>
+                                        <option value="{{ category.0 }}">{{ category.1 }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
