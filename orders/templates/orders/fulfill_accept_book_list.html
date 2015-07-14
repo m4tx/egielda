@@ -24,28 +24,26 @@
                 <td>{{ book_type.price|price }}</td>
                 <td>{{ book_type.amount }}</td>
             </tr>
-            {% block additional_rows %}
-                <tr>
-                    <td style="border-top: 0;" colspan="7">
-                        <div class="form-group">
-                            <label style="width: 100%; display: flex; align-items: center;">
-                                <span class="col-sm-3 col-md-2 control-label">
-                                    {% trans "Book owners" %}:
-                                </span>
-                                <div class="col-sm-9 col-md-10 tokenfield" style="padding: 6px 12px; height: 34px;">
-                                    {% for owner in book_type.owners %}
-                                        <span class="token" style="padding-right: 5px;">
-                                            <span class="token-label">
-                                                {{ users|keyvalue:owner }}
-                                            </span>
+            <tr>
+                <td style="border-top: 0;" colspan="7">
+                    <div class="form-group">
+                        <label style="width: 100%; display: flex; align-items: center;">
+                            <span class="col-sm-3 col-md-2 control-label">
+                                {% trans "Book owners" %}:
+                            </span>
+                            <div class="col-sm-9 col-md-10 tokenfield" style="padding: 6px 12px; height: 34px;">
+                                {% for owner in book_type.owners %}
+                                    <span class="token" style="padding-right: 5px;">
+                                        <span class="token-label">
+                                            {{ users|keyvalue:owner }}
                                         </span>
-                                    {% endfor %}
-                                </div>
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-            {% endblock %}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        </label>
+                    </div>
+                </td>
+            </tr>
         {% endfor %}
 
         <tr class="bg-info">
