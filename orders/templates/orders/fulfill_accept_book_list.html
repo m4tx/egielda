@@ -16,34 +16,36 @@
         </thead>
 
         {% for book_type in book_list %}
-            <tr>
-                <td>{{ book_type.isbn }}</td>
-                <td>{{ book_type.publisher }}</td>
-                <td>{{ book_type.title }}</td>
-                <td>{{ book_type.publication_year }}</td>
-                <td>{{ book_type.price|price }}</td>
-                <td>{{ book_type.amount }}</td>
-            </tr>
-            <tr>
-                <td style="border-top: 0;" colspan="7">
-                    <div class="form-group">
-                        <label style="width: 100%; display: flex; align-items: center;">
-                            <span class="col-sm-3 col-md-2 control-label">
-                                {% trans "Book owners" %}:
-                            </span>
-                            <div class="col-sm-9 col-md-10 tokenfield" style="padding: 6px 12px; height: 34px;">
-                                {% for owner in book_type.owners %}
-                                    <span class="token" style="padding-right: 5px;">
-                                        <span class="token-label">
-                                            {{ users|keyvalue:owner }}
+            <tbody class="book-row">
+                <tr>
+                    <td>{{ book_type.isbn }}</td>
+                    <td>{{ book_type.publisher }}</td>
+                    <td>{{ book_type.title }}</td>
+                    <td>{{ book_type.publication_year }}</td>
+                    <td>{{ book_type.price|price }}</td>
+                    <td>{{ book_type.amount }}</td>
+                </tr>
+                <tr>
+                    <td style="border-top: 0;" colspan="7">
+                        <div class="form-group">
+                            <label style="width: 100%; display: flex; align-items: center;">
+                                <span class="col-sm-3 col-md-2 control-label">
+                                    {% trans "Book owners" %}:
+                                </span>
+                                <div class="col-sm-9 col-md-10 tokenfield" style="padding: 6px 12px; height: 34px;">
+                                    {% for owner in book_type.owners %}
+                                        <span class="token" style="padding-right: 5px;">
+                                            <span class="token-label">
+                                                {{ users|keyvalue:owner }}
+                                            </span>
                                         </span>
-                                    </span>
-                                {% endfor %}
-                            </div>
-                        </label>
-                    </div>
-                </td>
-            </tr>
+                                    {% endfor %}
+                                </div>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
         {% endfor %}
 
         <tr class="bg-info">

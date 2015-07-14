@@ -20,6 +20,7 @@
         </thead>
 
         {% for book in book_list %}
+            {% block preceding_rows %}{% endblock %}
             <tr{% block tr_attributes %}{% endblock %}>
                 {% block tr_header %}{% endblock %}
                 <td>{{ book.isbn }}</td>

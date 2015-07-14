@@ -16,24 +16,29 @@
     </td>
 {% endblock %}
 
+{% block preceding_rows %}
+    <tbody class="book-row">
+{% endblock %}
+
 {% block additional_rows %}
-    <tr>
-        <td style="border-top: 0;" colspan="7">
-            <div class="form-group">
-                <label style="width: 100%; display: flex; align-items: center;">
-                    <span class="col-sm-3 col-md-2 control-label">
-                        {% trans "Book owners" %}:
-                    </span>
-                    <span class="col-sm-9 col-md-10">
-                        <input
-                            type="text"
-                            class="tokenfield form-control{% if book.error %} has-error{% endif %}"
-                            name="owners-{{ book.pk }}"
-                            value="{{ book.owners }}"
-                        />
-                    </span>
-                </label>
-            </div>
-        </td>
-    </tr>
+        <tr>
+            <td style="border-top: 0;" colspan="7">
+                <div class="form-group">
+                    <label style="width: 100%; display: flex; align-items: center;">
+                        <span class="col-sm-3 col-md-2 control-label">
+                            {% trans "Book owners" %}:
+                        </span>
+                        <span class="col-sm-9 col-md-10">
+                            <input
+                                type="text"
+                                class="tokenfield form-control{% if book.error %} has-error{% endif %}"
+                                name="owners-{{ book.pk }}"
+                                value="{{ book.owners }}"
+                            />
+                        </span>
+                    </label>
+                </div>
+            </td>
+        </tr>
+    </tbody>
 {% endblock %}
