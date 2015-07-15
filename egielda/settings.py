@@ -60,6 +60,8 @@ CURRENCY = 'zł'
 TIME_ZONE = 'Europe/Warsaw'
 USE_TZ = True
 
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Other settings
 INSTALLED_APPS = (
@@ -71,7 +73,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
-    'authentication',
+    'authentication.apps.AuthenticationConfig',
     'common',
     'books',
     'sell',
