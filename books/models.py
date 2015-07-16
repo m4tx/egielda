@@ -49,6 +49,7 @@ class Book(models.Model):
         return _("%(book_type)s from %(owner)s, accepted: %(accepted)s, sold: %(sold)s" %
                  {'book_type': self.book_type, 'owner': self.owner, 'accepted': self.accepted, 'sold': self.sold})
 
+
 class OrderedBook(models.Model):
     book_type = models.ForeignKey(BookType)
     count = models.IntegerField()

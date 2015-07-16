@@ -96,6 +96,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'egielda.sellpurchaseavailable.SellPurchaseAvailableMiddleware',
+    'egielda.cachelasturl.CacheLastURLMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
