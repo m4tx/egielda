@@ -58,6 +58,7 @@ def alerts(context):
             'profile_saved': _("Your profile data was successfully updated."),
             'user_profile_saved': _("User's profile data was successfully updated."),
             'user_verified': _("User was verified successfully."),
+            'incorrect_fields_saved': _("Information about incorrect data was sent to user."),
         }[request.session['success_msg']]
         del request.session['success_msg']
 

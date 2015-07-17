@@ -105,3 +105,8 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
             'phone_number': self.phone_number,
             'email': self.email
         }
+
+
+class AppUserHasCorrectData(models.Model):
+    user = models.OneToOneField(AppUser)
+    incorrect_fields = models.TextField()

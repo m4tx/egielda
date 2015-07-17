@@ -60,6 +60,21 @@
         </h4>
     {% profile_header %}
 
+    {% if user.awaiting_verification and not incorrect_fields %}
+        <div class="alert alert-warning">
+            {% trans "Your account is now awaiting verification." %}
+        </div>
+    {% elif incorrect_fields %}
+        <div class="alert alert-danger">
+            {% trans "Your verification request was rejected. Following fields are filled in incorrectly:" %}
+            <ul>
+                {% for field in incorrect_fields %}
+                    <li>{{ field.1 }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
     <ul class="nav nav-tabs">
         {% if perms.common.view_authentication_profile %}
             <li class="active"><a href="{% url 'authentication.views.profile' %}">{% trans "Profile data" %}</a></li>

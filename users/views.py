@@ -8,16 +8,18 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+import json
 
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
 from django.db.models import Sum, Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
+from django.utils.translation import ugettext as _
 
 from authentication.forms import UserDataForm
-from authentication.models import AppUser
+from authentication.models import AppUser, AppUserHasCorrectData
 from books.models import Book
 from orders.models import Order
 from utils import alerts
@@ -50,11 +52,41 @@ def verify(request, user_pk):
     if request.POST:
         group = Group.objects.get(name='verified_user')
         student.groups.add(group)
+        student.awaiting_verification = False
+        student.save()
+
+        AppUserHasCorrectData.objects.filter(user=user_pk).delete()
+
         alerts.set_success_msg(request, 'user_verified')
 
         return HttpResponseRedirect(reverse(unverified))
     else:
         return render(request, 'users/verify.html', {'student': student})
+
+
+@permission_required('common.view_users_verify', raise_exception=True)
+def needs_correction(request, user_pk):
+    if request.method == 'POST':
+        user = get_object_or_404(AppUser, Q(pk=user_pk) & ~Q(groups__name__in=AppUser.get_verified_groups()))
+        user.awaiting_verification = False
+        user.save()
+        incorrect_fields = request.POST['incorrect_fields'].split(',')
+
+        fields_to_save = []
+        for incorrect_field in incorrect_fields:
+            for field in AppUser._meta.local_fields:
+                if field.name == incorrect_field:
+                    fields_to_save.append((field.name, _(field.verbose_name.capitalize())))
+
+        has_correct_data = AppUserHasCorrectData.objects.get_or_create(user=user)[0]
+        has_correct_data.incorrect_fields = json.dumps(fields_to_save)
+        has_correct_data.save()
+
+        set_success_msg(request, 'incorrect_fields_saved')
+
+        return HttpResponseRedirect(reverse(unverified))
+    else:
+        raise Http404
 
 
 @permission_required('common.view_users_profile', raise_exception=True)

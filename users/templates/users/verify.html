@@ -39,48 +39,58 @@
     <h1>{% blocktrans %}Verify {{ student }}'s account{% endblocktrans %}</h1>
     {% manage_header "users/unverified/verify" %}
 
+    <div class="alert alert-danger" role="alert" style="display: none;" id="to-correct-not-selected">
+        You didn't select any field which needs to be corrected.
+    </div>
+
     <div class="row">
         <div class="col-md-8">
             <div class="form-horizontal">
                 <div class="form-group">
+                    <div class="col-sm-1 col-lg-1" id="to-correct-username"></div>
                     <label class="col-sm-4 col-lg-3 control-label">{% trans "Username" %}:</label>
 
-                    <div class="col-sm-8 col-lg-9">
+                    <div class="col-sm-7 col-lg-8">
                         <p class="form-control-static">{{ student.username }}</p>
                     </div>
                 </div>
                 <div class="form-group">
+                    <div class="col-sm-1 col-lg-1" id="to-correct-first_name"></div>
                     <label class="col-sm-4 col-lg-3 control-label">{% trans "First name" %}:</label>
 
-                    <div class="col-sm-8 col-lg-9">
+                    <div class="col-sm-7 col-lg-8">
                         <p class="form-control-static">{{ student.first_name }}</p>
                     </div>
                 </div>
                 <div class="form-group">
+                    <div class="col-sm-1 col-lg-1" id="to-correct-last_name"></div>
                     <label class="col-sm-4 col-lg-3 control-label">{% trans "Last name" %}:</label>
 
-                    <div class="col-sm-8 col-lg-9">
+                    <div class="col-sm-7 col-lg-8">
                         <p class="form-control-static">{{ student.last_name }}</p>
                     </div>
                 </div>
                 <div class="form-group">
+                    <div class="col-sm-1 col-lg-1" id="to-correct-student_class"></div>
                     <label class="col-sm-4 col-lg-3 control-label">{% trans "Class" %}:</label>
 
-                    <div class="col-sm-8 col-lg-9">
+                    <div class="col-sm-7 col-lg-8">
                         <p class="form-control-static">{{ student.student_class }}</p>
                     </div>
                 </div>
                 <div class="form-group">
+                    <div class="col-sm-1 col-lg-1" id="to-correct-phone_number"></div>
                     <label class="col-sm-4 col-lg-3 control-label">{% trans "Phone number" %}:</label>
 
-                    <div class="col-sm-8 col-lg-9">
+                    <div class="col-sm-7 col-lg-8">
                         <p class="form-control-static">{{ student.phone_number }}</p>
                     </div>
                 </div>
                 <div class="form-group">
+                    <div class="col-sm-1 col-lg-1" id="to-correct-email"></div>
                     <label class="col-sm-4 col-lg-3 control-label">{% trans "E-mail" %}:</label>
 
-                    <div class="col-sm-8 col-lg-9">
+                    <div class="col-sm-7 col-lg-8">
                         <p class="form-control-static">{{ student.email }}</p>
                     </div>
                 </div>
@@ -105,8 +115,38 @@
         <div class="btn-toolbar" role="toolbar">
             <button class="btn btn-primary pull-right" type="submit">
                 <span class="glyphicon glyphicon-ok"></span> {% trans "Verify" %}</button>
-            <a class="btn btn-danger pull-right" href="#" {# TODO #}>
-                <span class="glyphicon glyphicon-trash"></span> {% trans "Delete" %}</a>
+            <a class="btn btn-danger pull-right" href="#" id="needs-correction">
+                <span class="glyphicon glyphicon-eye-open"></span> {% trans "Needs correction" %}</a>
         </div>
     </form>
+{% endblock %}
+
+{% block footer %}
+    <script type="text/javascript">
+        window.addEventListener("load", function(){
+            $('#needs-correction').click(function(e) {
+                e.preventDefault();
+
+                if($('.to-correct').length == 0) {
+                    $('.form-group').each(function () {
+                        $(this).children().first().prepend("<input type=\"checkbox\" class=\"to-correct\" style=\"margin-top: 11px;\" />");
+                    });
+                }
+                else if($('.to-correct:checked').length == 0) {
+                    $('#to-correct-not-selected').slideDown();
+                }
+                else {
+                    var to_correct = new Array;
+                    $('.to-correct:checked').each(function () {
+                       to_correct.push($(this).parent().attr('id').substr('to-correct-'.length));
+                    });
+                    var form = $(document.forms[0]);
+
+                    form.append("<input type=\"hidden\" name=\"incorrect_fields\" value=\"" + to_correct.join(',') + "\"/>");
+                    form.attr('action', '{% url 'users.views.needs_correction' student.pk %}');
+                    form.submit();
+                }
+            });
+        });
+    </script>
 {% endblock %}

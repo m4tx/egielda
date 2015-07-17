@@ -8,6 +8,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+import json
 
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
@@ -20,6 +21,8 @@ from authentication.forms import UserDataForm
 from books.models import Book
 from utils.alerts import set_success_msg
 from orders.models import Order
+from authentication.models import AppUserHasCorrectData
+
 
 def register(request):
     if request.method == 'POST':
@@ -66,6 +69,21 @@ def profile(request):
             return HttpResponseRedirect(reverse(profile))
     else:
         form = UserDataForm(instance=request.user)
+        #form.is_bound = True
+        form.cleaned_data = {}
+        if form.is_valid():
+            print(form.cleaned_data)
+        else:
+            print(form.is_bound)
+            print(form.errors)
+        incorrect_fields = None
+        try:
+            incorrect_fields = AppUserHasCorrectData.objects.get(user=request.user).incorrect_fields
+            incorrect_fields = json.loads(incorrect_fields)
+            for field in incorrect_fields:
+                form.add_error(field[0], '')
+        except AppUserHasCorrectData.DoesNotExist:
+            pass
 
     for field in disabled_fields_post + disabled_fields_files:
         form.fields[field].widget.attrs['readonly'] = True
@@ -73,7 +91,7 @@ def profile(request):
 
     del form.fields['password']
 
-    return render(request, 'authentication/profile.html', {'form': form})
+    return render(request, 'authentication/profile.html', {'form': form, 'incorrect_fields': incorrect_fields})
 
 
 @permission_required('common.view_authentication_profile_purchased', raise_exception=True)
