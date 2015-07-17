@@ -22,7 +22,6 @@ from authentication.forms import UserDataForm
 from authentication.models import AppUser, AppUserHasCorrectData
 from books.models import Book
 from orders.models import Order
-from utils import alerts
 from utils.alerts import set_success_msg
 
 
@@ -57,7 +56,7 @@ def verify(request, user_pk):
 
         AppUserHasCorrectData.objects.filter(user=user_pk).delete()
 
-        alerts.set_success_msg(request, 'user_verified')
+        set_success_msg(request, 'user_verified')
 
         return HttpResponseRedirect(reverse(unverified))
     else:
