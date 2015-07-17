@@ -34,11 +34,16 @@ def awaiting_verification_save(sender, instance, **kwargs):
         params = {
             'username': instance,
             'site_name': getattr(settings, 'SITE_NAME', "e-Giełda"),
-            'verification_url': urljoin(settings.CURRENT_URL, reverse('users.views.verify', args=[instance.pk]))
+            'verification_url': urljoin(settings.CURRENT_URL,
+                                        reverse('users.views.verify', args=[instance.pk]))
         }
         subject = _("{username} on {site_name} is awaiting verification").format(**params)
-        message = _("""Hello,
+        message = (_("""Hello,
 
-{username} on {site_name} is awaiting verification.<br /><a href=\"{verification_url}\">Verify {username}</a>""")\
-            .format(**params)
-        mail_admins(subject, message, fail_silently=True)
+{username} on {site_name} is awaiting verification. To verify them, visit {verification_url}""")
+                   .format(**params))
+        html_message = (_("Hello,"
+                          "<p>{username} on {site_name} is awaiting verification."
+                          "<p><a href='{verification_url}'>Verify {username}</a>")
+                        .format(**params))
+        mail_admins(subject, message, fail_silently=True, html_message=html_message)
