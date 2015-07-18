@@ -91,7 +91,7 @@ def fulfill(request, order_pk):
             error = False
             owners_by_book = dict()
             for book_type in book_types.keys():
-                new_amount = int(request.POST['amount-' + str(book_type.pk)])
+                new_amount = int(request.POST.get('amount-' + str(book_type.pk), -1))
                 if book_type.in_stock < new_amount or new_amount < 0:
                     return HttpResponseBadRequest()
 
@@ -105,7 +105,7 @@ def fulfill(request, order_pk):
 
                 book_type.amount = new_amount
 
-                book_type.owners = request.POST['owners-' + str(book_type.pk)]
+                book_type.owners = request.POST.get('owners-' + str(book_type.pk), '')
                 owners = book_type.owners.split(',')
 
                 valid_data = True

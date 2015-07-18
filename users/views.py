@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
 from django.db.models import Sum, Q
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
 
@@ -69,6 +69,9 @@ def verify(request, user_pk):
 @permission_required('common.view_users_verify', raise_exception=True)
 def needs_correction(request, user_pk):
     if request.method == 'POST':
+        if len(request.POST.get('incorrect_fields', '')) == 0:
+            return HttpResponseBadRequest()
+
         user = get_object_or_404(AppUser, Q(pk=user_pk) & ~Q(groups__name__in=AppUser.get_verified_groups()))
         user.awaiting_verification = False
         user.save()

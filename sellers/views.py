@@ -56,11 +56,11 @@ def accept_books(request, user_pk):
             books.update(accepted=True, accept_date=timezone.now())
             for book_type in book_type_list:
                 if not book_type.visible:
-                    book_type.price = Decimal(request.POST['price-' + str(book_type.pk)])
+                    book_type.price = Decimal(request.POST.get('price-' + str(book_type.pk), 1))
                     book_type.visible = True
                     book_type.save()
 
-                new_amount = int(request.POST['amount-' + str(book_type.pk)])
+                new_amount = int(request.POST.get('amount-' + str(book_type.pk), -1))
                 if new_amount < 0:
                     return HttpResponseBadRequest()
 
