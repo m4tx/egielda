@@ -8,17 +8,21 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+
 from urllib.parse import urljoin
 
-from django.core.mail import mail_admins
+from django.core.mail import mail_admins, send_mail
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_init, post_save
-from django.dispatch import receiver
+from django.dispatch import receiver, Signal
 
 from django.utils.translation import ugettext as _
 
 from authentication.models import AppUser
 from django.conf import settings
+
+
+user_verified = Signal(providing_args=['user'])
 
 
 @receiver(post_init, sender=AppUser)
@@ -47,3 +51,23 @@ def awaiting_verification_save(sender, instance, **kwargs):
                           "<p><a href='{verification_url}'>Verify {username}</a>")
                         .format(**params))
         mail_admins(subject, message, fail_silently=True, html_message=html_message)
+
+
+@receiver(user_verified)
+def send_mail_to_verified_user(sender, user, **kwargs):
+    params = {
+        'site_name': getattr(settings, 'SITE_NAME', "e-Giełda"),
+        'username': user.first_name + " " + user.last_name,
+    }
+    subject = _("[{site_name}] Your account was successfully verified").format(**params)
+    message = (_("""Hello {username},
+
+Your account was successfully verified. You will be able to sell and purchase books within speficied time span.""")
+               .format(**params))
+    html_message = (_("Hello {username},"
+                      "<p>Your account was successfully verified. You will be able to sell and purchase books "
+                      "within specified time span.")
+                    .format(**params))
+
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=True,
+              html_message=html_message)

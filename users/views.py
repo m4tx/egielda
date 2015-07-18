@@ -8,6 +8,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+
 import json
 
 from django.contrib.auth.decorators import permission_required
@@ -23,6 +24,7 @@ from authentication.models import AppUser, AppUserHasCorrectData
 from books.models import Book
 from orders.models import Order
 from utils.alerts import set_success_msg
+from authentication.signals import user_verified
 
 
 @permission_required('common.view_users_index', raise_exception=True)
@@ -56,6 +58,7 @@ def verify(request, user_pk):
 
         AppUserHasCorrectData.objects.filter(user=user_pk).delete()
 
+        user_verified.send(sender=None, user=student)
         set_success_msg(request, 'user_verified')
 
         return HttpResponseRedirect(reverse(unverified))
