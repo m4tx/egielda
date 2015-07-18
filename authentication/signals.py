@@ -23,6 +23,7 @@ from django.conf import settings
 
 
 user_verified = Signal(providing_args=['user'])
+user_needs_correction = Signal(providing_args=['user', 'incorrect_fields'])
 
 
 @receiver(post_init, sender=AppUser)
@@ -68,6 +69,40 @@ Your account was successfully verified. You will be able to sell and purchase bo
                       "<p>Your account was successfully verified. You will be able to sell and purchase books "
                       "within specified time span.")
                     .format(**params))
+
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=True,
+              html_message=html_message)
+
+
+@receiver(user_needs_correction)
+def send_mail_to_unverified_user(sender, user, incorrect_fields, **kwargs):
+    params = {
+        'site_name': getattr(settings, 'SITE_NAME', "e-Giełda"),
+        'username': user.first_name + " " + user.last_name,
+    }
+    subject = _("[{site_name}] Your profile data needs correction").format(**params)
+    message = (_("""Hello {username},
+
+The data you provided in your profile was found incorrect. Following fields don't match a scan of your identity \
+card or contain typos:
+""").format(**params))
+
+    for field in incorrect_fields:
+        message += "- " + field[1] + "\n"
+
+    message += _("In order to get your account verified, you will need to correct them.")
+
+    html_message = (_("Hello {username},"
+                      "<p>The data you provided in your profile was found incorrect. Following fields "
+                      "don't match a scan of your identity card or contain typos:")
+                    .format(**params))
+
+    html_message += "<ul>"
+    for field in incorrect_fields:
+        html_message += "<li>" + field[1] + "</li>"
+    html_message += "</ul>"
+
+    html_message += _("<p>In order to get your account verified, you will need to correct them.")
 
     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=True,
               html_message=html_message)

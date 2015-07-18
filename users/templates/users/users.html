@@ -64,7 +64,12 @@
                             <td>
                                 <a class="btn btn-xs btn-link"
                                    href="{% url 'users.views.verify' student.pk %}" role="button">
-                                    <span class="glyphicon glyphicon-ok"></span> {% trans "Verify" %}
+                                    {% if student.awaiting_verification %}
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    {% else %}
+                                        <span class="glyphicon glyphicon-warning-sign"></span>
+                                    {% endif %}
+                                    {% trans "Verify" %}
                                 </a>
                             </td>
                         {% endif %}

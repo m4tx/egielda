@@ -24,7 +24,7 @@ from authentication.models import AppUser, AppUserHasCorrectData
 from books.models import Book
 from orders.models import Order
 from utils.alerts import set_success_msg
-from authentication.signals import user_verified
+from authentication.signals import user_verified, user_needs_correction
 
 
 @permission_required('common.view_users_index', raise_exception=True)
@@ -84,6 +84,7 @@ def needs_correction(request, user_pk):
         has_correct_data.incorrect_fields = json.dumps(fields_to_save)
         has_correct_data.save()
 
+        user_needs_correction.send(sender=None, user=user, incorrect_fields=fields_to_save)
         set_success_msg(request, 'incorrect_fields_saved')
 
         return HttpResponseRedirect(reverse(unverified))
