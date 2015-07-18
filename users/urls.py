@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^([0-9]+)/needs_correction/$', views.needs_correction),
     url(r'^verified/$', views.verified),
     url(r'^unverified/$', views.unverified),
+    url(r'^needingcorrection/$', views.needing_data_correction),
     url(r'^/$', views.index)
 ]

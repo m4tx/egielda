@@ -22,9 +22,15 @@
         {% if tab == 'verified' %}
             <li class="active"><a href="#">{% trans "Verified" %}</a></li>
             <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>
+            <li><a href="{% url 'users.views.needing_data_correction' %}">{% trans "Needing data correction" %}</a></li>
         {% elif tab == 'unverified' %}
             <li><a href="{% url 'users.views.verified' %}">{% trans "Verified" %}</a></li>
             <li class="active"><a href="#">{% trans "Unverified" %}</a></li>
+            <li><a href="{% url 'users.views.needing_data_correction' %}">{% trans "Needing data correction" %}</a></li>
+        {% elif tab == 'needing_data_correction' %}
+            <li><a href="{% url 'users.views.verified' %}">{% trans "Verified" %}</a></li>
+            <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>
+            <li class="active"><a href="#">{% trans "Needing data correction" %}</a></li>
         {% endif %}
     </ul>
 

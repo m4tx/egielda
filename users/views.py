@@ -41,9 +41,22 @@ def verified(request):
 
 @permission_required('common.view_users_unverified', raise_exception=True)
 def unverified(request):
-    users = AppUser.objects.exclude(groups__name__in=AppUser.get_verified_groups()).order_by('last_name', 'first_name')
+    needing_correction = AppUserIncorrectFields.objects.all().values_list('user_id')
+    users = (AppUser.objects
+             .exclude(id__in=needing_correction)
+             .exclude(groups__name__in=AppUser.get_verified_groups())
+             .order_by('last_name', 'first_name'))
 
     return render(request, 'users/users.html', {'users': users, 'tab': 'unverified'})
+
+
+@permission_required('common.view_users_needing_data_correction', raise_exception=True)
+def needing_data_correction(request):
+    users_qs = (AppUserIncorrectFields.objects.select_related('user')
+                .exclude(user__groups__name__in=AppUser.get_verified_groups())
+                .order_by('user__last_name', 'user__first_name'))
+    users = [x.user for x in users_qs]
+    return render(request, 'users/users.html', {'users': users, 'tab': 'needing_data_correction'})
 
 
 @permission_required('common.view_users_verify', raise_exception=True)

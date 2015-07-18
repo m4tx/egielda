@@ -54,6 +54,8 @@ def manage_header(*args):
             'unverified': ['users.views.unverified', _("Unverified"), {
                 'verify': ['users.views.verify', _("Verify")]
             }],
+            'needing_data_correction': ['users.views.needing_data_correction',
+                                        _("Needing data correction")],
             'profile': ['users.views.profile', _("User's profile")],
             'purchased': ['users.views.profile_purchased', _("User's purchased books")],
             'sold': ['users.views.profile_sold', _("User's sold books")],

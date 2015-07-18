@@ -122,6 +122,10 @@
                         {% if perms.common.view_users_unverified %}
                             <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>
                         {% endif %}
+
+                        {% if perms.common.view_users_needing_data_correction %}
+                            <li><a href="{% url 'users.views.needing_data_correction' %}">{% trans "Needing data correction" %}</a></li>
+                        {% endif %}
                     </ul>
                 {% endif %}
             </li>
