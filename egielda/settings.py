@@ -1,7 +1,7 @@
 # coding=utf-8
 
 # This file is part of e-Giełda.
-# Copyright (C) 2014  Mateusz Maćkowski and Tomasz Zieliński
+# Copyright (C) 2014-2015  Mateusz Maćkowski and Tomasz Zieliński
 #
 # e-Giełda is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
