@@ -20,7 +20,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
 
 from authentication.forms import UserDataForm
-from authentication.models import AppUser, AppUserHasCorrectData
+from authentication.models import AppUser, AppUserIncorrectFields
 from books.models import Book
 from orders.models import Order
 from utils.alerts import set_success_msg
@@ -56,7 +56,7 @@ def verify(request, user_pk):
         student.awaiting_verification = False
         student.save()
 
-        AppUserHasCorrectData.objects.filter(user=user_pk).delete()
+        AppUserIncorrectFields.objects.filter(user=user_pk).delete()
 
         user_verified.send(sender=None, user=student)
         set_success_msg(request, 'user_verified')
@@ -80,7 +80,7 @@ def needs_correction(request, user_pk):
                 if field.name == incorrect_field:
                     fields_to_save.append((field.name, _(field.verbose_name.capitalize())))
 
-        has_correct_data = AppUserHasCorrectData.objects.get_or_create(user=user)[0]
+        has_correct_data = AppUserIncorrectFields.objects.get_or_create(user=user)[0]
         has_correct_data.incorrect_fields = json.dumps(fields_to_save)
         has_correct_data.save()
 

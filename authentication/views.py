@@ -21,7 +21,7 @@ from authentication.forms import UserDataForm
 from books.models import Book
 from utils.alerts import set_success_msg
 from orders.models import Order
-from authentication.models import AppUserHasCorrectData
+from authentication.models import AppUserIncorrectFields
 
 
 def register(request):
@@ -78,11 +78,11 @@ def profile(request):
             print(form.errors)
         incorrect_fields = None
         try:
-            incorrect_fields = AppUserHasCorrectData.objects.get(user=request.user).incorrect_fields
+            incorrect_fields = AppUserIncorrectFields.objects.get(user=request.user).incorrect_fields
             incorrect_fields = json.loads(incorrect_fields)
             for field in incorrect_fields:
                 form.add_error(field[0], '')
-        except AppUserHasCorrectData.DoesNotExist:
+        except AppUserIncorrectFields.DoesNotExist:
             pass
 
     for field in disabled_fields_post + disabled_fields_files:

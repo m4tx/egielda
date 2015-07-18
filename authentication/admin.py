@@ -12,7 +12,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 
-from authentication.models import AppUser, AppUserHasCorrectData
+from authentication.models import AppUser, AppUserIncorrectFields
 
 
 class AppUserAdmin(admin.ModelAdmin):
@@ -24,4 +24,4 @@ class AppUserAdmin(admin.ModelAdmin):
         return super(AppUserAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
 
 admin.site.register(AppUser, AppUserAdmin)
-admin.site.register(AppUserHasCorrectData)
+admin.site.register(AppUserIncorrectFields)
