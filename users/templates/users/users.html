@@ -63,6 +63,7 @@
                         {% if tab == 'unverified' and perms.common.view_users_verify %}
                             <td>
                                 <a class="btn btn-xs btn-link"
+                                   {% if not student.awaiting_verification %}title="{% trans "This user lacks an ID" %}"{% endif %}
                                    href="{% url 'users.views.verify' student.pk %}" role="button">
                                     {% if student.awaiting_verification %}
                                         <span class="glyphicon glyphicon-ok"></span>
