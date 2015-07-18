@@ -58,7 +58,7 @@ def awaiting_verification_save(sender, instance, **kwargs):
 def send_mail_to_verified_user(sender, user, **kwargs):
     params = {
         'site_name': getattr(settings, 'SITE_NAME', "e-Giełda"),
-        'username': user.first_name + " " + user.last_name,
+        'username': user.get_short_name(),
     }
     subject = _("[{site_name}] Your account was successfully verified").format(**params)
     message = (_("""Hello {username},
@@ -78,7 +78,7 @@ Your account was successfully verified. You will be able to sell and purchase bo
 def send_mail_to_unverified_user(sender, user, incorrect_fields, **kwargs):
     params = {
         'site_name': getattr(settings, 'SITE_NAME', "e-Giełda"),
-        'username': user.first_name + " " + user.last_name,
+        'username': user.get_short_name(),
     }
     subject = _("[{site_name}] Your profile data needs correction").format(**params)
     message = (_("""Hello {username},
