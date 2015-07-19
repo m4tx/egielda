@@ -81,6 +81,12 @@
 
     {% if stats %}
             <div class="panel panel-info">
+                <div class="panel-heading">
+                    <b>
+                        {{ user.get_full_name }}
+                        <span class="pull-right">#{{ user.id }}</span>
+                    </b>
+                </div>
                 <table class="list-group table table-hover">
                      <thead>
                         <tr>
