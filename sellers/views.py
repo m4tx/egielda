@@ -73,11 +73,14 @@ def accept_books(request, user_pk):
                     amount_difference = new_amount - book_type.amount
                     book = d[book_type]
 
+                    book_list = []
                     for i in range(0, amount_difference):
                         book.pk = None
                         book.accepted = True
                         book.accept_date = timezone.now()
-                        book.save()
+                        book_list.append(book)
+
+                    Book.objects.bulk_create(book_list)
 
                 if new_amount > 0:
                     correct_book_list.append(book_type)

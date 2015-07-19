@@ -65,9 +65,12 @@ class SellWizard(BookChooserWizard):
                 seller_book_list.append(book_type.pk)
                 amounts[book_type.pk] = amount
 
+            dbbook_list = []
             for i in range(0, amount):
                 dbbook.pk = None
-                dbbook.save()
+                dbbook_list.append(dbbook)
+
+            Book.objects.bulk_create(dbbook_list)
 
         session['seller_books'] = (seller_book_list, amounts)
         return True, None
