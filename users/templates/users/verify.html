@@ -136,13 +136,13 @@
                     $('#to-correct-not-selected').slideDown();
                 }
                 else {
-                    var to_correct = new Array;
+                    var toCorrect = new Array();
                     $('.to-correct:checked').each(function () {
-                       to_correct.push($(this).parent().attr('id').substr('to-correct-'.length));
+                       toCorrect.push($(this).parent().attr('id').substr('to-correct-'.length));
                     });
                     var form = $(document.forms[0]);
 
-                    form.append("<input type=\"hidden\" name=\"incorrect_fields\" value=\"" + to_correct.join(',') + "\"/>");
+                    form.append("<input type=\"hidden\" name=\"incorrect_fields\" value=\"" + toCorrect.join(',') + "\"/>");
                     form.attr('action', '{% url 'users.views.needs_correction' student.pk %}');
                     form.submit();
                 }
