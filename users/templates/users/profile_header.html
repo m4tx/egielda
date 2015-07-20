@@ -1,0 +1,9 @@
+{% load i18n %}
+
+<h1>{% blocktrans %}{{ student }}'s profile{% endblocktrans %}</h1> <h4>
+    {% if student.verified %}
+        {%  trans "Account verified" %}
+    {% else %}
+        {%  trans "Account not verified" %}
+    {% endif %}
+</h4>

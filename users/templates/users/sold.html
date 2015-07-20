@@ -52,13 +52,7 @@
 {% block title %}{% trans "Sold books" %}{% endblock %}
 
 {% block content %}
-    <h1>{% blocktrans %}{{ student }}'s profile{% endblocktrans %}</h1> <h4>
-            {% if user.verified %}
-                {%  trans "Account verified" %}
-            {% else %}
-                {%  trans "Account not verified" %}
-            {% endif %}
-        </h4>
+    {% include "users/profile_header.html" %}
     {% manage_header "users/sold" %}
 
     <ul class="nav nav-tabs">
