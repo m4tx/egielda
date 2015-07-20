@@ -63,7 +63,7 @@ def send_mail_to_verified_user(sender, user, **kwargs):
     subject = _("[{site_name}] Your account was successfully verified").format(**params)
     message = (_("""Hello {username},
 
-Your account was successfully verified. You will be able to sell and purchase books within speficied time span.""")
+Your account was successfully verified. You will be able to sell and purchase books within specified time span.""")
                .format(**params))
     html_message = (_("Hello {username},"
                       "<p>Your account was successfully verified. You will be able to sell and purchase books "
@@ -84,7 +84,7 @@ def send_mail_to_unverified_user(sender, user, incorrect_fields, **kwargs):
     message = (_("""Hello {username},
 
 The data you provided in your profile was found incorrect. Following fields don't match a scan of your identity \
-card or contain typos:
+card or contain other errors:
 """).format(**params))
 
     for field in incorrect_fields:
@@ -94,7 +94,7 @@ card or contain typos:
 
     html_message = (_("Hello {username},"
                       "<p>The data you provided in your profile was found incorrect. Following fields "
-                      "don't match a scan of your identity card or contain typos:")
+                      "don't match a scan of your identity card or contain other errors:")
                     .format(**params))
 
     html_message += "<ul>"
