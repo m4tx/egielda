@@ -18,7 +18,7 @@ from settings.forms import SettingsForm
 from settings.settings import Settings
 from settings.settings import string_to_datetime
 from utils.alerts import set_success_msg
-from utils.dates import datetime_html_format
+from utils.dates import datetime_html_format, datetime_to_string
 
 
 @permission_required('common.view_settings_index', raise_exception=True)
@@ -26,10 +26,10 @@ def index(request):
     if request.method == 'POST':
         form = SettingsForm(request.POST)
         if form.is_valid():
-            Settings().start_sell = form.cleaned_data['start_sell']
-            Settings().end_sell = form.cleaned_data['end_sell']
-            Settings().start_purchase = form.cleaned_data['start_purchase']
-            Settings().end_purchase = form.cleaned_data['end_purchase']
+            Settings().start_sell = datetime_to_string(form.cleaned_data['start_sell'])
+            Settings().end_sell = datetime_to_string(form.cleaned_data['end_sell'])
+            Settings().start_purchase = datetime_to_string(form.cleaned_data['start_purchase'])
+            Settings().end_purchase = datetime_to_string(form.cleaned_data['end_purchase'])
             Settings().profit_per_book = form.cleaned_data['profit_per_book']
             Settings().homepage_info = form.cleaned_data['homepage_info']
             set_success_msg(request, 'settings_updated')
