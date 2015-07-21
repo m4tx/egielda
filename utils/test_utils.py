@@ -11,14 +11,14 @@
 
 from datetime import timedelta
 
-from django.contrib.auth.models import User
-from django.test import TestCase
 from django.utils import timezone
 
 from books.models import BookType, Book
 from categories.models import Category
 from authentication.models import AppUser
 from orders.models import Order
+from settings.settings import Settings
+from utils.dates import datetime_to_string
 
 
 def create_test_superuser():
@@ -62,3 +62,10 @@ def create_test_order(user):
     order = Order(user=user, date=timezone.now())
     order.save()
     return order
+
+def set_sell_purchase_timespan():
+    settings = Settings()
+    settings.start_purchase = datetime_to_string(timezone.now())
+    settings.end_purchase = datetime_to_string(timezone.now() + timedelta(1))
+    settings.start_sell = datetime_to_string(timezone.now())
+    settings.end_sell = datetime_to_string(timezone.now() + timedelta(1))

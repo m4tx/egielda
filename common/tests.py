@@ -12,14 +12,14 @@
 from django.contrib.auth.models import Permission
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.models import Session
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse
 
 from django.test import TestCase, Client
 
 from authentication.models import AppUser
 from utils.test_utils import (
     create_test_book_type, create_test_category, create_test_app_user, create_test_book,
-    create_test_order
+    create_test_order, set_sell_purchase_timespan
 )
 
 
@@ -208,6 +208,22 @@ class ManagePermissionsTest(TestCase):
     def test_view_authentication_profile_sold(self):
         self.check_permission('view_authentication_profile_sold',
                               reverse('authentication.views.sold'))
+
+    def test_purchase_sell_books(self):
+        set_sell_purchase_timespan()
+        self.check_permission('purchase_sell_books', reverse('purchase:books'))
+
+    def test_purchase_sell_books2(self):
+        set_sell_purchase_timespan()
+        self.check_permission('purchase_sell_books', reverse('purchase:summary'))
+
+    def test_purchase_sell_books3(self):
+        set_sell_purchase_timespan()
+        self.check_permission('purchase_sell_books', reverse('sell:books'))
+
+    def test_purchase_sell_books4(self):
+        set_sell_purchase_timespan()
+        self.check_permission('purchase_sell_books', reverse('sell:summary'))
 
     def check_permission(self, permission_name, url, response_func=None, **data):
         if response_func is None:
