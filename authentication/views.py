@@ -8,6 +8,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+
 import json
 
 from django.shortcuts import render
@@ -69,13 +70,7 @@ def profile(request):
             return HttpResponseRedirect(reverse(profile))
     else:
         form = UserDataForm(instance=request.user)
-        #form.is_bound = True
         form.cleaned_data = {}
-        if form.is_valid():
-            print(form.cleaned_data)
-        else:
-            print(form.is_bound)
-            print(form.errors)
         incorrect_fields = None
         try:
             incorrect_fields = AppUserIncorrectFields.objects.get(user=request.user).incorrect_fields

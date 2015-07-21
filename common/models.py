@@ -58,9 +58,9 @@ class DummyPermissions(models.Model):
             ('view_users_profile_purchased', "View users.profile_purchased"),
             ('view_users_profile_sold', "View users.profile_sold"),
 
-            ('view_authentication_profile', 'View authentication.profile'),
-            ('view_authentication_profile_purchased', 'View authentication.purchased'),
-            ('view_authentication_profile_sold', 'View authentication.sold'),
+            ('view_authentication_profile', "View authentication.profile"),
+            ('view_authentication_profile_purchased', "View authentication.purchased"),
+            ('view_authentication_profile_sold', "View authentication.sold"),
 
-            ('purchase_sell_books', 'Purchase and sell books')
+            ('purchase_sell_books', "Purchase and sell books")
         )
