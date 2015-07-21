@@ -36,7 +36,7 @@ class Settings:
     def __setattr__(self, key, value):
         Setting.objects.update_or_create(name=key, defaults={'value': value})
 
-    def exists(self, key):
+    def __contains__(self, key):
         return key in self.__dict__['settings']
 
 

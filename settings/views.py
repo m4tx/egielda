@@ -44,15 +44,15 @@ def index(request):
                     add_date_value('end_sell', settings),
                     add_date_value('start_purchase', settings),
                     add_date_value('end_purchase', settings),
-                    ('profit_per_book', settings.profit_per_book if settings.exists('profit_per_book') else 1),
-                    ('homepage_info', settings.homepage_info if settings.exists('homepage_info') else "")]))
+                    ('profit_per_book', settings.profit_per_book if 'profit_per_book' in settings else 1),
+                    ('homepage_info', settings.homepage_info if 'homepage_info' in settings else "")]))
         form = SettingsForm(initial=values)
 
     return render(request, 'settings/index.html', {'form': form})
 
 
 def add_date_value(name, settings):
-    if settings.exists(name):
+    if name in settings:
         return name, datetime_html_format(string_to_datetime(getattr(settings, name)))
     else:
         return None

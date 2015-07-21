@@ -22,4 +22,4 @@ def home(request):
     return render(request, 'egielda/home.html',
                   {'sell_available': sell_available,
                    'purchase_available': purchase_available,
-                   'homepage_info': settings.homepage_info if settings.exists('homepage_info') else None})
+                   'homepage_info': settings.homepage_info if 'homepage_info' in settings else None})
