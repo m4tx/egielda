@@ -11,7 +11,6 @@
 
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render
-from django.utils.translation import ugettext_lazy as _
 from django.http.response import HttpResponseRedirect
 
 from settings.forms import SettingsForm
