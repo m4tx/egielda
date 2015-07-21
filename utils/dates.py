@@ -18,8 +18,8 @@ def datetime_html_format(date):
     return date.strftime("%Y-%m-%dT%H:%M")
 
 
-def datetime_to_string(datetime):
-    return datetime.strftime(datetime, DT_FORMAT)
+def datetime_to_string(date):
+    return date.strftime(DT_FORMAT)
 
 
 def string_to_datetime(date):
