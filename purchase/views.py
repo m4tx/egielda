@@ -67,7 +67,9 @@ class PurchaseWizard(BookChooserWizard):
             else:
                 error_occurred = True
 
-        if not error_occurred:
+        if error_occurred:
+            order.delete()
+        else:
             OrderedBook.objects.bulk_create(parts_of_order)
             session['order_id'] = order.pk
 
