@@ -79,6 +79,16 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
             query |= Q(name=group_name)
         return self.groups.filter(query).exists()
 
+    def verify(self):
+        group = Group.objects.get(name='verified_user')
+        self.groups.add(group)
+        self.awaiting_verification = False
+        self.save()
+        AppUserIncorrectFields.objects.filter(user=self.pk).delete()
+
+        from authentication.signals import user_verified
+        user_verified.send(sender=AppUser, user=self)
+
     @staticmethod
     def get_verified_groups():
         return ['verified_user', 'moderator', 'admin', 'sysadmin']

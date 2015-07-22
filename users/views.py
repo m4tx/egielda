@@ -64,16 +64,8 @@ def verify(request, user_pk):
     student = get_object_or_404(AppUser,
                                 Q(pk=user_pk) & ~Q(groups__name__in=AppUser.get_verified_groups()))
     if request.POST:
-        group = Group.objects.get(name='verified_user')
-        student.groups.add(group)
-        student.awaiting_verification = False
-        student.save()
-
-        AppUserIncorrectFields.objects.filter(user=user_pk).delete()
-
-        user_verified.send(sender=None, user=student)
+        student.verify()
         set_success_msg(request, 'user_verified')
-
         return HttpResponseRedirect(reverse(unverified))
     else:
         return render(request, 'users/verify.html', {'student': student})
