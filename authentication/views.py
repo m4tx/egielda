@@ -61,10 +61,10 @@ def profile(request):
 
         if form.is_valid():
             user = form.save()
-            if 'document' in request.FILES and user.awaiting_verification is False:
+            if 'document' in form.cleaned_data and user.awaiting_verification is False:
                 user.awaiting_verification = True
                 AppUserIncorrectFields.objects.filter(user=user).delete()
-            elif 'document' not in request.FILES and user.awaiting_verification is True:
+            elif 'document-clear' in request.POST and user.awaiting_verification is True:
                 user.awaiting_verification = False
             user.save()
             set_success_msg(request, 'profile_saved')
