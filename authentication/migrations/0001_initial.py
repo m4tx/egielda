@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 import authentication.models
 
 
@@ -19,7 +20,7 @@ class Migration(migrations.Migration):
                 ('password', models.CharField(max_length=128, verbose_name='password')),
                 ('last_login', models.DateTimeField(null=True, verbose_name='last login', blank=True)),
                 ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
-                ('username', models.CharField(unique=True, max_length=100)),
+                ('username', models.CharField(unique=True, max_length=100, error_messages={'unique': 'Ta nazwa użytkownika już istnieje w bazie danych.'})),
                 ('first_name', models.CharField(max_length=30)),
                 ('last_name', models.CharField(max_length=30)),
                 ('student_class', models.CharField(max_length=30)),
@@ -33,5 +34,13 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
+        ),
+        migrations.CreateModel(
+            name='AppUserIncorrectFields',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('incorrect_fields', models.TextField()),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+            ],
         ),
     ]
