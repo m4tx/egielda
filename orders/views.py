@@ -146,7 +146,7 @@ def fulfill(request, order_pk):
 
                 for book_type, owners in owners_by_book.items():
                     for owner, amount in owners.items():
-                        if len(books_dict[book_type.pk][owner]) < amount:
+                        if len(books_dict[book_type.pk].get(owner, [])) < amount:
                             set_error_msg(request, 'owner_doesnt_have_enough_books_in_db')
                             book_type.error = True
                             error = True
