@@ -134,17 +134,17 @@ msgid ""
 msgstr ""
 "Witaj,\n"
 "\n"
-"Użytkownik {username} na stronie {site_name} czeka na weryfikację. Aby go "
+"{username} na stronie {site_name} czeka na weryfikację. Aby go "
 "zweryfikować, wejdź na {verification_url}"
 
 #: authentication/signals.py:50
 #, python-brace-format
 msgid ""
 "Hello,<p>{username} on {site_name} is awaiting verification.<p><a "
-"href='{verification_url}'>Verify {username}</a>"
+"href='{verification_url}'>Verify {short_name}</a>"
 msgstr ""
-"Witaj,<p>Użytkownik {username} na stronie {site_name} czeka na weryfikację."
-"<p><a href='{verification_url}'>Zweryfikuj użytkownika {username}</a>"
+"Witaj,<p>{username} na stronie {site_name} czeka na weryfikację."
+"<p><a href='{verification_url}'>Zweryfikuj użytkownika {short_name}</a>"
 
 #: authentication/signals.py:63
 #, python-brace-format
