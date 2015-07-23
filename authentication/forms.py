@@ -11,6 +11,7 @@
 
 import re
 
+from PIL import Image
 from django.forms import ModelForm
 from django.forms import PasswordInput, TextInput
 from django.forms import ValidationError
@@ -53,3 +54,25 @@ class UserDataForm(ModelForm):
                 _("Invalid data. Use \"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A"))
 
         return student_class
+
+    def clean_document(self):
+        document = self.cleaned_data['document']
+        image = Image.open(document.file)
+
+        if hasattr(image, '_getexif'):
+            exif = image._getexif()
+            if exif is not None:
+                # 0x0112 is "Orientation" EXIF tag ID
+                orientation = exif.get(0x0112, None)
+
+                if orientation is not None:
+                    if orientation == 3:
+                        image = image.transpose(Image.ROTATE_180)
+                    elif orientation == 6:
+                        image = image.transpose(Image.ROTATE_270)
+                    elif orientation == 8:
+                        image = image.transpose(Image.ROTATE_90)
+
+        document.file.seek(0)
+        image.save(document.file, "jpeg")
+        return document
