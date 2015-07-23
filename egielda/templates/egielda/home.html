@@ -23,32 +23,32 @@
 {% block title %}{% trans "Home" %}{% endblock %}
 
 {% block content %}
-    <div class="jumbotron">
-        <h1>{% site_name %}</h1>
+    <div class="column">
+        <div class="ui message">
+            <h1 class="ui header">{% site_name %}</h1>
+            {% if sell_available and purchase_available %}<p>{% trans "What do you want to do?" %}</p>{% endif %}
+            {% if not sell_available and not purchase_available %}<p>{% trans "The website is currently disabled." %}</p>{% endif %}
 
-        {% if sell_available and purchase_available %}<p>{% trans "What do you want to do?" %}</p>{% endif %}
-        {% if not sell_available and not purchase_available %}<p>{% trans "The website is currently disabled." %}
-            </p>{% endif %}
+            <p>
+                {% if purchase_available %}
+                    <a href="{% url 'purchase:books' %}" class="huge ui primary button">
+                        <i class="icon shop"></i>{% trans "Purchase" %}
+                    </a>
+                {% endif %}
+                {% if sell_available and purchase_available %}{% trans "or" %}{% endif %}
+                {% if sell_available %}
+                    <a href="{% url 'sell:books' %}" class="huge ui button">
+                        <i class="icon payment"></i>{% trans "Sell" %}
+                    </a>
+                {% endif %}
+            </p>
 
-        <p>
-            {% if purchase_available %}
-                <a href="{% url 'purchase:books' %}" class="btn btn-primary btn-lg" role="button">
-                    <span class="glyphicon glyphicon-shopping-cart"></span> {% trans "Purchase" %}
-                </a>
+            {% if homepage_info %}
+                <div id="homepage-info">
+                    <strong>{% trans "Information:" %}</strong>
+                    {{ homepage_info|safe|linebreaks }}
+                </div>
             {% endif %}
-            {% if sell_available and purchase_available %}{% trans "or" %}{% endif %}
-            {% if sell_available %}
-                <a href="{% url 'sell:books' %}" class="btn btn-default btn-lg" role="button">
-                    <span class="glyphicon glyphicon-transfer"></span> {% trans "Sell" %}
-                </a>
-            {% endif %}
-        </p>
-
-        {% if homepage_info %}
-            <div id="homepage-info">
-                <strong>{% trans "Information:" %}</strong>
-                {{ homepage_info|safe|linebreaks }}
-            </div>
-        {% endif %}
+        </div>
     </div>
 {% endblock %}

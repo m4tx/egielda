@@ -19,6 +19,7 @@
 
             <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
             <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.1/semantic.min.css">
 
             {% block head %}{% endblock %}
 
@@ -33,76 +34,54 @@
                 }
             </style>
 
+            <style>
+                .main.container {
+                    margin-top: 100px;
+                }
+            </style>
+
             <title>{% block title %}{% endblock %} | {% site_name %}</title>
         </head>
         <body>
-        <nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    {% if not disable_menu %}
-                        <button type="button" class="navbar-toggle" data-toggle="collapse"
-                                data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">{% trans "Toggle navigation" %}</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    {% endif %}
-                    <a class="navbar-brand" href="{% url 'home' %}">{% site_name %}</a>
-                </div>
-                {% if not disable_menu %}
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    {% if user.is_authenticated %}{{ user }}{% else %}{% trans "Anonymous" %}{% endif %}
-                                    <b class="caret"></b>
+
+        <div class="ui fixed inverted menu">
+            <div class="ui container">
+                <a href="{% url 'home' %}" class="header item" style="height: 55px;">
+                    {% site_name %}
+                </a>
+                <div class="ui dropdown item right">
+                    {% if user.is_authenticated %}{{ user }}{% else %}{% trans "Anonymous" %}{% endif %} <i class="dropdown icon"></i>
+                    <div class="menu">
+                        {% if user.is_authenticated %}
+                            {% if perms.common.view_managemenu_index %}
+                                <a href="{% url 'managemenu.views.index' %}" class="item">
+                                    <i class="dashboard icon"></i>{% trans "Manage" %}
                                 </a>
-                                <ul class="dropdown-menu">
-                                    {% if user.is_authenticated %}
-                                        {% if perms.common.view_managemenu_index %}
-                                            <li>
-                                                <a href="{% url 'managemenu.views.index' %}" role="menuitem">
-                                                    <span class="glyphicon glyphicon-cog"></span> {% trans "Manage" %}
-                                                </a>
-                                            </li>
-                                            <li role="presentation" class="divider"></li>
-                                        {% endif %}
-                                        <li>
-                                            <a href="{% url 'profile_page' %}" role="menuitem">
-                                                <span class="glyphicon glyphicon-user"></span> {% trans "Your profile" %}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{% url 'password_change' %}" role="menuitem">
-                                                <span class="glyphicon glyphicon-asterisk"></span> {% trans "Change password" %}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{% url 'logout' %}" role="menuitem">
-                                                <span class="glyphicon glyphicon-log-out"></span> {% trans "Sign out" %}
-                                            </a>
-                                        </li>
-                                    {% else %}
-                                        <li>
-                                            <a href="{% url 'register' %}" role="menuitem">
-                                                <span class="glyphicon glyphicon-plus"></span> {% trans "Sign up" %}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{% url 'login' %}" role="menuitem">
-                                                <span class="glyphicon glyphicon-log-in"></span> {% trans "Sign in" %}
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </li>
-                        </ul>
+                                <div class="divider"></div>
+                            {% endif %}
+                            <a href="{% url 'profile_page' %}" class="item">
+                                <i class="icon user"></i>{% trans "Your profile" %}
+                            </a>
+                            <a href="{% url 'password_change' %}" class="item">
+                                <i class="icon asterisk"></i>{% trans "Change password" %}
+                            </a>
+                            <a href="{% url 'logout' %}" class="item">
+                                <i class="icon sign out"></i>{% trans "Sign out" %}
+                            </a>
+                        {% else %}
+                            <a href="{% url 'register' %}" class="item">
+                                <i class="icon plus"></i>{% trans "Sign up" %}
+                            </a>
+                            <a href="{% url 'login' %}" class="item">
+                                <i class="icon sign in"></i>{% trans "Sign in" %}
+                            </a>
+                        {% endif %}
                     </div>
-                {% endif %}
+                </div>
             </div>
-        </nav>
-        <div class="container">
+        </div>
+
+        <div class="ui main container">
             {% alerts %}
             <noscript>
                 <div class="alert alert-danger">
@@ -115,6 +94,11 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.1/semantic.min.js"></script>
+
+        <script>
+            $('.ui.dropdown').dropdown();
+        </script>
         {% block footer %}{% endblock %}
 
         </body>
