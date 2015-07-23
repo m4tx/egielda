@@ -237,7 +237,7 @@ msgstr "Konto niezweryfikowane"
 
 #: authentication/templates/authentication/profile.html:65
 msgid "Your account is now awaiting verification."
-msgstr "Twoje konto oczekuje teraz na weryfikację"
+msgstr "Twoje konto oczekuje teraz na weryfikację."
 
 #: authentication/templates/authentication/profile.html:69
 msgid ""
