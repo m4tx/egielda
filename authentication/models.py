@@ -60,7 +60,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     student_class = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=9)
     email = models.CharField(max_length=100)
-    document = models.ImageField(upload_to=new_document_filename, blank=True)
+    document = models.ImageField(upload_to=new_document_filename, max_length=200, blank=True)
     awaiting_verification = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
