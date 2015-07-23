@@ -36,7 +36,7 @@ $('#btn-add-new-book').on('click', function () {
     var isbn = $('input[name="isbn"]').val().toUpperCase().replace(/[^\dX]/g, ''); // remove all chars which are not
                                                                                    // allowed in ISBN
     if (!isIsbnValid(isbn)) {
-        setFail(gettext("This ISBN is invalid."), false);
+        setSearchIsbnStatus(false, gettext("This ISBN is invalid."), false);
         return;
     }
 
