@@ -31,8 +31,9 @@ class UserDataForm(ModelForm):
             'phone_number': PhoneNumberInput(attrs={'maxlength': '9'}),
             'password': PasswordInput,
             'student_class': TextInput(attrs={
-                'placeholder': _("\"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A")}
-            ),
+                'placeholder': _("\"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A"),
+                'pattern': '^' + _('graduate') + '$|^[123][A-Z]$'
+            }),
             'document': FileFieldLink,
         }
         labels = {
