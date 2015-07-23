@@ -18,16 +18,19 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from books.models import BookType, Book
 from settings.settings import Settings
+from utils.dates import datetime_to_string
+from utils.test_utils import create_test_accepted_user, login
 
 
 class SellWizardLiveTest(StaticLiveServerTestCase):
     def setUp(self):
-        Settings().start_sell = timezone.now().replace(microsecond=0)
-        Settings().end_sell = timezone.now().replace(microsecond=0) + timedelta(1)
-        BookType(isbn='9788375940794', publisher="Some", title="Test book", publication_year=2000, price=16.00,
-                 visible=False).save()
-        BookType(isbn='9788376804538', publisher="Other", title="Another test book", publication_year=2010, price=32.00,
-                 visible=True).save()
+        Settings().start_sell = datetime_to_string(timezone.now())
+        Settings().end_sell = datetime_to_string(timezone.now() + timedelta(1))
+        BookType(isbn='9788375940794', publisher="Some", title="Test book",
+                 publication_year=2000, price=16.00, visible=False).save()
+        BookType(isbn='9788376804538', publisher="Other", title="Another test book",
+                 publication_year=2010, price=32.00, visible=True).save()
+        create_test_accepted_user()
 
     @classmethod
     def setUpClass(cls):
@@ -40,16 +43,11 @@ class SellWizardLiveTest(StaticLiveServerTestCase):
         super(SellWizardLiveTest, cls).tearDownClass()
 
     def test_sell_wizard(self):
-        # # Personal data
-        self.selenium.get('%s%s' % (self.live_server_url, '/sell/'))
-        self.selenium.find_element_by_name('first_name').send_keys("James")
-        self.selenium.find_element_by_name('last_name').send_keys("Smith")
-        self.selenium.find_element_by_name('student_class').send_keys("1A")
-        self.selenium.find_element_by_name('phone_number').send_keys("111222333")
-        self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
+        login(self.selenium, self.live_server_url, "test", "test")
 
         # # Books
         # Book list
+        self.selenium.get('%s%s' % (self.live_server_url, '/sell/'))
         book_trs = self.selenium.find_elements_by_xpath('//div[@id="bookList"]//table//tbody//tr')
         self.assertEqual(len(book_trs), 1)  # Ensure we only see the book with visible=True
         book_trs[0].find_element_by_xpath('//button[contains(@class, "btn-add-book")]').click()  # Add the book

@@ -26,6 +26,12 @@ def create_test_superuser():
         AppUser.objects.create_superuser("test", "Some", "User", "1A", "111222333",
                                          "test@localhost", "test")
 
+def create_test_accepted_user():
+    if AppUser.objects.filter(username="test").count() == 0:
+        user = AppUser.objects.create_user("test", "Some", "User", "1A", "111222333",
+                                           "test@localhost", "test")
+        user.verify()
+
 def login(selenium, live_server_url, username, password):
     selenium.get('%s%s' % (live_server_url, '/accounts/login/'))
     selenium.find_element_by_name('username').send_keys(username)

@@ -1,12 +1,16 @@
 [
     {
-        "model": "common.appuser",
+        "model": "authentication.appuser",
         "pk": 1,
         "fields": {
+            "username": "test_user",
+            "first_name": "User1",
             "last_name": "Test1",
-            "phone_number": "111222333",
             "student_class": "1A",
-            "first_name": "User1"
+            "phone_number": "111222333",
+            "email": "test@localhost",
+            "document": null,
+            "awaiting_verification": false
         }
     },
     {
@@ -52,12 +56,10 @@
         "model": "books.book",
         "pk": 1,
         "fields": {
-            "reserver": null,
             "sold_date": null,
             "owner": 1,
             "book_type": 2,
             "order": null,
-            "reserved_until": null,
             "sold": false,
             "accepted": true,
             "accept_date": "2014-08-02T08:54:11.099Z",
@@ -68,12 +70,10 @@
         "model": "books.book",
         "pk": 2,
         "fields": {
-            "reserver": null,
             "sold_date": null,
             "owner": 1,
             "book_type": 1,
             "order": null,
-            "reserved_until": null,
             "sold": false,
             "accepted": true,
             "accept_date": "2014-08-02T08:54:11.099Z",
@@ -84,12 +84,10 @@
         "model": "books.book",
         "pk": 3,
         "fields": {
-            "reserver": null,
             "sold_date": null,
             "owner": 1,
             "book_type": 1,
             "order": null,
-            "reserved_until": null,
             "sold": false,
             "accepted": true,
             "accept_date": "2014-08-02T08:54:11.099Z",
@@ -100,12 +98,10 @@
         "model": "books.book",
         "pk": 4,
         "fields": {
-            "reserver": null,
             "sold_date": null,
             "owner": 1,
             "book_type": 3,
             "order": null,
-            "reserved_until": null,
             "sold": false,
             "accepted": false,
             "accept_date": null,
@@ -117,7 +113,7 @@
         "pk": 3,
         "fields": {
             "name": "start_purchase",
-            "value": "1111-11-11 11:11:00+01:24"
+            "value": "1111-11-11 11:11:00+0124"
         }
     },
     {
@@ -125,7 +121,7 @@
         "pk": 4,
         "fields": {
             "name": "end_purchase",
-            "value": "3333-03-31 15:33:00+01:00"
+            "value": "3333-03-31 15:33:00+0100"
         }
     }
 ]

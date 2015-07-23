@@ -8,21 +8,23 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
-from time import sleep
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.webdriver import WebDriver
 
-from books.models import Book
+from authentication.models import AppUser
 
+from books.models import Book
 from utils.test_utils import create_test_superuser, login
 
 
 class OrdersLiveTest(StaticLiveServerTestCase):
-    fixtures = ['execute-test-data.json']
+    fixtures = ['fulfill-test-data.json']
 
     def setUp(self):
         create_test_superuser()
+        AppUser.objects.get(pk=1).verify()
 
     @classmethod
     def setUpClass(cls):
@@ -36,15 +38,23 @@ class OrdersLiveTest(StaticLiveServerTestCase):
 
     def test_orders(self):
         login(self.selenium, self.live_server_url, "test", "test")
-        self.selenium.get(self.live_server_url + "/manage/orders/notexecuted")
-        self.selenium.find_element_by_xpath('//td//a[contains(@href, "execute")]').click()
+
+        self.selenium.get(self.live_server_url + "/manage/orders/notfulfilled")
+        self.selenium.find_element_by_xpath('//td//a[contains(@href, "fulfill")]').click()
+
+        # Set 2nd BookType amount to 0 and 1st to 2
         self.selenium.find_element_by_xpath('//input[@value="2"]').clear()
         self.selenium.find_element_by_xpath('//input[@value="2"]').send_keys("0")
         self.selenium.find_element_by_xpath('//input[@value="1"]').clear()
         self.selenium.find_element_by_xpath('//input[@value="1"]').send_keys("2")
+        # Set book owner to user#1 two times
+        owners_xpath = '//input[@name="owners-1"]/following::input[contains(@class, "token-input")]'
+        for _ in range(2):
+            self.selenium.find_element_by_xpath(owners_xpath).send_keys("#1" + Keys.RETURN)
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
-        trs = self.selenium.find_elements_by_xpath('//table//tbody//tr[not(contains(@class, "bg-info"))]')
-        self.assertEqual(len(trs), 2)  # Ensure user see 2 books with the same book types
+
+        trs = self.selenium.find_elements_by_xpath('//table//tbody')
+        self.assertEqual(len(trs), 2)  # Ensure user sees 1 book type
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
 
         tables = self.selenium.find_elements_by_xpath('//table')

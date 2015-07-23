@@ -1,0 +1,139 @@
+[
+    {
+        "model": "books.booktype",
+        "pk": 1,
+        "fields": {
+            "visible": true,
+            "price": "60.00",
+            "publication_year": 2010,
+            "title": "Test book",
+            "isbn": "9788375940794",
+            "publisher": "Some",
+            "categories": []
+        }
+    },
+    {
+        "model": "books.booktype",
+        "pk": 2,
+        "fields": {
+            "visible": true,
+            "price": "99.00",
+            "publication_year": 2000,
+            "title": "Test book 2",
+            "isbn": "9781849696845",
+            "publisher": "Other",
+            "categories": []
+        }
+    },
+    {
+        "model": "books.orderedbook",
+        "pk": 1,
+        "fields": {
+            "order": 1,
+            "count": 1,
+            "book_type": 1
+        }
+    },
+    {
+        "model": "books.orderedbook",
+        "pk": 2,
+        "fields": {
+            "order": 1,
+            "count": 2,
+            "book_type": 2
+        }
+    },
+    {
+        "model": "authentication.appuser",
+        "pk": 1,
+        "fields": {
+            "phone_number": "111222333",
+            "username": "test_user1",
+            "email": "test1@localhost",
+            "awaiting_verification": false,
+            "student_class": "1A",
+            "document": "",
+            "first_name": "Test1",
+            "last_name": "User1"
+        }
+    },
+    {
+        "model": "authentication.appuser",
+        "pk": 2,
+        "fields": {
+            "phone_number": "333222111",
+            "username": "test_user2",
+            "email": "test2@localhost",
+            "awaiting_verification": false,
+            "student_class": "2A",
+            "document": "",
+            "first_name": "Test2",
+            "last_name": "User2"
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 1,
+        "fields": {
+            "order": null,
+            "owner": 1,
+            "purchaser": null,
+            "accept_date": "2015-07-23T16:33:49.020Z",
+            "book_type": 1,
+            "sold": false,
+            "accepted": true,
+            "sold_date": null
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 2,
+        "fields": {
+            "order": null,
+            "owner": 1,
+            "purchaser": null,
+            "accept_date": "2015-07-23T16:33:49.020Z",
+            "book_type": 1,
+            "sold": false,
+            "accepted": true,
+            "sold_date": null
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 3,
+        "fields": {
+            "order": null,
+            "owner": 1,
+            "purchaser": null,
+            "accept_date": "2015-07-23T16:33:49.020Z",
+            "book_type": 2,
+            "sold": false,
+            "accepted": true,
+            "sold_date": null
+        }
+    },
+    {
+        "model": "books.book",
+        "pk": 4,
+        "fields": {
+            "order": null,
+            "owner": 1,
+            "purchaser": null,
+            "accept_date": "2015-07-23T16:33:49.020Z",
+            "book_type": 2,
+            "sold": false,
+            "accepted": true,
+            "sold_date": null
+        }
+    },
+    {
+        "model": "orders.order",
+        "pk": 1,
+        "fields": {
+            "fulfilled": false,
+            "user": 2,
+            "date": "2015-07-23T16:34:29.989Z"
+        }
+    }
+]

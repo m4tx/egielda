@@ -85,9 +85,7 @@
         "accept_date": null,
         "sold_date": null,
         "order": null,
-        "reserved_until": null,
         "purchaser": null,
-        "reserver": null,
         "sold": false
     },
     "model": "books.book",
@@ -101,9 +99,7 @@
         "accept_date": null,
         "sold_date": null,
         "order": null,
-        "reserved_until": null,
         "purchaser": null,
-        "reserver": null,
         "sold": false
     },
     "model": "books.book",
@@ -117,9 +113,7 @@
         "accept_date": null,
         "sold_date": null,
         "order": null,
-        "reserved_until": null,
         "purchaser": null,
-        "reserver": null,
         "sold": false
     },
     "model": "books.book",
@@ -133,9 +127,7 @@
         "accept_date": null,
         "sold_date": null,
         "order": null,
-        "reserved_until": null,
         "purchaser": null,
-        "reserver": null,
         "sold": false
     },
     "model": "books.book",
@@ -149,9 +141,7 @@
         "accept_date": null,
         "sold_date": null,
         "order": null,
-        "reserved_until": null,
         "purchaser": null,
-        "reserver": null,
         "sold": false
     },
     "model": "books.book",
@@ -165,9 +155,7 @@
         "accept_date": null,
         "sold_date": null,
         "order": null,
-        "reserved_until": null,
         "purchaser": null,
-        "reserver": null,
         "sold": false
     },
     "model": "books.book",
@@ -181,9 +169,7 @@
         "accept_date": null,
         "sold_date": null,
         "order": null,
-        "reserved_until": null,
         "purchaser": null,
-        "reserver": null,
         "sold": false
     },
     "model": "books.book",
@@ -191,12 +177,16 @@
 },
 {
     "fields": {
-        "phone_number": "111333222",
+        "username": "test_user",
         "first_name": "Test",
+        "last_name": "Test",
         "student_class": "1A",
-        "last_name": "Test"
+        "phone_number": "111333222",
+        "email": "test@localhost",
+        "document": null,
+        "awaiting_verification": false
     },
-    "model": "common.appuser",
+    "model": "authentication.appuser",
     "pk": 1
 }
 ]
