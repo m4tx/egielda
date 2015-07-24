@@ -93,9 +93,9 @@
         {% endif %}
     </ul>
 
-    <form class="form-horizontal" enctype="multipart/form-data" action="{{ request.path }}" method="post">
+    <form class="ui form" enctype="multipart/form-data" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}
-        <button class="btn btn-primary pull-right" type="submit"><span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}</button>
+        <button class="ui primary button right floated" type="submit"><i class="icon checkmark"></i>{% trans "Save" %}</button>
     </form>
 {% endblock %}

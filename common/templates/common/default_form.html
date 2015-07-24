@@ -1,22 +1,30 @@
 <style scoped>
-    input[type="checkbox"][id$="-clear_id"]
-    {
+    input[type="checkbox"][id$="-clear_id"] {
         margin: 0 4px 0 25px;
     }
-    input[type="file"]
-    {
+
+    input[type="file"] {
         height: auto;
     }
 </style>
 {% for field in form %}
-    <div class="form-group">
-        <label class="col-sm-3 col-md-2 control-label" for="{{ field.auto_id }}">{{ field.label }}:</label>
+    <div class="inline fields">
+        <div class="three wide field">
+            <label class="right aligned" for="{{ field.auto_id }}">{{ field.label }}:</label>
+        </div>
 
-        <div class="col-sm-9 col-md-10{% if field.errors %} has-error{% endif %}">
+        <div class="thirteen wide field{% if field.errors %} error{% endif %}">
             {{ field }}
-            {% for error in field.errors %}
-                <span class="help-block">{{ error }}</span>
-            {% endfor %}
         </div>
     </div>
+    {% if field.errors %}
+        <div class="inline fields" style="margin-top: -1em;">
+            <div class="three wide field"></div>
+            <div class="thirteen wide ui pointing label">
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
 {% endfor %}

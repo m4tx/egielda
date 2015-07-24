@@ -4,17 +4,15 @@
 {% block title %}{% trans "Register new account" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Register new account" %}
-    </h1>
+    <h1>{% trans "Register new account" %}</h1>
 
-    <div class="alert alert-info">
+    <div class="ui info message">
         {% trans "In order to be able to sell and purchase books, you need to have a verified account. If you want your account to be verified, you have to upload scan of <strong>any identity card</strong> (it does not have to have a photo of you) and <strong>a confirmation that you are student or graduate</strong> of this school. An example of valid scan is front side of your school ID." %}
     </div>
 
-    <form class="form-horizontal" enctype="multipart/form-data" action="{{ request.path }}" method="post">
+    <form class="ui form" enctype="multipart/form-data" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}
-        <button class="btn btn-primary pull-right" type="submit">{% trans "Next" %} <span
-                class="glyphicon glyphicon-chevron-right"></span></button>
+        <button class="ui button primary right floated" type="submit">{% trans "Next" %}<i class="icon chevron right"></i></button>
     </form>
 {% endblock %}
