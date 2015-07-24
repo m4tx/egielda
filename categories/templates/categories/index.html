@@ -61,7 +61,7 @@
     {% endif %}
 
     {% if perms.common.view_categories_add_category %}
-        <a class="btn btn-primary pull-right" href="{% url 'categories.views.add_category' %}" role="button">
+        <a class="ui primary button pull-right" href="{% url 'categories.views.add_category' %}" role="button">
             <span class="glyphicon glyphicon-plus"></span> {% trans "Add category" %}
         </a>
     {% endif %}

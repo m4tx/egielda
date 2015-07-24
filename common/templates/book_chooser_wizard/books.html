@@ -65,7 +65,7 @@
                             </p>
                         </div>
                         {% include "common/default_form.html" %}
-                        <button class="btn btn-default pull-right" id="btn-add-new-book"><span
+                        <button class="ui button pull-right" id="btn-add-new-book"><span
                                 class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</button>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
     <div class="btn-toolbar">
         <form action="{{ request.path }}" method="post">
             {% csrf_token %}
-            <button class="btn btn-primary pull-right" name="btn-next" disabled="disabled">{% trans "Next" %} <span
+            <button class="ui primary button pull-right" name="btn-next" disabled="disabled">{% trans "Next" %} <span
                     class="glyphicon glyphicon-chevron-right"></span></button>
         </form>
     </div>

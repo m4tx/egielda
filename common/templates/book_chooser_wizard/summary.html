@@ -53,9 +53,9 @@
     {% include "book_chooser_wizard/books_chosen_list.html" with hide_actions=True book_list=chosen_book_list %}
     <form action="{{ request.path }}" method="post">
         {% csrf_token %}
-        <button class="btn btn-default" name="btn-back" type="submit"><span
+        <button class="ui button" name="btn-back" type="submit"><span
                 class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}</button>
-        <button class="btn btn-primary pull-right" name="btn-next" type="submit"><span
+        <button class="ui primary button pull-right" name="btn-next" type="submit"><span
                 class="glyphicon glyphicon-ok"></span> {% trans "Accept" %}</button>
     </form>
 {% endblock %}

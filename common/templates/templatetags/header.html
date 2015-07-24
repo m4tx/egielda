@@ -1,9 +1,10 @@
-<ol class="breadcrumb hidden-print">
+<div class="ui breadcrumb">
     {% for item in items %}
         {% if forloop.last %}
-            <li class="active">{{ item.1 }}</li>
+            <div class="active section">{{ item.1 }}</div>
         {% else %}
-            <li><a href="{% url item.0 %}">{{ item.1 }}</a></li>
+            <a class="section" href="{% url item.0 %}">{{ item.1 }}</a>
+            <i class="right chevron icon divider"></i>
         {% endif %}
     {% endfor %}
-</ol>
+</div>

@@ -50,7 +50,7 @@
     {% include "book_chooser_wizard/books_chosen_list.html" with hide_actions=True book_list=given_book_list %}
 
     {% if perms.common.view_sellers_index %}
-        <a href="{% url 'sellers.views.index' %}" class="btn btn-primary pull-right hidden-print" role="button">
+        <a href="{% url 'sellers.views.index' %}" class="ui primary button pull-right hidden-print" role="button">
             <span class="glyphicon glyphicon-chevron-right"></span> {% trans "Next" %}
         </a>
     {% endif %}

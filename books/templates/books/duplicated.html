@@ -36,7 +36,7 @@
     {% endif %}
 
     {% if perms.common.view_books_index %}
-        <a class="btn btn-default pull-left" href="{% url 'books.views.index' %}" role="button">
+        <a class="ui button pull-left" href="{% url 'books.views.index' %}" role="button">
             <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
         </a>
     {% endif %}

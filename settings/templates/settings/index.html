@@ -16,7 +16,7 @@
     <form class="form-horizontal" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary pull-right">
+        <button type="submit" class="ui primary button pull-right">
             <span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}
         </button>
     </form>

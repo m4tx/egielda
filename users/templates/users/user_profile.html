@@ -75,6 +75,6 @@
     <form class="form-horizontal" enctype="multipart/form-data" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}
-        <button class="btn btn-primary pull-right" type="submit"><span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}</button>
+        <button class="ui primary button pull-right" type="submit"><span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}</button>
     </form>
 {% endblock %}

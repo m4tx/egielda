@@ -20,10 +20,10 @@
     {% include "orders/orders_table.html" with hide_actions=True %}
     <form action="{{ request.path }}" method="post">
         {% if perms.common.view_orders_index %}
-            <a href="{% url 'orders.views.index' %}" class="btn btn-default" role="button"><span
+            <a href="{% url 'orders.views.index' %}" class="ui button" role="button"><span
                 class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
         {% endif %}
-        <button type="submit" class="btn btn-danger pull-right"><span
+        <button type="submit" class="ui negative button pull-right"><span
                 class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}</button>
         {% csrf_token %}
     </form>

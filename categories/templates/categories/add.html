@@ -12,10 +12,10 @@
         {% include 'common/default_form.html' %}
         {% csrf_token %}
         {% if perms.common.view_categories_index %}
-            <a href="{% url 'categories.views.index' %}" class="btn btn-default" role="button"><span
+            <a href="{% url 'categories.views.index' %}" class="ui button" role="button"><span
                 class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
         {% endif %}
-        <button type="submit" class="btn btn-primary pull-right">
+        <button type="submit" class="ui primary button pull-right">
             <span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}
         </button>
     </form>

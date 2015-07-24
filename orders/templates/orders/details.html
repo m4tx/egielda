@@ -39,7 +39,7 @@
     {% include "orders/fulfill_accept_book_list.html" %}
 
     {% if perms.common.view_orders_index %}
-        <a class="btn btn-default" role="button" href="{% url 'orders.views.index' %}">
+        <a class="ui button" role="button" href="{% url 'orders.views.index' %}">
             <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
         </a>
     {% endif %}

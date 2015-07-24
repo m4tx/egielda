@@ -33,13 +33,13 @@
         {% include 'orders/fulfill_book_list.html' with hide_actions=True %}
 
         {% if perms.common.view_orders_not_fulfilled %}
-            <a href="{% url 'orders.views.not_fulfilled' %}" class="btn btn-default" role="button">
+            <a href="{% url 'orders.views.not_fulfilled' %}" class="ui button" role="button">
                 <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}
             </a>
         {% endif %}
 
         {% if perms.common.view_orders_fulfill_accept %}
-            <button class="btn btn-primary pull-right" type="submit">
+            <button class="ui primary button pull-right" type="submit">
                 {% trans "Next" %} <span class="glyphicon glyphicon-chevron-right"></span>
             </button>
         {% endif %}

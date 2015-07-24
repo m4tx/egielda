@@ -26,10 +26,10 @@
         {% include "common/default_form.html" %}
         {% csrf_token %}
         {% if perms.common.view_books_index %}
-            <a href="{% url 'books.views.index' %}" class="btn btn-default" role="button"><span
+            <a href="{% url 'books.views.index' %}" class="ui button" role="button"><span
                 class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
         {% endif %}
-        <button class="btn btn-primary pull-right" type="submit"><span
+        <button class="ui primary button pull-right" type="submit"><span
                 class="glyphicon glyphicon-ok"></span> {% trans "Save" %}</button>
     </form>
 {% endblock %}

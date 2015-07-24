@@ -115,12 +115,12 @@
     <form class="form-horizontal" action="{{ request.path }}" method="post"
             data-action-needscorrection="{% url 'users.views.needs_correction' student.pk %}">
         {% csrf_token %}
-        <a class="btn btn-default pull-left" href="{% url 'users.views.unverified' %}" id="cancel">
+        <a class="ui button pull-left" href="{% url 'users.views.unverified' %}" id="cancel">
                 <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
         <div class="btn-toolbar" role="toolbar">
-            <button class="btn btn-primary pull-right" type="submit" id="verify">
+            <button class="ui primary button pull-right" type="submit" id="verify">
                 <span class="glyphicon glyphicon-ok"></span> {% trans "Verify" %}</button>
-            <a class="btn btn-danger pull-right" href="#" id="needs-correction">
+            <a class="ui negative button pull-right" href="#" id="needs-correction">
                 <span class="glyphicon glyphicon-eye-open"></span> {% trans "Needs correction" %}</a>
         </div>
     </form>

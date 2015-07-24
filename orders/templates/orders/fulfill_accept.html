@@ -31,13 +31,13 @@
 
     <form action="{{ request.path }}" method="post">
         {% if perms.common.view_orders_fulfill %}
-            <a href="{% url 'orders.views.fulfill' order.pk %}" class="btn btn-default" role="button">
+            <a href="{% url 'orders.views.fulfill' order.pk %}" class="ui button" role="button">
                 <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
             </a>
         {% endif %}
 
         {% csrf_token %}
-        <button class="btn btn-primary pull-right" type="submit">
+        <button class="ui primary button pull-right" type="submit">
             <span class="glyphicon glyphicon-ok"></span> {% trans "Fulfill" %}
         </button>
     </form>
