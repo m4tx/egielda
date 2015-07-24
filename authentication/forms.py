@@ -57,6 +57,9 @@ class UserDataForm(ModelForm):
 
     def clean_document(self):
         document = self.cleaned_data['document']
+        if document is None:
+            return document
+
         image = Image.open(document.file)
 
         if hasattr(image, '_getexif'):
