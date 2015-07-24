@@ -61,11 +61,11 @@
     {% profile_header %}
 
     {% if user.awaiting_verification and not incorrect_fields %}
-        <div class="alert alert-warning">
+        <div class="ui warning message">
             {% trans "Your account is now awaiting verification." %}
         </div>
     {% elif incorrect_fields %}
-        <div class="alert alert-danger">
+        <div class="ui error message">
             {% trans "Your verification request was rejected. Following fields are filled in incorrectly:" %}
             <ul>
                 {% for field in incorrect_fields %}

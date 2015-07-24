@@ -13,9 +13,9 @@
     {% manage_header "orders/remove" %}
 
     {% if orders|length == 1 %}
-        <div class="alert alert-danger">{% trans "Are you sure you want to remove this order?" %}</div>
+        <div class="ui error message">{% trans "Are you sure you want to remove this order?" %}</div>
     {% else %}
-        <div class="alert alert-danger">{% trans "Are you sure you want to remove these orders?" %}</div>
+        <div class="ui error message">{% trans "Are you sure you want to remove these orders?" %}</div>
     {% endif %}
     {% include "orders/orders_table.html" with hide_actions=True %}
     <form action="{{ request.path }}" method="post">

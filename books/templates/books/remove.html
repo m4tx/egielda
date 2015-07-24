@@ -13,9 +13,9 @@
     {% manage_header "books/remove" %}
 
     {% if book_list|length == 1 %}
-        <div class="alert alert-danger">{% trans "Are you sure you want to remove this book?" %}</div>
+        <div class="ui error message">{% trans "Are you sure you want to remove this book?" %}</div>
     {% else %}
-        <div class="alert alert-danger">{% trans "Are you sure you want to remove these books?" %}</div>
+        <div class="ui error message">{% trans "Are you sure you want to remove these books?" %}</div>
     {% endif %}
     {% include "books/book_list_base.html" with hide_actions=True %}
     <form action="{{ request.path }}" method="post">

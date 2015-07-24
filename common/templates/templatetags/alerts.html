@@ -8,15 +8,27 @@
         });
     </script>
     {% if error_msg %}
-        <div class="alert alert-danger alert-dismissable">{{ error_msg }}</div>
+        <div class="ui error message">
+            <i class="close icon"></i>
+            {{ error_msg }}
+        </div>
     {% endif %}
     {% if warning_msg %}
-        <div class="alert alert-warning alert-dismissable">{{ warning_msg }}</div>
+        <div class="ui warning message">
+            <i class="close icon"></i>
+            {{ warning_msg }}
+        </div>
     {% endif %}
     {% if success_msg %}
-        <div class="alert alert-success alert-dismissable">{{ success_msg }}</div>
+        <div class="ui success message">
+            <i class="close icon"></i>
+            {{ success_msg }}
+        </div>
     {% endif %}
     {% if info_msg %}
-        <div class="alert alert-info alert-dismissable">{{ info_msg }}</div>
+        <div class="ui info message">
+            <i class="close icon"></i>
+            {{ info_msg }}
+        </div>
     {% endif %}
 {% endif %}

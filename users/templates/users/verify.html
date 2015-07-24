@@ -39,11 +39,11 @@
     <h1>{% blocktrans %}Verify {{ student }}'s account{% endblocktrans %}</h1>
     {% manage_header "users/unverified/verify" %}
 
-    <div class="alert alert-info" role="alert" style="display: none;" id="to-correct-info">
+    <div class="ui info message" role="alert" style="display: none;" id="to-correct-info">
         {% trans 'Select incorrectly filled fields and then press "Needs correction" button again.' %}
     </div>
 
-    <div class="alert alert-danger" role="alert" style="display: none;" id="to-correct-not-selected">
+    <div class="ui error message" role="alert" style="display: none;" id="to-correct-not-selected">
         {% trans "You didn't select any field which needs to be corrected." %}
     </div>
 

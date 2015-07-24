@@ -86,7 +86,7 @@
         <div class="ui main container">
             {% alerts %}
             <noscript>
-                <div class="alert alert-danger">
+                <div class="ui error message">
                     {% trans "You don't seem to have JavaScript enabled. This website <strong>does not work properly</strong> without JavaScript, so please enable it in your browser." %}
                 </div>
             </noscript>
@@ -100,6 +100,9 @@
 
         <script>
             $('.ui.dropdown').dropdown();
+            $('.message .close').on('click', function () {
+                $(this).closest('.message').transition('fade');
+            });
         </script>
         {% block footer %}{% endblock %}
 

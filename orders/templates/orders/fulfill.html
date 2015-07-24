@@ -27,7 +27,7 @@
     </h1>
     {% manage_header "orders/fulfill" %}
 
-    <div class="alert alert-info">{% trans "If you want to delete some book, just pass 0 as amount." %}</div>
+    <div class="ui info message">{% trans "If you want to delete some book, just pass 0 as amount." %}</div>
     <form action="{{ request.path }}" method="post">
         {% csrf_token %}
         {% include 'orders/fulfill_book_list.html' with hide_actions=True %}

@@ -18,7 +18,7 @@
     </h1>
     {% manage_header "sellers/accept_books" %}
 
-    <div class="alert alert-info">{% trans "If you want to delete some book, just pass 0 as amount." %}</div>
+    <div class="ui info message">{% trans "If you want to delete some book, just pass 0 as amount." %}</div>
     <form action="{{ request.path }}" method="post">
         {% csrf_token %}
         {% include 'sellers/accept_book_list.html' %}

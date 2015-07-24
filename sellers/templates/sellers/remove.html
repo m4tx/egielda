@@ -13,9 +13,9 @@
     {% manage_header "sellers/remove" %}
 
     {% if seller_list|length == 1 %}
-        <div class="alert alert-danger">{% trans "Are you sure you want to remove this seller's books?" %}</div>
+        <div class="ui error message">{% trans "Are you sure you want to remove this seller's books?" %}</div>
     {% else %}
-        <div class="alert alert-danger">{% trans "Are you sure you want to remove these sellers' books?" %}</div>
+        <div class="ui error message">{% trans "Are you sure you want to remove these sellers' books?" %}</div>
     {% endif %}
 
     <div class="table-responsive">

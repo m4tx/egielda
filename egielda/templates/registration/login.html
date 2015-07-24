@@ -9,13 +9,13 @@
     </div>
 
     {% if user.is_authenticated %}
-        <div class="alert alert-warning">
+        <div class="ui warning message">
             {% blocktrans %}You are already signed in as <b>{{ user }}</b>. If you are sure you want to sign in as another user, use the form below.{% endblocktrans %}
         </div>
     {% endif %}
 
     {% if form.errors %}
-        <div class="alert alert-danger">
+        <div class="ui error message">
             {% trans "Authentication data you provided is incorrect." %}
         </div>
     {% endif %}
