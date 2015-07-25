@@ -40,13 +40,42 @@
         window.addEventListener("load", function(){
             $(".table-responsive table").tablesorter();
 
-            $("input[name^='select-']").on('change', function () {
-                $(this).closest($('tr')).toggleClass('active', this.checked);
+            $('.ui.checkbox').checkbox('set enabled');
+            $('.table .master.checkbox').checkbox({
+                onChecked: function () {
+                    var $childCheckbox = $(this).closest('.table').find('.checkbox');
+                    $childCheckbox.checkbox('check');
+                },
+                onUnchecked: function () {
+                    var $childCheckbox = $(this).closest('.table').find('.checkbox');
+                    $childCheckbox.checkbox('uncheck');
+                }
             });
 
-            $("input#select-all").on('change', function () {
-                $("input[name^='select-']").prop('checked', this.checked);
-                $("input[name^='select-']").closest($('tr')).toggleClass('active', this.checked);
+            $('.table .child.checkbox').checkbox({
+                fireOnInit: true,
+                onChange: function () {
+                    var $listGroup = $(this).closest('.table'),
+                            $parentCheckbox = $listGroup.find('th').children('.checkbox'),
+                            $checkbox = $listGroup.find('.checkbox').not('.master'),
+                            allChecked = true,
+                            allUnchecked = true;
+
+                    $checkbox.each(function () {
+                        if ($(this).checkbox('is checked')) {
+                            allUnchecked = false;
+                        } else {
+                            allChecked = false;
+                        }
+                    });
+                    if (allChecked) {
+                        $parentCheckbox.checkbox('set checked');
+                    } else if (allUnchecked) {
+                        $parentCheckbox.checkbox('set unchecked');
+                    } else {
+                        $parentCheckbox.checkbox('set indeterminate');
+                    }
+                }
             });
         });
     </script>

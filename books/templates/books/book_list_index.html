@@ -3,37 +3,33 @@
 
 {% block actions %}
     {% if perms.common.view_books_edit_book %}
-        <a class="btn btn-xs btn-link" href="{% url 'books.views.edit_book' book.pk %}" role="button"><span
-            class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}</a>
+        <a href="{% url 'books.views.edit_book' book.pk %}"><i class="icon edit"></i>{% trans "Edit" %}</a>
     {% endif %}
     {% if perms.common.view_books_remove_book %}
-        <a class="btn btn-xs btn-link" href="{% url 'books.views.remove_book' book.pk %}" role="button"><span
-            class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}</a>
+        <a href="{% url 'books.views.remove_book' book.pk %}"><i class="icon trash"></i>{% trans "Remove" %}</a>
     {% endif %}
 {% endblock %}
 
 {% block thead_header %}
     {% if perms.common.view_books_remove_book %}
-        <th><input type="checkbox" id="select-all"></th>
+        <th><div class="ui master checkbox"><input type="checkbox"><label></label></div></th>
     {% endif %}
 {% endblock %}
 
 {% block tr_header %}
     {% if perms.common.view_books_remove_book %}
-        <td><input type="checkbox" name="select-{{ book.pk }}"></td>
+        <td><div class="ui child checkbox"><input type="checkbox" name="select-{{ book.pk }}"><label></label></div></td>
     {% endif %}
 {% endblock %}
 
 {% block footer %}
     {% if perms.common.view_books_remove_book %}
         <tr class="info">
-            <td colspan="6" class="text-right text-muted">{% trans "Bulk actions:" %}</td>
+            <td colspan="6" class="right aligned text-muted">{% trans "Bulk actions:" %}</td>
             <td>
-                <div class="btn-toolbar" role="toolbar">
-                    <button class="btn btn-xs btn-link" type="submit">
-                        <span class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}
-                    </button>
-                </div>
+                <button class="ui link button" type="submit">
+                    <i class="icon trash"></i>{% trans "Remove" %}
+                </button>
             </td>
         </tr>
     {% endif %}
