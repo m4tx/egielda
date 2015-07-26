@@ -258,6 +258,4 @@ $("#category_filter").on("change", function () {
     });
 });
 
-function showMessage(text) {
-    alert(text);
-}
+$('.ui.accordion').accordion();

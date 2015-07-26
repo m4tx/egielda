@@ -18,8 +18,8 @@ function getInputByName(name) {
     return get('input[name="' + name + '"]');
 }
 
-var searchIsbnButton = get('<button class="btn btn-default" type="button" disabled="disabled">' +
-    '<span class="glyphicon glyphicon-search"></span></button>');
+var searchIsbnButton = get('<button class="ui icon button" disabled="disabled">' +
+    '<i class="icon search"></i></button>');
 var isbnInput = getInputByName('isbn');
 
 // Ported from utils/isbn.py
