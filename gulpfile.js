@@ -23,13 +23,13 @@ var concat = require('gulp-concat'),
     less = require('gulp-less'),
     minifyCss = require('gulp-minify-css');
 
-gulp.task('lint', function() {
+gulp.task('lint', function () {
     return gulp.src('assets/js/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
 
-gulp.task('scripts', function() {
+gulp.task('scripts', function () {
     return gulp.src('assets/js/*.js')
         .pipe(concat('all.js'))
         .pipe(gulp.dest('dist'))
@@ -38,7 +38,7 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('less', function() {
+gulp.task('less', function () {
     return gulp.src('assets/less/*.less')
         .pipe(sourcemaps.init())
         .pipe(less())
@@ -46,7 +46,7 @@ gulp.task('less', function() {
         .pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('less-minified', function() {
+gulp.task('less-minified', function () {
     return gulp.src('assets/less/*.less')
         .pipe(less())
         .pipe(minifyCss({keepSpecialComments: 0}))
@@ -56,10 +56,15 @@ gulp.task('less-minified', function() {
         .pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('watch', function() {
+gulp.task('assets', function () {
+    return gulp.src('vendor/Semantic-UI/src/themes/default/assets/**/*.*')
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('watch', function () {
     gulp.watch('assets/js/*.js', ['lint', 'scripts']);
     gulp.watch('assets/less/*.less', ['less']);
 });
 
-gulp.task('default', ['lint', 'less', 'scripts', 'watch']);
+gulp.task('default', ['lint', 'less', 'scripts', 'assets', 'watch']);
 gulp.task('build-dist', ['less-minified']);
