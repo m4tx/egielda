@@ -42,9 +42,15 @@ def accept_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
     books = Book.objects.filter(owner=user, accepted=False).select_related('book_type')
 
-    d = books_by_types(books)
-    book_type_list = list(d.keys())
+    d = dict()
+    for book in books:
+        d[book.book_type] = d.setdefault(book.book_type, 0) + 1
+
+    book_type_list = []
     correct_book_list = []
+    for book_type, amount in d.items():
+        book_type.amount = amount
+        book_type_list.append(book_type)
 
     if not books:
         raise Http404("There's no books of that user.")
