@@ -29,7 +29,7 @@
             color: #333;
         }
 
-        .item > .image > .icon {
+        .item > .image > a > .icon {
             font-size: 76px;
             height: initial;
             line-height: 0.8em;
@@ -71,6 +71,11 @@
         .ui.items:last-child {
             margin-bottom: 10px !important;
         }
+
+        .ui.items > .item > .image {
+            padding: 5px;
+            margin: 0 10px;
+        }
     </style>
 {% endblock %}
 
@@ -85,9 +90,9 @@
         {% if perms.common.view_orders_not_fulfilled or perms.common.view_orders_fulfilled %}
             <div class="item">
                 <div class="ui tiny image">
-                    <i class="shop icon"></i>
+                    <a href="{% url 'orders.views.index' %}"><i class="shop icon"></i></a>
                 </div>
-                <div class="content">
+                <div class="middle aligned content">
                     <a href="{% url 'orders.views.index' %}">
                         <h4 class="header">{% trans "Orders" %}</h4>
                     </a>
@@ -109,9 +114,9 @@
         {% if perms.common.view_sellers_index %}
             <div class="item">
                 <div class="ui tiny image">
-                    <i class="check square icon"></i>
+                    <a href="{% url 'sellers.views.index' %}"><i class="check square icon"></i></a>
                 </div>
-                <div class="content">
+                <div class="middle aligned content">
                     <a href="{% url 'sellers.views.index' %}">
                         <h4 class="header">{% trans "Sellers with unaccepted books" %}</h4>
                     </a>
@@ -122,9 +127,9 @@
         {% if perms.common.view_users_index %}
             <div class="item">
                 <div class="ui tiny image">
-                    <i class="user icon"></i>
+                    <a href="{% url 'users.views.index' %}"><i class="user icon"></i></a>
                 </div>
-                <div class="content">
+                <div class="middle aligned content">
                     <a href="{% url 'users.views.index' %}">
                         <h4 class="header">{% trans "Users" %}</h4>
                     </a>
@@ -150,9 +155,9 @@
         {% if perms.common.view_stats_index %}
             <div class="item">
                 <div class="ui tiny image">
-                    <i class="line chart icon"></i>
+                    <a href="{% url 'stats.views.index' %}"><i class="line chart icon"></i></a>
                 </div>
-                <div class="content">
+                <div class="middle aligned content">
                     <a href="{% url 'stats.views.index' %}">
                         <h4 class="header">{% trans "Statistics" %}</h4>
                     </a>
@@ -176,9 +181,9 @@
         {% if perms.common.view_books_index %}
             <div class="item">
                 <div class="ui tiny image">
-                    <i class="book icon"></i>
+                    <a href="{% url 'books.views.index' %}"><i class="book icon"></i></a>
                 </div>
-                <div class="content">
+                <div class="middle aligned content">
                     <a href="{% url 'books.views.index' %}">
                         <h4 class="header">{% trans "Books" %}</h4>
                     </a>
@@ -201,9 +206,9 @@
         {% if perms.common.view_categories_index %}
             <div class="item">
                 <div class="ui tiny image">
-                    <i class="tag icon"></i>
+                    <a href="{% url 'categories.views.index' %}"><i class="tag icon"></i></a>
                 </div>
-                <div class="content">
+                <div class="middle aligned content">
                     <a href="{% url 'categories.views.index' %}">
                         <h4 class="header">{% trans "Categories" %}</h4>
                     </a>
@@ -223,9 +228,9 @@
         {% if perms.common.view_settings_index %}
             <div class="item">
                 <div class="ui tiny image">
-                    <i class="settings icon"></i>
+                    <a href="{% url 'settings.views.index' %}"><i class="settings icon"></i></a>
                 </div>
-                <div class="content">
+                <div class="middle aligned content">
                     <a href="{% url 'settings.views.index' %}">
                         <h4 class="header">{% trans "Settings" %}</h4>
                     </a>
