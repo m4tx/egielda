@@ -3,17 +3,16 @@
 
 {% block head %}
     <style>
-        /* Menu */
-        ul.manage-menu, ul.manage-menu > li > ul {
-            list-style: none;
-            padding: 0;
+        .ui.divided.items > .item:last-child {
+            border-bottom: 1px solid rgba(34, 36, 38, 0.15);
         }
 
-        ul.manage-menu a {
-            color: #333;
+        .ui.divided.items > .item:first-child {
+            border-top: 1px solid rgba(34, 36, 38, 0.15);
+            padding: 1em 0em;
         }
 
-        ul.manage-menu > li {
+        .ui.items .item {
             border: 1px #ddd solid;
             border-bottom-width: 0;
             padding: 10px;
@@ -22,51 +21,55 @@
             position: relative;
         }
 
-        ul.manage-menu > li:last-child {
-            border-bottom-width: 1px;
-        }
-
-        ul.manage-menu > li:hover {
+        .ui .item:hover {
             background-color: #f5f5f5;
         }
 
-        ul.manage-menu > li > a > .glyphicon {
+        .ui .item a {
+            color: #333;
+        }
+
+        .item > .image > .icon {
             font-size: 76px;
-            float: left;
+            height: initial;
+            line-height: 0.8em;
         }
 
-        ul.manage-menu > li > a > h4 {
-            display: inline-block;
-            margin-left: 20px;
+        .ui.items > .item > .content .header {
+            font-size: 18px;
         }
 
-        ul.manage-menu > li > a > h4:hover {
+        .ui.items > .item > .content a .header:hover {
             text-decoration: underline;
         }
 
-        /* Submenus */
-        ul.manage-menu > li > ul {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            left: 100px;
-            padding: 8px;
-
-            border-color: #ddd;
-            border-style: solid;
-            border-width: 1px 0 0 1px;
+        .ui.items > .item > .content > .extra a:hover {
+            text-decoration: underline;
         }
 
-        ul.manage-menu > li > ul > li {
+        .ui.items > .item .extra {
+            margin-top: 1.6em;
+        }
+
+        .extra > ul {
+            padding: 0;
+        }
+
+        .extra > ul > li {
             display: inline;
+            padding: 0;
         }
 
-        ul.manage-menu > li > ul > li:after {
+        .extra > ul > li:after {
             content: "\00a0\00a0\00a0•\00a0\00a0\00a0";
         }
 
-        ul.manage-menu > li > ul > li:last-child:after {
+        .extra > ul > li:last-child:after {
             content: none;
+        }
+
+        .ui.items:last-child {
+            margin-bottom: 10px !important;
         }
     </style>
 {% endblock %}
@@ -78,117 +81,156 @@
     {% load manage_header %}
     {% manage_header %}
 
-    <ul class="manage-menu">
-        {% if perms.common.view_orders_index %}
-            <li>
-                <a href="{% url 'orders.views.index' %}">
-                    <span class="glyphicon glyphicon-shopping-cart"></span> <h4>{% trans "Orders" %}</h4>
-                </a>
+    <div class="ui divided items">
+        {% if perms.common.view_orders_not_fulfilled or perms.common.view_orders_fulfilled %}
+            <div class="item">
+                <div class="ui tiny image">
+                    <i class="shop icon"></i>
+                </div>
+                <div class="content">
+                    <a href="{% url 'orders.views.index' %}">
+                        <h4 class="header">{% trans "Orders" %}</h4>
+                    </a>
+                    <div class="extra">
+                        <ul>
+                            {% if perms.common.view_orders_not_fulfilled %}
+                                <li><a href="{% url 'orders.views.not_fulfilled' %}">{% trans "Not fulfilled" %}</a></li>
+                            {% endif %}
 
-                {% if perms.common.view_orders_not_fulfilled or perms.common.view_orders_fulfilled %}
-                    <ul>
-                        {% if perms.common.view_orders_not_fulfilled %}
-                            <li><a href="{% url 'orders.views.not_fulfilled' %}">{% trans "Not fulfilled" %}</a></li>
-                        {% endif %}
-
-                        {% if perms.common.view_orders_fulfilled %}
-                            <li><a href="{% url 'orders.views.fulfilled' %}">{% trans "Fulfilled" %}</a></li>
-                        {% endif %}
-                    </ul>
-                {% endif %}
-            </li>
+                            {% if perms.common.view_orders_fulfilled %}
+                                <li><a href="{% url 'orders.views.fulfilled' %}">{% trans "Fulfilled" %}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
         {% endif %}
 
         {% if perms.common.view_sellers_index %}
-            <li>
-                <a href="{% url 'sellers.views.index' %}">
-                    <span class="glyphicon glyphicon-check"></span> <h4>{% trans "Sellers with unaccepted books" %}</h4>
-                </a>
-            </li>
+            <div class="item">
+                <div class="ui tiny image">
+                    <i class="check square icon"></i>
+                </div>
+                <div class="content">
+                    <a href="{% url 'sellers.views.index' %}">
+                        <h4 class="header">{% trans "Sellers with unaccepted books" %}</h4>
+                    </a>
+                </div>
+            </div>
         {% endif %}
 
         {% if perms.common.view_users_index %}
-            <li>
-                <a href="{% url 'users.views.index' %}">
-                    <span class="glyphicon glyphicon-user"></span> <h4>{% trans "Users" %}</h4>
-                </a>
+            <div class="item">
+                <div class="ui tiny image">
+                    <i class="user icon"></i>
+                </div>
+                <div class="content">
+                    <a href="{% url 'users.views.index' %}">
+                        <h4 class="header">{% trans "Users" %}</h4>
+                    </a>
+                    <div class="extra">
+                        <ul>
+                            {% if perms.common.view_users_verified %}
+                                <li><a href="{% url 'users.views.verified' %}">{% trans "Verified" %}</a></li>
+                            {% endif %}
 
-                {% if perms.common.view_users_verified or perms.common.view_users_unverified %}
-                    <ul>
-                        {% if perms.common.view_users_verified %}
-                            <li><a href="{% url 'users.views.verified' %}">{% trans "Verified" %}</a></li>
-                        {% endif %}
+                            {% if perms.common.view_users_unverified %}
+                                <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>
+                            {% endif %}
 
-                        {% if perms.common.view_users_unverified %}
-                            <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>
-                        {% endif %}
-
-                        {% if perms.common.view_users_needing_data_correction %}
-                            <li><a href="{% url 'users.views.needing_data_correction' %}">{% trans "Needing data correction" %}</a></li>
-                        {% endif %}
-                    </ul>
-                {% endif %}
-            </li>
+                            {% if perms.common.view_users_needing_data_correction %}
+                                <li><a href="{% url 'users.views.needing_data_correction' %}">{% trans "Needing data correction" %}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
         {% endif %}
 
         {% if perms.common.view_stats_index %}
-            <li>
-                <a href="{% url 'stats.views.index' %}">
-                    <span class="glyphicon glyphicon-stats"></span> <h4>{% trans "Statistics" %}</h4>
-                </a>
+            <div class="item">
+                <div class="ui tiny image">
+                    <i class="line chart icon"></i>
+                </div>
+                <div class="content">
+                    <a href="{% url 'stats.views.index' %}">
+                        <h4 class="header">{% trans "Statistics" %}</h4>
+                    </a>
+                    <div class="extra">
+                        {% if perms.common.view_stats_books_sold or perms.common.view_books_users or perms.common.view_books_books %}
+                            <ul>
+                                {% if perms.common.view_stats_books_sold %}
+                                    <li><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></li>
+                                {% endif %}
 
-                {% if perms.common.view_stats_books_sold or perms.common.view_books_users or perms.common.view_books_books %}
-                    <ul>
-                        {% if perms.common.view_stats_books_sold %}
-                            <li><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></li>
+                                {% if perms.common.view_stats_books %}
+                                    <li><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></li>
+                                {% endif %}
+                            </ul>
                         {% endif %}
-
-                        {% if perms.common.view_stats_books %}
-                            <li><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></li>
-                        {% endif %}
-                    </ul>
-                {% endif %}
-            </li>
+                    </div>
+                </div>
+            </div>
         {% endif %}
 
         {% if perms.common.view_books_index %}
-            <li>
-                <a href="{% url 'books.views.index' %}">
-                    <span class="glyphicon glyphicon-book"></span> <h4>{% trans "Books" %}</h4>
-                </a>
-
-                {% if perms.common.view_books_add_book %}
-                    <ul>
-                        {% if perms.common.view_books_add_book %}
-                            <li><a href="{% url 'books.views.add_book' %}">{% trans "Add new" %}</a></li>
-                            <li><a href="{% url 'books.views.duplicated' %}">{% trans "Duplicated" %}</a></li>
+            <div class="item">
+                <div class="ui tiny image">
+                    <i class="book icon"></i>
+                </div>
+                <div class="content">
+                    <a href="{% url 'books.views.index' %}">
+                        <h4 class="header">{% trans "Books" %}</h4>
+                    </a>
+                    <div class="extra">
+                        {% if perms.common.view_books_add_book or perms.common.view_books_duplicated %}
+                            <ul>
+                                {% if perms.common.view_books_add_book %}
+                                    <li><a href="{% url 'books.views.add_book' %}">{% trans "Add new" %}</a></li>
+                                {% endif %}
+                                {% if perms.common.view_books_duplicated %}
+                                    <li><a href="{% url 'books.views.duplicated' %}">{% trans "Duplicated" %}</a></li>
+                                {% endif %}
+                            </ul>
                         {% endif %}
-                    </ul>
-                {% endif %}
-            </li>
+                    </div>
+                </div>
+            </div>
         {% endif %}
 
         {% if perms.common.view_categories_index %}
-            <li>
-                <a href="{% url 'categories.views.index' %}">
-                    <span class="glyphicon glyphicon-tag"></span> <h4>{% trans "Categories" %}</h4>
-                </a>
-                {% if perms.common.view_categories_add_category %}
-                    <ul>
+            <div class="item">
+                <div class="ui tiny image">
+                    <i class="tag icon"></i>
+                </div>
+                <div class="content">
+                    <a href="{% url 'categories.views.index' %}">
+                        <h4 class="header">{% trans "Categories" %}</h4>
+                    </a>
+                    <div class="extra">
                         {% if perms.common.view_categories_add_category %}
-                            <li><a href="{% url 'categories.views.add_category' %}">{% trans "Add new" %}</a></li>
+                            <ul>
+                                {% if perms.common.view_categories_add_category %}
+                                    <li><a href="{% url 'categories.views.add_category' %}">{% trans "Add new" %}</a></li>
+                                {% endif %}
+                            </ul>
                         {% endif %}
-                    </ul>
-                {% endif %}
-            </li>
+                    </div>
+                </div>
+            </div>
         {% endif %}
 
         {% if perms.common.view_settings_index %}
-            <li>
-                <a href="{% url 'settings.views.index' %}">
-                    <span class="glyphicon glyphicon-wrench"></span> <h4>{% trans "Settings" %}</h4>
-                </a>
-            </li>
+            <div class="item">
+                <div class="ui tiny image">
+                    <i class="settings icon"></i>
+                </div>
+                <div class="content">
+                    <a href="{% url 'settings.views.index' %}">
+                        <h4 class="header">{% trans "Settings" %}</h4>
+                    </a>
+                </div>
+            </div>
         {% endif %}
-    </ul>
+    </div>
 {% endblock %}
