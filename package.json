@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/m4tx/egielda#readme",
   "devDependencies": {
+    "event-stream": "^3.3.1",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-jshint": "^1.11.2",

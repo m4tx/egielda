@@ -17,27 +17,59 @@ var concat = require('gulp-concat'),
     rename = require('gulp-rename'),
     sourcemaps = require('gulp-sourcemaps'),
 
+    fs = require('fs'),
+    path = require('path'),
+    es = require('event-stream'),
     jshint = require('gulp-jshint'),
     uglify = require('gulp-uglify'),
 
     less = require('gulp-less'),
     minifyCss = require('gulp-minify-css');
 
+/*
+ * JavaScript
+ */
 gulp.task('lint', function () {
     return gulp.src('assets/js/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
 
-gulp.task('scripts', function () {
-    return gulp.src('assets/js/*.js')
-        .pipe(concat('all.js'))
-        .pipe(gulp.dest('dist'))
-        .pipe(rename('all.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist'));
+function getFolders(dir){
+    return fs.readdirSync(dir)
+        .filter(function(file){
+            return fs.statSync(path.join(dir, file)).isDirectory();
+        });
+}
+
+function getJsTask(func) {
+    var folders = getFolders('assets/js');
+    var tasks = folders.map(func);
+    return es.concat.apply(null, tasks);
+}
+
+gulp.task('js', function() {
+    return getJsTask(function(folder) {
+        return gulp.src(path.join('assets/js', folder, '/*.js'))
+            .pipe(sourcemaps.init())
+            .pipe(concat(folder + '.js'))
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest('dist/js'));
+    });
 });
 
+gulp.task('js-minified', function() {
+    return getJsTask(function(folder) {
+        return gulp.src(path.join('assets/js', folder, '/*.js'))
+            .pipe(concat(folder + '.min.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('dist/js'));
+    });
+});
+
+/*
+ * LESS
+ */
 gulp.task('less', function () {
     return gulp.src('assets/less/*.less')
         .pipe(sourcemaps.init())
@@ -51,20 +83,29 @@ gulp.task('less-minified', function () {
         .pipe(less())
         .pipe(minifyCss({keepSpecialComments: 0}))
         .pipe(rename(function (path) {
-            path.basename += ".min";
+            path.basename += '.min';
         }))
         .pipe(gulp.dest('dist/css'));
 });
 
+/*
+ * Misc
+ */
 gulp.task('assets', function () {
     return gulp.src('vendor/Semantic-UI/src/themes/default/assets/**/*.*')
         .pipe(gulp.dest('dist'));
 });
 
 gulp.task('watch', function () {
-    gulp.watch('assets/js/*.js', ['lint', 'scripts']);
-    gulp.watch('assets/less/*.less', ['less']);
+    var semanticPath = 'vendor/Semantic-UI/src/**/';
+
+    gulp.watch('assets/js/*/*.js', ['lint', 'js']);
+    gulp.watch(['assets/less/**/*.less',
+        semanticPath + '*.less', semanticPath + '*.variables', semanticPath + '*.overrides'],
+        ['less']);
 });
 
-gulp.task('default', ['lint', 'less', 'scripts', 'assets', 'watch']);
-gulp.task('build-dist', ['less-minified']);
+gulp.task('build-dev', ['lint', 'js', 'less', 'assets']);
+gulp.task('build-dist', ['lint', 'js-minified','less-minified', 'assets']);
+gulp.task('build', ['build-dev', 'build-dist']);
+gulp.task('default', ['build-dev', 'watch']);
