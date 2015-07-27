@@ -17,52 +17,48 @@
     {% manage_header "categories" %}
 
     {% if category_list %}
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
+        <table class="ui selectable celled table">
+            <thead>
+            <tr>
+                <th>{% trans "Name" %}</th>
+                <th>{% trans "Books" %}</th>
+                <th>{% trans "Actions" %}</th>
+            </tr>
+            </thead>
+            {% for item, book_count in category_list %}
                 <tr>
-                    <th>{% trans "Name" %}</th>
-                    <th>{% trans "Books" %}</th>
-                    <th>{% trans "Actions" %}</th>
-                </tr>
-                </thead>
-                {% for item, book_count in category_list %}
-                    <tr>
-                        <td>{{ item.name }}</td>
-                        <td>
-                            {% if book_count and perms.common.view_categories_list_books %}
-                                <a href="{% url 'categories.views.list_books' item.pk %}">
-                                    {{ book_count }}
-                                </a>
-                            {% else %}
+                    <td>{{ item.name }}</td>
+                    <td>
+                        {% if book_count and perms.common.view_categories_list_books %}
+                            <a href="{% url 'categories.views.list_books' item.pk %}">
                                 {{ book_count }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if perms.common.view_categories_edit_category %}
-                                <a href="{% url 'categories.views.edit_category' item.pk %}" class="btn btn-xs btn-link"
-                                    role="button">
-                                    <span class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}
-                                </a>
-                            {% endif %}
-                            {% if perms.common.view_categories_remove_category %}
-                                <a href="{% url 'categories.views.remove_category' item.pk %}"
-                                   class="btn btn-xs btn-link" role="button">
-                                    <span class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}
-                                </a>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
+                            </a>
+                        {% else %}
+                            {{ book_count }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if perms.common.view_categories_edit_category %}
+                            <a href="{% url 'categories.views.edit_category' item.pk %}">
+                                <i class="icon edit"></i>{% trans "Edit" %}
+                            </a>
+                        {% endif %}
+                        {% if perms.common.view_categories_remove_category %}
+                            <a href="{% url 'categories.views.remove_category' item.pk %}">
+                                <i class="icon trash"></i>{% trans "Remove" %}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     {% else %}
         <div class="ui info message">{% trans "There's nothing to display." %}</div>
     {% endif %}
 
     {% if perms.common.view_categories_add_category %}
-        <a class="ui primary button pull-right" href="{% url 'categories.views.add_category' %}" role="button">
-            <span class="glyphicon glyphicon-plus"></span> {% trans "Add category" %}
+        <a class="ui primary icon labeled button right floated" href="{% url 'categories.views.add_category' %}" role="button">
+            <i class="icon plus"></i>{% trans "Add category" %}
         </a>
     {% endif %}
 {% endblock %}

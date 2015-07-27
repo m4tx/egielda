@@ -20,8 +20,8 @@
     {% endif %}
 
     {% if perms.common.view_categories_index %}
-        <a href="{% url 'categories.views.index' %}" class="ui primary button" role="button">
-            <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+        <a href="{% url 'categories.views.index' %}" class="ui primary icon labeled button" role="button">
+            <i class="icon chevron left"></i>{% trans "Back" %}
         </a>
     {% endif %}
 {% endblock %}
