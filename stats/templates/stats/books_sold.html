@@ -56,19 +56,19 @@
     <h1>{% trans "Books sold" %}</h1>
     {% manage_header "stats/sold" %}
 
-    <ul class="nav nav-tabs">
+    <div class="ui tabular menu">
         {% if perms.common.view_stats_index %}
-            <li><a href="{% url 'stats.views.index' %}">{% trans "Charts" %}</a></li>
+            <a href="{% url 'stats.views.index' %}" class="item">{% trans "Charts" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Charts" %}</a></li>
+            <div class="disabled item">{% trans "Charts" %}</div>
         {% endif %}
-        <li class="active"><a href="#">{% trans "Books sold" %}</a></li>
+        <div href="{% url 'stats.views.books_sold' %}" class="active item">{% trans "Books sold" %}</div>
         {% if perms.common.view_stats_books %}
-            <li><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></li>
+            <a href="{% url 'stats.views.books' %}" class="item">{% trans "Books" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Books" %}</a></li>
+            <div class="disabled item">{% trans "Books" %}</div>
         {% endif %}
-    </ul>
+    </div>
 
     {% if stats %}
         {% for key, value in stats %}

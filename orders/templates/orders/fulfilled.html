@@ -16,10 +16,10 @@
     <h1>{% trans "Orders" %}</h1>
     {% manage_header "orders/fulfilled" %}
 
-    <ul class="nav nav-tabs" role="tablist">
-        <li><a href="{% url 'orders.views.not_fulfilled' %}">{% trans "Not fulfilled" %}</a></li>
-        <li class="active"><a href="#">{% trans "Fulfilled" %}</a></li>
-    </ul>
+    <div class="ui tabular menu" role="tablist">
+        <a href="{% url 'orders.views.not_fulfilled' %}" class="item">{% trans "Not fulfilled" %}</a>
+        <div class="active item">{% trans "Fulfilled" %}</div>
+    </div>
 
     <div class="panel-body">
         <div class="form-horizontal">

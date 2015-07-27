@@ -61,23 +61,19 @@
         </h4>
     {% profile_header "purchased" %}
 
-    <ul class="nav nav-tabs">
+    <div class="ui tabular menu">
         {% if perms.common.view_authentication_profile %}
-            <li><a href="{% url 'authentication.views.profile' %}">{% trans "Profile data" %}</a></li>
+            <a href="{% url 'authentication.views.profile' %}" class="item">{% trans "Profile data" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Profile data" %}</a></li>
+            <div class="disabled item">{% trans "Profile data" %}</div>
         {% endif %}
-        {% if perms.common.view_authentication_profile_purchased %}
-            <li class="active"><a href="{% url 'authentication.views.purchased' %}">{% trans "Purchased books" %}</a></li>
-        {% else %}
-            <li class="disabled"><a href="#">{% trans "Purchased books" %}</a></li>
-        {% endif %}
+        <div class="active item">{% trans "Purchased books" %}</div>
         {% if perms.common.view_authentication_profile_sold %}
-            <li><a href="{% url 'authentication.views.sold' %}">{% trans "Sold books" %}</a></li>
+            <a href="{% url 'authentication.views.sold' %}" class="item">{% trans "Sold books" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Sold books" %}</a></li>
+            <div class="disabled item">{% trans "Sold books" %}</div>
         {% endif %}
-    </ul>
+    </div>
 
     {% if stats %}
         {% for key, value in stats.items %}

@@ -18,21 +18,21 @@
         {% manage_header path %}
     {% endwith %}
 
-    <ul class="nav nav-tabs">
+    <div class="ui tabular menu">
         {% if tab == 'verified' %}
-            <li class="active"><a href="#">{% trans "Verified" %}</a></li>
-            <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>
-            <li><a href="{% url 'users.views.needing_data_correction' %}">{% trans "Needing data correction" %}</a></li>
+            <div class="active item">{% trans "Verified" %}</div>
+            <a href="{% url 'users.views.unverified' %}" class="item">{% trans "Unverified" %}</a>
+            <a href="{% url 'users.views.needing_data_correction' %}" class="item">{% trans "Needing data correction" %}</a>
         {% elif tab == 'unverified' %}
-            <li><a href="{% url 'users.views.verified' %}">{% trans "Verified" %}</a></li>
-            <li class="active"><a href="#">{% trans "Unverified" %}</a></li>
-            <li><a href="{% url 'users.views.needing_data_correction' %}">{% trans "Needing data correction" %}</a></li>
+            <a href="{% url 'users.views.verified' %}" class="item">{% trans "Verified" %}</a>
+            <div class="active item">{% trans "Unverified" %}</div>
+            <a href="{% url 'users.views.needing_data_correction' %}" class="item">{% trans "Needing data correction" %}</a>
         {% elif tab == 'needing_data_correction' %}
-            <li><a href="{% url 'users.views.verified' %}">{% trans "Verified" %}</a></li>
-            <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>
-            <li class="active"><a href="#">{% trans "Needing data correction" %}</a></li>
+            <a href="{% url 'users.views.verified' %}" class="item">{% trans "Verified" %}</a>
+            <a href="{% url 'users.views.unverified' %}" class="item">{% trans "Unverified" %}</a>
+            <div class="active item">{% trans "Needing data correction" %}</div>
         {% endif %}
-    </ul>
+    </div>
 
     {% if users %}
         <div class="table-responsive">

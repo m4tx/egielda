@@ -61,23 +61,19 @@
         </h4>
     {% profile_header "sold" %}
 
-    <ul class="nav nav-tabs">
+    <div class="ui tabular menu">
         {% if perms.common.view_authentication_profile %}
-            <li><a href="{% url 'authentication.views.profile' %}">{% trans "Profile data" %}</a></li>
+            <a href="{% url 'authentication.views.profile' %}" class="item">{% trans "Profile data" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Profile data" %}</a></li>
+            <div class="disabled item">{% trans "Profile data" %}</div>
         {% endif %}
         {% if perms.common.view_authentication_profile_purchased %}
-            <li><a href="{% url 'authentication.views.purchased' %}">{% trans "Purchased books" %}</a></li>
+            <a href="{% url 'authentication.views.purchased' %}" class="item">{% trans "Purchased books" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Purchased books" %}</a></li>
+            <div class="disabled item">{% trans "Purchased books" %}</div>
         {% endif %}
-        {% if perms.common.view_authentication_profile_sold %}
-            <li class="active"><a href="{% url 'authentication.views.sold' %}">{% trans "Sold books" %}</a></li>
-        {% else %}
-            <li class="disabled"><a href="#">{% trans "Sold books" %}</a></li>
-        {% endif %}
-    </ul>
+        <div class="active item">{% trans "Sold books" %}</div>
+    </div>
 
     {% if stats %}
             <div class="panel panel-info">

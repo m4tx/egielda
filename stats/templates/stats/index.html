@@ -23,19 +23,19 @@
     <h1>{% trans "Statistics" %}</h1>
     {% manage_header "stats" %}
 
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#">{% trans "Charts" %}</a></li>
+    <div class="ui tabular menu">
+        <div href="{% url 'stats.views.index' %}" class="active item">{% trans "Charts" %}</div>
         {% if perms.common.view_stats_books_sold %}
-            <li><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></li>
+            <a href="{% url 'stats.views.books_sold' %}" class="item">{% trans "Books sold" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Books sold" %}</a></li>
+            <div class="disabled item">{% trans "Books sold" %}</div>
         {% endif %}
         {% if perms.common.view_stats_books %}
-            <li><a href="{% url 'stats.views.books' %}">{% trans "Books" %}</a></li>
+            <a href="{% url 'stats.views.books' %}" class="item">{% trans "Books" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Books" %}</a></li>
+            <div class="disabled item">{% trans "Books" %}</div>
         {% endif %}
-    </ul>
+    </div>
 
     <div class="row">
         <div class="col-lg-6">
