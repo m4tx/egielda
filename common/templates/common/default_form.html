@@ -1,3 +1,4 @@
+<div class="responsive-form">
 <style scoped>
     input[type="checkbox"][id$="-clear_id"] {
         margin: 0 4px 0 25px;
@@ -9,11 +10,8 @@
 </style>
 {% for field in form %}
     <div class="inline fields">
-        <div class="three wide field">
-            <label class="right aligned" for="{{ field.auto_id }}">{{ field.label }}:</label>
-        </div>
-
-        <div class="thirteen wide field{% if field.errors %} error{% endif %}">
+        <label for="{{ field.auto_id }}">{{ field.label }}:</label>
+        <div class="field{% if field.errors %} error{% endif %}">
             {{ field }}
         </div>
     </div>
@@ -28,3 +26,4 @@
         </div>
     {% endif %}
 {% endfor %}
+</div>
