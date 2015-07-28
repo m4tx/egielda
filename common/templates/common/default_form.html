@@ -9,12 +9,7 @@
         }
     </style>
     {% for field in form %}
-        <div class="inline fields">
-            <label for="{{ field.auto_id }}">{{ field.label }}:</label>
-            <div class="field{% if field.errors %} error{% endif %}">
-                {{ field }}
-            </div>
-        </div>
+        {% include "common/form_field.html" with id=field.auto_id label=field.label has_errors=field.errors %}
         {% if field.errors %}
             <div class="inline fields" style="margin-top: -1em;">
                 <div class="label"></div>
