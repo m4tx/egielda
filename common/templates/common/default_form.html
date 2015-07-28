@@ -1,29 +1,29 @@
 <div class="responsive-form">
-<style scoped>
-    input[type="checkbox"][id$="-clear_id"] {
-        margin: 0 4px 0 25px;
-    }
+    <style scoped>
+        input[type="checkbox"][id$="-clear_id"] {
+            margin: 0 4px 0 25px;
+        }
 
-    input[type="file"] {
-        height: auto;
-    }
-</style>
-{% for field in form %}
-    <div class="inline fields">
-        <label for="{{ field.auto_id }}">{{ field.label }}:</label>
-        <div class="field{% if field.errors %} error{% endif %}">
-            {{ field }}
-        </div>
-    </div>
-    {% if field.errors %}
-        <div class="inline fields" style="margin-top: -1em;">
-            <div class="three wide field"></div>
-            <div class="thirteen wide ui pointing label">
-                {% for error in field.errors %}
-                    {{ error }}
-                {% endfor %}
+        input[type="file"] {
+            height: auto;
+        }
+    </style>
+    {% for field in form %}
+        <div class="inline fields">
+            <label for="{{ field.auto_id }}">{{ field.label }}:</label>
+            <div class="field{% if field.errors %} error{% endif %}">
+                {{ field }}
             </div>
         </div>
-    {% endif %}
-{% endfor %}
+        {% if field.errors %}
+            <div class="inline fields" style="margin-top: -1em;">
+                <div class="label"></div>
+                <div class="ui pointing label">
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
 </div>
