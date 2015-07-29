@@ -112,17 +112,18 @@
         </div>
     </div>
 
-    <form class="form-horizontal" action="{{ request.path }}" method="post"
+    <form action="{{ request.path }}" method="post"
             data-action-needscorrection="{% url 'users.views.needs_correction' student.pk %}">
         {% csrf_token %}
-        <a class="ui button pull-left" href="{% url 'users.views.unverified' %}" id="cancel">
-                <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
-        <div class="btn-toolbar" role="toolbar">
-            <button class="ui primary button pull-right" type="submit" id="verify">
-                <span class="glyphicon glyphicon-ok"></span> {% trans "Verify" %}</button>
-            <a class="ui negative button pull-right" href="#" id="needs-correction">
-                <span class="glyphicon glyphicon-eye-open"></span> {% trans "Needs correction" %}</a>
-        </div>
+        <a class="ui icon labeled button left floated" href="{% url 'users.views.unverified' %}" id="cancel">
+                <i class="icon remove"></i>{% trans "Cancel" %}
+        </a>
+        <button class="ui primary icon labeled button right floated" type="submit" id="verify">
+            <i class="icon checkmark"></i>{% trans "Verify" %}
+        </button>
+        <a class="ui negative icon labeled button right floated" href="#" id="needs-correction">
+            <i class="icon unhide"></i>{% trans "Needs correction" %}
+        </a>
     </form>
 {% endblock %}
 

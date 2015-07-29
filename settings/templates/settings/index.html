@@ -13,11 +13,11 @@
     <h1>{% trans "Settings" %}</h1>
     {% manage_header "settings" %}
 
-    <form class="form-horizontal" action="{{ request.path }}" method="post">
+    <form class="ui form" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}
-        <button type="submit" class="ui primary button pull-right">
-            <span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}
+        <button type="submit" class="ui primary icon labeled button right floated">
+            <i class="icon checkmark"></i>{% trans "Save" %}
         </button>
     </form>
 {% endblock %}
