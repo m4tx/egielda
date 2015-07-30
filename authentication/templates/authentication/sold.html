@@ -75,42 +75,5 @@
         <div class="active item">{% trans "Sold books" %}</div>
     </div>
 
-    {% if stats %}
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <b>
-                        {{ user.get_full_name }}
-                        <span class="pull-right">#{{ user.id }}</span>
-                    </b>
-                </div>
-                <table class="list-group table table-hover">
-                     <thead>
-                        <tr>
-                            <th>{% trans "ISBN" %}</th>
-                            <th>{% trans "Publisher" %}</th>
-                            <th style="width: 40%;">{% trans "Title" %}</th>
-                            <th>{% trans "Publication" %}</th>
-                            <th>{% trans "Price" %}</th>
-                            <th>{% trans "Declared" %}</th>
-                            <th>{% trans "Brought" %}</th>
-                            <th>{% trans "Sold" context "count" %}</th>
-                        </tr>
-                    </thead>
-                    {% for key, value in stats.items %}
-                        <tr class="list-group-item" style="display: table-row; position: initial;">
-                            <td>{{ value.0.book_type.isbn }}</td>
-                            <td>{{ value.0.book_type.publisher }}</td>
-                            <td>{{ value.0.book_type.title }}</td>
-                            <td>{{ value.0.book_type.publication_year }}</td>
-                            <td>{{ value.0.book_type.price | price }}</td>
-                            <td>{{ value.1 }}</td>
-                            <td>{{ value.2 }}</td>
-                            <td>{{ value.3 }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-    {% else %}
-        <div class="ui info message">{% trans "There's nothing to display." %}</div>
-    {% endif %}
+    {% include "users/sold_list.html" %}
 {% endblock %}

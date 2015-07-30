@@ -1,0 +1,39 @@
+{% load i18n %}
+{% load price %}
+
+{% if stats %}
+    <table class="ui selectable table">
+        <thead>
+        <tr>
+            <th colspan="8" class="bg-info">
+                {{ user.get_full_name }}
+                <span class="right floated">#{{ user.id }}</span>
+            </th>
+        </tr>
+        <tr>
+            <th>{% trans "ISBN" %}</th>
+            <th>{% trans "Publisher" %}</th>
+            <th style="width: 40%;">{% trans "Title" %}</th>
+            <th>{% trans "Publication" %}</th>
+            <th>{% trans "Price" %}</th>
+            <th>{% trans "Declared" %}</th>
+            <th>{% trans "Brought" %}</th>
+            <th>{% trans "Sold" context "count" %}</th>
+        </tr>
+        </thead>
+        {% for key, value in stats.items %}
+            <tr>
+                <td>{{ value.0.book_type.isbn }}</td>
+                <td>{{ value.0.book_type.publisher }}</td>
+                <td>{{ value.0.book_type.title }}</td>
+                <td>{{ value.0.book_type.publication_year }}</td>
+                <td>{{ value.0.book_type.price | price }}</td>
+                <td>{{ value.1 }}</td>
+                <td>{{ value.2 }}</td>
+                <td>{{ value.3 }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <div class="ui info message">{% trans "There's nothing to display." %}</div>
+{% endif %}

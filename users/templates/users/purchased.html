@@ -69,48 +69,5 @@
         {% endif %}
     </div>
 
-    {% if stats %}
-        {% for key, value in stats.items %}
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <b>
-                        {{ key.0 }}
-                        <span class="pull-right">#{{ key.1 }}</span>
-                    </b>
-                </div>
-                <table class="list-group table table-hover">
-                     <thead>
-                        <tr>
-                            <th>{% trans "ISBN" %}</th>
-                            <th>{% trans "Publisher" %}</th>
-                            <th style="width: 40%;">{% trans "Title" %}</th>
-                            <th>{% trans "Publication" %}</th>
-                            <th>{% trans "Price" %}</th>
-                            <th>{% trans "Amount" %}</th>
-                            <th>{% trans "Fulfilled" %}</th>
-                        </tr>
-                    </thead>
-                    {% for book in value %}
-                        <tr class="list-group-item" style="display: table-row; position: initial;">
-                            <td>{{ book.0.isbn }}</td>
-                            <td>{{ book.0.publisher }}</td>
-                            <td>{{ book.0.title }}</td>
-                            <td>{{ book.0.publication_year }}</td>
-                            <td>{{ book.0.price | price }}</td>
-                            <td>{{ book.1 }}</td>
-                            <td>
-                                {% if book.2 %}
-                                    ✔
-                                {% else %}
-                                    ✘
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        {% endfor %}
-    {% else %}
-        <div class="ui info message">{% trans "There's nothing to display." %}</div>
-    {% endif %}
+    {% include "users/purchased_list.html" %}
 {% endblock %}
