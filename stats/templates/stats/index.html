@@ -14,6 +14,27 @@
         .nav-tabs {
             margin-bottom: 10px;
         }
+
+        .responsive-16by9 {
+            display: block;
+            width: 100%;
+            position: relative;
+            height: 0;
+            padding: 56.25% 0 0 0;
+            overflow: hidden;
+        }
+
+        .responsive-item {
+            position: absolute;
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
     </style>
 {% endblock %}
 
@@ -37,31 +58,29 @@
         {% endif %}
     </div>
 
-    <div class="row">
-        <div class="col-lg-6">
+    <div class="ui stackable two column grid">
+        <div class="column">
             <h3 class="text-center">{% trans "Number of books sold in each day" %}</h3>
-            <div id="sold-book-amounts-chart" class="embed-responsive embed-responsive-16by9">
-                <svg class="embed-responsive-item"></svg>
+            <div id="sold-book-amounts-chart" class="responsive-16by9">
+                <svg class="responsive-item"></svg>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="column">
             <h3 class="text-center">{% trans "Number of books given in each day" %}</h3>
-            <div id="given-book-amounts-chart" class="embed-responsive embed-responsive-16by9">
-                <svg class="embed-responsive-item"></svg>
+            <div id="given-book-amounts-chart" class="responsive-16by9">
+                <svg class="responsive-item"></svg>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
+        <div class="column">
             <h3 class="text-center">{% trans "Income in each day" %}</h3>
-            <div id="sold-book-prices-chart" class="embed-responsive embed-responsive-16by9">
-                <svg class="embed-responsive-item"></svg>
+            <div id="sold-book-prices-chart" class="responsive-16by9">
+                <svg class="responsive-item"></svg>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="column">
             <h3 class="text-center">{% trans "Number of books sold by categories" %}</h3>
-            <div id="sold-book-categories-chart" class="embed-responsive embed-responsive-16by9">
-                <svg class="embed-responsive-item"></svg>
+            <div id="sold-book-categories-chart" class="responsive-16by9">
+                <svg class="responsive-item"></svg>
             </div>
         </div>
     </div>
