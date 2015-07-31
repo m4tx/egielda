@@ -35,10 +35,8 @@
             <td>{% block book_price %}{{ book.price|price }}{% endblock %}</td>
             {% block tr_footer %}{% endblock %}
             {% if not hide_actions %}
-                <td>
-                    <div class="btn-toolbar" role="toolbar">
-                        {% block actions %}{% endblock %}
-                    </div>
+                <td class="actions">
+                    {% block actions %}{% endblock %}
                 </td>
             {% endif %}
         </tr>

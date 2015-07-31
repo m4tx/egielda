@@ -8,10 +8,9 @@
 
 {% block book_price %}
     {% if not book.visible %}
-        <div class="input-group input-group-sm">
-            <input type="number" step="0.01" max="999.99" class="form-control" name="price-{{ book.pk }}"
-                   value="{{ book.price }}">
-            <span class="input-group-addon">{{ currency }}</span>
+        <div class="ui right labeled mini input">
+            <input type="number" step="0.01" max="999.99" class="ui input" name="price-{{ book.pk }}" value="{{ book.price }}">
+            <div class="ui label">{{ currency }}</div>
         </div>
     {% else %}
         {{ block.super }}
@@ -20,16 +19,16 @@
 
 {% block tr_footer %}
     <td>
-        <input type="number" step="1" class="form-control input-sm" name="amount-{{ book.pk }}"
-               value="{{ book.amount }}">
+        <div class="ui mini input">
+            <input type="number" step="1" name="amount-{{ book.pk }}" value="{{ book.amount }}">
+        </div>
     </td>
 {% endblock %}
 
 {% block actions %}
     {% if not book.visible and perms.common.view_sellers_accept_edit_book %}
-        <a href="{% url 'sellers.views.accept_edit_book' student_pk book.pk %}" class="btn btn-xs btn-link"
-           role="button">
-            <span class="glyphicon glyphicon-edit"></span> {% trans "Edit" %}
+        <a href="{% url 'sellers.views.accept_edit_book' student_pk book.pk %}">
+            <i class="icon edit"></i>{% trans "Edit" %}
         </a>
     {% endif %}
 {% endblock %}
