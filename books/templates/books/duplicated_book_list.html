@@ -8,22 +8,32 @@
 {% endblock %}
 
 {% block thead_header %}
-    <th></th>
-    <th></th>
+    <th class="collapsing"></th>
+    <th class="collapsing"></th>
 {% endblock %}
 
 {% block tr_header %}
     {% if perms.common.view_books_remove_book %}
-        <td><input type="checkbox" name="to_merge" value="{{ book.pk }}" checked></td>
-        <td><input type="radio" name="merge_dest" value="{{ book.pk }}"></td>
+        <td>
+            <div class="ui fitted checkbox">
+                <input type="checkbox" name="to_merge" value="{{ book.pk }}" checked>
+                <label></label>
+            </div>
+        </td>
+        <td>
+            <div class="ui fitted radio checkbox">
+                <input type="radio" name="merge_dest" value="{{ book.pk }}">
+                <label></label>
+            </div>
+        </td>
     {% endif %}
 {% endblock %}
 
 {% block footer %}
-    <tr class="bg-primary">
-        <td colspan="7">
-            <button type="submit" class="btn btn-link btn-block merge" name="merge_isbn" value="{{ isbn }}">
-                <span class="glyphicon glyphicon-random"></span> {% trans "Merge" %}
+    <tr>
+        <td colspan="7" class="merge">
+            <button type="submit" class="ui fluid button merge" name="merge_isbn" value="{{ isbn }}">
+                <i class="icon copy"></i>{% trans "Merge" %}
             </button>
         </td>
     </tr>

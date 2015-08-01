@@ -6,13 +6,25 @@
 
 {% block head %}
     <style>
-        th.isbn {
+        .ui.table th.isbn {
             text-align: center;
         }
 
-        button.merge, button.merge:hover, button.merge:focus {
+        .ui.table td.merge {
             padding: 0;
-            color: #fff;
+        }
+
+        .ui.table td.merge > button {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        form {
+            margin-bottom: 1em;
+        }
+
+        form:last-child {
+            margin-bottom: 0;
         }
     </style>
 {% endblock %}
@@ -26,18 +38,18 @@
 
     {% if duplicated %}
         <form method="post" action="">
-        {% csrf_token %}
-        {% for isbn, l in duplicated.items %}
-            {% include "books/duplicated_book_list.html" with book_list=l hide_actions=True %}
-        {% endfor %}
+            {% csrf_token %}
+            {% for isbn, l in duplicated.items %}
+                {% include "books/duplicated_book_list.html" with book_list=l hide_actions=True %}
+            {% endfor %}
         </form>
     {% else %}
         <div class="ui info message">{% trans "There's nothing to display." %}</div>
     {% endif %}
 
     {% if perms.common.view_books_index %}
-        <a class="ui button pull-left" href="{% url 'books.views.index' %}" role="button">
-            <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+        <a class="ui icon labeled button" href="{% url 'books.views.index' %}" role="button">
+            <i class="icon chevron left"></i>{% trans "Back" %}
         </a>
     {% endif %}
 {% endblock %}
