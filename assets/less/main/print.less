@@ -11,10 +11,16 @@
  * along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.text-center {
-  text-align: center;
+.visible-print-inline {
+  display: none;
 }
 
-.text-muted {
-  color: #777;
+@media print {
+  .hidden-print {
+    display: none;
+  }
+
+  .visible-print-inline {
+    display: inline;
+  }
 }
