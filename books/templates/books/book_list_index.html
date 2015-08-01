@@ -12,19 +12,29 @@
 
 {% block thead_header %}
     {% if perms.common.view_books_remove_book %}
-        <th><div class="ui master checkbox"><input type="checkbox"><label></label></div></th>
+        <th class="collapsing">
+            <div class="ui master fitted checkbox">
+                <input type="checkbox">
+                <label></label>
+            </div>
+        </th>
     {% endif %}
 {% endblock %}
 
 {% block tr_header %}
     {% if perms.common.view_books_remove_book %}
-        <td><div class="ui child checkbox"><input type="checkbox" name="select-{{ book.pk }}"><label></label></div></td>
+        <td>
+            <div class="ui child fitted checkbox">
+                <input type="checkbox" name="select-{{ book.pk }}">
+                <label></label>
+            </div>
+        </td>
     {% endif %}
 {% endblock %}
 
 {% block footer %}
     {% if perms.common.view_books_remove_book %}
-        <tr class="info">
+        <tr class="bg-info">
             <td colspan="6" class="right aligned text-muted">{% trans "Bulk actions:" %}</td>
             <td>
                 <button class="ui link button" type="submit">

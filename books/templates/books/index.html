@@ -20,14 +20,14 @@
 
     <div class="btn-toolbar" role="toolbar">
         {% if perms.common.view_books_add_book %}
-            <a class="ui primary button pull-right" href="{% url 'books.views.add_book' %}" role="button">
-                <span class="glyphicon glyphicon-plus"></span> {% trans "Add book" %}
+            <a class="ui primary icon labeled button right floated" href="{% url 'books.views.add_book' %}" role="button">
+                <i class="icon plus"></i>{% trans "Add book" %}
             </a>
         {% endif %}
 
         {% if perms.common.view_books_duplicated %}
-            <a class="ui button pull-right" href="{% url 'books.views.duplicated' %}" role="button">
-                <span class="glyphicon glyphicon-random"></span> {% trans "Duplicated" %}
+            <a class="ui icon labeled button right floated" href="{% url 'books.views.duplicated' %}" role="button">
+                <i class="icon copy"></i>{% trans "Duplicated" %}
             </a>
         {% endif %}
     </div>
