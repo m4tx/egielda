@@ -12,23 +12,13 @@
 
 {% block thead_header %}
     {% if perms.common.view_books_remove_book %}
-        <th class="collapsing">
-            <div class="ui master fitted checkbox">
-                <input type="checkbox">
-                <label></label>
-            </div>
-        </th>
+        {% include "elements/select-all-checkbox-th.html" %}
     {% endif %}
 {% endblock %}
 
 {% block tr_header %}
     {% if perms.common.view_books_remove_book %}
-        <td>
-            <div class="ui child fitted checkbox">
-                <input type="checkbox" name="select-{{ book.pk }}">
-                <label></label>
-            </div>
-        </td>
+        {% include "elements/select-all-checkbox-td.html" with name="select-" id=book.pk %}
     {% endif %}
 {% endblock %}
 
