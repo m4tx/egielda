@@ -1,70 +1,65 @@
 {% load i18n %}
 
 {% if orders %}
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-            <tr>
+    <table class="ui sortable selectable table">
+        <thead>
+        <tr>
+            {% if show_remove and perms.common.view_orders_remove_order %}
+                {% include "elements/select-all-checkbox-th.html" %}
+            {% endif %}
+            <th>{% trans "Date" %}</th>
+            <th>{% trans "User" %}</th>
+            <th>{% trans "Class" %}</th>
+            <th>{% trans "Books" %}</th>
+            {% if not hide_actions %}
+                <th>{% trans "Actions" %}</th>
+            {% endif %}
+        </tr>
+        </thead>
+        {% for order in orders %}
+            <tr data-class="{{ order.user.student_class }}">
                 {% if show_remove and perms.common.view_orders_remove_order %}
-                    <th><input type="checkbox" id="select-all"></th>
+                    {% include "elements/select-all-checkbox-td.html" with name="select-" id=order.pk %}
                 {% endif %}
-                <th>{% trans "Date" %}</th>
-                <th>{% trans "User" %}</th>
-                <th>{% trans "Class" %}</th>
-                <th>{% trans "Books" %}</th>
+                <td>{{ order.date }}</td>
+                <td>{{ order.user.get_short_name }}</td>
+                <td>{{ order.user.student_class }}</td>
+                <td>{{ order.books_count }}</td>
                 {% if not hide_actions %}
-                    <th>{% trans "Actions" %}</th>
-                {% endif %}
-            </tr>
-            </thead>
-            {% for order in orders %}
-                <tr data-class="{{ order.user.student_class }}">
-                    {% if show_remove and perms.common.view_orders_remove_order %}
-                        <td><input type="checkbox" name="select-{{ order.pk }}"></td>
-                    {% endif %}
-                    <td>{{ order.date }}</td>
-                    <td>{{ order.user.get_short_name }}</td>
-                    <td>{{ order.user.student_class }}</td>
-                    <td>{{ order.books_count }}</td>
-                    <td>
-                        {% if not hide_actions %}
-                            {% if show_fulfill and perms.common.view_orders_fulfill %}
-                                <a class="btn btn-xs btn-link" role="button"
-                                   href="{% url 'orders.views.fulfill' order.pk %}">
-                                    <span class="glyphicon glyphicon-ok"></span> {% trans "Fulfill" %}
-                                </a>
-                            {% endif %}
-                            {% if show_remove and perms.common.view_orders_remove_order %}
-                                <a class="btn btn-xs btn-link" href="{% url 'orders.views.remove_order' order.pk %}" role="button"><span
-                                    class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}</a>
-                            {% endif %}
+                    <td class="collapsing">
+                        {% if show_fulfill and perms.common.view_orders_fulfill %}
+                            <a href="{% url 'orders.views.fulfill' order.pk %}">
+                                <i class="icon checkmark"></i>{% trans "Fulfill" %}
+                            </a>
+                        {% endif %}
+                        {% if show_remove and perms.common.view_orders_remove_order %}
+                            <a href="{% url 'orders.views.remove_order' order.pk %}">
+                                <i class="icon trash"></i>{% trans "Remove" %}
+                            </a>
+                        {% endif %}
 
-                            {% if show_order and perms.common.view_orders_order_details %}
-                                <a class="btn btn-xs btn-link" role="button"
-                                   href="{% url 'orders.views.order_details' order.pk %}">
-                                    <span class="glyphicon glyphicon-list-alt"></span> {% trans "Show order" %}
-                                </a>
-                            {% endif %}
+                        {% if show_order and perms.common.view_orders_order_details %}
+                            <a href="{% url 'orders.views.order_details' order.pk %}">
+                                <i class="icon browser"></i>{% trans "Show order" %}
+                            </a>
                         {% endif %}
                     </td>
-                </tr>
-            {% endfor %}
-            <tfoot>
-                {% if show_remove and perms.common.view_orders_remove_order %}
-                    <tr class="info">
-                        <td colspan="5" class="text-right text-muted">{% trans "Bulk actions:" %}</td>
-                        <td>
-                            <div class="btn-toolbar" role="toolbar">
-                                <button class="btn btn-xs btn-link" type="submit">
-                                    <span class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
                 {% endif %}
-            </tfoot>
-        </table>
-    </div>
+            </tr>
+        {% endfor %}
+        <tfoot>
+        {% if show_remove and perms.common.view_orders_remove_order %}
+            <tr class="bg-info">
+                <td colspan="5" class="right aligned text-muted">{% trans "Bulk actions:" %}</td>
+                <td>
+                    <button class="ui link button" type="submit">
+                        <i class="icon trash"></i>{% trans "Remove" %}
+                    </button>
+                </td>
+            </tr>
+        {% endif %}
+        </tfoot>
+    </table>
 {% else %}
     <div class="ui info message">{% trans "There's nothing to display." %}</div>
 {% endif %}

@@ -21,23 +21,17 @@
         <div class="active item">{% trans "Fulfilled" %}</div>
     </div>
 
-    <div class="panel-body">
-        <div class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-3 col-md-2 control-label"
-                       for="category_filter">{% trans "Class" %}:</label>
-
-                <div class="col-sm-9 col-md-10">
-                    <select class="form-control" id="class_filter">
-                        <option value="0">{% trans "All" context "class" %}</option>
-                        <option disabled="disabled">────────</option>
-                        {% for class in class_list %}
-                            <option value="{{ class }}">{{ class }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-        </div>
+    <div class="responsive-form">
+        {% load formfield %}
+        {% formfield id="class_filter" label=_("Class") %}
+            <select class="ui dropdown" id="class_filter">
+                <option value="0">{% trans "All" context "class" %}</option>
+                <option disabled="disabled">────────</option>
+                {% for class in class_list %}
+                    <option value="{{ class }}">{{ class }}</option>
+                {% endfor %}
+            </select>
+        {% endformfield %}
     </div>
 
     {% include "orders/orders_table.html" with show_fulfill=False show_order=True %}
@@ -49,7 +43,7 @@
     <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
     <script type="text/javascript">
         window.addEventListener("load", function(){
-            $(".table-responsive table").tablesorter();
+            $("table.sortable").tablesorter();
         });
     </script>
     <script src="{% static "js/classfilter.js" %}"></script>
