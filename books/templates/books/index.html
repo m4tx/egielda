@@ -37,7 +37,7 @@
     {% load staticfiles %}
     <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
     <script type="text/javascript">
-        window.addEventListener("load", function(){
+        window.addEventListener("load", function () {
             $(".table-responsive table").tablesorter();
 
             $('.ui.checkbox').checkbox('set enabled');
@@ -56,7 +56,7 @@
                 fireOnInit: true,
                 onChange: function () {
                     var $listGroup = $(this).closest('.table'),
-                            $parentCheckbox = $listGroup.find('th').children('.checkbox'),
+                            $parentCheckbox = $listGroup.find('th .master.checkbox'),
                             $checkbox = $listGroup.find('.checkbox').not('.master'),
                             allChecked = true,
                             allUnchecked = true;
