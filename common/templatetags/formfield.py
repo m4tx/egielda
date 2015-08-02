@@ -27,7 +27,7 @@ def formfield(parser, token):
     for each form field, including 'common/form_field.html' template instead.
 
     It has three keyword arguments:
-    * id - id of the input for the label to point to
+    * id (optional) - id of the input for the label to point to
     * label - label text in English (it is wrapped by ugettext function, therefore localizing it
     before displaying)
     * has_errors (optional) - whether or not the value provided by user is incorrect
@@ -51,8 +51,8 @@ class FormfieldNode(TagHelperNode):
 
         t = loader.get_template('common/form_field.html')
         return t.render(Context({
-            'id': kwargs['id'],
-            'label': _(kwargs['label']),
+            'id': kwargs.get('id', None),
+            'label': kwargs['label'],
             'has_errors': kwargs.get('has_errors', False),
             'field': output
         }))

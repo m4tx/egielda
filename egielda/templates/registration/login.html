@@ -23,10 +23,10 @@
     <form class="ui form" action="" method="post">
         <div class="responsive-form">
             {% load formfield %}
-            {% formfield id="username" label="Username" %}
+            {% formfield id="username" label=_("Username") %}
                 <input type="text" id="username" name="username" required="required">
             {% endformfield %}
-            {% formfield id="password" label="Password" %}
+            {% formfield id="password" label=_("Password") %}
                 <input type="password" id="password" name="password" required="required">
             {% endformfield %}
         </div>
