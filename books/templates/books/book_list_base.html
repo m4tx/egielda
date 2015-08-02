@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load price %}
 
-<table class="ui selectable celled table"{% block table_attributes %}{% endblock %}>
+<table class="ui selectable table"{% block table_attributes %}{% endblock %}>
     <thead>
     {% block thead_tr %}{% endblock %}
     <tr>
@@ -35,7 +35,7 @@
             <td>{% block book_price %}{{ book.price|price }}{% endblock %}</td>
             {% block tr_footer %}{% endblock %}
             {% if not hide_actions %}
-                <td class="actions">
+                <td class="collapsing">
                     {% block actions %}{% endblock %}
                 </td>
             {% endif %}

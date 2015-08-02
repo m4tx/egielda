@@ -20,11 +20,13 @@
     {% include "books/book_list_base.html" with hide_actions=True %}
     <form action="{{ request.path }}" method="post">
         {% if perms.common.view_books_index %}
-            <a href="{% url 'books.views.index' %}" class="ui button" role="button"><span
-                class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
+            <a href="{% url 'books.views.index' %}" class="ui icon labeled button" role="button">
+                <i class="icon remove"></i>{% trans "Cancel" %}
+            </a>
         {% endif %}
-        <button type="submit" class="ui negative button pull-right"><span
-                class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}</button>
+        <button type="submit" class="ui negative icon labeled button right floated">
+            <i class="icon trash"></i>{% trans "Remove" %}
+        </button>
         {% csrf_token %}
     </form>
 {% endblock %}

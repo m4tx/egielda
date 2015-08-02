@@ -21,6 +21,8 @@
             <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
             {% load staticfiles %}
             <link rel="stylesheet" href="{% static 'css/main.css' %}">
+            <!-- TODO: include it only on /manage subpages -->
+            <link rel="stylesheet" href="{% static 'css/manage.css' %}">
 
             {% block head %}{% endblock %}
 
