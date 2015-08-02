@@ -13,7 +13,6 @@ from django import template
 from django.template import loader
 from django.template import Context
 from django.template.base import TagHelperNode
-from django.utils.translation import ugettext as _
 
 from utils.tags import parse_args
 
