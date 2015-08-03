@@ -1,4 +1,4 @@
 <div class="inline fields">
-    <label for="{{ id }}">{{ label }}:</label>
+    <label{% if id %} for="{{ id }}"{% endif %}>{{ label }}:</label>
     <div class="field{% if has_errors %} error{% endif %}">{{ field }}</div>
 </div>
