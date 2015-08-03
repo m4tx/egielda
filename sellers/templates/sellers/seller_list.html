@@ -1,0 +1,44 @@
+{% extends "users/user_list_sortable.html" %}
+{% load i18n %}
+
+{% block thead_header %}
+    {% if perms.common.view_sellers_remove_seller %}
+        {% include "elements/select-all-checkbox-th.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block tr_header %}
+    {% if perms.common.view_sellers_remove_seller %}
+        {% include "elements/select-all-checkbox-td.html" with name="select-" id=user.pk %}
+    {% endif %}
+{% endblock %}
+
+{% block actions %}
+    {% if perms.common.view_sellers_accept_books %}
+        <a href="{% url 'sellers.views.accept_books' user.pk %}">
+            <i class="icon checkmark"></i>{% trans "Accept" %}
+        </a>
+    {% endif %}
+    {% if perms.common.view_sellers_remove_seller %}
+        <a href="{% url 'sellers.views.remove_seller' user.pk %}">
+            <i class="icon trash"></i>{% trans "Remove" %}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+    <tfoot>
+    {% if perms.common.view_sellers_remove_seller %}
+        <tr class="bg-info">
+            <td colspan="7" class="right aligned text-muted">{% trans "Bulk actions:" %}</td>
+            <td>
+                {% if perms.common.view_sellers_remove_seller %}
+                    <button class="ui link button" type="submit">
+                        <i class="icon trash"></i>{% trans "Remove" %}
+                    </button>
+                {% endif %}
+            </td>
+        </tr>
+    {% endif %}
+    </tfoot>
+{% endblock %}
