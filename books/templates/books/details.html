@@ -27,7 +27,7 @@
         {% formfield label=_("Title") %}{{ book.title }}{% endformfield %}
         {% formfield label=_("Publisher") %}{{ book.publisher }}{% endformfield %}
         {% formfield label=_("Publication year") %}{{ book.publication_year }}{% endformfield %}
-        {% formfield label=_("Price") %}{{ book.price }}{% endformfield %}
+        {% formfield label=_("Price") %}{{ book.price|price }}{% endformfield %}
         {% formfield label=_("Categories") %}
             {% if book.categories_str %}
                 {{ book.categories_str }}
