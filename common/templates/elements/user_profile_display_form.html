@@ -1,0 +1,9 @@
+{# Displays user profile data like a form. #}
+
+{% load formfield %}
+{% formfield label=_("Username") %}{{ user.username }}{% endformfield %}
+{% formfield label=_("First name") %}{{ user.first_name }}{% endformfield %}
+{% formfield label=_("Last name") %}{{ user.last_name }}{% endformfield %}
+{% formfield label=_("Class") %}{{ user.student_class }}{% endformfield %}
+{% formfield label=_("Phone number") %}{{ user.phone_number }}{% endformfield %}
+{% formfield label=_("E-mail") %}{{ user.email }}{% endformfield %}

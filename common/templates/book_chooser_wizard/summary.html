@@ -11,43 +11,8 @@
         {% blocktrans %}Check now if all of the data displayed here are correct. If there is anything you want to modify, just click the "Back" button.{% endblocktrans %}
     </div>
     <h2>{% trans "Personal data" %}</h2>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "First name" %}:</label>
-
-            <div class="col-sm-9">
-                <p class="form-control-static">{{ personal_data.first_name }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "Last name" %}:</label>
-
-            <div class="col-sm-9">
-                <p class="form-control-static">{{ personal_data.last_name }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "Class" %}:</label>
-
-            <div class="col-sm-9">
-                <p class="form-control-static">{{ personal_data.student_class }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "Phone number" %}:</label>
-
-            <div class="col-sm-9">
-                <p class="form-control-static">{{ personal_data.phone_number }}</p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "E-mail" %}:</label>
-
-            <div class="col-sm-9">
-                <p class="form-control-static">{{ personal_data.email }}</p>
-            </div>
-        </div>
+    <div class="responsive-form">
+        {% include "elements/user_profile_display_form.html" %}
     </div>
     <h2>{% trans "Books" %}</h2>
     {% include "book_chooser_wizard/books_chosen_list.html" with hide_actions=True book_list=chosen_book_list %}

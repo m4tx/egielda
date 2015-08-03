@@ -160,11 +160,11 @@ function createNewBookTr(vals) {
 }
 
 function addBookTr(tr) {
-    var button = $('<button class="btn btn-xs btn-link btn-remove-book"><span class="glyphicon glyphicon-remove"></span> ' + gettext("Remove") + '</button>');
+    var button = $('<button class="ui link button btn-remove-book"><i class="icon trash"></i>' + gettext("Remove") + '</button>');
     button.on('click', function () {
         removeBook($('#chosen-book-list').find('button.btn-remove-book').index(this))
     });
-    tr.append($('<td/>').append(button));
+    tr.append($('<td class="collapsing"/>').append(button));
 
     $('#chosen-book-list-div').removeClass('hidden');
     var chosenTable = $('#chosen-book-list');

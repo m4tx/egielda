@@ -8,43 +8,9 @@
         {% trans "Your request was accepted. You can claim your books now." %}
     </div>
 
-    <h1>{% trans "Order summary" %}<span class="text-muted pull-right"><small>#{{ order_ID }}</small></span></h1>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "First name" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.user.first_name }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "Last name" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.user.last_name }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "Class" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.user.student_class }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "Phone number" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.user.phone_number }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "E-mail" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.user.email }}</p>
-            </div>
-        </div>
+    <h1>{% trans "Order summary" %}<span class="text-muted right floated"><small>#{{ order_ID }}</small></span></h1>
+    <div class="responsive-form">
+        {% include "elements/user_profile_display_form.html" with user=order.user %}
     </div>
 
     {% include "book_chooser_wizard/books_chosen_list.html" with hide_actions=True book_list=chosen_book_list %}

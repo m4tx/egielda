@@ -10,43 +10,9 @@
         {% trans "If you don't have access to a printer right now, you can save this page as PDF or print 'Sold books' tab on your profile page when you gain access to the printer." %}
     </div>
 
-    <h1>{% trans "Books transfer evidence" %}<span class="text-muted pull-right"><small>#{{ seller_ID }}</small></span></h1>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "First name" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ seller.first_name }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "Last name" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ seller.last_name }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "Class" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ seller.student_class }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "Phone number" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ seller.phone_number }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "E-mail" %}:</label>
-
-            <div class="col-sm-9">
-                <p class="form-control-static">{{ seller.email }}</p>
-            </div>
-        </div>
+    <h1>{% trans "Books transfer evidence" %}<span class="text-muted right floated"><small>#{{ seller_ID }}</small></span></h1>
+    <div class="responsive-form">
+        {% include "elements/user_profile_display_form.html" with user=seller %}
     </div>
 
     {% include "book_chooser_wizard/books_chosen_list.html" with hide_actions=True book_list=given_book_list %}
