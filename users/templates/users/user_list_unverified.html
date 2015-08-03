@@ -1,0 +1,14 @@
+{% extends "users/user_list_sortable.html" %}
+{% load i18n %}
+
+{% block actions %}
+<a {% if not user.awaiting_verification %}title="{% trans "This user lacks an ID" %}"{% endif %}
+   href="{% url 'users.views.verify' user.pk %}">
+    {% if user.awaiting_verification %}
+        <i class="icon checkmark"></i>
+    {% else %}
+        <i class="icon warning sign"></i>
+    {% endif %}
+    {% trans "Verify" %}
+</a>
+{% endblock %}
