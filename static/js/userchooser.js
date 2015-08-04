@@ -63,16 +63,15 @@ $('input.tokenfield').each(function() {
         $(this).tokenfield('createToken', { value: values[i]});
 });
 
-$('div.tokenfield.form-control').each(function() {
-    if($(this).children('input.tokenfield.form-control').hasClass('has-error')) {
-        $(this).css("border-color", "#a94442");
-        $(this).css("-webkit-box-shadow", "inset 0 1px 1px rgba(0,0,0,.075)");
-        $(this).css("box-shadow", "inset 0 1px 1px rgba(0,0,0,.075)");
+$('div.tokenfield').each(function() {
+    if($(this).children('input.tokenfield').hasClass('error')) {
+        $(this).addClass('error');
+        console.log('okurwa');
     }
 });
 
 $(document.forms[0]).on('submit', function() {
-    $('input.tokenfield.form-control').each(function() {
+    $('input.tokenfield').each(function() {
         var tokens = $(this).tokenfield('getTokens');
         var values = new Array();
         for(var i = 0; i < tokens.length; ++i) {

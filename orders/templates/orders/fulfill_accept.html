@@ -4,20 +4,6 @@
 
 {% block title %}{% trans "Orders - Fulfill" %}{% endblock %}
 
-{% block head %}
-    <style>
-        .book-row:hover {
-            background-color: #f5f5f5;
-        }
-    </style>
-
-    {% load staticfiles %}
-    <link href="//code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.min.css" type="text/css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="{% static "css/tokenfield-typeahead.css" %}"></link>
-    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-tokenfield.css" %}"></link>
-{% endblock %}
-
 {% block content %}
     <h1>
         {% trans "Orders" %}
@@ -31,14 +17,14 @@
 
     <form action="{{ request.path }}" method="post">
         {% if perms.common.view_orders_fulfill %}
-            <a href="{% url 'orders.views.fulfill' order.pk %}" class="ui button" role="button">
-                <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+            <a href="{% url 'orders.views.fulfill' order.pk %}" class="ui icon labeled button" role="button">
+                <i class="icon chevron left"></i>{% trans "Back" %}
             </a>
         {% endif %}
 
         {% csrf_token %}
-        <button class="ui primary button pull-right" type="submit">
-            <span class="glyphicon glyphicon-ok"></span> {% trans "Fulfill" %}
+        <button class="ui primary icon labeled button right floated" type="submit">
+            <i class="icon checkmark"></i>{% trans "Fulfill" %}
         </button>
     </form>
 {% endblock %}

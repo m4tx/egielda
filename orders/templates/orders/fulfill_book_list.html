@@ -1,44 +1,22 @@
-{% extends 'books/book_list_base.html' %}
+{% extends 'orders/fulfill_book_list_base.html' %}
 {% load i18n %}
 
-{% block thead_footer %}
-    <th>{% trans "Amount" %}</th>
+{% block thead %}
     <th>{% trans "In stock" %}</th>
 {% endblock %}
 
-{% block tr_footer %}
-    <td>
-        <input type="number" step="1" class="form-control input-sm" min="0" max="{{ book.in_stock }}" name="amount-{{ book.pk }}"
-               value="{{ book.amount }}">
-    </td>
-    <td>
-        {{ book.in_stock }}
-    </td>
+{% block amount_td %}
+    <div class="ui mini input">
+        <input type="number" step="1" min="0" max="{{ book_type.in_stock }}"
+               name="amount-{{ book_type.pk }}" value="{{ book_type.amount }}">
+    </div>
 {% endblock %}
 
-{% block preceding_rows %}
-    <tbody class="book-row">
+{% block tr %}
+    <td>{{ book_type.in_stock }}</td>
 {% endblock %}
 
-{% block additional_rows %}
-        <tr>
-            <td style="border-top: 0;" colspan="7">
-                <div class="form-group">
-                    <label style="width: 100%; display: flex; align-items: center;">
-                        <span class="col-sm-3 col-md-2 control-label">
-                            {% trans "Book owners" %}:
-                        </span>
-                        <span class="col-sm-9 col-md-10">
-                            <input
-                                type="text"
-                                class="tokenfield form-control{% if book.error %} has-error{% endif %}"
-                                name="owners-{{ book.pk }}"
-                                value="{{ book.owners }}"
-                            />
-                        </span>
-                    </label>
-                </div>
-            </td>
-        </tr>
-    </tbody>
+{% block owners_field %}
+    <input type="text" name="owners-{{ book_type.pk }}" value="{{ book_type.owners }}"
+           class="tokenfield ui input{% if book_type.error %} error{% endif %}">
 {% endblock %}
