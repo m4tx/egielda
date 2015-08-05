@@ -11,8 +11,9 @@
  * along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var INVALID_ISBN = gettext("This ISBN is invalid.");
-var BOOK_NOT_FOUND = gettext("The book wasn't found. Please check the ISBN or fill out the form manually.");
+var INVALID_ISBN = gettext("This ISBN is invalid."),
+    BOOK_NOT_FOUND =
+        gettext("The book wasn't found. Please check the ISBN or fill out the form manually.");
 
 function getInputByName(name) {
     return get('input[name="' + name + '"]');
@@ -79,33 +80,57 @@ function isIsbnValid(isbn) {
     return true;
 }
 
+function setSearchIsbnIcon(icon) {
+    searchIsbnButton.children('i').removeClass().addClass('icon').addClass(icon);
+}
+
 function setSearchIsbnStatus(success, text, clearFields) {
-    if(success) {
-        isbnInput.parent().removeClass('has-error');
-        isbnInput.next().removeClass('glyphicon-warning-sign').addClass('glyphicon-ok').attr('title', '')
-            .attr('data-original-title', '');
-    }
-    else {
-        isbnInput.parent().addClass('has-error has-feedback');
-        isbnInput.next().removeClass('glyphicon-ok').addClass('glyphicon-warning-sign').attr('title', text)
-            .tooltip('fixTitle');
+    searchIsbnButton.removeClass('loading');
+
+    if (success) {
+        setSearchIsbnIcon('checkmark');
+        searchIsbnButton.disable();
+    } else {
+        setSearchIsbnIcon('cancel');
+        // 'is visible' returns either true or element, so we have to compare it to true
+        if (searchIsbnButton.popup('is visible') !== true) {
+            searchIsbnButton.popup({
+                content: text,
+                position: 'top right',
+                onHidden: function () {
+                    searchIsbnButton.popup('destroy');
+                }
+            });
+
+            searchIsbnButton.popup('show');
+        }
 
         if (clearFields) {
-            $.each(['title', 'publication_year', 'publisher'], function(){
+            $.each(['title', 'publication_year', 'publisher'], function () {
                 getInputByName(this).setText('');
             });
         }
     }
 }
 
-searchIsbnButton.on('click', function () {
-    var isbn = isbnInput.getText().toUpperCase().replace(/[^\dX]/g, ''); // remove all chars which are not allowed
+function clearSearchIsbnStatus() {
+    setSearchIsbnIcon('search');
+    searchIsbnButton.popup('hide');
+}
+
+searchIsbnButton.on('click', function (e) {
+    e.preventDefault();
+
+    // remove all chars which are not allowed
+    var isbn = isbnInput.getText().toUpperCase().replace(/[^\dX]/g, '');
     if (!isIsbnValid(isbn)) {
         setSearchIsbnStatus(false, INVALID_ISBN, true);
         return;
     }
 
-    var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn + "&fields=items(selfLink)";
+    searchIsbnButton.addClass('loading');
+    var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
+        + "&fields=items(selfLink)";
     $.ajax(url)
         .success(function (data) {
             if (data.totalItems == 0) {
@@ -113,7 +138,8 @@ searchIsbnButton.on('click', function () {
                 return;
             }
 
-            $.ajax(data.items[0].selfLink + "?fields=volumeInfo(title,subtitle,publisher,publishedDate)")
+            $.ajax(data.items[0].selfLink
+                + "?fields=volumeInfo(title,subtitle,publisher,publishedDate)")
                 .success(function (data) {
                     setSearchIsbnStatus(true);
 
@@ -137,12 +163,6 @@ searchIsbnButton.on('click', function () {
         });
 });
 
-function clearSearchIsbnStatus() {
-    isbnInput.parent().removeClass('has-error');
-    isbnInput.next().removeClass('glyphicon-warning-sign glyphicon-ok').attr('title', '')
-        .attr('data-original-title', '');
-}
-
 function checkSearchAvailability() {
     var isbn = isbnInput.getText();
     isbn = isbn.toUpperCase().replace(/[^\dX]/g, ''); // remove all chars which are not allowed
@@ -156,13 +176,10 @@ function checkSearchAvailability() {
 
 // track user input to disable or enable search's button when applicable
 checkSearchAvailability.call(isbnInput);
-isbnInput.on('input', function() {
+isbnInput.on('input', function () {
     clearSearchIsbnStatus();
     checkSearchAvailability();
 });
 
 // append controls to document
-isbnInput.wrap('<div class="input-group has-feedback"/>').parent().append($('<span class="input-group-btn"/>')
-    .append(searchIsbnButton));
-isbnInput.after('<span class="glyphicon form-control-feedback"></span>');
-isbnInput.next().tooltip();
+isbnInput.wrap('<div class="ui action input"/>').parent().append(searchIsbnButton);
