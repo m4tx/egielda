@@ -92,6 +92,8 @@
     <form class="ui form" enctype="multipart/form-data" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}
-        <button class="ui primary button right floated" type="submit"><i class="icon checkmark"></i>{% trans "Save" %}</button>
+        <button class="ui primary icon labeled button right floated" type="submit">
+            <i class="icon checkmark"></i>{% trans "Save" %}
+        </button>
     </form>
 {% endblock %}
