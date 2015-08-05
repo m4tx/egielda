@@ -6,7 +6,7 @@
     <style>
         #identity-card {
             display: block;
-            max-height: 280px;
+            max-height: 200px;
             width: auto;
             max-width: 100%;
             margin-bottom: 15px;
@@ -39,75 +39,25 @@
     <h1>{% blocktrans %}Verify {{ student }}'s account{% endblocktrans %}</h1>
     {% manage_header "users/unverified/verify" %}
 
-    <div class="ui info message" role="alert" style="display: none;" id="to-correct-info">
+    <div class="ui info message slideable" role="alert" style="display: none;" id="to-correct-info">
         {% trans 'Select incorrectly filled fields and then press "Needs correction" button again.' %}
     </div>
 
-    <div class="ui error message" role="alert" style="display: none;" id="to-correct-not-selected">
+    <div class="ui error message slideable" role="alert" style="display: none;" id="to-correct-not-selected">
         {% trans "You didn't select any field which needs to be corrected." %}
     </div>
 
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-username"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "Username" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.username }}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-first_name"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "First name" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.first_name }}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-last_name"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "Last name" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.last_name }}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-student_class"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "Class" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.student_class }}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-phone_number"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "Phone number" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.phone_number }}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-email"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "E-mail" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.email }}</p>
-                    </div>
-                </div>
-            </div>
+    <div class="ui stackable two column grid">
+        <div class="responsive-form column">
+            {% include "elements/user_profile_display_form.html" with user=student %}
         </div>
-        <div class="col-md-4">
+        <div class="column">
             {% if student.document %}
                 <a href="{{ student.document.url }}">
                     <img id="identity-card" src="{{ student.document.url }}">
                 </a>
             {% else %}
-                <div id="no-id-info">
-                {% trans "This user has no associated identity card." %}</div>
+                <div id="no-id-info">{% trans "This user has no associated identity card." %}</div>
             {% endif %}
         </div>
     </div>
