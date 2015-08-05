@@ -1,84 +1,6 @@
 {% extends "common/base.html" %}
 {% load i18n %}
 
-{% block head %}
-    <style>
-        .ui.divided.items > .item:last-child {
-            border-bottom: 1px solid rgba(34, 36, 38, 0.15);
-        }
-
-        .ui.divided.items > .item:first-child {
-            border-top: 1px solid rgba(34, 36, 38, 0.15);
-            padding: 1em 0em !important;
-        }
-
-        .ui.items .item {
-            border: 1px #ddd solid;
-            border-bottom-width: 0;
-            padding: 10px;
-            height: 100px;
-
-            position: relative;
-        }
-
-        .ui .item:hover {
-            background-color: #f5f5f5;
-        }
-
-        .ui .item a {
-            color: #333;
-        }
-
-        .item > .image > a > .icon {
-            font-size: 76px;
-            height: initial;
-            line-height: 0.8em;
-        }
-
-        .ui.items > .item > .content .header {
-            font-size: 18px;
-        }
-
-        .ui.items > .item > .content a .header:hover {
-            text-decoration: underline;
-        }
-
-        .ui.items > .item > .content > .extra a:hover {
-            text-decoration: underline;
-        }
-
-        .ui.items > .item .extra {
-            margin-top: 1.6em;
-        }
-
-        .extra > ul {
-            padding: 0;
-        }
-
-        .extra > ul > li {
-            display: inline;
-            padding: 0;
-        }
-
-        .extra > ul > li:after {
-            content: "\00a0\00a0\00a0•\00a0\00a0\00a0";
-        }
-
-        .extra > ul > li:last-child:after {
-            content: none;
-        }
-
-        .ui.items:last-child {
-            margin-bottom: 10px !important;
-        }
-
-        .ui.items > .item > .image {
-            padding: 5px;
-            margin: 0 10px;
-        }
-    </style>
-{% endblock %}
-
 {% block title %}{% trans "Manage" %}{% endblock %}
 
 {% block content %}
@@ -86,7 +8,7 @@
     {% load manage_header %}
     {% manage_header %}
 
-    <div class="ui divided items">
+    <div class="ui divided items managemenu">
         {% if perms.common.view_orders_not_fulfilled or perms.common.view_orders_fulfilled %}
             <div class="item">
                 <div class="ui tiny image">
