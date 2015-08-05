@@ -69,12 +69,12 @@ function checkInStock(tr) {
     var addBookBtn = $('button.btn-add-book', tr);
 
     // Reset
-    $(tr).removeClass('bg-warning bg-danger text-muted');
+    $(tr).removeClass('bg-warning bg-error text-muted');
     addBookBtn.removeAttr('disabled');
 
     // Check the In stock value
     if (inStockVal == 0) {
-        $(tr).addClass('bg-danger text-muted');
+        $(tr).addClass('bg-error text-muted');
         $('button.btn-add-book', tr).attr('disabled', 'disabled');
     } else if (inStockVal <= 5) {
         $(tr).addClass('bg-warning');

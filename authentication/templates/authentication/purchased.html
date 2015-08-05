@@ -52,13 +52,7 @@
 {% block title %}{% trans "Purchased books" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Your profile" %}</h1> <h4>
-            {% if user.verified %}
-                {%  trans "Account verified" %}
-            {% else %}
-                {%  trans "Account not verified" %}
-            {% endif %}
-        </h4>
+    {% include "users/profile_header.html" with your_profile=True student=user %}
     {% profile_header "purchased" %}
 
     <div class="ui tabular menu">
