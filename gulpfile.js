@@ -92,8 +92,19 @@ gulp.task('less-minified', function () {
  * Misc
  */
 gulp.task('assets', function () {
-    return gulp.src('vendor/Semantic-UI/src/themes/default/assets/**/*.*')
-        .pipe(gulp.dest('dist'));
+    return es.concat(
+        // Semantic UI assets
+        gulp.src('vendor/Semantic-UI/src/themes/default/assets/**/*.*')
+            .pipe(gulp.dest('dist')),
+
+        // jQuery datetimepicker
+        gulp.src('node_modules/jquery-datetimepicker/jquery.datetimepicker.js')
+            .pipe(uglify())
+            .pipe(gulp.dest('dist/js')),
+        gulp.src('node_modules/jquery-datetimepicker/jquery.datetimepicker.css')
+            .pipe(minifyCss({keepSpecialComments: 0}))
+            .pipe(gulp.dest('dist/css'))
+    );
 });
 
 gulp.task('watch', function () {

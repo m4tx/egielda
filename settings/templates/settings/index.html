@@ -4,7 +4,7 @@
 
 {% block head %}
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static "css/bootstrap-datetimepicker.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/jquery.datetimepicker.css" %}">
 {% endblock %}
 
 {% block title %}{% trans "Settings" %}{% endblock %}
@@ -23,32 +23,31 @@
 {% endblock %}
 
 {% block footer %}
-    <script src="{% static "js/moment.js" %}"></script>
-    <script src="{% static "js/bootstrap-datetimepicker.min.js" %}"></script>
+    <script src="{% static "js/jquery.datetimepicker.js" %}"></script>
+    <script type="text/javascript" src="{% url "django.views.i18n.javascript_catalog" %}"></script>
     <script type="text/javascript">
         window.addEventListener("load", function () {
-            var is_datetime_supported = false;
-            var input = document.createElement("input");
+            var isDatetimeSupported = false,
+                    input = document.createElement("input");
             input.setAttribute("type", "datetime-local");
 
             if (input.type === "datetime-local") {
-                is_datetime_supported = true;
+                isDatetimeSupported = true;
             }
 
-            $('[data-datetimepicker]').each(function () {
-                if (is_datetime_supported) {
-                    return;
-                }
+            if (!isDatetimeSupported) {
+                $('input[type="datetime-local"]').each(function () {
+                    $(this).datetimepicker({
+                        format: 'Y-m-d H:i',
+                        lang: '{{ LANGUAGE_CODE }}'
+                    });
 
-                $(this).attr("placeholder", "RRRR-MM-DD GG:MM");
-                if ($(this).is("[value]")) {
-                    $(this).attr("value", $(this).attr("value").replace("T", " "));
-                }
-
-                $("<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>").insertAfter($(this));
-                $(this).next().addBack().wrapAll("<div class=\"input-group\" data-date-format=\"YYYY-MM-DD HH:mm\"></div>");
-                $(this).parent().datetimepicker({language: 'pl'});
-            });
+                    $(this).attr("placeholder", gettext("YYYY-MM-DD HH:MM"));
+                    if ($(this).is("[value]")) {
+                        $(this).attr("value", $(this).attr("value").replace("T", " "));
+                    }
+                });
+            }
         });
     </script>
 {% endblock %}
