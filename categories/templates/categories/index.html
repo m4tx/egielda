@@ -17,7 +17,7 @@
     {% manage_header "categories" %}
 
     {% if category_list %}
-        <table class="ui selectable celled table">
+        <table class="ui selectable sortable table">
             <thead>
             <tr>
                 <th>{% trans "Name" %}</th>
@@ -37,7 +37,7 @@
                             {{ book_count }}
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="collapsing">
                         {% if perms.common.view_categories_edit_category %}
                             <a href="{% url 'categories.views.edit_category' item.pk %}">
                                 <i class="icon edit"></i>{% trans "Edit" %}
@@ -68,7 +68,7 @@
     <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
     <script type="text/javascript">
         window.addEventListener("load", function(){
-            $(".table-responsive table").tablesorter();
+            $("table.sortable").tablesorter();
         });
     </script>
 {% endblock %}
