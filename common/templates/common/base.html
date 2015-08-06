@@ -18,8 +18,6 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"> -->
             {% load staticfiles %}
             <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
@@ -28,17 +26,6 @@
             {% endif %}
 
             {% block head %}{% endblock %}
-
-            <style>
-                {# https://github.com/twbs/bootstrap/issues/14042 #}
-                ul.dropdown-menu > li span.glyphicon {
-                    width: 16px;
-                }
-
-                a[href]:after {
-                    content: none;
-                }
-            </style>
 
             <title>{% block title %}{% endblock %} | {% site_name %}</title>
         </head>
@@ -93,7 +80,6 @@
         </div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.1/semantic.min.js"></script>
 
         <script>
