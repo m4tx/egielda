@@ -77,7 +77,7 @@ def accept_books(request, user_pk):
 
                 elif new_amount > book_type.amount:
                     amount_difference = new_amount - book_type.amount
-                    book = d[book_type]
+                    book = Book(book_type=book_type, owner=user)
 
                     book_list = []
                     for i in range(0, amount_difference):
