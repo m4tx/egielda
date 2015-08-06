@@ -238,24 +238,20 @@ function sortTable() {
 }
 sortTable();
 
-$("#category_filter").on("change", function () {
-    var category = parseInt($(this).val());
-    $("#bookList table > tbody > tr").each(function () {
-        var bookCategories = $(this).attr("data-categories").split(",");
-        var visible = false;
+$('#category-filter').dropdown({
+    onChange: function (category) {
+        $("#bookList table > tbody > tr").each(function () {
+            var bookCategories = $(this).data('categories').toString().split(',');
 
-        for (var categoryID in bookCategories) {
-            if (parseInt(bookCategories[categoryID]) === category || category === 0) {
-                $(this).attr("style", "display: table-row");
-                visible = true;
-                break;
+            for (var categoryID in bookCategories) {
+                if (parseInt(bookCategories[categoryID]) === category || category === 0) {
+                    $(this).css('display', 'table-row');
+                    return;
+                }
             }
-        }
-
-        if (!visible) {
-            $(this).attr("style", "display: none");
-        }
-    });
+            $(this).css('display', 'none');
+        });
+    }
 });
 
 $('.ui.accordion').accordion();

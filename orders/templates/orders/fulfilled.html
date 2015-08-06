@@ -24,13 +24,7 @@
     <div class="responsive-form">
         {% load formfield %}
         {% formfield id="class_filter" label=_("Class") %}
-            <select class="ui dropdown" id="class_filter">
-                <option value="0">{% trans "All" context "class" %}</option>
-                <option disabled="disabled">────────</option>
-                {% for class in class_list %}
-                    <option value="{{ class }}">{{ class }}</option>
-                {% endfor %}
-            </select>
+            {% include "orders/class_filter.html" %}
         {% endformfield %}
     </div>
 

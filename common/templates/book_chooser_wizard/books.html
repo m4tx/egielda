@@ -29,13 +29,19 @@
             <div class="responsive-form">
                 {% load formfield %}
                 {% formfield id="category_filter" label=_("Categories") %}
-                    <select class="ui dropdown" id="category_filter">
-                        <option value="0">{% trans "All" context "categories" %}</option>
-                        <option disabled="disabled">────────</option>
-                        {% for category in category_list %}
-                            <option value="{{ category.0 }}">{{ category.1 }}</option>
-                        {% endfor %}
-                    </select>
+                    <div class="ui selection dropdown" id="category-filter">
+                        <input type="hidden" value="0">
+                        <i class="dropdown icon"></i>
+
+                        <div class="default text"></div>
+                        <div class="menu">
+                            <div class="item" data-value="0">{% trans "All" context "categories" %}</div>
+                            <div class="divider"></div>
+                            {% for category in category_list %}
+                                <div class="item" data-value="{{ category.0 }}">{{ category.1 }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 {% endformfield %}
             </div>
 
