@@ -11,7 +11,7 @@
     </h1>
     {% manage_header "orders/details" %}
 
-    <div class="responsive-form">
+    <div class="responsive-form static-form">
         {% load formfield %}
         {% formfield label=_("User") %}{{ order.user }}{% endformfield %}
         {% formfield label=_("Date") %}{{ order.date }}{% endformfield %}

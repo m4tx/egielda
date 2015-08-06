@@ -21,7 +21,7 @@
     </div>
     {% manage_header "books/details" %}
 
-    <div class="responsive-form">
+    <div class="responsive-form static-form">
         {% load formfield %}
         {% formfield label=_("ISBN") %}{{ book.isbn }}{% endformfield %}
         {% formfield label=_("Title") %}{{ book.title }}{% endformfield %}
