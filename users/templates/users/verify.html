@@ -2,37 +2,6 @@
 {% load i18n %}
 {% load manage_header %}
 
-{% block head %}
-    <style>
-        #identity-card {
-            display: block;
-            max-height: 200px;
-            width: auto;
-            max-width: 100%;
-            margin-bottom: 15px;
-        }
-
-        @media (min-width: 992px) {
-            #identity-card {
-                float: right;
-            }
-        }
-
-        @media (max-width: 991px) {
-            #identity-card {
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-
-        #no-id-info {
-            text-align: center;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-    </style>
-{% endblock %}
-
 {% block title %}{% blocktrans %}Verify {{ student }}'s account{% endblocktrans %}{% endblock %}
 
 {% block content %}
@@ -48,7 +17,7 @@
     </div>
 
     <div class="ui stackable two column grid">
-        <div class="responsive-form column">
+        <div class="responsive-form column" id="user-verify-details">
             {% include "elements/user_profile_display_form.html" with user=student %}
         </div>
         <div class="column">
