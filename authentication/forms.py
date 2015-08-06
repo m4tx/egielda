@@ -29,6 +29,10 @@ class UserDataForm(ModelForm):
         exclude = ['awaiting_verification', 'is_superuser', 'groups', 'user_permissions', 'last_login']
 
         widgets = {
+            'username': TextInput(attrs={
+                'title': _("Alpha-numeric characters only"),
+                'pattern': '^[a-zA-Z0-9]*$'
+            }),
             'phone_number': PhoneNumberInput(attrs={'maxlength': '9'}),
             'password': PasswordInput,
             'student_class': TextInput(attrs={
@@ -46,12 +50,21 @@ class UserDataForm(ModelForm):
             'document': _("Identity card"),
         }
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+
+        if not re.match('^[a-zA-Z0-9]*$', username):
+            raise ValidationError(
+                _("Username contains illegal characters."))
+
+        return username
+
     def clean_student_class(self):
         student_class = self.cleaned_data['student_class']
 
         if not re.match('^[123][A-Z]$', student_class) and student_class != _("graduate"):
             raise ValidationError(
-                _("Invalid data. Use \"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A"))
+                _("Invalid data. Use \"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A."))
 
         return student_class
 
