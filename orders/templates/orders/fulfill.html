@@ -13,9 +13,7 @@
 
     {% load staticfiles %}
     <link href="//code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.min.css" type="text/css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="{% static "css/tokenfield-typeahead.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-tokenfield.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "semantic-tokenfield/dist/css/semantic-tokenfield.min.css" %}">
 {% endblock %}
 
 {% block content %}
@@ -27,20 +25,20 @@
     </h1>
     {% manage_header "orders/fulfill" %}
 
-    <div class="alert alert-info">{% trans "If you want to delete some book, just pass 0 as amount." %}</div>
+    <div class="ui info message">{% trans "If you want to delete some book, just pass 0 as amount." %}</div>
     <form action="{{ request.path }}" method="post">
         {% csrf_token %}
         {% include 'orders/fulfill_book_list.html' with hide_actions=True %}
 
         {% if perms.common.view_orders_not_fulfilled %}
-            <a href="{% url 'orders.views.not_fulfilled' %}" class="btn btn-default" role="button">
-                <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}
+            <a href="{% url 'orders.views.not_fulfilled' %}" class="ui icon labeled button" role="button">
+                <i class="icon remove"></i>{% trans "Cancel" %}
             </a>
         {% endif %}
 
         {% if perms.common.view_orders_fulfill_accept %}
-            <button class="btn btn-primary pull-right" type="submit">
-                {% trans "Next" %} <span class="glyphicon glyphicon-chevron-right"></span>
+            <button class="ui primary icon right labeled button right floated" type="submit">
+                {% trans "Next" %}<i class="icon chevron right"></i>
             </button>
         {% endif %}
     </form>
@@ -60,7 +58,7 @@
             users[{{ user.0 }}] = "{{ user.1 }}";
         {% endfor %}
     </script>
-    <script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/bootstrap-tokenfield.js" %}"></script>
+    <script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{% static "semantic-tokenfield/dist/semantic-tokenfield.min.js" %}"></script>
     <script type="text/javascript" src="{% static "js/userchooser.js" %}"></script>
 {% endblock %}

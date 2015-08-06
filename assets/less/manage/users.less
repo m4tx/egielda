@@ -1,0 +1,54 @@
+/*
+ * This file is part of e-Giełda.
+ * Copyright (C) 2014-2015  Mateusz Maćkowski and Tomasz Zieliński
+ *
+ * e-Giełda is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+//
+// Users
+//
+
+// Verify
+.responsive-form#user-verify-details {
+  padding-top: 0;
+}
+
+#identity-card {
+  display: block;
+  max-height: 200px;
+  width: auto;
+  max-width: 100%;
+  margin-bottom: 15px;
+}
+
+#no-id-info {
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+@import "../../../vendor/Semantic-UI/src/themes/default/globals/site.variables";
+@media only screen and (max-width: @largestMobileScreen) {
+  #identity-card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media only screen and (min-width: @tabletBreakpoint) {
+  #no-id-info {
+    max-width: 20em;
+    margin-left: auto;
+  }
+
+  #identity-card {
+    float: right;
+  }
+}

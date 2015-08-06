@@ -16,28 +16,16 @@
     <h1>{% trans "Orders" %}</h1>
     {% manage_header "orders/not_fulfilled" %}
 
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="active"><a href="#">{% trans "Not fulfilled" %}</a></li>
-        <li><a href="{% url 'orders.views.fulfilled' %}">{% trans "Fulfilled" %}</a></li>
-    </ul>
+    <div class="ui tabular menu">
+        <div class="active item">{% trans "Not fulfilled" %}</div>
+        <a href="{% url 'orders.views.fulfilled' %}" class="item">{% trans "Fulfilled" %}</a>
+    </div>
 
-    <div class="panel-body">
-        <div class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-3 col-md-2 control-label"
-                       for="category_filter">{% trans "Class" %}:</label>
-
-                <div class="col-sm-9 col-md-10">
-                    <select class="form-control" id="class_filter">
-                        <option value="0">{% trans "All" context "class" %}</option>
-                        <option disabled="disabled">────────</option>
-                        {% for class in class_list %}
-                            <option value="{{ class }}">{{ class }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-        </div>
+    <div class="responsive-form">
+        {% load formfield %}
+        {% formfield id="class_filter" label=_("Class") %}
+            {% include "orders/class_filter.html" %}
+        {% endformfield %}
     </div>
 
      <form action="{% url 'orders.views.bulk_actions' 'remove' %}" method="post">
@@ -52,18 +40,44 @@
     <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
     <script type="text/javascript">
         window.addEventListener("load", function(){
-            $(".table-responsive table").tablesorter();
+            $("table.sortable").tablesorter();
 
-            $("input[name^='select-']").on('change', function () {
-                $(this).closest($('tr')).toggleClass('active', this.checked);
+            $('.ui.checkbox').checkbox('set enabled');
+            $('.table .master.checkbox').checkbox({
+                onChecked: function () {
+                    var $childCheckbox = $(this).closest('.table').find('.checkbox');
+                    $childCheckbox.checkbox('check');
+                },
+                onUnchecked: function () {
+                    var $childCheckbox = $(this).closest('.table').find('.checkbox');
+                    $childCheckbox.checkbox('uncheck');
+                }
             });
 
-            $("input#select-all").on('change', function () {
-                var checkboxes = $("input[name^='select-']").filter(function(){
-                    return $(this).parent().parent().css('display') !== 'none';
-                });
-                checkboxes.prop('checked', this.checked);
-                checkboxes.closest($('tr')).toggleClass('active', this.checked);
+            $('.table .child.checkbox').checkbox({
+                fireOnInit: true,
+                onChange: function () {
+                    var $listGroup = $(this).closest('.table'),
+                            $parentCheckbox = $listGroup.find('th .master.checkbox'),
+                            $checkbox = $listGroup.find('.checkbox').not('.master'),
+                            allChecked = true,
+                            allUnchecked = true;
+
+                    $checkbox.each(function () {
+                        if ($(this).checkbox('is checked')) {
+                            allUnchecked = false;
+                        } else {
+                            allChecked = false;
+                        }
+                    });
+                    if (allChecked) {
+                        $parentCheckbox.checkbox('set checked');
+                    } else if (allUnchecked) {
+                        $parentCheckbox.checkbox('set unchecked');
+                    } else {
+                        $parentCheckbox.checkbox('set indeterminate');
+                    }
+                }
             });
         });
     </script>

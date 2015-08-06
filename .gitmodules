@@ -1,0 +1,6 @@
+[submodule "vendor/Semantic-UI"]
+	path = vendor/Semantic-UI
+	url = https://github.com/m4tx/egielda-Semantic-UI.git
+[submodule "vendor/semantic-tokenfield"]
+	path = vendor/semantic-tokenfield
+	url = https://github.com/m4tx/semantic-tokenfield.git

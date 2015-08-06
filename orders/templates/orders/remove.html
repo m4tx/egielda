@@ -13,18 +13,20 @@
     {% manage_header "orders/remove" %}
 
     {% if orders|length == 1 %}
-        <div class="alert alert-danger">{% trans "Are you sure you want to remove this order?" %}</div>
+        <div class="ui error message">{% trans "Are you sure you want to remove this order?" %}</div>
     {% else %}
-        <div class="alert alert-danger">{% trans "Are you sure you want to remove these orders?" %}</div>
+        <div class="ui error message">{% trans "Are you sure you want to remove these orders?" %}</div>
     {% endif %}
     {% include "orders/orders_table.html" with hide_actions=True %}
     <form action="{{ request.path }}" method="post">
         {% if perms.common.view_orders_index %}
-            <a href="{% url 'orders.views.index' %}" class="btn btn-default" role="button"><span
-                class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
+            <a href="{% url 'orders.views.index' %}" class="ui icon labeled button" role="button">
+                <i class="icon remove"></i>{% trans "Cancel" %}
+            </a>
         {% endif %}
-        <button type="submit" class="btn btn-danger pull-right"><span
-                class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}</button>
+        <button type="submit" class="ui negative icon labeled button right floated">
+            <i class="icon trash"></i>{% trans "Remove" %}
+        </button>
         {% csrf_token %}
     </form>
 {% endblock %}

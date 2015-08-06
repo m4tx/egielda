@@ -16,12 +16,12 @@
     {% if book_list %}
         {% include 'books/book_list_base.html' with hide_actions=True %}
     {% else %}
-        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+        <div class="ui info message">{% trans "There's nothing to display." %}</div>
     {% endif %}
 
     {% if perms.common.view_categories_index %}
-        <a href="{% url 'categories.views.index' %}" class="btn btn-primary" role="button">
-            <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+        <a href="{% url 'categories.views.index' %}" class="ui primary icon labeled button" role="button">
+            <i class="icon chevron left"></i>{% trans "Back" %}
         </a>
     {% endif %}
 {% endblock %}

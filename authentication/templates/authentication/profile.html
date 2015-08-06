@@ -51,21 +51,15 @@
 {% block title %}{% trans "Your profile" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Your profile" %}</h1> <h4>
-            {% if user.verified %}
-                {%  trans "Account verified" %}
-            {% else %}
-                {%  trans "Account not verified" %}
-            {% endif %}
-        </h4>
+    {% include "users/profile_header.html" with your_profile=True student=user %}
     {% profile_header %}
 
     {% if user.awaiting_verification and not incorrect_fields %}
-        <div class="alert alert-warning">
+        <div class="ui warning message">
             {% trans "Your account is now awaiting verification." %}
         </div>
     {% elif incorrect_fields %}
-        <div class="alert alert-danger">
+        <div class="ui error message">
             {% trans "Your verification request was rejected. Following fields are filled in incorrectly:" %}
             <ul>
                 {% for field in incorrect_fields %}
@@ -75,27 +69,25 @@
         </div>
     {% endif %}
 
-    <ul class="nav nav-tabs">
-        {% if perms.common.view_authentication_profile %}
-            <li class="active"><a href="{% url 'authentication.views.profile' %}">{% trans "Profile data" %}</a></li>
-        {% else %}
-            <li class="disabled"><a href="#">{% trans "Profile data" %}</a></li>
-        {% endif %}
+    <div class="ui tabular menu">
+        <div class="active item">{% trans "Profile data" %}</div>
         {% if perms.common.view_authentication_profile_purchased %}
-            <li><a href="{% url 'authentication.views.purchased' %}">{% trans "Purchased books" %}</a></li>
+            <a href="{% url 'authentication.views.purchased' %}" class="item">{% trans "Purchased books" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Purchased books" %}</a></li>
+            <div class="disabled item">{% trans "Purchased books" %}</div>
         {% endif %}
         {% if perms.common.view_authentication_profile_sold %}
-            <li><a href="{% url 'authentication.views.sold' %}">{% trans "Sold books" %}</a></li>
+            <a href="{% url 'authentication.views.sold' %}" class="item">{% trans "Sold books" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Sold books" %}</a></li>
+            <div class="disabled item">{% trans "Sold books" %}</div>
         {% endif %}
-    </ul>
+    </div>
 
-    <form class="form-horizontal" enctype="multipart/form-data" action="{{ request.path }}" method="post">
+    <form class="ui form" enctype="multipart/form-data" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}
-        <button class="btn btn-primary pull-right" type="submit"><span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}</button>
+        <button class="ui primary icon labeled button right floated" type="submit">
+            <i class="icon checkmark"></i>{% trans "Save" %}
+        </button>
     </form>
 {% endblock %}

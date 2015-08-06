@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<div class="ui selection dropdown" id="class-filter">
+    <input type="hidden" value="0">
+    <i class="dropdown icon"></i>
+
+    <div class="default text"></div>
+    <div class="menu">
+        <div class="item" data-value="0">{% trans "All" context "class" %}</div>
+        <div class="divider"></div>
+        {% for class in class_list %}
+            <div class="item" data-value="{{ class }}">{{ class }}</div>
+        {% endfor %}
+    </div>
+</div>

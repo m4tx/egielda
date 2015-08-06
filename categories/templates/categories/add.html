@@ -8,15 +8,16 @@
     <h1>{% trans "Add category" %}</h1>
     {% manage_header "categories/add" %}
 
-    <form class="form-horizontal" method="post" action="">
+    <form class="ui form" method="post" action="">
         {% include 'common/default_form.html' %}
         {% csrf_token %}
         {% if perms.common.view_categories_index %}
-            <a href="{% url 'categories.views.index' %}" class="btn btn-default" role="button"><span
-                class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
+            <a href="{% url 'categories.views.index' %}" class="ui icon labeled button" role="button">
+                <i class="icon remove"></i>{% trans "Cancel" %}
+            </a>
         {% endif %}
-        <button type="submit" class="btn btn-primary pull-right">
-            <span class="glyphicon glyphicon-plus"></span> {% trans "Add" %}
+        <button type="submit" class="ui primary icon labeled button right floated">
+            <i class="icon plus"></i>{% trans "Add" %}
         </button>
     </form>
 {% endblock %}

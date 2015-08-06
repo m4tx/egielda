@@ -4,19 +4,19 @@
 {% block title %}{% blocktrans %}Error {{ error }}{% endblocktrans %}{% endblock %}
 
 {% block content %}
-    <div class="jumbotron">
-        <h1>
+    <div class="ui message">
+        <h1 class="ui header">
             {% blocktrans %}Error {{ error }}{% endblocktrans %}
             <small>{% block subtitle %}{% endblock %}</small>
         </h1>
 
-        <p class="text-danger">{% block description %}{% endblock %}</p>
+        <strong class="text-error">{% block description %}{% endblock %}</strong>
 
         {% block error_body %}{% endblock %}
 
         {% if not disable_homepage %}
-            <a href="{% url 'home' %}" class="btn btn-lg btn-primary">
-                <span class="glyphicon glyphicon-home"></span> {% trans "Homepage" %}
+            <a href="{% url 'home' %}" class="ui icon labeled button">
+                <i class="icon home"></i>{% trans "Homepage" %}
             </a>
         {% endif %}
     </div>

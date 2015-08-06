@@ -52,69 +52,22 @@
 {% block title %}{% trans "Sold books" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Your profile" %}</h1> <h4>
-            {% if user.verified %}
-                {%  trans "Account verified" %}
-            {% else %}
-                {%  trans "Account not verified" %}
-            {% endif %}
-        </h4>
+    {% include "users/profile_header.html" with your_profile=True student=user %}
     {% profile_header "sold" %}
 
-    <ul class="nav nav-tabs">
+    <div class="ui tabular menu">
         {% if perms.common.view_authentication_profile %}
-            <li><a href="{% url 'authentication.views.profile' %}">{% trans "Profile data" %}</a></li>
+            <a href="{% url 'authentication.views.profile' %}" class="item">{% trans "Profile data" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Profile data" %}</a></li>
+            <div class="disabled item">{% trans "Profile data" %}</div>
         {% endif %}
         {% if perms.common.view_authentication_profile_purchased %}
-            <li><a href="{% url 'authentication.views.purchased' %}">{% trans "Purchased books" %}</a></li>
+            <a href="{% url 'authentication.views.purchased' %}" class="item">{% trans "Purchased books" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Purchased books" %}</a></li>
+            <div class="disabled item">{% trans "Purchased books" %}</div>
         {% endif %}
-        {% if perms.common.view_authentication_profile_sold %}
-            <li class="active"><a href="{% url 'authentication.views.sold' %}">{% trans "Sold books" %}</a></li>
-        {% else %}
-            <li class="disabled"><a href="#">{% trans "Sold books" %}</a></li>
-        {% endif %}
-    </ul>
+        <div class="active item">{% trans "Sold books" %}</div>
+    </div>
 
-    {% if stats %}
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <b>
-                        {{ user.get_full_name }}
-                        <span class="pull-right">#{{ user.id }}</span>
-                    </b>
-                </div>
-                <table class="list-group table table-hover">
-                     <thead>
-                        <tr>
-                            <th>{% trans "ISBN" %}</th>
-                            <th>{% trans "Publisher" %}</th>
-                            <th style="width: 40%;">{% trans "Title" %}</th>
-                            <th>{% trans "Publication" %}</th>
-                            <th>{% trans "Price" %}</th>
-                            <th>{% trans "Declared" %}</th>
-                            <th>{% trans "Brought" %}</th>
-                            <th>{% trans "Sold" context "count" %}</th>
-                        </tr>
-                    </thead>
-                    {% for key, value in stats.items %}
-                        <tr class="list-group-item" style="display: table-row; position: initial;">
-                            <td>{{ value.0.book_type.isbn }}</td>
-                            <td>{{ value.0.book_type.publisher }}</td>
-                            <td>{{ value.0.book_type.title }}</td>
-                            <td>{{ value.0.book_type.publication_year }}</td>
-                            <td>{{ value.0.book_type.price | price }}</td>
-                            <td>{{ value.1 }}</td>
-                            <td>{{ value.2 }}</td>
-                            <td>{{ value.3 }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-    {% else %}
-        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
-    {% endif %}
+    {% include "users/sold_list.html" %}
 {% endblock %}

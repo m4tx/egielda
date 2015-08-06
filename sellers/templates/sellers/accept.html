@@ -18,19 +18,19 @@
     </h1>
     {% manage_header "sellers/accept_books" %}
 
-    <div class="alert alert-info">{% trans "If you want to delete some book, just pass 0 as amount." %}</div>
+    <div class="ui info message">{% trans "If you want to delete some book, just pass 0 as amount." %}</div>
     <form action="{{ request.path }}" method="post">
         {% csrf_token %}
         {% include 'sellers/accept_book_list.html' %}
 
         {% if perms.common.view_sellers_index %}
-            <a href="{% url 'sellers.views.index' %}" class="btn btn-default" role="button">
-                <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}
+            <a href="{% url 'sellers.views.index' %}" class="ui icon labeled button" role="button">
+                <i class="icon remove"></i>{% trans "Cancel" %}
             </a>
         {% endif %}
 
-        <button class="btn btn-primary pull-right" type="submit">
-            <span class="glyphicon glyphicon-ok"></span> {% trans "Accept" %}
+        <button class="ui primary icon labeled button right floated" type="submit">
+            <i class="icon checkmark"></i>{% trans "Accept" %}
         </button>
     </form>
 {% endblock %}

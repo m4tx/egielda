@@ -1,53 +1,49 @@
 {% load i18n %}
 {% load price %}
 
-<div class="table-responsive">
-    <table class="table table-hover"{% block table_attributes %}{% endblock %}>
-        <thead>
-        {% block thead_tr %}{% endblock %}
-        <tr>
-            {% block thead_header %}{% endblock %}
-            <th>{% trans "ISBN" %}</th>
-            <th>{% trans "Publisher" %}</th>
-            <th style="width: 40%;">{% trans "Title" %}</th>
-            <th>{% trans "Publication" %}</th>
-            <th>{% trans "Price" %}</th>
-            {% block thead_footer %}{% endblock %}
+<table class="ui selectable table"{% block table_attributes %}{% endblock %}>
+    <thead>
+    {% block thead_tr %}{% endblock %}
+    <tr>
+        {% block thead_header %}{% endblock %}
+        <th>{% trans "ISBN" %}</th>
+        <th>{% trans "Publisher" %}</th>
+        <th style="width: 40%;">{% trans "Title" %}</th>
+        <th>{% trans "Publication" %}</th>
+        <th>{% trans "Price" %}</th>
+        {% block thead_footer %}{% endblock %}
+        {% if not hide_actions %}
+            <th>{% trans "Actions" %}</th>
+        {% endif %}
+    </tr>
+    </thead>
+
+    {% for book in book_list %}
+        {% block preceding_rows %}{% endblock %}
+        <tr{% block tr_attributes %}{% endblock %}>
+            {% block tr_header %}{% endblock %}
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.publisher }}</td>
+            <td>
+                {% if book.pk and perms.common.view_books_book_details %}
+                    <a href="{% url 'books.views.book_details' book.pk %}">{{ book.title }}</a>
+                {% else %}
+                    {{ book.title }}
+                {% endif %}
+            </td>
+            <td>{{ book.publication_year }}</td>
+            <td>{% block book_price %}{{ book.price|price }}{% endblock %}</td>
+            {% block tr_footer %}{% endblock %}
             {% if not hide_actions %}
-                <th>{% trans "Actions" %}</th>
+                <td class="collapsing">
+                    {% block actions %}{% endblock %}
+                </td>
             {% endif %}
         </tr>
-        </thead>
+        {% block additional_rows %}{% endblock %}
+    {% endfor %}
 
-        {% for book in book_list %}
-            {% block preceding_rows %}{% endblock %}
-            <tr{% block tr_attributes %}{% endblock %}>
-                {% block tr_header %}{% endblock %}
-                <td>{{ book.isbn }}</td>
-                <td>{{ book.publisher }}</td>
-                <td>
-                    {% if book.pk and perms.common.view_books_book_details %}
-                        <a href="{% url 'books.views.book_details' book.pk %}">{{ book.title }}</a>
-                    {% else %}
-                        {{ book.title }}
-                    {% endif %}
-                </td>
-                <td>{{ book.publication_year }}</td>
-                <td>{% block book_price %}{{ book.price|price }}{% endblock %}</td>
-                {% block tr_footer %}{% endblock %}
-                {% if not hide_actions %}
-                    <td>
-                        <div class="btn-toolbar" role="toolbar">
-                            {% block actions %}{% endblock %}
-                        </div>
-                    </td>
-                {% endif %}
-            </tr>
-            {% block additional_rows %}{% endblock %}
-        {% endfor %}
-
-        <tfoot>
-            {% block footer %}{% endblock %}
-        </tfoot>
-    </table>
-</div>
+    <tfoot>
+        {% block footer %}{% endblock %}
+    </tfoot>
+</table>

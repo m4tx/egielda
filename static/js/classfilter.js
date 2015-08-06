@@ -11,14 +11,15 @@
  * along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$("#class_filter").on("change", function () {
-    var studentClass = $(this).val();
-    $("table > tbody > tr").each(function () {
-        if($(this).attr("data-class") !== studentClass && studentClass !== "0") {
-            $(this).attr("style", "display: none");
+$('#class-filter').dropdown({
+        onChange: function (studentClass) {
+            $("table > tbody > tr").each(function () {
+                if ($(this).data('class') !== studentClass && studentClass !== 0) {
+                    $(this).css('display', 'none');
+                } else {
+                    $(this).css('display', 'table-row');
+                }
+            });
         }
-        else {
-            $(this).attr("style", "display: table-row");
-        }
-    });
-});
+    }
+);

@@ -1,0 +1,43 @@
+{% load base %}
+{% load i18n %}
+{% load price %}
+
+<table class="ui selectable-tbody table">
+    <thead>
+    <tr>
+        <th>{% trans "ISBN" %}</th>
+        <th>{% trans "Publisher" %}</th>
+        <th>{% trans "Title" %}</th>
+        <th>{% trans "Publication" %}</th>
+        <th>{% trans "Price" %}</th>
+        <th>{% trans "Amount" %}</th>
+        {% block thead %}{% endblock %}
+    </tr>
+    </thead>
+
+    {% for book_type in book_list %}
+        <tbody>
+        <tr>
+            <td>{{ book_type.isbn }}</td>
+            <td>{{ book_type.publisher }}</td>
+            <td>{{ book_type.title }}</td>
+            <td>{{ book_type.publication_year }}</td>
+            <td>{{ book_type.price|price }}</td>
+            <td>{% block amount_td %}{{ book_type.amount }}{% endblock %}</td>
+            {% block tr %}{% endblock %}
+        </tr>
+        <tr>
+            <td style="border-top: 0;" colspan="7">
+                <div class="spaceless responsive-form">
+                    {% load formfield %}
+                    {% formfield label=_("Book owners") %}
+                        {% block owners_field %}{% endblock %}
+                    {% endformfield %}
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    {% endfor %}
+
+    {% block footer %}{% endblock %}
+</table>

@@ -8,15 +8,15 @@
         <h1>{% trans "Sign out" %}</h1>
     </div>
 
-    <div class="alert alert-success">
+    <div class="ui success message">
         {% trans "You have been successfully signed out." %}
     </div>
 
     <div class="btn-toolbar">
-        <a href="{% url 'home' %}" class="btn btn-primary" role="button">
+        <a href="{% url 'home' %}" class="ui primary button" role="button">
             <span class="glyphicon glyphicon-home"></span> {% trans "Homepage" %}
         </a>
-        <a href="{% url 'login' %}" class="btn btn-default" role="button">
+        <a href="{% url 'login' %}" class="ui button" role="button">
             <span class="glyphicon glyphicon-log-in"></span> {% trans "Sign in again" %}
         </a>
     </div>

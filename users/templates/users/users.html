@@ -2,90 +2,36 @@
 {% load i18n %}
 {% load manage_header %}
 
-{% block head %}
-    <style>
-        .nav-tabs {
-            margin-bottom: 10px;
-        }
-    </style>
-{% endblock %}
-
 {% block title %}{% trans "Users" %}{% endblock %}
 
 {% block content %}
     <h1>{% trans "Users" %}</h1>
-    {% with path="users/"|add:tab %}
-        {% manage_header path %}
-    {% endwith %}
+    {% manage_header "users/"|add:tab %}
 
-    <ul class="nav nav-tabs">
+    <div class="ui tabular menu">
         {% if tab == 'verified' %}
-            <li class="active"><a href="#">{% trans "Verified" %}</a></li>
-            <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>
-            <li><a href="{% url 'users.views.needing_data_correction' %}">{% trans "Needing data correction" %}</a></li>
+            <div class="active item">{% trans "Verified" %}</div>
+            <a href="{% url 'users.views.unverified' %}" class="item">{% trans "Unverified" %}</a>
+            <a href="{% url 'users.views.needing_data_correction' %}" class="item">{% trans "Needing data correction" %}</a>
         {% elif tab == 'unverified' %}
-            <li><a href="{% url 'users.views.verified' %}">{% trans "Verified" %}</a></li>
-            <li class="active"><a href="#">{% trans "Unverified" %}</a></li>
-            <li><a href="{% url 'users.views.needing_data_correction' %}">{% trans "Needing data correction" %}</a></li>
+            <a href="{% url 'users.views.verified' %}" class="item">{% trans "Verified" %}</a>
+            <div class="active item">{% trans "Unverified" %}</div>
+            <a href="{% url 'users.views.needing_data_correction' %}" class="item">{% trans "Needing data correction" %}</a>
         {% elif tab == 'needing_data_correction' %}
-            <li><a href="{% url 'users.views.verified' %}">{% trans "Verified" %}</a></li>
-            <li><a href="{% url 'users.views.unverified' %}">{% trans "Unverified" %}</a></li>
-            <li class="active"><a href="#">{% trans "Needing data correction" %}</a></li>
+            <a href="{% url 'users.views.verified' %}" class="item">{% trans "Verified" %}</a>
+            <a href="{% url 'users.views.unverified' %}" class="item">{% trans "Unverified" %}</a>
+            <div class="active item">{% trans "Needing data correction" %}</div>
         {% endif %}
-    </ul>
+    </div>
 
     {% if users %}
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>{% trans "Username" %}</th>
-                    <th>{% trans "First name" %}</th>
-                    <th>{% trans "Last name" %}</th>
-                    <th>{% trans "Class" %}</th>
-                    <th>{% trans "Phone number" %}</th>
-                    <th>{% trans "E-mail" %}</th>
-                    {% if tab == 'unverified' and perms.common.view_users_verify %}
-                        <th>{% trans "Actions" %}</th>
-                    {% endif %}
-                </tr>
-                </thead>
-                {% for student in users %}
-                    <tr>
-                        <td>
-                            {% if perms.common.view_users_profile %}
-                                <a class="btn btn-xs btn-link" href="{% url 'users.views.profile' student.pk %}"
-                                    role="button"><span class="glyphicon glyphicon-user"></span>
-                                {{ student.username }}</a>
-                            {% else %}
-                                {{ student.username }}
-                            {% endif %}
-                        </td>
-                        <td>{{ student.first_name }}</td>
-                        <td>{{ student.last_name }}</td>
-                        <td>{{ student.student_class }}</td>
-                        <td>{{ student.phone_number }}</td>
-                        <td>{{ student.email }}</td>
-                        {% if tab == 'unverified' and perms.common.view_users_verify %}
-                            <td>
-                                <a class="btn btn-xs btn-link"
-                                   {% if not student.awaiting_verification %}title="{% trans "This user lacks an ID" %}"{% endif %}
-                                   href="{% url 'users.views.verify' student.pk %}" role="button">
-                                    {% if student.awaiting_verification %}
-                                        <span class="glyphicon glyphicon-ok"></span>
-                                    {% else %}
-                                        <span class="glyphicon glyphicon-warning-sign"></span>
-                                    {% endif %}
-                                    {% trans "Verify" %}
-                                </a>
-                            </td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
+        {% if tab == 'unverified' %}
+            {% include "users/user_list_unverified.html" with show_actions=perms.common.view_users_verify %}
+        {% else %}
+            {% include "users/user_list_sortable.html" %}
+        {% endif %}
     {% else %}
-        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+        <div class="ui info message">{% trans "There's nothing to display." %}</div>
     {% endif %}
 {% endblock %}
 
@@ -94,7 +40,7 @@
     <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
     <script type="text/javascript">
         window.addEventListener("load", function(){
-            $(".table-responsive table").tablesorter();
+            $("table.sortable").tablesorter();
         });
     </script>
 {% endblock %}

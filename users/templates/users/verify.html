@@ -2,127 +2,47 @@
 {% load i18n %}
 {% load manage_header %}
 
-{% block head %}
-    <style>
-        #identity-card {
-            display: block;
-            max-height: 280px;
-            width: auto;
-            max-width: 100%;
-            margin-bottom: 15px;
-        }
-
-        @media (min-width: 992px) {
-            #identity-card {
-                float: right;
-            }
-        }
-
-        @media (max-width: 991px) {
-            #identity-card {
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-
-        #no-id-info {
-            text-align: center;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-    </style>
-{% endblock %}
-
 {% block title %}{% blocktrans %}Verify {{ student }}'s account{% endblocktrans %}{% endblock %}
 
 {% block content %}
     <h1>{% blocktrans %}Verify {{ student }}'s account{% endblocktrans %}</h1>
     {% manage_header "users/unverified/verify" %}
 
-    <div class="alert alert-info" role="alert" style="display: none;" id="to-correct-info">
+    <div class="ui info message slideable" role="alert" style="display: none;" id="to-correct-info">
         {% trans 'Select incorrectly filled fields and then press "Needs correction" button again.' %}
     </div>
 
-    <div class="alert alert-danger" role="alert" style="display: none;" id="to-correct-not-selected">
+    <div class="ui error message slideable" role="alert" style="display: none;" id="to-correct-not-selected">
         {% trans "You didn't select any field which needs to be corrected." %}
     </div>
 
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-username"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "Username" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.username }}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-first_name"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "First name" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.first_name }}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-last_name"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "Last name" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.last_name }}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-student_class"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "Class" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.student_class }}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-phone_number"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "Phone number" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.phone_number }}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-1 col-lg-1" id="to-correct-email"></div>
-                    <label class="col-sm-4 col-lg-3 control-label">{% trans "E-mail" %}:</label>
-
-                    <div class="col-sm-7 col-lg-8">
-                        <p class="form-control-static">{{ student.email }}</p>
-                    </div>
-                </div>
-            </div>
+    <div class="ui stackable two column grid">
+        <div class="responsive-form column" id="user-verify-details">
+            {% include "elements/user_profile_display_form.html" with user=student %}
         </div>
-        <div class="col-md-4">
+        <div class="column">
             {% if student.document %}
                 <a href="{{ student.document.url }}">
                     <img id="identity-card" src="{{ student.document.url }}">
                 </a>
             {% else %}
-                <div id="no-id-info">
-                {% trans "This user has no associated identity card." %}</div>
+                <div id="no-id-info">{% trans "This user has no associated identity card." %}</div>
             {% endif %}
         </div>
     </div>
 
-    <form class="form-horizontal" action="{{ request.path }}" method="post"
+    <form action="{{ request.path }}" method="post"
             data-action-needscorrection="{% url 'users.views.needs_correction' student.pk %}">
         {% csrf_token %}
-        <a class="btn btn-default pull-left" href="{% url 'users.views.unverified' %}" id="cancel">
-                <span class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
-        <div class="btn-toolbar" role="toolbar">
-            <button class="btn btn-primary pull-right" type="submit" id="verify">
-                <span class="glyphicon glyphicon-ok"></span> {% trans "Verify" %}</button>
-            <a class="btn btn-danger pull-right" href="#" id="needs-correction">
-                <span class="glyphicon glyphicon-eye-open"></span> {% trans "Needs correction" %}</a>
-        </div>
+        <a class="ui icon labeled button left floated" href="{% url 'users.views.unverified' %}" id="cancel">
+                <i class="icon remove"></i>{% trans "Cancel" %}
+        </a>
+        <button class="ui primary icon labeled button right floated" type="submit" id="verify">
+            <i class="icon checkmark"></i>{% trans "Verify" %}
+        </button>
+        <a class="ui negative icon labeled button right floated" href="#" id="needs-correction">
+            <i class="icon unhide"></i>{% trans "Needs correction" %}
+        </a>
     </form>
 {% endblock %}
 

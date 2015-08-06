@@ -1,22 +1,24 @@
-<style scoped>
-    input[type="checkbox"][id$="-clear_id"]
-    {
-        margin: 0 4px 0 25px;
-    }
-    input[type="file"]
-    {
-        height: auto;
-    }
-</style>
-{% for field in form %}
-    <div class="form-group">
-        <label class="col-sm-3 col-md-2 control-label" for="{{ field.auto_id }}">{{ field.label }}:</label>
+<div class="responsive-form">
+    <style scoped>
+        input[type="checkbox"][id$="-clear_id"] {
+            margin: 0 4px 0 25px;
+        }
 
-        <div class="col-sm-9 col-md-10{% if field.errors %} has-error{% endif %}">
-            {{ field }}
-            {% for error in field.errors %}
-                <span class="help-block">{{ error }}</span>
-            {% endfor %}
-        </div>
-    </div>
-{% endfor %}
+        input[type="file"] {
+            height: auto;
+        }
+    </style>
+    {% for field in form %}
+        {% include "common/form_field.html" with id=field.auto_id label=field.label has_errors=field.errors %}
+        {% if field.errors %}
+            <div class="inline fields" style="margin-top: -1em;">
+                <div class="label"></div>
+                <div class="ui pointing label">
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

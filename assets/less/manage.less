@@ -11,10 +11,11 @@
  * along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-    $('select#id_categories').selectpicker({
-        countSelectedText: gettext('{0} of {1} selected'),
-        noneSelectedText: gettext('Nothing selected'),
-        selectedTextFormat: 'count > 4'
-    });
-}
+//
+// Stylesheet to be included on /manage subpages
+//
+
+@import "manage/details";
+@import "manage/managemenu";
+@import "manage/users";
+

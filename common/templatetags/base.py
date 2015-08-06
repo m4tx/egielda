@@ -9,11 +9,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+
 from django import template
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from egielda import settings
-
+import managemenu.views
 
 register = template.Library()
 
@@ -22,9 +25,16 @@ register = template.Library()
 def site_name():
     return getattr(settings, 'SITE_NAME', 'e-Giełda')
 
+
+@register.assignment_tag(takes_context=True)
+def is_manage(context):
+    return bool(re.compile(reverse(managemenu.views.index)).match(context.request.path_info))
+
+
 @register.filter
 def keyvalue(dict, key):
     return dict[key]
+
 
 @register.inclusion_tag('templatetags/alerts.html', takes_context=True)
 def alerts(context):

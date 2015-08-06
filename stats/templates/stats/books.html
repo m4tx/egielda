@@ -20,47 +20,45 @@
     <h1>{% trans "Books" %}</h1>
     {% manage_header "stats/books" %}
 
-    <ul class="nav nav-tabs">
+    <div class="ui tabular menu">
         {% if perms.common.view_stats_index %}
-            <li><a href="{% url 'stats.views.index' %}">{% trans "Charts" %}</a></li>
+            <a href="{% url 'stats.views.index' %}" class="item">{% trans "Charts" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Charts" %}</a></li>
+            <div class="disabled item">{% trans "Charts" %}</div>
         {% endif %}
         {% if perms.common.view_stats_books_sold %}
-            <li><a href="{% url 'stats.views.books_sold' %}">{% trans "Books sold" %}</a></li>
+            <a href="{% url 'stats.views.books_sold' %}" class="item">{% trans "Books sold" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Books sold" %}</a></li>
+            <div class="disabled item">{% trans "Books sold" %}</div>
         {% endif %}
-        <li class="active"><a href="#">{% trans "Books" %}</a></li>
-    </ul>
+        <div href="{% url 'stats.views.books' %}" class="active item">{% trans "Books" %}</div>
+    </div>
 
     {% if book_list %}
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
+        <table class="ui selectable table">
+            <thead>
                 <tr>
                     <th>{% trans "Book" %}</th>
                     <th>{% trans "Received" %}</th>
                     <th>{% trans "Sold" context "count" %}</th>
                 </tr>
-                </thead>
-                {% for book in book_list %}
-                    <tr>
-                        <td>
-                            {% if perms.common.view_books_book_details %}
-                                <a href="{% url 'books.views.book_details' book.pk %}">{{ book.title }}</a>
-                            {% else %}
-                                {{ book.title }}
-                            {% endif %}
-                        </td>
-                        <td>{{ book.received }}</td>
-                        <td>{{ book.sold }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
+            </thead>
+            {% for book in book_list %}
+                <tr>
+                    <td>
+                        {% if perms.common.view_books_book_details %}
+                            <a href="{% url 'books.views.book_details' book.pk %}">{{ book.title }}</a>
+                        {% else %}
+                            {{ book.title }}
+                        {% endif %}
+                    </td>
+                    <td>{{ book.received }}</td>
+                    <td>{{ book.sold }}</td>
+                </tr>
+            {% endfor %}
+        </table>
     {% else %}
-        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+        <div class="ui info message">{% trans "There's nothing to display." %}</div>
     {% endif %}
 {% endblock %}
 

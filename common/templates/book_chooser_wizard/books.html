@@ -21,54 +21,47 @@
         <small>{% trans "Step 1 of 2: choose the books" %}</small>
     </h1>
 
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion"
-                                           href="#bookList">{% trans "Choose from the list" %}</a></h4>
-            </div>
-            <div id="bookList" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-3 col-md-2 control-label"
-                                   for="category_filter">{% trans "Categories" %}:</label>
+    <div class="ui styled fluid accordion" id="accordion">
+        <div class="active title">
+            <i class="dropdown icon"></i>{% trans "Choose from the list" %}
+        </div>
+        <div id="bookList" class="active content">
+            <div class="responsive-form">
+                {% load formfield %}
+                {% formfield id="category_filter" label=_("Categories") %}
+                    <div class="ui selection dropdown" id="category-filter">
+                        <input type="hidden" value="0">
+                        <i class="dropdown icon"></i>
 
-                            <div class="col-sm-9 col-md-10">
-                                <select class="form-control" id="category_filter">
-                                    <option value="0">{% trans "All" context "categories" %}</option>
-                                    <option disabled="disabled">────────</option>
-                                    {% for category in category_list %}
-                                        <option value="{{ category.0 }}">{{ category.1 }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                        <div class="default text"></div>
+                        <div class="menu">
+                            <div class="item" data-value="0">{% trans "All" context "categories" %}</div>
+                            <div class="divider"></div>
+                            {% for category in category_list %}
+                                <div class="item" data-value="{{ category.0 }}">{{ category.1 }}</div>
+                            {% endfor %}
                         </div>
                     </div>
-                </div>
-
-                {% include "book_chooser_wizard/books_book_list.html" %}
+                {% endformfield %}
             </div>
+
+            {% include "book_chooser_wizard/books_book_list.html" %}
         </div>
         {% if feature_add_new %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion"
-                                               href="#addBookForm">{% trans "Add new" %}</a></h4>
+            <div class="title">
+                <i class="dropdown icon"></i>{% trans "Add new" %}
+            </div>
+            <div id="addBookForm" class="content ui form">
+                <div class="ui info message">
+                    {% trans "Before adding a new book, please check whether it is not already present in the list above and is it included in the school textbook list." %}
+                    <p>
+                        {% trans "Also, we <strong>strongly</strong> recommend entering the ISBN number and clicking the magnifying glass icon next to the input field. The other fields will be automatically filled, so you won't have to do it by hand." %}
+                    </p>
                 </div>
-                <div id="addBookForm" class="panel-collapse collapse">
-                    <div class="panel-body form-horizontal">
-                        <div class="alert alert-info">
-                            {% trans "Before adding a new book, please check whether it is not already present in the list above and is it included in the school textbook list." %}
-                            <p>
-                                {% trans "Also, we <strong>strongly</strong> recommend entering the ISBN number and clicking the magnifying glass icon next to the input field. The other fields will be automatically filled, so you won't have to do it by hand." %}
-                            </p>
-                        </div>
-                        {% include "common/default_form.html" %}
-                        <button class="btn btn-default pull-right" id="btn-add-new-book"><span
-                                class="glyphicon glyphicon-plus"></span> {% trans "Add" %}</button>
-                    </div>
-                </div>
+                {% include "common/default_form.html" %}
+                <button class="ui labeled icon button right floated" id="btn-add-new-book">
+                    <i class="icon plus"></i>{% trans "Add" %}
+                </button>
             </div>
         {% endif %}
     </div>
@@ -78,13 +71,12 @@
         {% include "book_chooser_wizard/books_chosen_list.html" with book_list=chosen_book_list %}
     </div>
 
-    <div class="btn-toolbar">
-        <form action="{{ request.path }}" method="post">
-            {% csrf_token %}
-            <button class="btn btn-primary pull-right" name="btn-next" disabled="disabled">{% trans "Next" %} <span
-                    class="glyphicon glyphicon-chevron-right"></span></button>
-        </form>
-    </div>
+    <form action="{{ request.path }}" method="post">
+        {% csrf_token %}
+        <button class="ui primary right labeled icon button right floated" name="btn-next" disabled="disabled">
+            <i class="icon chevron right"></i>{% trans "Next" %}
+        </button>
+    </form>
 {% endblock %}
 
 {% block footer %}

@@ -1,0 +1,45 @@
+{% load i18n %}
+
+<table class="ui selectable table {% block table_class %}{% endblock %}">
+    <thead>
+    <tr>
+        {% block thead_header %}{% endblock %}
+        <th>{% trans "Username" %}</th>
+        <th>{% trans "First name" %}</th>
+        <th>{% trans "Last name" %}</th>
+        <th>{% trans "Class" %}</th>
+        <th>{% trans "Phone number" %}</th>
+        <th>{% trans "E-mail" %}</th>
+        {% if show_actions %}
+            <th>{% trans "Actions" %}</th>
+        {% endif %}
+    </tr>
+    </thead>
+
+    {% for user in users %}
+        <tr>
+            {% block tr_header %}{% endblock %}
+            <td>
+                {% if perms.common.view_users_profile %}
+                    <a href="{% url 'users.views.profile' user.pk %}">
+                        <i class="icon user"></i>{{ user.username }}
+                    </a>
+                {% else %}
+                    {{ user.username }}
+                {% endif %}
+            </td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.student_class }}</td>
+            <td>{{ user.phone_number }}</td>
+            <td>{{ user.email }}</td>
+            {% if show_actions %}
+                <td class="collapsing">
+                    {% block actions %}{% endblock %}
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+
+    {% block footer %}{% endblock %}
+</table>

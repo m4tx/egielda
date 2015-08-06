@@ -4,14 +4,6 @@
 
 {% block title %}{% trans "Order details" %}{% endblock %}
 
-{% block head %}
-    {% load staticfiles %}
-    <link href="//code.jquery.com/ui/1.11.4/themes/flick/jquery-ui.min.css" type="text/css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="{% static "css/tokenfield-typeahead.css" %}"></link>
-    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-tokenfield.css" %}"></link>
-{% endblock %}
-
 {% block content %}
     <h1>
         {% trans "Order details" %}
@@ -19,28 +11,17 @@
     </h1>
     {% manage_header "orders/details" %}
 
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "User" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.user }}</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-3 col-md-2 control-label">{% trans "Date" %}:</label>
-
-            <div class="col-sm-9 col-md-10">
-                <p class="form-control-static">{{ order.date }}</p>
-            </div>
-        </div>
+    <div class="responsive-form static-form">
+        {% load formfield %}
+        {% formfield label=_("User") %}{{ order.user }}{% endformfield %}
+        {% formfield label=_("Date") %}{{ order.date }}{% endformfield %}
     </div>
 
     {% include "orders/fulfill_accept_book_list.html" %}
 
     {% if perms.common.view_orders_index %}
-        <a class="btn btn-default" role="button" href="{% url 'orders.views.index' %}">
-            <span class="glyphicon glyphicon-chevron-left"></span> {% trans "Back" %}
+        <a class="ui icon labeled button" role="button" href="{% url 'orders.views.index' %}">
+            <i class="icon chevron left"></i>{% trans "Back" %}
         </a>
     {% endif %}
 {% endblock %}

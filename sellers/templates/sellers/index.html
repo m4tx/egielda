@@ -11,62 +11,10 @@
     {% if seller_list %}
         <form action="{% url 'sellers.views.bulk_actions' 'remove' %}" method="post">
             {% csrf_token %}
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        {% if perms.common.view_sellers_remove_seller %}
-                            <th><input type="checkbox" id="select-all">
-                        {% endif %}
-                        <th>{% trans "First name" %}</th>
-                        <th>{% trans "Last name" %}</th>
-                        <th>{% trans "Class" %}</th>
-                        <th>{% trans "Phone number" %}</th>
-                        <th>{% trans "Actions" %}</th>
-                    </tr>
-                    </thead>
-                    {% for seller in seller_list %}
-                        <tr>
-                            {% if perms.common.view_sellers_remove_seller %}
-                                <td><input type="checkbox" name="select-{{ seller.pk }}"></td>
-                            {% endif %}
-                            <td>{{ seller.first_name }}</td>
-                            <td>{{ seller.last_name }}</td>
-                            <td>{{ seller.student_class }}</td>
-                            <td>{{ seller.phone_number }}</td>
-                            <td>
-                                {% if perms.common.view_sellers_accept_books %}
-                                    <a class="btn btn-xs btn-link" href="{% url 'sellers.views.accept_books' seller.pk %}"
-                                        role="button"><span class="glyphicon glyphicon-ok"></span> {% trans "Accept" %}</a>
-                                {% endif %}
-                                {% if perms.common.view_sellers_remove_seller %}
-                                    <a class="btn btn-xs btn-link" href="{% url 'sellers.views.remove_seller' seller.pk %}"
-                                        role="button"><span class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}</a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    <tfoot>
-                        {% if perms.common.view_sellers_remove_seller %}
-                            <tr class="info">
-                                <td colspan="5" class="text-right text-muted">{% trans "Bulk actions:" %}</td>
-                                <td>
-                                    <div class="btn-toolbar" role="toolbar">
-                                        {% if perms.common.view_sellers_remove_seller %}
-                                            <button class="btn btn-xs btn-link" type="submit">
-                                                <span class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}
-                                            </button>
-                                        {% endif %}
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endif %}
-                    </tfoot>
-                </table>
-            </div>
+            {% include "sellers/seller_list.html" with users=seller_list show_actions=True %}
         </form>
     {% else %}
-        <div class="alert alert-info">{% trans "There's nothing to display." %}</div>
+        <div class="ui info message">{% trans "There's nothing to display." %}</div>
     {% endif %}
 {% endblock %}
 
@@ -74,16 +22,45 @@
     {% load staticfiles %}
     <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
     <script type="text/javascript">
-        window.addEventListener("load", function(){
-            $(".table-responsive table").tablesorter();
+        window.addEventListener("load", function () {
+            $("table.sortable").tablesorter();
 
-            $("input[name^='select-']").on('change', function () {
-                $(this).closest($('tr')).toggleClass('active', this.checked);
+            $('.ui.checkbox').checkbox('set enabled');
+            $('.table .master.checkbox').checkbox({
+                onChecked: function () {
+                    var $childCheckbox = $(this).closest('.table').find('.checkbox');
+                    $childCheckbox.checkbox('check');
+                },
+                onUnchecked: function () {
+                    var $childCheckbox = $(this).closest('.table').find('.checkbox');
+                    $childCheckbox.checkbox('uncheck');
+                }
             });
 
-            $("input#select-all").on('change', function () {
-                $("input[name^='select-']").prop('checked', this.checked);
-                $("input[name^='select-']").closest($('tr')).toggleClass('active', this.checked);
+            $('.table .child.checkbox').checkbox({
+                fireOnInit: true,
+                onChange: function () {
+                    var $listGroup = $(this).closest('.table'),
+                            $parentCheckbox = $listGroup.find('th .master.checkbox'),
+                            $checkbox = $listGroup.find('.checkbox').not('.master'),
+                            allChecked = true,
+                            allUnchecked = true;
+
+                    $checkbox.each(function () {
+                        if ($(this).checkbox('is checked')) {
+                            allUnchecked = false;
+                        } else {
+                            allChecked = false;
+                        }
+                    });
+                    if (allChecked) {
+                        $parentCheckbox.checkbox('set checked');
+                    } else if (allUnchecked) {
+                        $parentCheckbox.checkbox('set unchecked');
+                    } else {
+                        $parentCheckbox.checkbox('set indeterminate');
+                    }
+                }
             });
         });
     </script>

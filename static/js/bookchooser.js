@@ -69,12 +69,12 @@ function checkInStock(tr) {
     var addBookBtn = $('button.btn-add-book', tr);
 
     // Reset
-    $(tr).removeClass('bg-warning bg-danger text-muted');
+    $(tr).removeClass('bg-warning bg-error text-muted');
     addBookBtn.removeAttr('disabled');
 
     // Check the In stock value
     if (inStockVal == 0) {
-        $(tr).addClass('bg-danger text-muted');
+        $(tr).addClass('bg-error text-muted');
         $('button.btn-add-book', tr).attr('disabled', 'disabled');
     } else if (inStockVal <= 5) {
         $(tr).addClass('bg-warning');
@@ -160,11 +160,11 @@ function createNewBookTr(vals) {
 }
 
 function addBookTr(tr) {
-    var button = $('<button class="btn btn-xs btn-link btn-remove-book"><span class="glyphicon glyphicon-remove"></span> ' + gettext("Remove") + '</button>');
+    var button = $('<button class="ui link button btn-remove-book"><i class="icon trash"></i>' + gettext("Remove") + '</button>');
     button.on('click', function () {
         removeBook($('#chosen-book-list').find('button.btn-remove-book').index(this))
     });
-    tr.append($('<td/>').append(button));
+    tr.append($('<td class="collapsing"/>').append(button));
 
     $('#chosen-book-list-div').removeClass('hidden');
     var chosenTable = $('#chosen-book-list');
@@ -238,26 +238,20 @@ function sortTable() {
 }
 sortTable();
 
-$("#category_filter").on("change", function () {
-    var category = parseInt($(this).val());
-    $("#bookList table > tbody > tr").each(function () {
-        var bookCategories = $(this).attr("data-categories").split(",");
-        var visible = false;
+$('#category-filter').dropdown({
+    onChange: function (category) {
+        $("#bookList table > tbody > tr").each(function () {
+            var bookCategories = $(this).data('categories').toString().split(',');
 
-        for (var categoryID in bookCategories) {
-            if (parseInt(bookCategories[categoryID]) === category || category === 0) {
-                $(this).attr("style", "display: table-row");
-                visible = true;
-                break;
+            for (var categoryID in bookCategories) {
+                if (parseInt(bookCategories[categoryID]) === category || category === 0) {
+                    $(this).css('display', 'table-row');
+                    return;
+                }
             }
-        }
-
-        if (!visible) {
-            $(this).attr("style", "display: none");
-        }
-    });
+            $(this).css('display', 'none');
+        });
+    }
 });
 
-function showMessage(text) {
-    alert(text);
-}
+$('.ui.accordion').accordion();

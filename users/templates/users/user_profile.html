@@ -54,27 +54,25 @@
     {% include "users/profile_header.html" %}
     {% manage_header "users/profile" %}
 
-    <ul class="nav nav-tabs">
-        {% if perms.common.view_stats_user_profile %}
-            <li class="active"><a href="{% url 'users.views.profile' student.pk %}">{% trans "Profile data" %}</a></li>
-        {% else %}
-            <li class="disabled"><a href="#">{% trans "Profile data" %}</a></li>
-        {% endif %}
+    <div class="ui tabular menu">
+        <div class="active item">{% trans "Profile data" %}</div>
         {% if perms.common.view_stats_user_profile_purchased %}
-            <li><a href="{% url 'users.views.profile_purchased' student.pk %}">{% trans "Purchased books" %}</a></li>
+            <a href="{% url 'users.views.profile_purchased' student.pk %}" class="item">{% trans "Purchased books" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Purchased books" %}</a></li>
+            <div class="item disabled">{% trans "Purchased books" %}</div>
         {% endif %}
         {% if perms.common.view_stats_user_profile_sold %}
-            <li><a href="{% url 'users.views.profile_sold' student.pk %}">{% trans "Sold books" %}</a></li>
+            <a href="{% url 'users.views.profile_sold' student.pk %}" class="item">{% trans "Sold books" %}</a>
         {% else %}
-            <li class="disabled"><a href="#">{% trans "Sold books" %}</a></li>
+            <div class="item disabled">{% trans "Sold books" %}</div>
         {% endif %}
-    </ul>
+    </div>
 
-    <form class="form-horizontal" enctype="multipart/form-data" action="{{ request.path }}" method="post">
+    <form class="ui form" enctype="multipart/form-data" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
         {% csrf_token %}
-        <button class="btn btn-primary pull-right" type="submit"><span class="glyphicon glyphicon-ok"></span> {% trans "Save" %}</button>
+        <button class="ui primary icon labeled button right floated" type="submit">
+            <i class="icon checkmark"></i>{% trans "Save" %}
+        </button>
     </form>
 {% endblock %}

@@ -52,7 +52,7 @@ class SellWizardLiveTest(StaticLiveServerTestCase):
         self.assertEqual(len(book_trs), 1)  # Ensure we only see the book with visible=True
         book_trs[0].find_element_by_xpath('//button[contains(@class, "btn-add-book")]').click()  # Add the book
         # Add book form
-        self.selenium.find_element_by_xpath('//a[@href="#addBookForm"]').click()
+        self.selenium.find_element_by_xpath('//div[@id="addBookForm"]/preceding-sibling::div[contains(@class, "title")][1]').click()
         WebDriverWait(self.selenium, 5).until(lambda driver: driver.find_element_by_name('isbn').is_displayed())
         self.selenium.find_element_by_name('isbn').send_keys('9781849696845')
         self.selenium.find_element_by_name('publisher').send_keys("Some other")
@@ -68,7 +68,8 @@ class SellWizardLiveTest(StaticLiveServerTestCase):
         self.selenium.find_element_by_name('btn-next').click()
 
         # Success page
-        alerts = self.selenium.find_elements_by_xpath('//div[contains(@class, "alert-success")]')
+        alerts = self.selenium.find_elements_by_xpath('//div[contains(@class, "message") '
+                                                      'and contains(@class, "success")]')
         self.assertEqual(len(alerts), 1)  # Ensure the user see the Success alert
         self.assertEqual(len(BookType.objects.all()), 3)  # Check whether the new BookType was actually added
         self.assertEqual(len(Book.objects.all()), 2)  # Check if the Books from the user were added

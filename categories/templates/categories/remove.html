@@ -8,7 +8,7 @@
     <h1>{% trans "Remove category" %}</h1>
     {% manage_header "categories/remove" %}
 
-    <div class="alert alert-danger">
+    <div class="ui error message">
         {% blocktrans with cat_name=category.name %}Are you sure you want to delete category {{ cat_name }}?{% endblocktrans %}
         {% if book_count %}
             <strong>
@@ -22,11 +22,12 @@
     <form method="post" action="">
         {% csrf_token %}
         {% if perms.common.view_categories_index %}
-            <a href="{% url 'categories.views.index' %}" class="btn btn-default" role="button"><span
-                class="glyphicon glyphicon-remove"></span> {% trans "Cancel" %}</a>
+            <a href="{% url 'categories.views.index' %}" class="ui icon labeled button" role="button">
+                <i class="icon remove"></i>{% trans "Cancel" %}
+            </a>
         {% endif %}
-        <button type="submit" class="btn btn-danger pull-right">
-            <span class="glyphicon glyphicon-trash"></span> {% trans "Remove" %}
+        <button type="submit" class="ui negative icon labeled button right floated">
+            <i class="icon trash"></i>{% trans "Remove" %}
         </button>
     </form>
 {% endblock %}
