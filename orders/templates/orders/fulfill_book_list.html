@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block amount_td %}
-    <div class="ui mini input">
+    <div class="ui mini slim input">
         <input type="number" step="1" min="0" max="{{ book_type.in_stock }}"
                name="amount-{{ book_type.pk }}" value="{{ book_type.amount }}">
     </div>
