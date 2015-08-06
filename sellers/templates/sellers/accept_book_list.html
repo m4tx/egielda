@@ -8,7 +8,7 @@
 
 {% block book_price %}
     {% if not book.visible %}
-        <div class="ui right labeled mini input">
+        <div class="ui right labeled slim mini input">
             <input type="number" step="0.01" max="999.99" class="ui input" name="price-{{ book.pk }}" value="{{ book.price }}">
             <div class="ui label">{{ currency }}</div>
         </div>
@@ -19,7 +19,7 @@
 
 {% block tr_footer %}
     <td>
-        <div class="ui mini input">
+        <div class="ui mini slim input">
             <input type="number" step="1" name="amount-{{ book.pk }}" value="{{ book.amount }}">
         </div>
     </td>
