@@ -42,7 +42,7 @@ class PurchaseWizardLiveTest(StaticLiveServerTestCase):
         for i in range(3):
             self.selenium.find_element_by_xpath('//div[@id="bookList"]//button[not(@disabled="disabled")]').click()
         trs = self.selenium.find_elements_by_xpath('//div[@id="bookList"]//table//tbody//tr[contains('
-                                                   '@class, "bg-danger")]')
+                                                   '@class, "bg-error")]')
         self.assertEqual(len(trs), 2)  # Check if the user see 2 "disabled" book types
         self.selenium.find_element_by_name('btn-next').click()
 
@@ -61,7 +61,8 @@ class PurchaseWizardLiveTest(StaticLiveServerTestCase):
         self.__create_test_order(1, 2)
         self.selenium.find_element_by_name('btn-next').click()
         # Ensure user sees now "Your order was modified" alert because of other user that just stole their book
-        self.selenium.find_element_by_xpath('//div[contains(@class, "alert-warning")]')
+        self.selenium.find_element_by_xpath('//div[contains(@class, "message") and '
+                                            'contains(@class, "warning")]')
         trs = self.selenium.find_elements_by_xpath('//table[@id="chosen-book-list"]//tbody//tr')
         self.assertEqual(len(trs), 1)  # ...and we have one book type now
         self.selenium.find_element_by_name('btn-next').click()

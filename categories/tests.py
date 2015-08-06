@@ -53,7 +53,8 @@ class CategoriesLiveTest(StaticLiveServerTestCase):
         self.selenium.find_element_by_xpath('//table//tbody//tr//a[contains(@href, "/remove")]').click()
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
         # Ensure that "There's nothing to display" alert is displaying
-        self.selenium.find_element_by_xpath('//div[contains(@class, "alert-info")]')
+        self.selenium.find_element_by_xpath('//div[contains(@class, "message") '
+                                            'and contains(@class, "info")]')
         self.assertEqual(Category.objects.count(), 0)
 
         self.selenium.find_element_by_xpath('//a[contains(@href, "categories/add")]').click()

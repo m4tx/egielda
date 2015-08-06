@@ -86,9 +86,11 @@ class BooksLiveTest(StaticLiveServerTestCase):
         self.assertEqual(len(trs), 2)
         self.assertEqual(BookType.objects.count(), 2)
 
-        self.selenium.find_element_by_xpath('//table//thead//input[@id="select-all"]').click()
-        trs = self.selenium.find_elements_by_xpath(
-            '//table//tbody//tr[contains(@class, "active")]//input[@type="checkbox"]')
+        # Select all checkbox
+        self.selenium.find_element_by_xpath('//table//thead//div[contains(@class, "master")'
+                                            ' and contains(@class, "checkbox")]').click()
+        trs = self.selenium.find_elements_by_css_selector(
+            'table tbody tr input[type=checkbox]:checked')
         self.assertEqual(len(trs), 2)  # Ensure everything is selected
 
         # Bulk remove button
@@ -99,7 +101,8 @@ class BooksLiveTest(StaticLiveServerTestCase):
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
 
         # Ensure user sees the "Nothing to display" alert
-        self.selenium.find_element_by_xpath('//div[contains(@class, "alert-info")]')
+        self.selenium.find_element_by_xpath('//div[contains(@class, "message")'
+                                            'and contains(@class, "info")]')
 
         self.assertEqual(BookType.objects.count(), 0)
 
@@ -154,7 +157,8 @@ class DuplicatedBooksLiveTest(StaticLiveServerTestCase):
         self.selenium.find_element_by_xpath('//input[@value="1" and @type="radio"]').click()
         self.selenium.find_element_by_xpath('//button[@value="9780262033848"]').click()
         # There's nothing to display alert
-        self.selenium.find_element_by_xpath('//div[contains(@class, "alert-info")]')
+        self.selenium.find_element_by_xpath('//div[contains(@class, "message") '
+                                            'and contains(@class, "info")]')
 
         # Check whether there is actually no references to non-existing BookTypes
         self.assertEqual({1, 4, 5}, set([book.book_type.pk for book in Book.objects.all()]))
