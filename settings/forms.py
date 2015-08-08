@@ -18,19 +18,19 @@ from egielda import settings
 class SettingsForm(forms.Form):
     start_sell = forms.DateTimeField(label=_("Selling start date"),
                                      widget=forms.TextInput(
-                                         attrs={'type': 'datetime-local', 'data-datetimepicker': 'true'}),
+                                         attrs={'type': 'datetime-local'}),
                                      input_formats=['%Y-%m-%dT%H:%M', '%Y-%m-%d %H:%M'])
     end_sell = forms.DateTimeField(label=_("Selling end date"),
                                    widget=forms.TextInput(
-                                       attrs={'type': 'datetime-local', 'data-datetimepicker': 'true'}),
+                                       attrs={'type': 'datetime-local'}),
                                    input_formats=['%Y-%m-%dT%H:%M', '%Y-%m-%d %H:%M'])
     start_purchase = forms.DateTimeField(label=_("Purchasing start date"),
                                          widget=forms.TextInput(
-                                             attrs={'type': 'datetime-local', 'data-datetimepicker': 'true'}),
+                                             attrs={'type': 'datetime-local'}),
                                          input_formats=['%Y-%m-%dT%H:%M', '%Y-%m-%d %H:%M'])
     end_purchase = forms.DateTimeField(label=_("Purchasing end date"),
                                        widget=forms.TextInput(
-                                           attrs={'type': 'datetime-local', 'data-datetimepicker': 'true'}),
+                                           attrs={'type': 'datetime-local'}),
                                        input_formats=['%Y-%m-%dT%H:%M', '%Y-%m-%d %H:%M'])
     profit_per_book = forms.DecimalField(label=_("Profit per book (%(currency)s)") % {
         'currency': getattr(settings, 'CURRENCY', "USD")},
