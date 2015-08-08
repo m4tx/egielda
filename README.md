@@ -8,13 +8,13 @@ The app is written in Python using Django. It makes use of HTML5 and CSS3 by usi
 ## Features
 * Selling, buying books
 * Categories of books
-* Filling the informations about the book automatically after typing the ISBN number (thanks to the Google Books API)
+* Filling the information about the book automatically after typing the ISBN number (thanks to the Google Books API)
 * Statistics:
-  * Charts (visualising informations about the amount of books sold, income, etc.)
+  * Charts (visualising information about the amount of books sold, income, etc.)
   * Raw data about books sold in each day
   * Generating reports for each user about sold and unsold books
 * Permissions support, built-in groups (administrator, moderator that can accept books from users and sell them)
-* Database setttings: buying/selling time interval, order validity time, static information on homepage, profit per book for organisators
+* Settings stored in the database: buying/selling time interval, order validity time, static information on homepage, profit per book for organizers
 * i18n support (Polish translation built-in)
 * More...
 
