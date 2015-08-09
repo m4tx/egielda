@@ -12,7 +12,14 @@
 
     <form class="ui form" enctype="multipart/form-data" action="{{ request.path }}" method="post">
         {% include "common/default_form.html" %}
+        {% if tos_url %}
+            <div id="terms-of-service-notice">
+                {% blocktrans %}By clicking the "Register" button below, you are agreeing to the <a href="{{ tos_url }}">Terms of Service</a>.{% endblocktrans %}
+            </div>
+        {% endif %}
         {% csrf_token %}
-        <button class="ui button primary right floated" type="submit">{% trans "Next" %}<i class="icon chevron right"></i></button>
+        <button class="ui icon labeled primary button right floated" type="submit">
+            <i class="icon plus"></i>{% trans "Register" %}
+        </button>
     </form>
 {% endblock %}

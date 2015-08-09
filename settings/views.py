@@ -30,12 +30,13 @@ def index(request):
             Settings().start_purchase = datetime_to_string(form.cleaned_data['start_purchase'])
             Settings().end_purchase = datetime_to_string(form.cleaned_data['end_purchase'])
             Settings().profit_per_book = form.cleaned_data['profit_per_book']
+            Settings().tos_url = form.cleaned_data['tos_url']
             Settings().homepage_info = form.cleaned_data['homepage_info']
             set_success_msg(request, 'settings_updated')
             return HttpResponseRedirect("")
     else:
-        settings = Settings('start_sell', 'end_sell', 'start_purchase', 'end_purchase', 'profit_per_book',
-                            'homepage_info')
+        settings = Settings('start_sell', 'end_sell', 'start_purchase', 'end_purchase',
+                            'profit_per_book', 'tos_url', 'homepage_info')
         # Pack the retrieved values into new dictionary, formatting them as HTML datetime first
         values = dict(
             filter(lambda x: x is not None,
@@ -44,6 +45,7 @@ def index(request):
                     add_date_value(settings, 'start_purchase'),
                     add_date_value(settings, 'end_purchase'),
                     add_value(settings, 'profit_per_book', 1),
+                    add_value(settings, 'tos_url', ''),
                     add_value(settings, 'homepage_info', '')]))
         form = SettingsForm(initial=values)
 

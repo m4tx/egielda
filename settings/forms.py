@@ -36,6 +36,8 @@ class SettingsForm(forms.Form):
         'currency': getattr(settings, 'CURRENCY', "USD")},
                                          decimal_places=2,
                                          min_value=0)
+    tos_url = forms.URLField(label=_("Terms of Service URL"),
+                             required=False)
     homepage_info = forms.CharField(label=_("Homepage information"),
                                     required=False,
                                     widget=forms.Textarea())

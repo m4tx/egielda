@@ -20,6 +20,7 @@ from django.db.models import Sum
 
 from authentication.forms import UserDataForm
 from books.models import Book
+from settings.settings import Settings
 from utils.alerts import set_success_msg
 from orders.models import Order
 from authentication.models import AppUserIncorrectFields
@@ -40,7 +41,9 @@ def register(request):
     else:
         form = UserDataForm()
 
-    return render(request, 'authentication/register.html', {'form': form})
+    settings = Settings('tos_url')
+    return render(request, 'authentication/register.html',
+                  {'form': form, 'tos_url': getattr(settings, 'tos_url', None)})
 
 
 @permission_required('common.view_authentication_profile', raise_exception=True)
