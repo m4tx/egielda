@@ -31,13 +31,13 @@ class Settings:
         self.__dict__['settings'] = dict((o.name, o.value) for o in settings)
 
     def __getattr__(self, item):
-        return self.__dict__['settings'][item]
+        if item in self.__dict__['settings']:
+            return self.__dict__['settings'][item]
+        else:
+            raise AttributeError
 
     def __setattr__(self, key, value):
         Setting.objects.update_or_create(name=key, defaults={'value': value})
-
-    def __contains__(self, key):
-        return key in self.__dict__['settings']
 
 
 def is_sell_available():
@@ -51,7 +51,7 @@ def is_sell_available():
         if (now - start_sell).total_seconds() > 0 and (end_sell - now).total_seconds() > 0:
             return True
 
-    except KeyError:
+    except AttributeError:
         return False
 
     return False
@@ -68,7 +68,7 @@ def is_purchase_available():
         if (now - start_purchase).total_seconds() > 0 and (end_purchase - now).total_seconds() > 0:
             return True
 
-    except KeyError:
+    except AttributeError:
         return False
 
     return False

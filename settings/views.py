@@ -39,19 +39,22 @@ def index(request):
         # Pack the retrieved values into new dictionary, formatting them as HTML datetime first
         values = dict(
             filter(lambda x: x is not None,
-                   [add_date_value('start_sell', settings),
-                    add_date_value('end_sell', settings),
-                    add_date_value('start_purchase', settings),
-                    add_date_value('end_purchase', settings),
-                    ('profit_per_book', settings.profit_per_book if 'profit_per_book' in settings else 1),
-                    ('homepage_info', settings.homepage_info if 'homepage_info' in settings else "")]))
+                   [add_date_value(settings, 'start_sell'),
+                    add_date_value(settings, 'end_sell'),
+                    add_date_value(settings, 'start_purchase'),
+                    add_date_value(settings, 'end_purchase'),
+                    add_value(settings, 'profit_per_book', 1),
+                    add_value(settings, 'homepage_info', '')]))
         form = SettingsForm(initial=values)
 
     return render(request, 'settings/index.html', {'form': form})
 
 
-def add_date_value(name, settings):
-    if name in settings:
+def add_value(settings, name, default):
+    return name, getattr(settings, name, default)
+
+def add_date_value(settings, name):
+    if hasattr(settings, name):
         return name, datetime_html_format(string_to_datetime(getattr(settings, name)))
     else:
         return None
