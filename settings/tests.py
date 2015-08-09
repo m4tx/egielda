@@ -56,11 +56,14 @@ class SettingsLiveTest(StaticLiveServerTestCase):
 
         # Go to Settings => Dates and set new values for start/end dates
         self.selenium.get('%s%s' % (self.live_server_url, '/manage/settings/'))
-        self.selenium.find_element_by_name('start_sell').send_keys(datetime_html_format(datetime.now()))
-        self.selenium.find_element_by_name('end_sell').send_keys(datetime_html_format(datetime.now() + timedelta(1)))
-        self.selenium.find_element_by_name('start_purchase').send_keys(datetime_html_format(datetime.now()))
+        self.selenium.find_element_by_name('start_sell').send_keys(
+            datetime_html_format(datetime.now()).replace('T', ' '))
+        self.selenium.find_element_by_name('end_sell').send_keys(
+            datetime_html_format(datetime.now() + timedelta(1)).replace('T', ' '))
+        self.selenium.find_element_by_name('start_purchase').send_keys(
+            datetime_html_format(datetime.now()).replace('T', ' '))
         self.selenium.find_element_by_name('end_purchase').send_keys(
-            datetime_html_format(datetime.now() + timedelta(1)))
+            datetime_html_format(datetime.now() + timedelta(1)).replace('T', ' '))
         self.selenium.find_element_by_xpath('//button[@type="submit"]').click()
 
         # Check if the buttons shows up now
