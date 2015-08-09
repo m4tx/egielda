@@ -9,9 +9,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.utils import timezone
-
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 from books.models import BookType, Book
@@ -19,7 +18,7 @@ from authentication.models import AppUser
 from utils.test_utils import create_test_superuser, login
 
 
-class SellersLiveTest(LiveServerTestCase):
+class SellersLiveTest(StaticLiveServerTestCase):
     def setUp(self):
         user = AppUser(first_name="Test", last_name="Test", student_class="1A", phone_number="111222333")
         user.save()

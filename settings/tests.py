@@ -11,10 +11,10 @@
 
 from datetime import datetime, timedelta
 
-from django.test import LiveServerTestCase, TestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.test import TestCase
 from selenium.webdriver.firefox.webdriver import WebDriver
 
-from settings.models import Setting
 from settings.settings import Settings
 from utils.dates import datetime_html_format
 from utils.test_utils import login, create_test_superuser
@@ -31,7 +31,7 @@ class SettingsTest(TestCase):
         self.assertEqual(settings.str_val, "test")
 
 
-class SettingsLiveTest(LiveServerTestCase):
+class SettingsLiveTest(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         create_test_superuser()
