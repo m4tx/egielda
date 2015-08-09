@@ -12,10 +12,10 @@
  */
 
 //
-// Stylesheet to be included on /manage subpages
+// Sellers
 //
-
-@import "manage/details";
-@import "manage/managemenu";
-@import "manage/sellers";
-@import "manage/users";
+.ui.table tbody > tr > td > .ui.input > input {
+  &[name^="price-"], &[name^="amount-"] {
+    width: 6em;
+  }
+}
