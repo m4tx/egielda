@@ -81,7 +81,7 @@ gulp.task('less', function () {
 gulp.task('less-minified', function () {
     return gulp.src('assets/less/*.less')
         .pipe(less())
-        .pipe(minifyCss({keepSpecialComments: 0}))
+        .pipe(minifyCss({keepSpecialComments: 0, processImport: false}))
         .pipe(rename(function (path) {
             path.basename += '.min';
         }))
