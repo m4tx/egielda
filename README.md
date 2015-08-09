@@ -1,4 +1,4 @@
-egielda
+egielda [![Build Status](https://travis-ci.org/m4tx/egielda.svg?branch=master)](https://travis-ci.org/m4tx/egielda)
 =======
 
 e-Giełda is a project that aims to create easy and convenient way to trade books between students, both user-friendly and featureful.
