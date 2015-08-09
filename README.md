@@ -56,10 +56,13 @@ virtualenv -p python3 egielda
 cd egielda
 source bin/activate
 # Actual installing
-git clone https://github.com/m4tx/egielda.git
+git clone --recursive https://github.com/m4tx/egielda.git
 cd egielda
 pip install -r requirements.txt
 python manage.py migrate
+# Build the assets
+npm install
+gulp build
 # In order to make translations working
 python manage.py compilemessages
 # Superuser may be useful
