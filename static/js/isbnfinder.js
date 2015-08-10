@@ -133,13 +133,15 @@ searchIsbnButton.on('click', function (e) {
         + "&fields=items(selfLink)";
     $.ajax(url)
         .success(function (data) {
-            if (data.totalItems == 0) {
+            var link;
+            try {
+                link = data.items[0].selfLink;
+            } catch(err) {
                 setSearchIsbnStatus(false, BOOK_NOT_FOUND, true);
                 return;
             }
 
-            $.ajax(data.items[0].selfLink
-                + "?fields=volumeInfo(title,subtitle,publisher,publishedDate)")
+            $.ajax(link + "?fields=volumeInfo(title,subtitle,publisher,publishedDate)")
                 .success(function (data) {
                     setSearchIsbnStatus(true);
 
