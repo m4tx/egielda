@@ -11,6 +11,20 @@
 
         input[type="file"] {
             height: auto;
+            padding: 0.458614em 1em;
+        }
+
+        .ui.form .responsive-form div.inline.fields > .ui.pointing.label, .responsive-form div.inline.fields > .ui.pointing.label {
+            margin-top: 0;
+        }
+
+        .ui.form .responsive-form div.inline.fields > .ui.pointing.label, .responsive-form div.inline.fields > .ui.pointing.label > ul {
+            margin: 0;
+            padding: 4px 20px;
+        }
+
+        .ui.form .responsive-form div.inline.fields > .ui.pointing.label, .responsive-form div.inline.fields > .ui.pointing.label > ul > li {
+            padding: 3px;
         }
     </style>
     {% for field in form %}
@@ -19,9 +33,15 @@
             <div class="inline fields" style="margin-top: -1em;">
                 <div class="label"></div>
                 <div class="ui pointing label">
-                    {% for error in field.errors %}
-                        {{ error }}
-                    {% endfor %}
+                    {% if field.errors|length == 1 %}
+                        {{ field.errors.0 }}
+                    {% else %}
+                        <ul>
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         {% endif %}

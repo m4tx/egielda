@@ -11,39 +11,68 @@
 
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, HttpResponseNotAllowed
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 from django.db.models import Sum
 
-from authentication.forms import UserDataForm
+from authentication.forms import UserDataForm, SupplementForm, RegistrationForm
 from books.models import Book
+from egielda import settings
 from settings.settings import Settings
+from utils.LDAP import check_user_existence
 from utils.alerts import set_success_msg
 from orders.models import Order
-from authentication.models import AppUserIncorrectFields
+from authentication.models import AppUserIncorrectFields, AppUser
 
 
 def register(request):
     if request.method == 'POST':
-        form = UserDataForm(request.POST, request.FILES)
+        form = RegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
-            if 'document' in request.FILES:
-                user.awaiting_verification = True
             user.set_password(user.password)
             group = Group.objects.get(name='user')
             user.groups.add(group)
-            user.save()
-            return render(request, 'authentication/registration_complete.html', {})
-    else:
-        form = UserDataForm()
 
-    settings = Settings('tos_url')
+            if settings.USE_LDAP_VERIFICATION:
+                if check_user_existence(user):
+                    user.verify()
+                else:
+                    request.session['user_to_supplement'] = user.pk
+                    return render(request, 'authentication/registration_unverified.html', {'form': SupplementForm()})
+            else:
+                if 'document' in request.FILES:
+                    user.awaiting_verification = True
+            user.save()
+            return render(request, 'authentication/registration_complete.html', {'verified': user.verified})
+    else:
+        form = RegistrationForm()
+
     return render(request, 'authentication/register.html',
-                  {'form': form, 'tos_url': getattr(settings, 'tos_url', None)})
+                  {'form': form, 'tos_url': getattr(Settings('tos_url'), 'tos_url', None),
+                   'use_LDAP_verification': settings.USE_LDAP_VERIFICATION})
+
+
+def register_supplement(request):
+    if request.method == 'POST' and 'user_to_supplement' in request.session:
+        user = get_object_or_404(AppUser, pk=request.session['user_to_supplement'])
+        del request.session['user_to_supplement']
+        form = SupplementForm(request.POST, request.FILES)
+        if form.is_valid():
+            if 'document' in form.cleaned_data:
+                user.document = form.cleaned_data['document']
+                user.awaiting_verification = True
+                user.save()
+
+            return render(request, 'authentication/registration_complete.html', {'verified': False})
+        else:
+            return render(request, 'authentication/registration_unverified.html', {'form': form})
+
+    else:
+        return HttpResponseNotAllowed(['POST'])
 
 
 @permission_required('common.view_authentication_profile', raise_exception=True)

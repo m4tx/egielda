@@ -37,7 +37,7 @@
     {% manage_header "books/duplicated" %}
 
     {% if duplicated %}
-        <form method="post" action="">
+        <form method="post" action="{{ request.path }}">
             {% csrf_token %}
             {% for isbn, l in duplicated.items %}
                 {% include "books/duplicated_book_list.html" with book_list=l hide_actions=True %}

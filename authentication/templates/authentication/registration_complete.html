@@ -7,5 +7,9 @@
     <h1>{% trans "Registration completed" %}
     </h1>
 
-    {% trans "Your account was created. You can sign in now, although you won't be able to do anything until the account is verified." %}
+    {% if verified %}
+        {% trans "Your account was created. You can sign in now." %}
+    {% else %}
+        {% trans "Your account was created. You can sign in now, although you won't be able to do anything until the account is verified." %}
+    {% endif %}
 {% endblock %}

@@ -19,6 +19,7 @@ from django.utils.translation import ugettext as _
 
 from authentication.models import AppUser
 from common.widgets import PhoneNumberInput, FileFieldLink
+from egielda import settings
 
 
 class UserDataForm(ModelForm):
@@ -47,7 +48,7 @@ class UserDataForm(ModelForm):
             'student_class': _("Class"),
             'phone_number': _("Phone number"),
             'email': _("E-mail"),
-            'document': _("Identity card"),
+            'document': _("School ID"),
         }
 
     def clean_username(self):
@@ -92,3 +93,14 @@ class UserDataForm(ModelForm):
         document.file.seek(0)
         image.save(document.file, "jpeg")
         return document
+
+
+class RegistrationForm(UserDataForm):
+    class Meta(UserDataForm.Meta):
+        if settings.USE_LDAP_VERIFICATION:
+            exclude = ['document']
+
+
+class SupplementForm(UserDataForm):
+    class Meta(UserDataForm.Meta):
+        fields = ['document']

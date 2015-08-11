@@ -51,6 +51,12 @@ MEDIA_URL = '/static/upload/'
 
 AUTH_USER_MODEL = 'authentication.AppUser'
 
+USE_LDAP_VERIFICATION = False
+LDAP_SERVER_URL = None
+LDAP_USERNAME = None
+LDAP_PASS = None
+LDAP_SEARCH_USER_PATH = None
+
 # Internationalization
 USE_I18N = True
 USE_L10N = True
