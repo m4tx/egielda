@@ -4,7 +4,7 @@
 {% block title %}{% blocktrans %}Error {{ error }}{% endblocktrans %}{% endblock %}
 
 {% block content %}
-    <div class="ui message">
+    <div class="ui message" id="http-error">
         <h1 class="ui header">
             {% blocktrans %}Error {{ error }}{% endblocktrans %}
             <small>{% block subtitle %}{% endblock %}</small>
@@ -15,9 +15,11 @@
         {% block error_body %}{% endblock %}
 
         {% if not disable_homepage %}
-            <a href="{% url 'home' %}" class="ui icon labeled button">
-                <i class="icon home"></i>{% trans "Homepage" %}
-            </a>
+            <div>
+                <a href="{% url 'home' %}" class="ui icon labeled button">
+                    <i class="icon home"></i>{% trans "Homepage" %}
+                </a>
+            </div>
         {% endif %}
     </div>
 {% endblock %}
