@@ -26,7 +26,7 @@ def check_user_existence(user):
     if 1 <= month <= 6:
         year -= 1
 
-    user_year = year - int(user.student_class[:1]-1)
+    user_year = year - (int(user.student_class[:1])-1)
 
     path = settings.LDAP_SEARCH_USER_PATH.format(
         full_name=user.get_short_name(),
