@@ -13,7 +13,7 @@
 
 function createSimpleBarChart() {
     // I literally have no idea why NVD3.js does not provide any kind of simple bar chart...
-    return nv.models.discreteBarChart()
+    var chart = nv.models.discreteBarChart()
         .x(function (d) {
             return d.label
         })
@@ -21,11 +21,12 @@ function createSimpleBarChart() {
             return d.value
         })
         .staggerLabels(true)
-        .tooltips(false)
         .showValues(true)
-        .transitionDuration(350)
+        .duration(350)
         .color(['steelblue'])
         .noData(gettext("No data"));
+    chart.tooltip.enabled(false);
+    return chart;
 }
 
 // Sold book amounts chart

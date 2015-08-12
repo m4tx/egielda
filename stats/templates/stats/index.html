@@ -5,7 +5,7 @@
 {% load price %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/nv.d3.css' %}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css">
     <style>
         .col-lg-6 {
             page-break-inside: avoid;
@@ -87,8 +87,8 @@
 {% endblock %}
 
 {% block footer %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
-    <script src="{% static 'js/nv.d3.min.js' %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="{% static "js/nv.d3.min.js" %}"></script>
     <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
     <script src="{% static 'js/statscharts.js' %}"></script>
     <script>
