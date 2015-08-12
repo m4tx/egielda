@@ -97,6 +97,10 @@ gulp.task('assets', function () {
         gulp.src('vendor/Semantic-UI/src/themes/default/assets/**/*.*')
             .pipe(gulp.dest('dist')),
 
+        // Files from vendor
+        gulp.src('vendor/js/*.min.js')
+            .pipe(gulp.dest('dist/js')),
+
         // jQuery datetimepicker
         gulp.src('node_modules/jquery-datetimepicker/jquery.datetimepicker.js')
             .pipe(uglify())
