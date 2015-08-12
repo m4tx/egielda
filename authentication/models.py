@@ -48,8 +48,8 @@ class AppUserManager(BaseUserManager):
 
 
 def new_document_filename(instance, filename):
-    return '_'.join([instance.username, instance.first_name, instance.last_name, instance.student_class]) + '.' + \
-        filename.split('.')[-1]
+    return ('_'.join([instance.username, instance.first_name, instance.last_name, instance.student_class]) + '.' +
+            filename.split('.')[-1]).encode('ascii', 'ignore').decode('ascii')
 
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
