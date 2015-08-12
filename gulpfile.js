@@ -101,6 +101,12 @@ gulp.task('assets', function () {
         gulp.src('vendor/js/*.min.js')
             .pipe(gulp.dest('dist/js')),
 
+        // Semantic tokenfield
+        gulp.src('vendor/semantic-tokenfield/dist/semantic-tokenfield.min.js')
+            .pipe(gulp.dest('dist/js')),
+        gulp.src('vendor/semantic-tokenfield/dist/css/semantic-tokenfield.min.css')
+            .pipe(gulp.dest('dist/css')),
+
         // jQuery datetimepicker
         gulp.src('node_modules/jquery-datetimepicker/jquery.datetimepicker.js')
             .pipe(uglify())
