@@ -62,7 +62,7 @@ def register_supplement(request):
         del request.session['user_to_supplement']
         form = SupplementForm(request.POST, request.FILES)
         if form.is_valid():
-            if 'document' in form.cleaned_data:
+            if 'document' in request.FILES:
                 user.document = form.cleaned_data['document']
                 user.awaiting_verification = True
                 user.save()
