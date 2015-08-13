@@ -36,6 +36,11 @@ def keyvalue(dict, key):
     return dict[key]
 
 
+@register.filter
+def striplist(list):
+    return [el for el in list if el != ""]
+
+
 @register.inclusion_tag('templatetags/alerts.html', takes_context=True)
 def alerts(context):
     request = context['request']

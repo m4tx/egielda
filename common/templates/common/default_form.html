@@ -28,9 +28,10 @@
             padding: 3px;
         }
     </style>
+    {% load base %}
     {% for field in form %}
         {% include "common/form_field.html" with id=field.auto_id label=field.label has_errors=field.errors %}
-        {% if field.errors %}
+        {% if field.errors|striplist %}
             <div class="inline fields" style="margin-top: -1em;">
                 <div class="label"></div>
                 <div class="ui pointing label">
