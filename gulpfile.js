@@ -14,7 +14,6 @@
 var gulp = require('gulp');
 
 var concat = require('gulp-concat'),
-    rename = require('gulp-rename'),
     sourcemaps = require('gulp-sourcemaps'),
 
     fs = require('fs'),
@@ -61,7 +60,7 @@ gulp.task('js', function() {
 gulp.task('js-minified', function() {
     return getJsTask(function(folder) {
         return gulp.src(path.join('assets/js', folder, '/*.js'))
-            .pipe(concat(folder + '.min.js'))
+            .pipe(concat(folder + '.js'))
             .pipe(uglify())
             .pipe(gulp.dest('dist/js'));
     });
@@ -82,9 +81,6 @@ gulp.task('less-minified', function () {
     return gulp.src('assets/less/*.less')
         .pipe(less())
         .pipe(minifyCss({keepSpecialComments: 0, processImport: false}))
-        .pipe(rename(function (path) {
-            path.basename += '.min';
-        }))
         .pipe(gulp.dest('dist/css'));
 });
 
@@ -128,5 +124,5 @@ gulp.task('watch', function () {
 
 gulp.task('build-dev', ['lint', 'js', 'less', 'assets']);
 gulp.task('build-dist', ['lint', 'js-minified','less-minified', 'assets']);
-gulp.task('build', ['build-dev', 'build-dist']);
+gulp.task('build', ['build-dist']);
 gulp.task('default', ['build-dev', 'watch']);
