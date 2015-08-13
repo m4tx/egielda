@@ -87,6 +87,7 @@ def alerts(context):
                                                     "owners are not equal. You'll need to fill in the form again."),
             'owner_doesnt_have_enough_books_in_db': _("Some of the users you have provided don't have enough books in" +
                                                       " the database."),
+            'invalid_amount': _("Invalid amount.")
         }[request.session['error_msg']]
         del request.session['error_msg']
 

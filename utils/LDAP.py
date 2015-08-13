@@ -9,7 +9,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-import datetime
 from ldap3 import Server, Connection, SUBTREE
 from egielda import settings
 
@@ -21,17 +20,10 @@ def check_user_existence(user):
     if not conn.bind():
         return False
 
-    month = datetime.datetime.now().month
-    year = datetime.datetime.now().year
-    if 1 <= month <= 6:
-        year -= 1
-
-    user_year = year - (int(user.student_class[:1])-1)
-
     path = settings.LDAP_SEARCH_USER_PATH.format(
         full_name=user.get_short_name(),
-        class_letter=user.student_class[1:2],
-        year=user_year
+        class_letter=user.class_letter,
+        year=user.year
     )
     if conn.search(path, '(objectClass=*)', SUBTREE):
         return True

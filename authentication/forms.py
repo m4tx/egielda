@@ -12,7 +12,8 @@
 import re
 
 from PIL import Image
-from django.forms import ModelForm
+import datetime
+from django.forms import ModelForm, Select
 from django.forms import PasswordInput, TextInput
 from django.forms import ValidationError
 from django.utils.translation import ugettext as _
@@ -20,12 +21,25 @@ from django.utils.translation import ugettext as _
 from authentication.models import AppUser
 from common.widgets import PhoneNumberInput, FileFieldLink
 from egielda import settings
+from utils.dates import get_current_year
+
+
+def get_available_years():
+    year = get_current_year()
+
+    for y in range(year, 1999, -1):
+        if y <= year-3:
+            cl = _("graduate")
+        else:
+            cl = _("%(class)d class") % {'class': year-y+1}
+
+        yield (y, "%(year)d (%(class)s)" % {'year': y, 'class': cl})
 
 
 class UserDataForm(ModelForm):
     class Meta:
         model = AppUser
-        fields = ['username', 'password', 'first_name', 'last_name', 'student_class', 'phone_number', 'email',
+        fields = ['username', 'password', 'first_name', 'last_name', 'year', 'class_letter', 'phone_number', 'email',
                   'document']
         exclude = ['awaiting_verification', 'is_superuser', 'groups', 'user_permissions', 'last_login']
 
@@ -36,16 +50,17 @@ class UserDataForm(ModelForm):
             }),
             'phone_number': PhoneNumberInput(attrs={'maxlength': '9'}),
             'password': PasswordInput,
-            'student_class': TextInput(attrs={
-                'placeholder': _("\"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A"),
-                'pattern': '^' + _('graduate') + '$|^[123][A-Z]$'
+            'year': Select(choices=get_available_years()),
+            'class_letter': TextInput(attrs={
+                'pattern': '^[A-Z]$'
             }),
             'document': FileFieldLink,
         }
         labels = {
             'first_name': _("First name"),
             'last_name': _("Last name"),
-            'student_class': _("Class"),
+            'year': _("Beginning year"),
+            'class_letter': _("Class letter"),
             'phone_number': _("Phone number"),
             'email': _("E-mail"),
             'document': _("School ID"),
@@ -66,16 +81,24 @@ class UserDataForm(ModelForm):
     def clean_last_name(self):
         return self.cleaned_data['last_name'].strip()
 
-    def clean_student_class(self):
-        student_class = self.cleaned_data['student_class']
+    def clean_year(self):
+        year = self.cleaned_data['year']
+        curr_year = datetime.datetime.now().year
 
-        if not re.match('^[123][A-Z]$', student_class) and student_class != _("graduate"):
-            raise ValidationError(
-                _("Invalid data. Use \"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A."))
+        if 2000 > year > curr_year:
+            raise ValidationError(_("Invalid year."))
 
-        return student_class
+        return year
 
-    def clean_document(self):
+    def clean_class_letter(self):
+        class_letter = self.cleaned_data['class_letter']
+
+        if not re.match('^[A-Z]$', class_letter):
+            raise ValidationError(_("Invalid class letter."))
+
+        return class_letter
+
+    """def clean_document(self):
         document = self.cleaned_data['document']
         if document is None:
             return document
@@ -98,7 +121,7 @@ class UserDataForm(ModelForm):
 
         document.file.seek(0)
         image.save(document.file, "jpeg")
-        return document
+        return document"""
 
 
 class RegistrationForm(UserDataForm):

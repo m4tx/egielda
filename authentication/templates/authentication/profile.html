@@ -54,21 +54,6 @@
     {% include "users/profile_header.html" with your_profile=True student=user %}
     {% profile_header %}
 
-    {% if user.awaiting_verification and not incorrect_fields %}
-        <div class="ui warning message">
-            {% trans "Your account is now awaiting verification." %}
-        </div>
-    {% elif incorrect_fields %}
-        <div class="ui error message">
-            {% trans "Your verification request was rejected. Following fields are filled in incorrectly:" %}
-            <ul>
-                {% for field in incorrect_fields %}
-                    <li>{{ field.1 }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-
     <div class="ui tabular menu">
         <div class="active item">{% trans "Profile data" %}</div>
         {% if perms.common.view_authentication_profile_purchased %}

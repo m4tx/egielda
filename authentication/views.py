@@ -9,8 +9,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-import json
-
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect, HttpResponseNotAllowed
@@ -36,6 +34,7 @@ def register(request):
             user.set_password(user.password)
             group = Group.objects.get(name='user')
             user.groups.add(group)
+            user.save()
 
             if settings.USE_LDAP_VERIFICATION:
                 if check_user_existence(user):
@@ -46,7 +45,8 @@ def register(request):
             else:
                 if 'document' in request.FILES:
                     user.awaiting_verification = True
-            user.save()
+                    user.save()
+
             return render(request, 'authentication/registration_complete.html', {'verified': user.verified})
     else:
         form = RegistrationForm()
@@ -81,7 +81,7 @@ def profile(request):
     disabled_fields_files = []
 
     if request.user.verified:
-        disabled_fields_post += ['first_name', 'last_name', 'student_class']
+        disabled_fields_post += ['first_name', 'last_name', 'year', 'class_letter']
         disabled_fields_files += ['document']
 
     if request.POST:
@@ -93,7 +93,7 @@ def profile(request):
 
         if form.is_valid():
             user = form.save()
-            if 'document' in form.cleaned_data and user.awaiting_verification is False:
+            if 'document' in form.cleaned_data and user.awaiting_verification is False and user.verified is False:
                 user.awaiting_verification = True
                 AppUserIncorrectFields.objects.filter(user=user).delete()
             elif 'document-clear' in request.POST and user.awaiting_verification is True:
@@ -106,14 +106,9 @@ def profile(request):
     else:
         form = UserDataForm(instance=request.user)
         form.cleaned_data = {}
-        incorrect_fields = None
-        try:
-            incorrect_fields = AppUserIncorrectFields.objects.get(user=request.user).incorrect_fields
-            incorrect_fields = json.loads(incorrect_fields)
-            for field in incorrect_fields:
-                form.add_error(field[0], '')
-        except AppUserIncorrectFields.DoesNotExist:
-            pass
+
+        for field in request.user.incorrect_fields:
+            form.add_error(field[0], '')
 
     for field in disabled_fields_post + disabled_fields_files:
         form.fields[field].widget.attrs['readonly'] = True
@@ -121,7 +116,7 @@ def profile(request):
 
     del form.fields['password']
 
-    return render(request, 'authentication/profile.html', {'form': form, 'incorrect_fields': incorrect_fields})
+    return render(request, 'authentication/profile.html', {'form': form})
 
 
 @permission_required('common.view_authentication_profile_purchased', raise_exception=True)

@@ -53,7 +53,7 @@ def create_test_category():
 
 
 def create_test_app_user():
-    app_user = AppUser(first_name="Some", last_name="User", student_class="1A", phone_number="111222333")
+    app_user = AppUser(first_name="Some", last_name="User", year=2013, class_letter="A", phone_number="111222333")
     app_user.save()
     return app_user
 

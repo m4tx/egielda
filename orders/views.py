@@ -23,6 +23,7 @@ from books.models import Book
 from orders.models import Order
 from utils.alerts import set_success_msg, set_info_msg, set_error_msg
 from utils.books import get_available_books
+from utils.dates import get_current_year
 
 
 @permission_required('common.view_orders_index', raise_exception=True)
@@ -33,15 +34,21 @@ def index(request):
 @permission_required('common.view_orders_not_fulfilled', raise_exception=True)
 def not_fulfilled(request):
     orders = get_orders().filter(fulfilled=False)
-    class_list = AppUser.objects.order_by('student_class').values_list('student_class', flat=True).distinct()
-    return render(request, 'orders/not_fulfilled.html', {'orders': orders, 'class_list': class_list})
+    class_list = AppUser.objects.order_by('-year', 'class_letter').values_list('year', 'class_letter').distinct()
+    cl_list = []
+    for cl in class_list:
+        cl_list.append("%(year)d%(class_letter)s" % {'year': get_current_year() - cl[0] + 1, 'class_letter': cl[1]})
+    return render(request, 'orders/not_fulfilled.html', {'orders': orders, 'class_list': cl_list})
 
 
 @permission_required('common.view_orders_fulfilled', raise_exception=True)
 def fulfilled(request):
     orders = get_orders().exclude(fulfilled=False)
-    class_list = AppUser.objects.order_by('student_class').values_list('student_class', flat=True).distinct()
-    return render(request, 'orders/fulfilled.html', {'orders': orders, 'class_list': class_list})
+    class_list = AppUser.objects.order_by('-year', 'class_letter').values_list('year', 'class_letter').distinct()
+    cl_list = []
+    for cl in class_list:
+        cl_list.append("%(year)d%(class_letter)s" % {'year': get_current_year() - cl[0] + 1, 'class_letter': cl[1]})
+    return render(request, 'orders/fulfilled.html', {'orders': orders, 'class_list': cl_list})
 
 
 @permission_required('common.view_orders_order_details', raise_exception=True)
@@ -93,7 +100,9 @@ def fulfill(request, order_pk):
             for book_type in book_types.keys():
                 new_amount = int(request.POST.get('amount-' + str(book_type.pk), -1))
                 if book_type.in_stock < new_amount or new_amount < 0:
-                    return HttpResponseBadRequest()
+                    set_error_msg(request, 'invalid_amount')
+                    return render(request, 'orders/fulfill.html', {'order': order, 'book_list': book_types.keys(),
+                                                                   'users': users})
 
                 if new_amount == 0:
                     book_types[book_type].delete()  # delete orderedbook which points to that book type

@@ -28,3 +28,12 @@ def string_to_datetime(date):
 
 def date_range(start_date, end_date):
     return list(start_date + timedelta(x) for x in range((end_date - start_date).days + 1))
+
+
+def get_current_year():
+    month = datetime.now().month
+    year = datetime.now().year
+    if 1 <= month <= 6:
+        year -= 1
+
+    return year

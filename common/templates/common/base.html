@@ -70,6 +70,20 @@
 
         <div class="ui main container">
             {% alerts %}
+            {% if user.awaiting_verification and not user.incorrect_fields %}
+                <div class="ui warning message">
+                    {% trans "Your account is now awaiting verification." %}
+                </div>
+            {% elif user.incorrect_fields %}
+                <div class="ui error message">
+                    {% trans "Your verification request was rejected. Following fields are filled in incorrectly:" %}
+                    <ul>
+                        {% for field in user.incorrect_fields %}
+                            <li>{{ field.1 }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
             <noscript>
                 <div class="ui error message">
                     {% trans "You don't seem to have JavaScript enabled. This website <strong>does not work properly</strong> without JavaScript, so please enable it in your browser." %}

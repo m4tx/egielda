@@ -13,7 +13,7 @@
 
 // 'on', 'off' or 'switching'
 var choosingIncorrect = 'off',
-    fields = ['username', 'first_name', 'last_name', 'student_class', 'phone_number', 'email'];
+    fields = ['username', 'first_name', 'last_name', 'year', 'class_letter', 'phone_number', 'email'];
 
 // Animations
 $.fn.fadeOutKeepSpace = function(duration, complete) {

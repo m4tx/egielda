@@ -18,7 +18,7 @@
 
     <div class="ui stackable two column grid">
         <div class="responsive-form static-form column" id="user-verify-details">
-            {% include "elements/user_profile_display_form.html" with user=student %}
+            {% include "elements/user_profile_display_form.html" with user=student split_student_class=True %}
         </div>
         <div class="column">
             {% if student.document %}

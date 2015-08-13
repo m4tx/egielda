@@ -8,16 +8,20 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+import datetime
+import json
+from django.core.validators import MinValueValidator
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Group, ContentType, PermissionsMixin
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext as _
 from django.db.models import Q
+from utils.dates import get_current_year
 
 
 class AppUserManager(BaseUserManager):
-    def create_user(self, username, first_name, last_name, student_class, phone_number, email, password):
+    def create_user(self, username, first_name, last_name, year, class_letter, phone_number, email, password):
 
         if not username or not password:
             raise ValueError('Users must have a username and a password')
@@ -26,7 +30,8 @@ class AppUserManager(BaseUserManager):
             username=username,
             first_name=first_name,
             last_name=last_name,
-            student_class=student_class,
+            year=year,
+            class_letter=class_letter,
             phone_number=phone_number,
             email=AppUserManager.normalize_email(email),
         )
@@ -38,8 +43,8 @@ class AppUserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, username, first_name, last_name, student_class, phone_number, email, password):
-        u = self.create_user(username, first_name, last_name, student_class, phone_number, email, password)
+    def create_superuser(self, username, first_name, last_name, year, class_letter, phone_number, email, password):
+        u = self.create_user(username, first_name, last_name, year, class_letter, phone_number, email, password)
         u.awaiting_verification = False
         u.is_superuser = True
         u.groups.add(Group.objects.get(name='sysadmin'))
@@ -57,14 +62,15 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
                                 error_messages={'unique': _("This username already does exist in the database.")})
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    student_class = models.CharField(max_length=30)
+    year = models.IntegerField(validators=[MinValueValidator(2000)])
+    class_letter = models.CharField(max_length=1)
     phone_number = models.CharField(max_length=9)
     email = models.CharField(max_length=100)
     document = models.ImageField(upload_to=new_document_filename, max_length=200, blank=True)
     awaiting_verification = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'student_class', 'phone_number', 'email']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'year', 'class_letter', 'phone_number', 'email']
 
     objects = AppUserManager()
 
@@ -78,6 +84,27 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
         for group_name in AppUser.get_verified_groups():
             query |= Q(name=group_name)
         return self.groups.filter(query).exists()
+
+    @cached_property
+    def incorrect_fields(self):
+        try:
+            incorrect_fields = AppUserIncorrectFields.objects.get(user=self).incorrect_fields
+            incorrect_fields = json.loads(incorrect_fields)
+            return incorrect_fields
+        except AppUserIncorrectFields.DoesNotExist:
+            return []
+
+    @property
+    def student_class(self):
+        year = get_current_year()
+
+        if self.year <= year-3:
+            return _("graduate")
+
+        return "%(year)d%(class_letter)s" % {
+            'year': year - self.year + 1,
+            'class_letter': self.class_letter
+        }
 
     def verify(self):
         group = Group.objects.get(name='verified_user')

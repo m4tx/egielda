@@ -20,7 +20,7 @@ from utils.test_utils import create_test_superuser, login
 
 class SellersLiveTest(StaticLiveServerTestCase):
     def setUp(self):
-        user = AppUser(first_name="Test", last_name="Test", student_class="1A", phone_number="111222333")
+        user = AppUser(first_name="Test", last_name="Test", year=2013, class_letter="A", phone_number="111222333")
         user.save()
         type1 = BookType(isbn="9788375940794", publisher="Some", title="Test book", publication_year=2010, price=0,
                          visible=False)

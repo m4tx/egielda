@@ -32,7 +32,7 @@ class ManagePermissionsTest(TestCase):
     def setUp(self):
         self.user = AppUser.objects.create_user(username="test", email="test@localhost",
                                                 password="test", first_name="Test",
-                                                last_name="Test", student_class="1A",
+                                                last_name="Test", year=2013, class_letter="A",
                                                 phone_number="111222333")
         self.user.groups.clear()  # Default 'user' group already has some permissions
         self.client = Client()

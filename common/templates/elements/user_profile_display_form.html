@@ -4,6 +4,11 @@
 {% formfield label=_("Username") %}{{ user.username }}{% endformfield %}
 {% formfield label=_("First name") %}{{ user.first_name }}{% endformfield %}
 {% formfield label=_("Last name") %}{{ user.last_name }}{% endformfield %}
-{% formfield label=_("Class") %}{{ user.student_class }}{% endformfield %}
+{% if split_student_class %}
+    {% formfield label=_("Beginning year") %}{{ user.year }}{% endformfield %}
+    {% formfield label=_("Class letter") %}{{ user.class_letter }}{% endformfield %}
+{% else %}
+    {% formfield label=_("Class") %}{{ user.student_class }}{% endformfield %}
+{% endif %}
 {% formfield label=_("Phone number") %}{{ user.phone_number }}{% endformfield %}
 {% formfield label=_("E-mail") %}{{ user.email }}{% endformfield %}
