@@ -24,8 +24,9 @@ First of all, a user goes to Sell page and choose the books they want to sell. T
 In e-Giełda, there are two models with "Book" in name: BookType and Book. The difference between them is that BookType contains only a common data about the book (title, publisher, etc.), while Book is a "physical" book with an owner, sold/unsold state, etc.
 
 ## Dependencies
-* Python 3.2 or newer (may also work with 3.0, though it wasn't tested)
-* Django 1.7 or newer
+
+For building the assets:
+* Node.js with gulp
 
 For running tests:
 * Selenium
@@ -62,7 +63,6 @@ pip install -r requirements.txt
 python manage.py migrate
 # Build the assets
 npm install
-gulp build
 # In order to make translations working
 python manage.py compilemessages
 # Superuser may be useful
@@ -71,6 +71,8 @@ python manage.py createsuperuser
 Remember that you shouldn't use default `settings.py` on production. Also, bear in mind that SQLite is unsuitable for anything but e-Giełda development.
 
 Please note that our migration script automatically creates three groups (moderator, admin, sysadmin) and gives them some permissions. If you change anything and want to restore default permissions for these groups, you have to remove **all** permissions from at least one group, then run `migrate`.
+
+e-Giełda uses gulp tool to build CSS and JS files. `postinstall` script in npm calls `gulp build` automatically (actually, `npm run gulp build`, in case that gulp is not installed globally).
 
 ## License
 Copyright (C) 2014-2015 [Mateusz Maćkowski](http://m4tx.pl) and Tomasz Zieliński
