@@ -20,7 +20,7 @@ from authentication.forms import UserDataForm, SupplementForm, RegistrationForm
 from books.models import Book
 from egielda import settings
 from settings.settings import Settings
-from utils.LDAP import check_user_existence
+from utils.ldap import check_user_existence
 from utils.alerts import set_success_msg
 from orders.models import Order
 from authentication.models import AppUserIncorrectFields, AppUser
