@@ -23,13 +23,17 @@ from utils.dates import datetime_to_string
 
 def create_test_superuser():
     if AppUser.objects.filter(username="test").count() == 0:
-        AppUser.objects.create_superuser("test", "Some", "User", "1A", "111222333",
-                                         "test@localhost", "test")
+        AppUser.objects.create_superuser(
+            username="test", first_name="Some", last_name="User", year="2015", class_letter="A",
+            phone_number="111222333", email="test@localhost", password="test"
+        )
 
 def create_test_accepted_user():
     if AppUser.objects.filter(username="test").count() == 0:
-        user = AppUser.objects.create_user("test", "Some", "User", "1A", "111222333",
-                                           "test@localhost", "test")
+        user = AppUser.objects.create_user(
+            username="test", first_name="Some", last_name="User", year="2015", class_letter="A",
+            phone_number="111222333", email="test@localhost", password="test"
+        )
         user.verify()
 
 def login(selenium, live_server_url, username, password):
