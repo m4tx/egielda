@@ -26,18 +26,21 @@
     <div class="column">
         <div class="ui message">
             <h1 class="ui header">{% site_name %}</h1>
-            {% if sell_available and purchase_available %}<p>{% trans "What do you want to do?" %}</p>{% endif %}
+            {% if sell_available and purchase_available and user.verified %}<p>{% trans "What do you want to do?" %}</p>{% endif %}
+            {% if not user.verified %}
+                <p>{% trans "You must have a verified account to access this site." %}</p>
+            {% endif %}
             {% if not sell_available and not purchase_available %}<p>{% trans "The website is currently disabled." %}</p>{% endif %}
 
             {% if sell_available and purchase_available %}<div class="ui massive buttons">{% endif %}
             {% if purchase_available %}
-                <a href="{% url 'purchase:books' %}" class="huge ui primary button">
+                <a href="{% url 'purchase:books' %}" class="huge ui primary button{% if not user.verified %} disabled{% endif %}">
                     <i class="icon shop"></i>{% trans "Purchase" %}
                 </a>
             {% endif %}
             {% if sell_available and purchase_available %}<div class="or" data-text="{% trans "or" %}"></div>{% endif %}
             {% if sell_available %}
-                <a href="{% url 'sell:books' %}" class="huge ui button">
+                <a href="{% url 'sell:books' %}" class="huge ui button{% if not user.verified %} disabled{% endif %}">
                     <i class="icon exchange"></i>{% trans "Sell" %}
                 </a>
             {% endif %}
