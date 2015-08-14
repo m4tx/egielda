@@ -11,15 +11,15 @@
 
 from collections import defaultdict
 
-from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render
 from django.db.models import Count
 
+from authentication.decorators import permission_required
 from books.models import BookType, Book
 from utils.dates import date_range
 
 
-@permission_required('common.view_stats_index', raise_exception=True)
+@permission_required('common.view_stats_index')
 def index(request):
     args = get_sold_books_chart_data()
     args.update(get_given_books_chart_data())
@@ -66,7 +66,7 @@ def get_given_books_chart_data():
     return {}
 
 
-@permission_required('common.view_stats_books_sold', raise_exception=True)
+@permission_required('common.view_stats_books_sold')
 def books_sold(request):
     books = Book.objects.filter(sold=True).order_by('-sold_date').select_related('book_type', 'purchaser')
 
@@ -85,7 +85,7 @@ def books_sold(request):
     return render(request, 'stats/books_sold.html', {'stats': list(reversed(sorted(stats.items())))})
 
 
-@permission_required('common.view_stats_books', raise_exception=True)
+@permission_required('common.view_stats_books')
 def books(request):
     book_list = BookType.objects.annotate(received=Count('book')).annotate(
         sold=Count('book', field='CASE WHEN books_book.sold THEN 1 END')).order_by('title')

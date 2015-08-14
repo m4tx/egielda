@@ -11,35 +11,34 @@
 
 import json
 
-from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
 from django.db.models import Sum, Q
 from django.http import HttpResponseRedirect, Http404, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
 
+from authentication.decorators import permission_required
 from authentication.forms import UserDataForm
 from authentication.models import AppUser, AppUserIncorrectFields
 from books.models import Book
 from orders.models import Order
 from utils.alerts import set_success_msg
-from authentication.signals import user_verified, user_needs_correction
+from authentication.signals import user_needs_correction
 
 
-@permission_required('common.view_users_index', raise_exception=True)
+@permission_required('common.view_users_index')
 def index(request):
     return HttpResponseRedirect(reverse(verified))
 
 
-@permission_required('common.view_users_verified', raise_exception=True)
+@permission_required('common.view_users_verified')
 def verified(request):
     users = AppUser.objects.filter(groups__name__in=AppUser.get_verified_groups()).order_by('last_name', 'first_name')
 
     return render(request, 'users/users.html', {'users': users, 'tab': 'verified'})
 
 
-@permission_required('common.view_users_unverified', raise_exception=True)
+@permission_required('common.view_users_unverified')
 def unverified(request):
     needing_correction = AppUserIncorrectFields.objects.all().values_list('user_id')
     users = (AppUser.objects
@@ -50,7 +49,7 @@ def unverified(request):
     return render(request, 'users/users.html', {'users': users, 'tab': 'unverified'})
 
 
-@permission_required('common.view_users_needing_data_correction', raise_exception=True)
+@permission_required('common.view_users_needing_data_correction')
 def needing_data_correction(request):
     users_qs = (AppUserIncorrectFields.objects.select_related('user')
                 .exclude(user__groups__name__in=AppUser.get_verified_groups())
@@ -59,7 +58,7 @@ def needing_data_correction(request):
     return render(request, 'users/users.html', {'users': users, 'tab': 'needing_data_correction'})
 
 
-@permission_required('common.view_users_verify', raise_exception=True)
+@permission_required('common.view_users_verify')
 def verify(request, user_pk):
     student = get_object_or_404(AppUser,
                                 Q(pk=user_pk) & ~Q(groups__name__in=AppUser.get_verified_groups()))
@@ -71,7 +70,7 @@ def verify(request, user_pk):
         return render(request, 'users/verify.html', {'student': student})
 
 
-@permission_required('common.view_users_verify', raise_exception=True)
+@permission_required('common.view_users_verify')
 def needs_correction(request, user_pk):
     if request.method == 'POST':
         if len(request.POST.get('incorrect_fields', '')) == 0:
@@ -100,7 +99,7 @@ def needs_correction(request, user_pk):
         raise Http404
 
 
-@permission_required('common.view_users_profile', raise_exception=True)
+@permission_required('common.view_users_profile')
 def profile(request, user_pk):
     user = get_object_or_404(AppUser, id=user_pk)
 
@@ -130,7 +129,7 @@ def profile(request, user_pk):
     return render(request, 'users/user_profile.html', {'form': form, 'student': user})
 
 
-@permission_required('common.view_users_profile_purchased', raise_exception=True)
+@permission_required('common.view_users_profile_purchased')
 def profile_purchased(request, user_pk):
     user = get_object_or_404(AppUser, id=user_pk)
     orders = Order.objects.filter(user=user).prefetch_related(
@@ -152,7 +151,7 @@ def profile_purchased(request, user_pk):
     return render(request, 'users/purchased.html', {'stats': stats, 'student': user})
 
 
-@permission_required('common.view_users_profile_sold', raise_exception=True)
+@permission_required('common.view_users_profile_sold')
 def profile_sold(request, user_pk):
     user = get_object_or_404(AppUser, id=user_pk)
     books = Book.objects.filter(owner=user).select_related("book_type")

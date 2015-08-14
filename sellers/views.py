@@ -11,22 +11,21 @@
 
 from decimal import Decimal
 
-from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponseRedirect, Http404, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
+from authentication.decorators import permission_required
 from books.forms import BookForm
 from books.models import BookType, Book
 from authentication.models import AppUser
 from utils.alerts import set_success_msg
 from egielda import settings
-from utils.books import books_by_types
 
 
-@permission_required('common.view_sellers_index', raise_exception=True)
+@permission_required('common.view_sellers_index')
 def index(request):
     book_list = Book.objects.filter(accepted=False).select_related('owner').order_by('-pk')
     seller_list = []
@@ -37,7 +36,7 @@ def index(request):
     return render(request, 'sellers/index.html', {'seller_list': seller_list})
 
 
-@permission_required('common.view_sellers_accept_books', raise_exception=True)
+@permission_required('common.view_sellers_accept_books')
 def accept_books(request, user_pk):
     user = get_object_or_404(AppUser, pk=user_pk)
     books = Book.objects.filter(owner=user, accepted=False).select_related('book_type')
@@ -110,7 +109,7 @@ def accept_books(request, user_pk):
                        'currency': getattr(settings, 'CURRENCY', 'USD')})
 
 
-@permission_required('common.view_sellers_accept_edit_book', raise_exception=True)
+@permission_required('common.view_sellers_accept_edit_book')
 def accept_edit_book(request, user_pk, book_id):
     book = get_object_or_404(BookType, id=book_id)
 
@@ -124,7 +123,7 @@ def accept_edit_book(request, user_pk, book_id):
     return render(request, 'books/edit.html', {'form': form})
 
 
-@permission_required('common.view_sellers_remove_seller', raise_exception=True)
+@permission_required('common.view_sellers_remove_seller')
 def remove_seller(request, seller_ids):
     seller_list = AppUser.objects.filter(pk__in=seller_ids.split(','))
     if len(seller_list) == 0:

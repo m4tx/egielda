@@ -9,7 +9,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib.auth.decorators import permission_required
+from authentication.decorators import permission_required
 from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
 
@@ -20,7 +20,7 @@ from utils.alerts import set_success_msg
 from utils.dates import datetime_html_format, datetime_to_string
 
 
-@permission_required('common.view_settings_index', raise_exception=True)
+@permission_required('common.view_settings_index')
 def index(request):
     if request.method == 'POST':
         form = SettingsForm(request.POST)

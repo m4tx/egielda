@@ -19,7 +19,7 @@ from django.db import transaction
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render
 from django.views.generic import RedirectView
-from django.contrib.auth.decorators import permission_required
+from authentication.decorators import permission_required
 
 from books.forms import BookForm
 from books.models import BookType
@@ -91,9 +91,9 @@ class BookChooserWizard:
     def url_patterns(self):
         return [
             url(r'^$', RedirectView.as_view(url=reverse_lazy(self.url_namespace + ':books')), name='index'),
-            url(r'^books/$', permission_required('common.purchase_sell_books', raise_exception=True)(self.books),
+            url(r'^books/$', permission_required('common.purchase_sell_books')(self.books),
                 name='books'),
-            url(r'^summary/$', permission_required('common.purchase_sell_books', raise_exception=True)(self.summary),
+            url(r'^summary/$', permission_required('common.purchase_sell_books')(self.summary),
                 name='summary'),
         ]
 

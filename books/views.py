@@ -10,7 +10,7 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 from collections import defaultdict
 
-from django.contrib.auth.decorators import permission_required
+from authentication.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
@@ -20,13 +20,13 @@ from books.models import BookType, Book
 from utils.alerts import set_success_msg, set_error_msg, set_info_msg
 
 
-@permission_required('common.view_books_index', raise_exception=True)
+@permission_required('common.view_books_index')
 def index(request):
     book_list = BookType.objects.all().order_by('title')
     return render(request, 'books/index.html', {'book_list': book_list})
 
 
-@permission_required('common.view_books_add_book', raise_exception=True)
+@permission_required('common.view_books_add_book')
 def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
@@ -42,7 +42,7 @@ def add_book(request):
     return render(request, 'books/add.html', {'form': form})
 
 
-@permission_required('common.view_books_edit_book', raise_exception=True)
+@permission_required('common.view_books_edit_book')
 def edit_book(request, book_id):
     book = get_object_or_404(BookType, id=book_id)
     if request.method == 'POST':
@@ -59,7 +59,7 @@ def edit_book(request, book_id):
     return render(request, 'books/edit.html', {'form': form})
 
 
-@permission_required('common.view_books_remove_book', raise_exception=True)
+@permission_required('common.view_books_remove_book')
 def remove_book(request, book_ids):
     book_list = BookType.objects.filter(pk__in=book_ids.split(','))
     if len(book_list) == 0:
@@ -73,7 +73,7 @@ def remove_book(request, book_ids):
         return render(request, 'books/remove.html', {'book_list': book_list})
 
 
-@permission_required('common.view_books_book_details', raise_exception=True)
+@permission_required('common.view_books_book_details')
 def book_details(request, book_id):
     book = get_object_or_404(BookType, id=book_id)
     book.categories_str = ", ".join([category.name for category in book.categories.all()])
@@ -95,7 +95,7 @@ def bulk_actions(request, action_name):
         raise Http404
 
 
-@permission_required('common.view_books_duplicated', raise_exception=True)
+@permission_required('common.view_books_duplicated')
 def duplicated(request):
     if request.method == 'POST':
         if 'merge_isbn' not in request.POST or 'to_merge' not in request.POST:

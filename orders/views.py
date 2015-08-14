@@ -9,15 +9,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.db.models import Sum
 from django.db.models.query import QuerySet
-from django.http.response import HttpResponseBadRequest, HttpResponseRedirect, Http404
+from django.http.response import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
+from authentication.decorators import permission_required
 from authentication.models import AppUser
 from books.models import Book
 from orders.models import Order
@@ -26,12 +26,12 @@ from utils.books import get_available_books
 from utils.dates import get_current_year
 
 
-@permission_required('common.view_orders_index', raise_exception=True)
+@permission_required('common.view_orders_index')
 def index(request):
     return HttpResponseRedirect(reverse(not_fulfilled))
 
 
-@permission_required('common.view_orders_not_fulfilled', raise_exception=True)
+@permission_required('common.view_orders_not_fulfilled')
 def not_fulfilled(request):
     orders = get_orders().filter(fulfilled=False)
     class_list = AppUser.objects.order_by('-year', 'class_letter').values_list('year', 'class_letter').distinct()
@@ -41,7 +41,7 @@ def not_fulfilled(request):
     return render(request, 'orders/not_fulfilled.html', {'orders': orders, 'class_list': cl_list})
 
 
-@permission_required('common.view_orders_fulfilled', raise_exception=True)
+@permission_required('common.view_orders_fulfilled')
 def fulfilled(request):
     orders = get_orders().exclude(fulfilled=False)
     class_list = AppUser.objects.order_by('-year', 'class_letter').values_list('year', 'class_letter').distinct()
@@ -51,7 +51,7 @@ def fulfilled(request):
     return render(request, 'orders/fulfilled.html', {'orders': orders, 'class_list': cl_list})
 
 
-@permission_required('common.view_orders_order_details', raise_exception=True)
+@permission_required('common.view_orders_order_details')
 def order_details(request, order_pk):
     order = get_object_or_404(Order.objects
                               .prefetch_related('book_set', 'book_set__book_type',
@@ -76,7 +76,7 @@ def order_details(request, order_pk):
                                                    'price_sum': price_sum, 'users': users, 'book_sum': book_sum})
 
 
-@permission_required('common.view_orders_fulfill', raise_exception=True)
+@permission_required('common.view_orders_fulfill')
 def fulfill(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('orderedbook_set', 'orderedbook_set__book_type')
                               .select_related('user'), pk=order_pk, fulfilled=False)
@@ -178,7 +178,7 @@ def fulfill(request, order_pk):
         return render(request, 'orders/fulfill.html', {'order': order, 'book_list': book_types.keys(), 'users': users})
 
 
-@permission_required('common.view_orders_fulfill_accept', raise_exception=True)
+@permission_required('common.view_orders_fulfill_accept')
 def fulfill_accept(request, order_pk):
     order = get_object_or_404(Order.objects.prefetch_related('orderedbook_set', 'orderedbook_set__book_type')
                               .select_related('user'), pk=order_pk, fulfilled=False)
@@ -217,7 +217,7 @@ def fulfill_accept(request, order_pk):
                                                           'price_sum': price_sum, 'users': users, 'book_sum': book_sum})
 
 
-@permission_required('common.view_orders_remove_order', raise_exception=True)
+@permission_required('common.view_orders_remove_order')
 def remove_order(request, order_ids):
     order_list = get_orders().filter(pk__in=order_ids.split(','), fulfilled=False)
     if len(order_list) == 0:

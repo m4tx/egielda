@@ -12,10 +12,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect, HttpResponseNotAllowed
-from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
+
 from django.db.models import Sum
 
+from authentication.decorators import permission_required
 from authentication.forms import UserDataForm, SupplementForm, RegistrationForm
 from books.models import Book
 from egielda import settings
@@ -75,7 +76,7 @@ def register_supplement(request):
         return HttpResponseNotAllowed(['POST'])
 
 
-@permission_required('common.view_authentication_profile', raise_exception=True)
+@permission_required('common.view_authentication_profile')
 def profile(request):
     disabled_fields_post = ['username', 'password']
     disabled_fields_files = []
@@ -119,7 +120,7 @@ def profile(request):
     return render(request, 'authentication/profile.html', {'form': form})
 
 
-@permission_required('common.view_authentication_profile_purchased', raise_exception=True)
+@permission_required('common.view_authentication_profile_purchased')
 def purchased(request):
     orders = Order.objects.filter(user=request.user).prefetch_related(
         'user', 'orderedbook_set', 'orderedbook_set__book_type').annotate(books_count=Sum('orderedbook__count'))
@@ -138,7 +139,7 @@ def purchased(request):
     return render(request, 'authentication/purchased.html', {'stats': stats})
 
 
-@permission_required('common.view_authentication_profile_sold', raise_exception=True)
+@permission_required('common.view_authentication_profile_sold')
 def sold(request):
     books = Book.objects.filter(owner=request.user).select_related("book_type")
 

@@ -9,18 +9,18 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 
+from authentication.decorators import permission_required
 from books.models import BookType
 from categories.forms import CategoryForm
 from categories.models import Category
 from utils.alerts import set_success_msg
 
 
-@permission_required('common.view_categories_index', raise_exception=True)
+@permission_required('common.view_categories_index')
 def index(request):
     book_list = BookType.objects.all().prefetch_related('categories')
     category_list = Category.objects.all()
@@ -33,7 +33,7 @@ def index(request):
     return render(request, 'categories/index.html', {'category_list': sorted(count.items(), key=lambda o: o[0].name)})
 
 
-@permission_required('common.view_categories_add_category', raise_exception=True)
+@permission_required('common.view_categories_add_category')
 def add_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -46,7 +46,7 @@ def add_category(request):
     return render(request, 'categories/add.html', {'form': form})
 
 
-@permission_required('common.view_categories_edit_category', raise_exception=True)
+@permission_required('common.view_categories_edit_category')
 def edit_category(request, cat_pk):
     category = get_object_or_404(Category, pk=cat_pk)
     if request.method == 'POST':
@@ -60,7 +60,7 @@ def edit_category(request, cat_pk):
     return render(request, 'categories/edit.html', {'form': form})
 
 
-@permission_required('common.view_categories_remove_category', raise_exception=True)
+@permission_required('common.view_categories_remove_category')
 def remove_category(request, cat_pk):
     category = get_object_or_404(Category, pk=cat_pk)
     if request.method == 'POST':
@@ -72,7 +72,7 @@ def remove_category(request, cat_pk):
         return render(request, 'categories/remove.html', {'category': category, 'book_count': book_count})
 
 
-@permission_required('common.view_categories_list_books', raise_exception=True)
+@permission_required('common.view_categories_list_books')
 def list_books(request, cat_pk):
     category = get_object_or_404(Category, pk=cat_pk)
     book_list = get_list_or_404(BookType, categories=category)
