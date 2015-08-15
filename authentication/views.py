@@ -102,8 +102,7 @@ def profile(request):
             user.save()
             set_success_msg(request, 'profile_saved')
             return HttpResponseRedirect(reverse(profile))
-        else:
-            incorrect_fields = None
+
     else:
         form = UserDataForm(instance=request.user)
         form.cleaned_data = {}
