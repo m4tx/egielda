@@ -103,6 +103,11 @@ class UserDataForm(ModelForm):
         if document is None:
             return document
 
+        extension = document.name.split('.')[-1].upper()
+        if extension not in settings.ALLOWED_UPLOAD_EXTS:
+            raise ValidationError(_("File type is not supported. Valid extensions are: {}")
+                                  .format(", ".join(settings.ALLOWED_UPLOAD_EXTS)))
+
         image = Image.open(document.file)
 
         if hasattr(image, '_getexif'):

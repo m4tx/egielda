@@ -49,6 +49,7 @@ STATIC_URL = '/static/'
 # Uploads
 MEDIA_ROOT = 'upload/upload'
 MEDIA_URL = '/static/upload/'
+ALLOWED_UPLOAD_EXTS = ('PNG', 'JPG', 'JPEG')
 
 # LDAP support
 USE_LDAP_VERIFICATION = False
