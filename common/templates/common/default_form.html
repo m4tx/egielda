@@ -1,33 +1,4 @@
 <div class="responsive-form">
-    <style scoped>
-        input[type="checkbox"][id$="-clear_id"] {
-            margin: 0 4px 0 25px;
-            width: initial !important;
-        }
-
-        label[for$="-clear_id"] {
-            width: initial !important;
-        }
-
-        input[type="file"] {
-            height: auto;
-            padding: 0.458614em 1em;
-            width: initial !important;
-        }
-
-        .ui.form .responsive-form div.inline.fields > .ui.pointing.label, .responsive-form div.inline.fields > .ui.pointing.label {
-            margin-top: 0;
-        }
-
-        .ui.form .responsive-form div.inline.fields > .ui.pointing.label, .responsive-form div.inline.fields > .ui.pointing.label > ul {
-            margin: 0;
-            padding: 4px 20px;
-        }
-
-        .ui.form .responsive-form div.inline.fields > .ui.pointing.label, .responsive-form div.inline.fields > .ui.pointing.label > ul > li {
-            padding: 3px;
-        }
-    </style>
     {% load base %}
     {% for field in form %}
         {% include "common/form_field.html" with id=field.auto_id label=field.label has_errors=field.errors %}
