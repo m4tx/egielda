@@ -1,5 +1,3 @@
-# coding=utf-8
-
 # This file is part of e-Giełda.
 # Copyright (C) 2014-2015  Mateusz Maćkowski and Tomasz Zieliński
 #
