@@ -54,7 +54,9 @@ class UserDataForm(ModelForm):
             'class_letter': TextInput(attrs={
                 'pattern': '^[A-Z]$'
             }),
-            'document': FileFieldLink,
+            'document': FileFieldLink(attrs={
+                'accept': ','.join('.' + x.lower() for x in settings.ALLOWED_UPLOAD_EXTS)
+            }),
         }
         labels = {
             'first_name': _("First name"),
