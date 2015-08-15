@@ -98,7 +98,7 @@ class UserDataForm(ModelForm):
 
         return class_letter
 
-    """def clean_document(self):
+    def clean_document(self):
         document = self.cleaned_data['document']
         if document is None:
             return document
@@ -119,9 +119,10 @@ class UserDataForm(ModelForm):
                     elif orientation == 8:
                         image = image.transpose(Image.ROTATE_90)
 
-        document.file.seek(0)
-        image.save(document.file, "jpeg")
-        return document"""
+            document.file.seek(0)
+            image.save(document.file, "jpeg")
+
+        return document
 
 
 class RegistrationForm(UserDataForm):
