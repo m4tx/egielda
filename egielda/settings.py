@@ -46,11 +46,11 @@ DATABASES = {
 SITE_NAME = "e-Giełda"
 STATIC_URL = '/static/'
 
+# Uploads
 MEDIA_ROOT = 'upload/upload'
 MEDIA_URL = '/static/upload/'
 
-AUTH_USER_MODEL = 'authentication.AppUser'
-
+# LDAP support
 USE_LDAP_VERIFICATION = False
 LDAP_SERVER_URL = None
 LDAP_USERNAME = None
@@ -70,6 +70,8 @@ USE_TZ = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Other settings
+AUTH_USER_MODEL = 'authentication.AppUser'
+
 INSTALLED_APPS = (
     'egielda',
     'django.contrib.admin',
