@@ -35,7 +35,7 @@ class FileFieldLink(ClearableFileInput):
                 # Avoid displaying the link as input
                 attrs['class'] = attrs['class'].replace('form-control', '')
 
-            p_attrs = {'class': 'form-control-static'}
+            p_attrs = {'class': 'static-field'}
             if value:
                 attrs['href'] = value.url
                 return format_html('<a{}><p{}>{}</p></a>',
