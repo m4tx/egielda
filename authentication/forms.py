@@ -102,7 +102,7 @@ class UserDataForm(ModelForm):
 
     def clean_document(self):
         document = self.cleaned_data['document']
-        if document is None:
+        if document is None or isinstance(document, bool):
             return document
 
         extension = document.name.split('.')[-1].upper()
