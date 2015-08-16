@@ -98,6 +98,11 @@
 
         <script>
             $('.ui.dropdown,.ui.form select').dropdown();
+            $('.ui.dropdown select').each(function() {
+                if($(this).prop("disabled")) {
+                    $(this).parent().addClass("disabled");
+                }
+            });
             $('.message .close').on('click', function () {
                 $(this).closest('.message').transition('fade');
             });
