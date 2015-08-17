@@ -5,7 +5,7 @@
 {% formfield label=_("First name") %}{{ user.first_name }}{% endformfield %}
 {% formfield label=_("Last name") %}{{ user.last_name }}{% endformfield %}
 {% if split_student_class %}
-    {% formfield label=_("Beginning year") %}{{ user.year }}{% endformfield %}
+    {% formfield label=_("School's beginning year") %}{{ user.year }}{% endformfield %}
     {% formfield label=_("Class letter") %}{{ user.class_letter }}{% endformfield %}
 {% else %}
     {% formfield label=_("Class") %}{{ user.student_class }}{% endformfield %}

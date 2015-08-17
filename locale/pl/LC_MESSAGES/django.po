@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e-Giełda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-17 22:35+0200\n"
-"PO-Revision-Date: 2015-08-17 22:35+0200\n"
+"POT-Creation-Date: 2015-08-17 22:56+0200\n"
+"PO-Revision-Date: 2015-08-17 22:56+0200\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language: pl\n"
@@ -53,8 +53,8 @@ msgstr "Nazwisko"
 
 #: authentication/forms.py:64
 #: common/templates/elements/user_profile_display_form.html:8
-msgid "Beginning year"
-msgstr "Rok rozpoczęcia"
+msgid "School's beginning year"
+msgstr "Rok rozpoczęcia szkoły"
 
 #: authentication/forms.py:65
 #: common/templates/elements/user_profile_display_form.html:9

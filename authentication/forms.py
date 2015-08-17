@@ -61,7 +61,7 @@ class UserDataForm(ModelForm):
         labels = {
             'first_name': _("First name"),
             'last_name': _("Last name"),
-            'year': _("Beginning year"),
+            'year': _("School's beginning year"),
             'class_letter': _("Class letter"),
             'phone_number': _("Phone number"),
             'email': _("E-mail"),
