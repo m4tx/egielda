@@ -59,6 +59,7 @@ class UserDataForm(ModelForm):
             }),
         }
         labels = {
+            'username': _("Username"),
             'first_name': _("First name"),
             'last_name': _("Last name"),
             'year': _("School's beginning year"),
