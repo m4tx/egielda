@@ -7,12 +7,8 @@
     <h1>{% trans "Register new account" %}</h1>
 
     <div class="ui warning message">
-        {% blocktrans %}
-            <p>We were unable to verify your identity. If you think it's because of
-                a mistake in the data you have filled in, you should skip this step and update your profile.
-            <p>In order to get your account verified, you can also upload a scan of
-            <strong>the front side of your school ID</strong> below. You can do it later from your profile page as well.
-        {% endblocktrans %}
+        <p>{% trans "We were unable to verify your identity. If you think it's because of a mistake in the data you have filled in, you should skip this step and update your profile." %}
+        <p>{% trans "In order to get your account verified, you can also upload a scan of <strong>the front side of your school ID</strong> below. You can do it later from your profile page as well." %}
     </div>
 
     <form class="ui form" enctype="multipart/form-data" action="{% url 'authentication.views.register_supplement' %}" method="post">

@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e-Giełda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-20 16:41+0200\n"
-"PO-Revision-Date: 2015-07-20 16:48+0200\n"
+"POT-Creation-Date: 2015-08-17 22:29+0200\n"
+"PO-Revision-Date: 2015-08-17 22:29+0200\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language: pl\n"
@@ -26,105 +26,100 @@ msgstr ""
 "X-Generator: Poedit 1.8.2\n"
 "X-Poedit-Bookmarks: -1,-1,15,-1,-1,-1,-1,-1,-1,-1\n"
 
-#: authentication/forms.py:34
-msgid ""
-"\"graduate\" or [grade as an arabic numeral][capital class letter], e.g. 2A"
-msgstr "„absolwent” lub [klasa][duża litera klasy], np. 2A"
-
-#: authentication/forms.py:39
-#: common/templates/book_chooser_wizard/summary.html:16
-#: purchase/templates/purchase/success.html:14 sell/forms.py:28
-#: sell/templates/sell/success.html:16 sellers/templates/sellers/index.html:21
-#: sellers/templates/sellers/remove.html:25
-#: sellers/templates/sellers/success.html:14
-#: users/templates/users/users.html:43 users/templates/users/verify.html:63
-msgid "First name"
-msgstr "Imię"
-
-#: authentication/forms.py:40
-#: common/templates/book_chooser_wizard/summary.html:23
-#: purchase/templates/purchase/success.html:21 sell/forms.py:29
-#: sell/templates/sell/success.html:23 sellers/templates/sellers/index.html:22
-#: sellers/templates/sellers/remove.html:26
-#: sellers/templates/sellers/success.html:21
-#: users/templates/users/users.html:44 users/templates/users/verify.html:71
-msgid "Last name"
-msgstr "Nazwisko"
-
-#: authentication/forms.py:41
-#: common/templates/book_chooser_wizard/summary.html:30
-#: orders/templates/orders/fulfilled.html:28
-#: orders/templates/orders/not_fulfilled.html:28
-#: orders/templates/orders/orders_table.html:13
-#: purchase/templates/purchase/success.html:28 sell/forms.py:30
-#: sell/templates/sell/success.html:30 sellers/templates/sellers/index.html:23
-#: sellers/templates/sellers/remove.html:27
-#: sellers/templates/sellers/success.html:28
-#: users/templates/users/users.html:45 users/templates/users/verify.html:79
-msgid "Class"
-msgstr "Klasa"
-
-#: authentication/forms.py:42
-#: common/templates/book_chooser_wizard/summary.html:37
-#: purchase/templates/purchase/success.html:35 sell/forms.py:31
-#: sell/templates/sell/success.html:37 sellers/templates/sellers/index.html:24
-#: sellers/templates/sellers/remove.html:28
-#: sellers/templates/sellers/success.html:35
-#: users/templates/users/users.html:46 users/templates/users/verify.html:87
-msgid "Phone number"
-msgstr "Numer telefonu"
-
-#: authentication/forms.py:43
-#: common/templates/book_chooser_wizard/summary.html:45
-#: purchase/templates/purchase/success.html:42
-#: sell/templates/sell/success.html:44
-#: sellers/templates/sellers/success.html:42
-#: users/templates/users/users.html:47 users/templates/users/verify.html:95
-msgid "E-mail"
-msgstr "E-mail"
-
-#: authentication/forms.py:44
-msgid "Identity card"
-msgstr "Dowód tożsamości"
-
-#: authentication/forms.py:50
+#: authentication/forms.py:32 authentication/models.py:102
 msgid "graduate"
 msgstr "absolwent"
 
-#: authentication/forms.py:52
-msgid ""
-"Invalid data. Use \"graduate\" or [grade as an arabic numeral][capital class "
-"letter], e.g. 2A"
-msgstr ""
-"Nieprawidłowe dane. Użyj „absolwent” lub [klasa][duża litera klasy], np. 2A"
+#: authentication/forms.py:34
+#, python-format
+msgid "%(class)d class"
+msgstr "%(class)d. klasa"
 
-#: authentication/models.py:57
+#: authentication/forms.py:48
+msgid "Alpha-numeric characters only"
+msgstr "Tylko znaki alfanumeryczne"
+
+#: authentication/forms.py:62
+#: common/templates/elements/user_profile_display_form.html:5
+#: users/templates/users/user_list_base.html:8
+msgid "First name"
+msgstr "Imię"
+
+#: authentication/forms.py:63
+#: common/templates/elements/user_profile_display_form.html:6
+#: users/templates/users/user_list_base.html:9
+msgid "Last name"
+msgstr "Nazwisko"
+
+#: authentication/forms.py:64
+#: common/templates/elements/user_profile_display_form.html:8
+msgid "Beginning year"
+msgstr "Rok rozpoczęcia"
+
+#: authentication/forms.py:65
+#: common/templates/elements/user_profile_display_form.html:9
+msgid "Class letter"
+msgstr "Litera klasy"
+
+#: authentication/forms.py:66
+#: common/templates/elements/user_profile_display_form.html:13
+#: users/templates/users/user_list_base.html:11
+msgid "Phone number"
+msgstr "Numer telefonu"
+
+#: authentication/forms.py:67
+#: common/templates/elements/user_profile_display_form.html:14
+#: users/templates/users/user_list_base.html:12
+msgid "E-mail"
+msgstr "E-mail"
+
+#: authentication/forms.py:68
+msgid "School ID"
+msgstr "Legitymacja szkolna"
+
+#: authentication/forms.py:76
+msgid "Username contains illegal characters."
+msgstr "Nazwa użytkownika zawiera niedozwolone znaki."
+
+#: authentication/forms.py:91
+msgid "Invalid year."
+msgstr "Nieprawidłowy rok."
+
+#: authentication/forms.py:99
+msgid "Invalid class letter."
+msgstr "Nieprawidłowa litera klasy."
+
+#: authentication/forms.py:110
+msgid "File type is not supported. Valid extensions are: {}"
+msgstr "Nieobsługiwany typ pliku. Poprawne rozszerzenia: {}"
+
+#: authentication/models.py:62
 msgid "This username already does exist in the database."
 msgstr "Ta nazwa użytkownika już istnieje w bazie danych."
 
-#: authentication/models.py:90
+#: authentication/models.py:127
 #, python-format
 msgid "%(first_name)s %(last_name)s, %(student_class)s"
 msgstr "%(first_name)s %(last_name)s, %(student_class)s"
 
-#: authentication/models.py:95
+#: authentication/models.py:132
 #, python-format
 msgid "%(first_name)s %(last_name)s"
 msgstr "%(first_name)s %(last_name)s"
 
-#: authentication/models.py:101
+#: authentication/models.py:138
 #, python-format
 msgid ""
 "%(first_name)s %(last_name)s, %(student_class)s, %(phone_number)s, %(email)s"
 msgstr ""
 "%(first_name)s %(last_name)s, %(student_class)s, %(phone_number)s, %(email)s"
 
-#: authentication/signals.py:45
+#: authentication/signals.py:46
 #, python-brace-format
 msgid "{username} on {site_name} is awaiting verification"
 msgstr "{username} na stronie {site_name} oczekuje na weryfikację"
 
-#: authentication/signals.py:46
+#: authentication/signals.py:47
 #, python-brace-format
 msgid ""
 "Hello,\n"
@@ -134,24 +129,24 @@ msgid ""
 msgstr ""
 "Witaj,\n"
 "\n"
-"{username} na stronie {site_name} czeka na weryfikację. Aby go "
-"zweryfikować, wejdź na {verification_url}"
+"{username} na stronie {site_name} czeka na weryfikację. Aby go zweryfikować, "
+"wejdź na {verification_url}"
 
-#: authentication/signals.py:50
+#: authentication/signals.py:51
 #, python-brace-format
 msgid ""
 "Hello,<p>{username} on {site_name} is awaiting verification.<p><a "
 "href='{verification_url}'>Verify {short_name}</a>"
 msgstr ""
-"Witaj,<p>{username} na stronie {site_name} czeka na weryfikację."
-"<p><a href='{verification_url}'>Zweryfikuj użytkownika {short_name}</a>"
+"Witaj,<p>{username} na stronie {site_name} czeka na weryfikację.<p><a "
+"href='{verification_url}'>Zweryfikuj użytkownika {short_name}</a>"
 
-#: authentication/signals.py:63
+#: authentication/signals.py:64
 #, python-brace-format
 msgid "[{site_name}] Your account was successfully verified"
 msgstr "[{site_name}] Twoje konto zostało pomyślnie zweryfikowane"
 
-#: authentication/signals.py:64
+#: authentication/signals.py:65
 #, python-brace-format
 msgid ""
 "Hello {username},\n"
@@ -164,7 +159,7 @@ msgstr ""
 "Twoje konto zostało pomyślnie zweryfikowane. Będziesz mógł sprzedawać i "
 "kupować książki w wyznaczonym okresie czasu."
 
-#: authentication/signals.py:68
+#: authentication/signals.py:69
 #, python-brace-format
 msgid ""
 "Hello {username},<p>Your account was successfully verified. You will be able "
@@ -173,12 +168,12 @@ msgstr ""
 "Witaj {username},<p>Twoje konto zostało pomyślnie zweryfikowane. Będziesz "
 "mógł sprzedawać i kupować książki w wyznaczonym okresie czasu."
 
-#: authentication/signals.py:83
+#: authentication/signals.py:84
 #, python-brace-format
 msgid "[{site_name}] Your profile data needs correction"
 msgstr "[{site_name}] Dane w Twoim profilu wymagają poprawy"
 
-#: authentication/signals.py:84
+#: authentication/signals.py:85
 #, python-brace-format
 msgid ""
 "Hello {username},\n"
@@ -192,11 +187,11 @@ msgstr ""
 "zgadzają się ze skanem Twojego dokumentu tożsamości lub zawierają inne "
 "błędy:\n"
 
-#: authentication/signals.py:93
+#: authentication/signals.py:94
 msgid "In order to get your account verified, you will need to correct them."
 msgstr "Aby Twoje konto mogło zostać zweryfikowane, musisz je poprawić."
 
-#: authentication/signals.py:95
+#: authentication/signals.py:96
 #, python-brace-format
 msgid ""
 "Hello {username},<p>The data you provided in your profile was found "
@@ -207,180 +202,72 @@ msgstr ""
 "Poniższe pola nie zgadzają się ze skanem Twojego dokumentu tożsamości lub "
 "zawierają inne błędy:"
 
-#: authentication/signals.py:105
+#: authentication/signals.py:106
 msgid ""
 "<p>In order to get your account verified, you will need to correct them."
 msgstr "<p>Aby Twoje konto mogło zostać zweryfikowane, musisz je poprawić."
 
 #: authentication/templates/authentication/profile.html:51
-#: authentication/templates/authentication/profile.html:54
-#: authentication/templates/authentication/purchased.html:55
-#: authentication/templates/authentication/sold.html:55
-#: common/templates/common/base.html:78
+#: common/templates/common/base.html:50
 #: common/templatetags/profile_header.py:23
+#: users/templates/users/profile_header.html:5
 msgid "Your profile"
 msgstr "Twój profil"
 
-#: authentication/templates/authentication/profile.html:56
-#: authentication/templates/authentication/purchased.html:57
-#: authentication/templates/authentication/sold.html:57
-#: users/templates/users/profile_header.html:5
-msgid "Account verified"
-msgstr "Konto zweryfikowane"
-
 #: authentication/templates/authentication/profile.html:58
-#: authentication/templates/authentication/purchased.html:59
-#: authentication/templates/authentication/sold.html:59
-#: users/templates/users/profile_header.html:7
-msgid "Account not verified"
-msgstr "Konto niezweryfikowane"
-
-#: authentication/templates/authentication/profile.html:65
-msgid "Your account is now awaiting verification."
-msgstr "Twoje konto oczekuje teraz na weryfikację."
-
-#: authentication/templates/authentication/profile.html:69
-msgid ""
-"Your verification request was rejected. Following fields are filled in "
-"incorrectly:"
-msgstr ""
-"Twoja prośba o weryfikację została odrzucona. Poniższe pola zostały "
-"wypełnione nieprawidłowo:"
-
-#: authentication/templates/authentication/profile.html:80
-#: authentication/templates/authentication/profile.html:82
-#: authentication/templates/authentication/purchased.html:66
-#: authentication/templates/authentication/purchased.html:68
-#: authentication/templates/authentication/sold.html:66
-#: authentication/templates/authentication/sold.html:68
+#: authentication/templates/authentication/purchased.html:60
+#: authentication/templates/authentication/purchased.html:62
+#: authentication/templates/authentication/sold.html:60
+#: authentication/templates/authentication/sold.html:62
 #: users/templates/users/purchased.html:60
 #: users/templates/users/purchased.html:62 users/templates/users/sold.html:60
 #: users/templates/users/sold.html.py:62
-#: users/templates/users/user_profile.html:59
-#: users/templates/users/user_profile.html:61
+#: users/templates/users/user_profile.html:58
 msgid "Profile data"
 msgstr "Twoje dane"
 
-#: authentication/templates/authentication/profile.html:85
-#: authentication/templates/authentication/profile.html:87
+#: authentication/templates/authentication/profile.html:60
+#: authentication/templates/authentication/profile.html:62
 #: authentication/templates/authentication/purchased.html:52
-#: authentication/templates/authentication/purchased.html:71
-#: authentication/templates/authentication/purchased.html:73
-#: authentication/templates/authentication/sold.html:71
-#: authentication/templates/authentication/sold.html:73
+#: authentication/templates/authentication/purchased.html:64
+#: authentication/templates/authentication/sold.html:65
+#: authentication/templates/authentication/sold.html:67
 #: common/templatetags/profile_header.py:24
 #: users/templates/users/purchased.html:52
-#: users/templates/users/purchased.html:65
-#: users/templates/users/purchased.html:67 users/templates/users/sold.html:65
+#: users/templates/users/purchased.html:64 users/templates/users/sold.html:65
 #: users/templates/users/sold.html.py:67
-#: users/templates/users/user_profile.html:64
-#: users/templates/users/user_profile.html:66
+#: users/templates/users/user_profile.html:60
+#: users/templates/users/user_profile.html:62
 msgid "Purchased books"
 msgstr "Kupione książki"
 
-#: authentication/templates/authentication/profile.html:90
-#: authentication/templates/authentication/profile.html:92
-#: authentication/templates/authentication/purchased.html:76
-#: authentication/templates/authentication/purchased.html:78
+#: authentication/templates/authentication/profile.html:65
+#: authentication/templates/authentication/profile.html:67
+#: authentication/templates/authentication/purchased.html:66
+#: authentication/templates/authentication/purchased.html:68
 #: authentication/templates/authentication/sold.html:52
-#: authentication/templates/authentication/sold.html:76
-#: authentication/templates/authentication/sold.html:78
+#: authentication/templates/authentication/sold.html:69
 #: common/templatetags/profile_header.py:25
-#: users/templates/users/purchased.html:70
-#: users/templates/users/purchased.html:72 users/templates/users/sold.html:52
-#: users/templates/users/sold.html.py:70 users/templates/users/sold.html:72
-#: users/templates/users/user_profile.html:69
-#: users/templates/users/user_profile.html:71
+#: users/templates/users/purchased.html:66
+#: users/templates/users/purchased.html:68 users/templates/users/sold.html:52
+#: users/templates/users/sold.html.py:69
+#: users/templates/users/user_profile.html:65
+#: users/templates/users/user_profile.html:67
 msgid "Sold books"
 msgstr "Sprzedane książki"
 
-#: authentication/templates/authentication/profile.html:99
-#: books/templates/books/edit.html:33
-#: categories/templates/categories/edit.html:19
+#: authentication/templates/authentication/profile.html:75
+#: books/templates/books/edit.html:29
+#: categories/templates/categories/edit.html:20
 #: settings/templates/settings/index.html:20
-#: users/templates/users/user_profile.html:78
+#: users/templates/users/user_profile.html:75
 msgid "Save"
 msgstr "Zapisz"
 
-#: authentication/templates/authentication/purchased.html:94
-#: authentication/templates/authentication/sold.html:93 books/forms.py:47
-#: books/templates/books/book_list_base.html:10
-#: books/templates/books/details.html:25
-#: orders/templates/orders/fulfill_accept_book_list.html:9
-#: users/templates/users/purchased.html:88 users/templates/users/sold.html:87
-msgid "ISBN"
-msgstr "ISBN"
-
-#: authentication/templates/authentication/purchased.html:95
-#: authentication/templates/authentication/sold.html:94 books/forms.py:54
-#: books/templates/books/book_list_base.html:11
-#: books/templates/books/details.html:39
-#: orders/templates/orders/fulfill_accept_book_list.html:10
-#: users/templates/users/purchased.html:89 users/templates/users/sold.html:88
-msgid "Publisher"
-msgstr "Wydawnictwo"
-
-#: authentication/templates/authentication/purchased.html:96
-#: authentication/templates/authentication/sold.html:95 books/forms.py:55
-#: books/templates/books/book_list_base.html:12
-#: books/templates/books/details.html:32
-#: orders/templates/orders/fulfill_accept_book_list.html:11
-#: users/templates/users/purchased.html:90 users/templates/users/sold.html:89
-msgid "Title"
-msgstr "Tytuł"
-
-#: authentication/templates/authentication/purchased.html:97
-#: authentication/templates/authentication/sold.html:96
-#: books/templates/books/book_list_base.html:13
-#: orders/templates/orders/fulfill_accept_book_list.html:12
-#: users/templates/users/purchased.html:91 users/templates/users/sold.html:90
-msgid "Publication"
-msgstr "Wydanie"
-
-#: authentication/templates/authentication/purchased.html:98
-#: authentication/templates/authentication/sold.html:97
-#: books/templates/books/book_list_base.html:14
-#: books/templates/books/details.html:53
-#: orders/templates/orders/fulfill_accept_book_list.html:13
-#: users/templates/users/purchased.html:92 users/templates/users/sold.html:91
-msgid "Price"
-msgstr "Cena"
-
-#: authentication/templates/authentication/purchased.html:99
-#: common/templates/book_chooser_wizard/books_chosen_list.html:9
-#: orders/templates/orders/fulfill_accept_book_list.html:14
-#: orders/templates/orders/fulfill_book_list.html:5
-#: sellers/templates/sellers/accept_book_list.html:6
-#: users/templates/users/purchased.html:93
-msgid "Amount"
-msgstr "Ilość"
-
-#: authentication/templates/authentication/purchased.html:100
-#: common/templatetags/manage_header.py:40
-#: managemenu/templates/managemenu/index.html:95
-#: orders/templates/orders/fulfilled.html:5
-#: orders/templates/orders/fulfilled.html:21
-#: orders/templates/orders/not_fulfilled.html:21
-#: users/templates/users/purchased.html:94
-msgid "Fulfilled"
-msgstr "Zrealizowane"
-
-#: authentication/templates/authentication/purchased.html:124
-#: authentication/templates/authentication/sold.html:118
-#: books/templates/books/duplicated.html:35
-#: books/templates/books/index.html:18
-#: categories/templates/categories/index.html:60
-#: categories/templates/categories/list.html:19
-#: orders/templates/orders/orders_table.html:69
-#: sellers/templates/sellers/index.html:69 stats/templates/stats/books.html:63
-#: stats/templates/stats/books_sold.html:103
-#: users/templates/users/purchased.html:118
-#: users/templates/users/sold.html:112 users/templates/users/users.html:88
-msgid "There's nothing to display."
-msgstr "Nie ma nic do wyświetlenia."
-
 #: authentication/templates/authentication/register.html:4
 #: authentication/templates/authentication/register.html:7
+#: authentication/templates/authentication/registration_unverified.html:4
+#: authentication/templates/authentication/registration_unverified.html:7
 msgid "Register new account"
 msgstr "Zarejestruj nowe konto"
 
@@ -398,19 +285,29 @@ msgstr ""
 "absolwentem</strong> tej szkoły. Przykładem poprawnego skanu jest przednia "
 "strona legitymacji szkolnej."
 
-#: authentication/templates/authentication/register.html:17
-#: common/templates/book_chooser_wizard/books.html:84
-#: orders/templates/orders/fulfill.html:43
-#: sellers/templates/sellers/success.html:54
-msgid "Next"
-msgstr "Dalej"
+#: authentication/templates/authentication/register.html:19
+#, python-format
+msgid ""
+"By clicking the \"Register\" button below, you are agreeing to the <a href="
+"\"%(tos_url)s\">Terms of Service</a>."
+msgstr ""
+"Klikając przycisk „Zarejestruj się”, akceptujesz <a href=\"%(tos_url)s"
+"\">regulamin</a>."
+
+#: authentication/templates/authentication/register.html:24
+msgid "Register"
+msgstr "Zarejestruj się"
 
 #: authentication/templates/authentication/registration_complete.html:4
 #: authentication/templates/authentication/registration_complete.html:7
 msgid "Registration completed"
 msgstr "Rejestracja zakończona"
 
-#: authentication/templates/authentication/registration_complete.html:10
+#: authentication/templates/authentication/registration_complete.html:11
+msgid "Your account was created. You can sign in now."
+msgstr "Twoje konto zostało utworzone. Możesz się teraz zalogować."
+
+#: authentication/templates/authentication/registration_complete.html:13
 msgid ""
 "Your account was created. You can sign in now, although you won't be able to "
 "do anything until the account is verified."
@@ -418,21 +315,29 @@ msgstr ""
 "Twoje konto zostało założone. Możesz się już zalogować, nie będziesz jednak "
 "w stanie wykonać żadnej akcji do czasu zweryfikowania konta."
 
-#: authentication/templates/authentication/sold.html:98
-#: users/templates/users/sold.html:92
-msgid "Declared"
-msgstr "Zadeklarowano"
+#: authentication/templates/authentication/registration_unverified.html:10
+msgid ""
+"We were unable to verify your identity. If you think it's because of a "
+"mistake in the data you have filled in, you should skip this step and update "
+"your profile."
+msgstr ""
+"Nie byliśmy w stanie zweryfikować Twojej tożsamości. Jeżeli myślisz, że jest "
+"to błąd w danych, które podałeś, powinieneś pominąć ten krok i zaktualizować "
+"swój profil."
 
-#: authentication/templates/authentication/sold.html:99
-#: users/templates/users/sold.html:93
-msgid "Brought"
-msgstr "Przyniesiono"
+#: authentication/templates/authentication/registration_unverified.html:11
+msgid ""
+"In order to get your account verified, you can also upload a scan of "
+"<strong>the front side of your school ID</strong> below. You can do it later "
+"from your profile page as well."
+msgstr ""
+"By Twoje konto mogło być zweryfikowane, powinieneś również wysłać skan "
+"<strong>przedniej strony swojej legitymacji</strong>. Możesz to zrobić także "
+"później na stronie swojego profilu."
 
-#: authentication/templates/authentication/sold.html:100
-#: stats/templates/stats/books.html:44 users/templates/users/sold.html:94
-msgctxt "count"
-msgid "Sold"
-msgstr "Sprzedano"
+#: authentication/templates/authentication/registration_unverified.html:19
+msgid "Continue"
+msgstr "Kontynuuj"
 
 #: books/forms.py:24
 msgid "This ISBN is not valid."
@@ -442,7 +347,31 @@ msgstr "Ten ISBN nie jest prawidłowy."
 msgid "ISBN number"
 msgstr "Numer ISBN"
 
-#: books/forms.py:56 books/templates/books/details.html:46
+#: books/forms.py:47 books/templates/books/book_list_base.html:9
+#: books/templates/books/details.html:26
+#: orders/templates/orders/fulfill_book_list_base.html:8
+#: users/templates/users/purchased_list.html:15
+#: users/templates/users/sold_list.html:14
+msgid "ISBN"
+msgstr "ISBN"
+
+#: books/forms.py:54 books/templates/books/book_list_base.html:10
+#: books/templates/books/details.html:28
+#: orders/templates/orders/fulfill_book_list_base.html:9
+#: users/templates/users/purchased_list.html:16
+#: users/templates/users/sold_list.html:15
+msgid "Publisher"
+msgstr "Wydawnictwo"
+
+#: books/forms.py:55 books/templates/books/book_list_base.html:11
+#: books/templates/books/details.html:27
+#: orders/templates/orders/fulfill_book_list_base.html:10
+#: users/templates/users/purchased_list.html:17
+#: users/templates/users/sold_list.html:16
+msgid "Title"
+msgstr "Tytuł"
+
+#: books/forms.py:56 books/templates/books/details.html:29
 msgid "Publication year"
 msgstr "Rok wydania"
 
@@ -451,12 +380,12 @@ msgstr "Rok wydania"
 msgid "Price (%s)"
 msgstr "Cena (%s)"
 
-#: books/forms.py:58 books/templates/books/details.html:60
+#: books/forms.py:58 books/templates/books/details.html:31
 #: categories/templates/categories/index.html:16
 #: categories/templates/categories/list.html:9
-#: common/templates/book_chooser_wizard/books.html:35
+#: common/templates/book_chooser_wizard/books.html:31
 #: common/templatetags/manage_header.py:24
-#: managemenu/templates/managemenu/index.html:174
+#: managemenu/templates/managemenu/index.html:135
 msgid "Categories"
 msgstr "Kategorie"
 
@@ -476,63 +405,78 @@ msgstr ""
 msgid "Add book"
 msgstr "Dodaj książkę"
 
-#: books/templates/books/add.html:30 books/templates/books/edit.html:30
-#: books/templates/books/remove.html:24
-#: categories/templates/categories/add.html:16
-#: categories/templates/categories/edit.html:16
-#: categories/templates/categories/remove.html:26
-#: orders/templates/orders/fulfill.html:37
-#: orders/templates/orders/remove.html:24
-#: sellers/templates/sellers/accept.html:28
-#: sellers/templates/sellers/remove.html:45
-#: users/templates/users/verify.html:119
-msgid "Cancel"
-msgstr "Anuluj"
-
-#: books/templates/books/add.html:33
-#: categories/templates/categories/add.html:19
-#: common/templates/book_chooser_wizard/books.html:69
+#: books/templates/books/add.html:29
+#: categories/templates/categories/add.html:20
+#: common/templates/book_chooser_wizard/books.html:63
 #: common/templates/book_chooser_wizard/books_book_list.html:23
 msgid "Add"
 msgstr "Dodaj"
 
-#: books/templates/books/book_list_base.html:17
-#: categories/templates/categories/index.html:26
-#: orders/templates/orders/orders_table.html:16
-#: sellers/templates/sellers/index.html:25 users/templates/users/users.html:49
+#: books/templates/books/add.html:33 books/templates/books/edit.html:33
+#: books/templates/books/remove.html:24
+#: categories/templates/categories/add.html:16
+#: categories/templates/categories/edit.html:16
+#: categories/templates/categories/remove.html:26
+#: orders/templates/orders/fulfill.html:35
+#: orders/templates/orders/remove.html:24
+#: sellers/templates/sellers/accept.html:28
+#: sellers/templates/sellers/remove.html:26
+#: users/templates/users/verify.html:38
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: books/templates/books/book_list_base.html:12
+#: orders/templates/orders/fulfill_book_list_base.html:11
+#: users/templates/users/purchased_list.html:18
+#: users/templates/users/sold_list.html:17
+msgid "Publication"
+msgstr "Wydanie"
+
+#: books/templates/books/book_list_base.html:13
+#: books/templates/books/details.html:30
+#: orders/templates/orders/fulfill_book_list_base.html:12
+#: users/templates/users/purchased_list.html:19
+#: users/templates/users/sold_list.html:18
+msgid "Price"
+msgstr "Cena"
+
+#: books/templates/books/book_list_base.html:16
+#: categories/templates/categories/index.html:25
+#: orders/templates/orders/orders_table.html:15
+#: users/templates/users/user_list_base.html:14
 msgid "Actions"
 msgstr "Akcje"
 
-#: books/templates/books/book_list_index.html:7
+#: books/templates/books/book_list_index.html:6
 #: books/templates/books/details.html:13
-#: categories/templates/categories/index.html:45
+#: categories/templates/categories/index.html:43
 #: common/templatetags/manage_header.py:26
 #: common/templatetags/manage_header.py:32
-#: sellers/templates/sellers/accept_book_list.html:32
+#: sellers/templates/sellers/accept_book_list.html:31
 msgid "Edit"
 msgstr "Edytuj"
 
-#: books/templates/books/book_list_index.html:11
-#: books/templates/books/book_list_index.html:34
-#: books/templates/books/details.html:17 books/templates/books/remove.html:27
-#: categories/templates/categories/index.html:51
-#: categories/templates/categories/remove.html:29
+#: books/templates/books/book_list_index.html:9
+#: books/templates/books/book_list_index.html:31
+#: books/templates/books/details.html:18 books/templates/books/remove.html:28
+#: categories/templates/categories/index.html:48
+#: categories/templates/categories/remove.html:30
 #: common/templatetags/manage_header.py:27
 #: common/templatetags/manage_header.py:33
 #: common/templatetags/manage_header.py:42
 #: common/templatetags/manage_header.py:46
-#: orders/templates/orders/orders_table.html:39
-#: orders/templates/orders/orders_table.html:59
-#: orders/templates/orders/remove.html:27
-#: sellers/templates/sellers/index.html:44
-#: sellers/templates/sellers/index.html:57
-#: sellers/templates/sellers/remove.html:48
+#: orders/templates/orders/orders_table.html:37
+#: orders/templates/orders/orders_table.html:56
+#: orders/templates/orders/remove.html:28
+#: sellers/templates/sellers/remove.html:30
+#: sellers/templates/sellers/seller_list.html:24
+#: sellers/templates/sellers/seller_list.html:37
 msgid "Remove"
 msgstr "Usuń"
 
-#: books/templates/books/book_list_index.html:30
-#: orders/templates/orders/orders_table.html:55
-#: sellers/templates/sellers/index.html:52
+#: books/templates/books/book_list_index.html:28
+#: orders/templates/orders/orders_table.html:53
+#: sellers/templates/sellers/seller_list.html:33
 msgid "Bulk actions:"
 msgstr "Masowe działania:"
 
@@ -541,42 +485,58 @@ msgstr "Masowe działania:"
 msgid "Book's details"
 msgstr "Szczegóły książki"
 
+#: books/templates/books/details.html:35
+msgid "none"
+msgstr "brak"
+
 #: books/templates/books/duplicated.html:5 books/templates/books/index.html:5
 #: books/templates/books/remove.html:5
 msgid "Manage books"
 msgstr "Zarządzaj książkami"
 
-#: books/templates/books/duplicated.html:22 books/templates/books/index.html:8
-#: categories/templates/categories/index.html:25
-#: common/templates/book_chooser_wizard/summary.html:52
+#: books/templates/books/duplicated.html:34 books/templates/books/index.html:8
+#: categories/templates/categories/index.html:24
+#: common/templates/book_chooser_wizard/summary.html:17
 #: common/templatetags/manage_header.py:30
 #: common/templatetags/manage_header.py:50
-#: managemenu/templates/managemenu/index.html:147
-#: managemenu/templates/managemenu/index.html:157
-#: orders/templates/orders/orders_table.html:14
+#: managemenu/templates/managemenu/index.html:94
+#: managemenu/templates/managemenu/index.html:110
+#: orders/templates/orders/orders_table.html:13
 #: stats/templates/stats/books.html:17 stats/templates/stats/books.html:20
 #: stats/templates/stats/books.html:34
 #: stats/templates/stats/books_sold.html:67
 #: stats/templates/stats/books_sold.html:69
-#: stats/templates/stats/index.html:34 stats/templates/stats/index.html:36
+#: stats/templates/stats/index.html:55 stats/templates/stats/index.html:57
 msgid "Books"
 msgstr "Książki"
 
-#: books/templates/books/duplicated.html:23
+#: books/templates/books/duplicated.html:35
 #: books/templates/books/index.html:30 common/templatetags/manage_header.py:35
-#: managemenu/templates/managemenu/index.html:164
+#: managemenu/templates/managemenu/index.html:119
 msgid "Duplicated"
 msgstr "Zduplikowane"
 
-#: books/templates/books/duplicated.html:40
+#: books/templates/books/duplicated.html:47
+#: books/templates/books/index.html:18
+#: categories/templates/categories/index.html:56
+#: categories/templates/categories/list.html:19
+#: orders/templates/orders/orders_table.html:64
+#: sellers/templates/sellers/index.html:17 stats/templates/stats/books.html:61
+#: stats/templates/stats/books_sold.html:98
+#: users/templates/users/purchased_list.html:44
+#: users/templates/users/sold_list.html:38 users/templates/users/users.html:34
+msgid "There's nothing to display."
+msgstr "Nie ma nic do wyświetlenia."
+
+#: books/templates/books/duplicated.html:52
 #: categories/templates/categories/list.html:24
-#: common/templates/book_chooser_wizard/summary.html:57
-#: orders/templates/orders/details.html:43
-#: orders/templates/orders/fulfill_accept.html:35
+#: common/templates/book_chooser_wizard/summary.html:22
+#: orders/templates/orders/details.html:24
+#: orders/templates/orders/fulfill_accept.html:21
 msgid "Back"
 msgstr "Powrót"
 
-#: books/templates/books/duplicated_book_list.html:26
+#: books/templates/books/duplicated_book_list.html:36
 msgid "Merge"
 msgstr "Połącz"
 
@@ -600,13 +560,13 @@ msgstr "Czy jesteś pewien, że chcesz usunąć tę książkę?"
 msgid "Are you sure you want to remove these books?"
 msgstr "Czy jesteś pewien, że chcesz usunąć te książki?"
 
-#: categories/forms.py:23 categories/templates/categories/index.html:24
+#: categories/forms.py:23 categories/templates/categories/index.html:23
 msgid "Name"
 msgstr "Nazwa"
 
 #: categories/templates/categories/add.html:5
 #: categories/templates/categories/add.html:8
-#: categories/templates/categories/index.html:65
+#: categories/templates/categories/index.html:61
 msgid "Add category"
 msgstr "Dodaj kategorię"
 
@@ -657,24 +617,24 @@ msgstr "W tej kategorii nie ma żadnych książek."
 msgid "Step 1 of 2: choose the books"
 msgstr "Krok 1 z 2: wybierz książki"
 
-#: common/templates/book_chooser_wizard/books.html:28
+#: common/templates/book_chooser_wizard/books.html:26
 msgid "Choose from the list"
 msgstr "Wybierz z listy"
 
-#: common/templates/book_chooser_wizard/books.html:39
+#: common/templates/book_chooser_wizard/books.html:38
 msgctxt "categories"
 msgid "All"
 msgstr "Wszystkie"
 
-#: common/templates/book_chooser_wizard/books.html:57
+#: common/templates/book_chooser_wizard/books.html:52
 #: common/templatetags/manage_header.py:25
 #: common/templatetags/manage_header.py:31
-#: managemenu/templates/managemenu/index.html:163
-#: managemenu/templates/managemenu/index.html:179
+#: managemenu/templates/managemenu/index.html:116
+#: managemenu/templates/managemenu/index.html:141
 msgid "Add new"
 msgstr "Dodaj nową"
 
-#: common/templates/book_chooser_wizard/books.html:62
+#: common/templates/book_chooser_wizard/books.html:56
 msgid ""
 "Before adding a new book, please check whether it is not already present in "
 "the list above and is it included in the school textbook list."
@@ -682,7 +642,7 @@ msgstr ""
 "Przed dodaniem książki sprawdź, czy nie ma jej już na liście, oraz czy "
 "znajduje się ona w wykazie podręczników."
 
-#: common/templates/book_chooser_wizard/books.html:64
+#: common/templates/book_chooser_wizard/books.html:58
 msgid ""
 "Also, we <strong>strongly</strong> recommend entering the ISBN number and "
 "clicking the magnifying glass icon next to the input field. The other fields "
@@ -692,14 +652,27 @@ msgstr ""
 "kliknięcie ikony lupy obok pola edycyjnego. Pozostałe pola zostaną wtedy "
 "wypełnione automatycznie, więc nie będziesz musiał(a) robić tego ręcznie."
 
-#: common/templates/book_chooser_wizard/books.html:77
+#: common/templates/book_chooser_wizard/books.html:70
 msgid "Chosen books"
 msgstr "Wybrane książki"
 
+#: common/templates/book_chooser_wizard/books.html:77
+#: orders/templates/orders/fulfill.html:41
+#: sellers/templates/sellers/success.html:20
+msgid "Next"
+msgstr "Dalej"
+
 #: common/templates/book_chooser_wizard/books_book_list.html:11
-#: orders/templates/orders/fulfill_book_list.html:6
+#: orders/templates/orders/fulfill_book_list.html:5
 msgid "In stock"
 msgstr "Na stanie"
+
+#: common/templates/book_chooser_wizard/books_chosen_list.html:9
+#: orders/templates/orders/fulfill_book_list_base.html:13
+#: sellers/templates/sellers/accept_book_list.html:6
+#: users/templates/users/purchased_list.html:20
+msgid "Amount"
+msgstr "Ilość"
 
 #: common/templates/book_chooser_wizard/summary.html:8
 msgid "Step 2 of 2: summary"
@@ -717,49 +690,57 @@ msgstr ""
 msgid "Personal data"
 msgstr "Dane osobiste"
 
-#: common/templates/book_chooser_wizard/summary.html:59
+#: common/templates/book_chooser_wizard/summary.html:25
 #: sellers/templates/sellers/accept.html:33
-#: sellers/templates/sellers/index.html:40
+#: sellers/templates/sellers/seller_list.html:19
 msgid "Accept"
 msgstr "Akceptuj"
 
-#: common/templates/common/base.html:50
-msgid "Toggle navigation"
-msgstr "Nawigacja"
-
-#: common/templates/common/base.html:63
+#: common/templates/common/base.html:40
 msgid "Anonymous"
 msgstr "Anonimowy"
 
-#: common/templates/common/base.html:71
+#: common/templates/common/base.html:45
 #: common/templatetags/manage_header.py:23
-#: managemenu/templates/managemenu/index.html:74
-#: managemenu/templates/managemenu/index.html:77
+#: managemenu/templates/managemenu/index.html:4
+#: managemenu/templates/managemenu/index.html:7
 msgid "Manage"
 msgstr "Zarządzaj"
 
-#: common/templates/common/base.html:83
+#: common/templates/common/base.html:53
 msgid "Change password"
 msgstr "Zmień hasło"
 
-#: common/templates/common/base.html:88
+#: common/templates/common/base.html:56
 #: egielda/templates/registration/logged_out.html:4
 #: egielda/templates/registration/logged_out.html:8
 msgid "Sign out"
 msgstr "Wyloguj się"
 
-#: common/templates/common/base.html:94
+#: common/templates/common/base.html:60
 msgid "Sign up"
 msgstr "Zarejestruj się"
 
-#: common/templates/common/base.html:99
+#: common/templates/common/base.html:63
 #: egielda/templates/registration/login.html:4
 #: egielda/templates/registration/login.html:8
-#: egielda/templates/registration/login.html:42
+#: egielda/templates/registration/login.html:40
 msgid "Sign in"
 msgstr "Zaloguj się"
 
-#: common/templates/common/base.html:114
+#: common/templates/common/base.html:75
+msgid "Your account is now awaiting verification."
+msgstr "Twoje konto oczekuje teraz na weryfikację."
+
+#: common/templates/common/base.html:79
+msgid ""
+"Your verification request was rejected. Following fields are filled in "
+"incorrectly:"
+msgstr ""
+"Twoja prośba o weryfikację została odrzucona. Poniższe pola zostały "
+"wypełnione nieprawidłowo:"
+
+#: common/templates/common/base.html:89
 msgid ""
 "You don't seem to have JavaScript enabled. This website <strong>does not "
 "work properly</strong> without JavaScript, so please enable it in your "
@@ -769,87 +750,101 @@ msgstr ""
 "internetowa <strong>nie działa poprawnie</strong> bez niej, zalecamy więc, "
 "abyś włączył ją w swojej przeglądarce."
 
-#: common/templatetags/base.py:37
+#: common/templates/elements/user_profile_display_form.html:4
+#: egielda/templates/registration/login.html:32
+#: users/templates/users/user_list_base.html:7
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: common/templates/elements/user_profile_display_form.html:11
+#: orders/templates/orders/fulfilled.html:26
+#: orders/templates/orders/not_fulfilled.html:26
+#: orders/templates/orders/orders_table.html:12
+#: users/templates/users/user_list_base.html:10
+msgid "Class"
+msgstr "Klasa"
+
+#: common/templatetags/base.py:52
 msgid "The order was removed."
 msgstr "Zamówienie zostało usunięte."
 
-#: common/templatetags/base.py:38
+#: common/templatetags/base.py:53
 msgid "No books were chosen. Merged nothing."
 msgstr "Nie wybrano książek. Nic nie połączono."
 
-#: common/templatetags/base.py:44
+#: common/templatetags/base.py:59
 msgid "The book was added successfully."
 msgstr "Książka została pomyślnie dodana."
 
-#: common/templatetags/base.py:45
+#: common/templatetags/base.py:60
 msgid "The book was edited successfully."
 msgstr "Książka została pomyślnie zedytowana."
 
-#: common/templatetags/base.py:46
+#: common/templatetags/base.py:61
 msgid "The book was removed successfully."
 msgstr "Książka została pomyślnie usunięta."
 
-#: common/templatetags/base.py:47
+#: common/templatetags/base.py:62
 msgid "The books were removed successfully."
 msgstr "Książki zostały pomyślnie usunięte."
 
-#: common/templatetags/base.py:48
+#: common/templatetags/base.py:63
 msgid "The books were merged successfully."
 msgstr "Książki zostały pomyślnie połączone."
 
-#: common/templatetags/base.py:49
+#: common/templatetags/base.py:64
 msgid "The category was added successfully."
 msgstr "Kategoria została pomyślnie dodana."
 
-#: common/templatetags/base.py:50
+#: common/templatetags/base.py:65
 msgid "The category was edited successfully."
 msgstr "Kategoria została pomyślnie zedytowana."
 
-#: common/templatetags/base.py:51
+#: common/templatetags/base.py:66
 msgid "The category was removed successfully."
 msgstr "Kategoria została pomyślnie usunięta."
 
-#: common/templatetags/base.py:52
+#: common/templatetags/base.py:67
 msgid "Settings were updated successfully."
 msgstr "Ustawienia zostały pomyślnie zapisane."
 
-#: common/templatetags/base.py:53
+#: common/templatetags/base.py:68
 msgid "The order was fulfilled successfully."
 msgstr "Zamówienie zostało pomyślnie zrealizowane."
 
-#: common/templatetags/base.py:54
+#: common/templatetags/base.py:69
 msgid "The order was removed successfully."
 msgstr "Zamówienie zostało pomyślnie usunięte."
 
-#: common/templatetags/base.py:55
+#: common/templatetags/base.py:70
 msgid "The orders were removed successfully."
 msgstr "Zamówienia zostały pomyślnie usunięte."
 
-#: common/templatetags/base.py:56
+#: common/templatetags/base.py:71
 msgid "The seller's books were removed successfully."
 msgstr "Książki sprzedającego zostały pomyślnie usunięte."
 
-#: common/templatetags/base.py:57
+#: common/templatetags/base.py:72
 msgid "The sellers' books were removed successfully."
 msgstr "Książki sprzedających zostały pomyślnie usunięte."
 
-#: common/templatetags/base.py:58
+#: common/templatetags/base.py:73
 msgid "Your profile data was successfully updated."
 msgstr "Twoje dane zostały pomyślnie zaktualizowane."
 
-#: common/templatetags/base.py:59
+#: common/templatetags/base.py:74
 msgid "User's profile data was successfully updated."
 msgstr "Dane użytkownika zostały pomyślnie zaktualizowane."
 
-#: common/templatetags/base.py:60
+#: common/templatetags/base.py:75
 msgid "User was verified successfully."
 msgstr "Użytkownik został pomyślnie zweryfikowany."
 
-#: common/templatetags/base.py:61
+#: common/templatetags/base.py:76
 msgid "Information about incorrect data was sent to user."
 msgstr "Informacja o niepoprawnych danych została wysłana do użytkownika."
 
-#: common/templatetags/base.py:67
+#: common/templatetags/base.py:82
 msgid ""
 "An error occurred while processing your query. It was most likely the result "
 "of someone else who just bought the last copies of books you've chosen. Your "
@@ -860,11 +855,11 @@ msgstr ""
 "przez Ciebie książek. Twoje zamówienie zostało zmodyfikowane – przejrzyj je, "
 "a następnie kliknij przycisk Akceptuj ponownie."
 
-#: common/templatetags/base.py:75
+#: common/templatetags/base.py:90
 msgid "You haven't chosen the book to merge to!"
 msgstr "Nie wybrałeś docelowej książki do połączenia!"
 
-#: common/templatetags/base.py:76
+#: common/templatetags/base.py:91
 msgid ""
 "Amount of books being purchased and count of provided books' owners are not "
 "equal. You'll need to fill in the form again."
@@ -872,21 +867,25 @@ msgstr ""
 "Ilość kupowanych książek nie jest równa liczbie podanych właścicieli. Musisz "
 "wypełnić formularz ponownie."
 
-#: common/templatetags/base.py:78
+#: common/templatetags/base.py:93
 msgid ""
 "Some of the users you have provided don't have enough books in the database."
 msgstr ""
 "Niektórzy z podanych użytkowników nie posiadają wystarczającej ilości "
 "książek w bazie danych."
 
+#: common/templatetags/base.py:95
+msgid "Invalid amount."
+msgstr "Nieprawidłowa ilość."
+
 #: common/templatetags/manage_header.py:28
 msgid "Book list"
 msgstr "Lista książek"
 
 #: common/templatetags/manage_header.py:37
-#: managemenu/templates/managemenu/index.html:85
-#: orders/templates/orders/fulfill.html:23
-#: orders/templates/orders/fulfill_accept.html:23
+#: managemenu/templates/managemenu/index.html:19
+#: orders/templates/orders/fulfill.html:21
+#: orders/templates/orders/fulfill_accept.html:9
 #: orders/templates/orders/fulfilled.html:5
 #: orders/templates/orders/fulfilled.html:16
 #: orders/templates/orders/not_fulfilled.html:5
@@ -895,7 +894,7 @@ msgid "Orders"
 msgstr "Zamówienia"
 
 #: common/templatetags/manage_header.py:38
-#: managemenu/templates/managemenu/index.html:91
+#: managemenu/templates/managemenu/index.html:24
 #: orders/templates/orders/fulfilled.html:20
 #: orders/templates/orders/not_fulfilled.html:5
 #: orders/templates/orders/not_fulfilled.html:20
@@ -903,17 +902,26 @@ msgid "Not fulfilled"
 msgstr "Niezrealizowane"
 
 #: common/templatetags/manage_header.py:39
-#: orders/templates/orders/fulfill_accept.html:41
-#: orders/templates/orders/orders_table.html:34
+#: orders/templates/orders/fulfill_accept.html:27
+#: orders/templates/orders/orders_table.html:32
 msgid "Fulfill"
 msgstr "Zrealizuj"
+
+#: common/templatetags/manage_header.py:40
+#: managemenu/templates/managemenu/index.html:28
+#: orders/templates/orders/fulfilled.html:5
+#: orders/templates/orders/fulfilled.html:21
+#: orders/templates/orders/not_fulfilled.html:21
+#: users/templates/users/purchased_list.html:21
+msgid "Fulfilled"
+msgstr "Zrealizowane"
 
 #: common/templatetags/manage_header.py:41
 msgid "Details"
 msgstr "Szczegóły"
 
 #: common/templatetags/manage_header.py:44
-#: managemenu/templates/managemenu/index.html:105
+#: managemenu/templates/managemenu/index.html:43
 #: sellers/templates/sellers/accept.html:16
 #: sellers/templates/sellers/index.html:5
 #: sellers/templates/sellers/index.html:8
@@ -925,50 +933,51 @@ msgid "Accept books"
 msgstr "Zaakceptuj książki"
 
 #: common/templatetags/manage_header.py:48
-#: managemenu/templates/managemenu/index.html:137
-#: stats/templates/stats/index.html:20 stats/templates/stats/index.html:23
+#: managemenu/templates/managemenu/index.html:84
+#: stats/templates/stats/index.html:41 stats/templates/stats/index.html:44
 msgid "Statistics"
 msgstr "Statystyki"
 
 #: common/templatetags/manage_header.py:49
-#: managemenu/templates/managemenu/index.html:143
+#: managemenu/templates/managemenu/index.html:90
 #: stats/templates/stats/books.html:30 stats/templates/stats/books.html:32
 #: stats/templates/stats/books_sold.html:7
 #: stats/templates/stats/books_sold.html:56
 #: stats/templates/stats/books_sold.html:65
-#: stats/templates/stats/index.html:29 stats/templates/stats/index.html:31
+#: stats/templates/stats/index.html:50 stats/templates/stats/index.html:52
 msgid "Books sold"
 msgstr "Sprzedane książki"
 
 #: common/templatetags/manage_header.py:52
-#: managemenu/templates/managemenu/index.html:113
-#: users/templates/users/users.html:13 users/templates/users/users.html:16
+#: managemenu/templates/managemenu/index.html:56
+#: users/templates/users/users.html:5 users/templates/users/users.html.py:8
 msgid "Users"
 msgstr "Użytkownicy"
 
 #: common/templatetags/manage_header.py:53
-#: managemenu/templates/managemenu/index.html:119
-#: users/templates/users/users.html:23 users/templates/users/users.html:27
-#: users/templates/users/users.html:31
+#: managemenu/templates/managemenu/index.html:61
+#: users/templates/users/users.html:13 users/templates/users/users.html:17
+#: users/templates/users/users.html:21
 msgid "Verified"
 msgstr "Zweryfikowani"
 
 #: common/templatetags/manage_header.py:54
-#: managemenu/templates/managemenu/index.html:123
-#: users/templates/users/users.html:24 users/templates/users/users.html:28
-#: users/templates/users/users.html:32
+#: managemenu/templates/managemenu/index.html:65
+#: users/templates/users/users.html:14 users/templates/users/users.html:18
+#: users/templates/users/users.html:22
 msgid "Unverified"
 msgstr "Niezweryfikowani"
 
-#: common/templatetags/manage_header.py:55 users/templates/users/users.html:79
-#: users/templates/users/verify.html:122
+#: common/templatetags/manage_header.py:55
+#: users/templates/users/user_list_unverified.html:12
+#: users/templates/users/verify.html:41
 msgid "Verify"
 msgstr "Zweryfikuj"
 
 #: common/templatetags/manage_header.py:58
-#: managemenu/templates/managemenu/index.html:127
-#: users/templates/users/users.html:25 users/templates/users/users.html:29
-#: users/templates/users/users.html:33
+#: managemenu/templates/managemenu/index.html:69
+#: users/templates/users/users.html:15 users/templates/users/users.html:19
+#: users/templates/users/users.html:23
 msgid "Needing data correction"
 msgstr "Wymagający poprawy danych"
 
@@ -985,7 +994,7 @@ msgid "User's sold books"
 msgstr "Sprzedane książki użytkownika"
 
 #: common/templatetags/manage_header.py:63
-#: managemenu/templates/managemenu/index.html:189
+#: managemenu/templates/managemenu/index.html:157
 #: settings/templates/settings/index.html:10
 #: settings/templates/settings/index.html:13
 msgid "Settings"
@@ -1046,23 +1055,27 @@ msgstr "Strona główna"
 msgid "What do you want to do?"
 msgstr "Co chcesz zrobić?"
 
-#: egielda/templates/egielda/home.html:30
+#: egielda/templates/egielda/home.html:31
+msgid "You must have a verified account to access this site."
+msgstr "Musisz mieć zweryfikowane konto, aby uzyskać dostęp do tej strony."
+
+#: egielda/templates/egielda/home.html:33
 msgid "The website is currently disabled."
 msgstr "Strona internetowa jest teraz wyłączona."
 
-#: egielda/templates/egielda/home.html:36
+#: egielda/templates/egielda/home.html:38
 msgid "Purchase"
 msgstr "Kup"
 
-#: egielda/templates/egielda/home.html:39
+#: egielda/templates/egielda/home.html:41
 msgid "or"
 msgstr "lub"
 
-#: egielda/templates/egielda/home.html:42
+#: egielda/templates/egielda/home.html:44
 msgid "Sell"
 msgstr "Sprzedaj"
 
-#: egielda/templates/egielda/home.html:49
+#: egielda/templates/egielda/home.html:51
 msgid "Information:"
 msgstr "Informacja:"
 
@@ -1071,7 +1084,7 @@ msgstr "Informacja:"
 msgid "Error %(error)s"
 msgstr "Błąd %(error)s"
 
-#: egielda/templates/error.html:19
+#: egielda/templates/error.html:20
 #: egielda/templates/registration/logged_out.html:17
 msgid "Homepage"
 msgstr "Strona główna"
@@ -1094,17 +1107,14 @@ msgstr ""
 "zalogować jako inny użytkownik, użyj formularza poniżej."
 
 #: egielda/templates/registration/login.html:19
+msgid "The page you requested requires signing in."
+msgstr "Strona którą próbowałeś odwiedzić wymaga zalogowania się."
+
+#: egielda/templates/registration/login.html:25
 msgid "Authentication data you provided is incorrect."
 msgstr "Podane przez Ciebie dane logowania są nieprawidłowe."
 
-#: egielda/templates/registration/login.html:25
-#: egielda/templates/registration/login.html:29
-#: users/templates/users/users.html:42 users/templates/users/verify.html:55
-msgid "Username"
-msgstr "Nazwa użytkownika"
-
-#: egielda/templates/registration/login.html:33
-#: egielda/templates/registration/login.html:37
+#: egielda/templates/registration/login.html:35
 msgid "Password"
 msgstr "Hasło"
 
@@ -1126,23 +1136,28 @@ msgstr "Zmień"
 msgid "Order from %(user)s made at %(date)s, fulfilled: %(fulfilled)s"
 msgstr "Zamówienie od %(user)s utworzone %(date)s, zrealizowane: %(fulfilled)s"
 
+#: orders/templates/orders/class_filter.html:9
+msgctxt "class"
+msgid "All"
+msgstr "Wszystkie"
+
 #: orders/templates/orders/details.html:5
-#: orders/templates/orders/details.html:17
+#: orders/templates/orders/details.html:9
 msgid "Order details"
 msgstr "Szczegóły zamówienia"
 
-#: orders/templates/orders/details.html:18
+#: orders/templates/orders/details.html:10
 #, python-format
 msgid "%(user)s's order"
 msgstr "Zamówienie użytkownika %(user)s"
 
-#: orders/templates/orders/details.html:24
-#: orders/templates/orders/orders_table.html:12
+#: orders/templates/orders/details.html:16
+#: orders/templates/orders/orders_table.html:11
 msgid "User"
 msgstr "Użytkownik"
 
-#: orders/templates/orders/details.html:31
-#: orders/templates/orders/orders_table.html:11
+#: orders/templates/orders/details.html:17
+#: orders/templates/orders/orders_table.html:10
 msgid "Date"
 msgstr "Data"
 
@@ -1151,39 +1166,32 @@ msgstr "Data"
 msgid "Orders - Fulfill"
 msgstr "Zamówienia - Zrealizuj"
 
-#: orders/templates/orders/fulfill.html:25
-#: orders/templates/orders/fulfill_accept.html:25
+#: orders/templates/orders/fulfill.html:23
+#: orders/templates/orders/fulfill_accept.html:11
 #, python-format
 msgid "Fulfill %(user_name)s's order"
 msgstr "Zrealizuj zamówienie użytkownika %(user_name)s"
 
-#: orders/templates/orders/fulfill.html:30
+#: orders/templates/orders/fulfill.html:28
 #: sellers/templates/sellers/accept.html:21
 msgid "If you want to delete some book, just pass 0 as amount."
 msgstr "Jeśli chcesz usunąć książkę, po prostu podaj 0 jako ilość."
 
-#: orders/templates/orders/fulfill_accept_book_list.html:33
-#: orders/templates/orders/fulfill_book_list.html:29
-msgid "Book owners"
-msgstr "Właściciele książek"
-
-#: orders/templates/orders/fulfill_accept_book_list.html:52
+#: orders/templates/orders/fulfill_accept_book_list.html:17
 msgid "Total price:"
 msgstr "Łączna cena:"
 
-#: orders/templates/orders/fulfill_accept_book_list.html:56
+#: orders/templates/orders/fulfill_accept_book_list.html:21
 msgid "Number of books:"
 msgstr "Liczba książek:"
 
-#: orders/templates/orders/fulfilled.html:32
-#: orders/templates/orders/not_fulfilled.html:32
-msgctxt "class"
-msgid "All"
-msgstr "Wszystkie"
+#: orders/templates/orders/fulfill_book_list_base.html:33
+msgid "Book owners"
+msgstr "Właściciele książek"
 
-#: orders/templates/orders/orders_table.html:45
-msgid "Show order"
-msgstr "Wyświetl zamówienie"
+#: orders/templates/orders/orders_table.html:43
+msgid "Show"
+msgstr "Wyświetl"
 
 #: orders/templates/orders/remove.html:5
 msgid "Manage orders"
@@ -1303,6 +1311,10 @@ msgid "Profit per book (%(currency)s)"
 msgstr "Zysk za książkę (%(currency)s)"
 
 #: settings/forms.py:39
+msgid "Terms of Service URL"
+msgstr "URL do regulaminu"
+
+#: settings/forms.py:41
 msgid "Homepage information"
 msgstr "Informacja na stronie głównej"
 
@@ -1314,50 +1326,71 @@ msgstr "%(name)s: %(value)s"
 #: stats/templates/stats/books.html:25 stats/templates/stats/books.html:27
 #: stats/templates/stats/books_sold.html:61
 #: stats/templates/stats/books_sold.html:63
-#: stats/templates/stats/index.html:27
+#: stats/templates/stats/index.html:48
 msgid "Charts"
 msgstr "Wykresy"
 
-#: stats/templates/stats/books.html:42
+#: stats/templates/stats/books.html:41
 msgid "Book"
 msgstr "Książka"
 
-#: stats/templates/stats/books.html:43
+#: stats/templates/stats/books.html:42
 msgid "Received"
 msgstr "Otrzymano"
 
-#: stats/templates/stats/index.html:42
+#: stats/templates/stats/books.html:43 users/templates/users/sold_list.html:21
+msgctxt "count"
+msgid "Sold"
+msgstr "Sprzedano"
+
+#: stats/templates/stats/index.html:63
 msgid "Number of books sold in each day"
 msgstr "Liczba książek sprzedanych w każdym dniu"
 
-#: stats/templates/stats/index.html:48
+#: stats/templates/stats/index.html:69
 msgid "Number of books given in each day"
 msgstr "Liczba książek oddanych w każdym dniu"
 
-#: stats/templates/stats/index.html:56
+#: stats/templates/stats/index.html:75
 msgid "Income in each day"
 msgstr "Przychód w każdym dniu"
 
-#: stats/templates/stats/index.html:62
+#: stats/templates/stats/index.html:81
 msgid "Number of books sold by categories"
 msgstr "Sprzedane książki wg kategorii"
 
-#: users/templates/users/profile_header.html:3
+#: users/templates/users/profile_header.html:7
 #: users/templates/users/user_profile.html:51
 #, python-format
 msgid "%(student)s's profile"
 msgstr "Profil użytkownika %(student)s"
 
-#: users/templates/users/users.html:72
+#: users/templates/users/profile_header.html:12
+msgid "Account verified"
+msgstr "Konto zweryfikowane"
+
+#: users/templates/users/profile_header.html:14
+msgid "Account not verified"
+msgstr "Konto niezweryfikowane"
+
+#: users/templates/users/sold_list.html:19
+msgid "Declared"
+msgstr "Zadeklarowano"
+
+#: users/templates/users/sold_list.html:20
+msgid "Brought"
+msgstr "Przyniesiono"
+
+#: users/templates/users/user_list_unverified.html:5
 msgid "This user lacks an ID"
 msgstr "Ten użytkownik nie wysłał dokumentu tożsamości"
 
-#: users/templates/users/verify.html:36 users/templates/users/verify.html:39
+#: users/templates/users/verify.html:5 users/templates/users/verify.html:8
 #, python-format
 msgid "Verify %(student)s's account"
 msgstr "Zweryfikuj konto użytkownika %(student)s"
 
-#: users/templates/users/verify.html:43
+#: users/templates/users/verify.html:12
 msgid ""
 "Select incorrectly filled fields and then press \"Needs correction\" button "
 "again."
@@ -1365,14 +1398,14 @@ msgstr ""
 "Wybierz niepoprawnie wypełnione pola i wciśnij ponownie przycisk „Wymaga "
 "poprawy”."
 
-#: users/templates/users/verify.html:47
+#: users/templates/users/verify.html:16
 msgid "You didn't select any field which needs to be corrected."
 msgstr "Nie wybrałeś żadnych pól do poprawienia."
 
-#: users/templates/users/verify.html:110
+#: users/templates/users/verify.html:29
 msgid "This user has no associated identity card."
 msgstr "Ten użytkownik nie ma przypisanego dokumentu tożsamości."
 
-#: users/templates/users/verify.html:124
+#: users/templates/users/verify.html:44
 msgid "Needs correction"
 msgstr "Wymaga poprawy"
