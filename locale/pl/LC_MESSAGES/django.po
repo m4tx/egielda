@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: e-Giełda\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-17 22:56+0200\n"
-"PO-Revision-Date: 2015-08-17 22:56+0200\n"
+"PO-Revision-Date: 2015-08-18 22:51+0200\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language: pl\n"
@@ -33,7 +33,7 @@ msgstr "absolwent"
 #: authentication/forms.py:34
 #, python-format
 msgid "%(class)d class"
-msgstr "%(class)d. klasa"
+msgstr "%(class)d klasa"
 
 #: authentication/forms.py:48
 msgid "Alpha-numeric characters only"
