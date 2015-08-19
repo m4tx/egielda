@@ -69,7 +69,14 @@
         </div>
 
         <div class="ui main container">
-            {% alerts %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="ui {% if message.tags %}{{ message.tags }}{% endif %} message">
+                        <i class="close icon"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
             {% if user.awaiting_verification and not user.incorrect_fields %}
                 <div class="ui warning message">
                     {% trans "Your account is now awaiting verification." %}

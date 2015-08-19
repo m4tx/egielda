@@ -10,18 +10,19 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 from decimal import Decimal
+from django.contrib import messages
 
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponseRedirect, Http404, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
+from django.utils.translation import ungettext
 
 from authentication.decorators import permission_required
 from books.forms import BookForm
 from books.models import BookType, Book
 from authentication.models import AppUser
-from utils.alerts import set_success_msg
 from egielda import settings
 
 
@@ -130,7 +131,9 @@ def remove_seller(request, seller_ids):
         raise Http404
 
     if request.method == 'POST':
-        set_success_msg(request, 'seller_removed' if len(seller_list) == 1 else 'sellers_removed')
+        messages.success(request, ungettext("The seller's books were removed successfully.",
+                                            "The sellers' books were removed successfully.",
+                                            len(seller_list)))
         Book.objects.filter(owner__pk_in=seller_list).delete()
         return HttpResponseRedirect(reverse(index))
     else:

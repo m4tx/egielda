@@ -8,7 +8,10 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
+
 from collections import defaultdict
+from django.contrib import messages
+from django.utils.translation import ugettext as _, ungettext
 
 from authentication.decorators import permission_required
 from django.core.urlresolvers import reverse
@@ -17,7 +20,6 @@ from django.shortcuts import render, get_object_or_404
 
 from books.forms import BookForm
 from books.models import BookType, Book
-from utils.alerts import set_success_msg, set_error_msg, set_info_msg
 
 
 @permission_required('common.view_books_index')
@@ -35,7 +37,7 @@ def add_book(request):
             book.visible = True
             book.save()
             form.save_m2m()
-            set_success_msg(request, 'book_added')
+            messages.success(request, _("The book was added successfully."))
             return HttpResponseRedirect(reverse(index))
     else:
         form = BookForm()
@@ -52,7 +54,7 @@ def edit_book(request, book_id):
             book.visible = True
             book.save()
             form.save_m2m()
-            set_success_msg(request, 'book_edited')
+            messages.success(request, _("The book was edited successfully."))
             return HttpResponseRedirect(reverse(index))
     else:
         form = BookForm(instance=book)
@@ -66,7 +68,9 @@ def remove_book(request, book_ids):
         raise Http404
 
     if request.method == 'POST':
-        set_success_msg(request, 'book_removed' if len(book_list) == 1 else 'books_removed')
+        messages.success(request, ungettext("The book was removed successfully.",
+                                            "The books were removed successfully.",
+                                            len(book_list)))
         book_list.delete()
         return HttpResponseRedirect(reverse(index))
     else:
@@ -99,10 +103,10 @@ def bulk_actions(request, action_name):
 def duplicated(request):
     if request.method == 'POST':
         if 'merge_isbn' not in request.POST or 'to_merge' not in request.POST:
-            set_info_msg(request, 'merge_no_books_chosen')
+            messages.info(request, _("No books were chosen. Merged nothing."))
             return HttpResponseRedirect(reverse(duplicated))
         elif 'merge_dest' not in request.POST:
-            set_error_msg(request, 'merge_dest_not_chosen')
+            messages.error(request, _("You haven't chosen the book to merge to!"))
             return HttpResponseRedirect(reverse(duplicated))
         pk_list = [int(pk) for pk in request.POST.getlist('to_merge')]
         new_pk = int(request.POST['merge_dest'])
@@ -111,7 +115,7 @@ def duplicated(request):
         Book.objects.filter(book_type__in=to_merge).update(book_type=new_pk)
         to_merge.delete()
 
-        set_success_msg(request, 'books_merged')
+        messages.success(request, _("The books were merged successfully."))
         return HttpResponseRedirect(reverse(duplicated))
     else:
         book_types = BookType.objects.all().order_by('title')

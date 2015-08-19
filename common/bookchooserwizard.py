@@ -14,6 +14,7 @@ import json
 from decimal import Decimal
 
 from django.conf.urls import url
+from django.contrib import messages
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import transaction
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse, HttpRequest
@@ -27,7 +28,6 @@ from authentication.models import AppUser
 from categories.models import Category
 from egielda import settings
 from utils.books import get_available_books, books_by_types
-from utils.alerts import set_warning_msg
 
 
 class BookChooserWizard:
@@ -172,7 +172,12 @@ class BookChooserWizard:
                             return self.success(request)
                         else:
                             request.session[self.session_var_name] = json.dumps(book_list)
-                            set_warning_msg(request, 'purchase_incomplete')
+                            messages.warning(
+                                request,
+                                _("An error occurred while processing your query. It was most "
+                                  "likely the result of someone else who just bought the last "
+                                  "copies of books you've chosen. Your order was modified thus; "
+                                  "review it and click Accept again afterwards."))
                             return HttpResponseRedirect(reverse(self.url_namespace + ':summary'))
 
             else:

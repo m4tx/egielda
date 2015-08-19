@@ -9,6 +9,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib import messages
+from django.utils.translation import ugettext as _, ungettext
+
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.db.models import Sum
@@ -21,7 +24,6 @@ from authentication.decorators import permission_required
 from authentication.models import AppUser
 from books.models import Book
 from orders.models import Order
-from utils.alerts import set_success_msg, set_info_msg, set_error_msg
 from utils.books import get_available_books
 from utils.dates import get_current_year
 
@@ -100,7 +102,7 @@ def fulfill(request, order_pk):
             for book_type in book_types.keys():
                 new_amount = int(request.POST.get('amount-' + str(book_type.pk), -1))
                 if book_type.in_stock < new_amount or new_amount < 0:
-                    set_error_msg(request, 'invalid_amount')
+                    messages.error(request, _("Invalid amount."))
                     return render(request, 'orders/fulfill.html', {'order': order, 'book_list': book_types.keys(),
                                                                    'users': users})
 
@@ -124,7 +126,9 @@ def fulfill(request, order_pk):
                     valid_data = False
 
                 if len(owners) != new_amount or not valid_data:
-                    set_error_msg(request, 'amount_and_length_of_owners_differ')
+                    messages.error(
+                        request, _("Amount of books being purchased and count of provided books' "
+                                   "owners are not equal. You'll need to fill in the form again."))
                     book_type.error = True
                     error = True
                     continue
@@ -156,7 +160,8 @@ def fulfill(request, order_pk):
                 for book_type, owners in owners_by_book.items():
                     for owner, amount in owners.items():
                         if len(books_dict[book_type.pk].get(owner, [])) < amount:
-                            set_error_msg(request, 'owner_doesnt_have_enough_books_in_db')
+                            messages.error(request, _("Some of the users you have provided don't "
+                                                      "have enough books in the database."))
                             book_type.error = True
                             error = True
                             continue
@@ -185,7 +190,7 @@ def fulfill_accept(request, order_pk):
 
     if order.orderedbook_set.count() == 0:
         order.delete()
-        set_info_msg(request, 'order_removed')
+        messages.info(request, _("The order was removed."))
         del request.session['books_to_purchase'][str(order_pk)]
         del request.session['owners_by_book'][str(order_pk)]
         return HttpResponseRedirect(reverse(not_fulfilled))
@@ -196,7 +201,7 @@ def fulfill_accept(request, order_pk):
                                                              order=order)
         order.fulfilled = True
         order.save()
-        set_success_msg(request, 'order_fulfilled')
+        messages.success(request, _("The order was fulfilled successfully."))
         del request.session['books_to_purchase'][str(order_pk)]
         del request.session['owners_by_book'][str(order_pk)]
         return HttpResponseRedirect(reverse(not_fulfilled))
@@ -224,7 +229,9 @@ def remove_order(request, order_ids):
         raise Http404
 
     if request.method == 'POST':
-        set_success_msg(request, 'order_removed' if len(order_list) == 1 else 'orders_removed')
+        messages.success(request, ungettext("The order was removed successfully.",
+                                            "The orders were removed successfully.",
+                                            len(order_list)))
         order_list.delete()
         return HttpResponseRedirect(reverse(index))
     else:

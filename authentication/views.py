@@ -9,6 +9,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib import messages
+from django.utils.translation import ugettext as _
+
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect, HttpResponseNotAllowed
@@ -22,7 +25,6 @@ from books.models import Book
 from egielda import settings
 from settings.settings import Settings
 from utils.ldap import check_user_existence
-from utils.alerts import set_success_msg
 from orders.models import Order
 from authentication.models import AppUserIncorrectFields, AppUser
 
@@ -100,7 +102,7 @@ def profile(request):
             elif 'document-clear' in request.POST and user.awaiting_verification is True:
                 user.awaiting_verification = False
             user.save()
-            set_success_msg(request, 'profile_saved')
+            messages.success(request, _("Your profile data was successfully updated."))
             return HttpResponseRedirect(reverse(profile))
 
     else:

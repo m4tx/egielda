@@ -9,6 +9,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib import messages
+from django.utils.translation import ugettext as _
+
 from authentication.decorators import permission_required
 from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
@@ -16,7 +19,6 @@ from django.http.response import HttpResponseRedirect
 from settings.forms import SettingsForm
 from settings.settings import Settings
 from settings.settings import string_to_datetime
-from utils.alerts import set_success_msg
 from utils.dates import datetime_html_format, datetime_to_string
 
 
@@ -32,7 +34,7 @@ def index(request):
             Settings().profit_per_book = form.cleaned_data['profit_per_book']
             Settings().tos_url = form.cleaned_data['tos_url']
             Settings().homepage_info = form.cleaned_data['homepage_info']
-            set_success_msg(request, 'settings_updated')
+            messages.success(request, _("Settings were updated successfully."))
             return HttpResponseRedirect("")
     else:
         settings = Settings('start_sell', 'end_sell', 'start_purchase', 'end_purchase',

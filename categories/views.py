@@ -9,6 +9,9 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib import messages
+from django.utils.translation import ugettext as _
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404
@@ -17,7 +20,6 @@ from authentication.decorators import permission_required
 from books.models import BookType
 from categories.forms import CategoryForm
 from categories.models import Category
-from utils.alerts import set_success_msg
 
 
 @permission_required('common.view_categories_index')
@@ -39,7 +41,7 @@ def add_category(request):
         form = CategoryForm(request.POST)
         if form.is_valid():
             form.save()
-            set_success_msg(request, 'category_added')
+            messages.success(request, _("The category was added successfully."))
             return HttpResponseRedirect(reverse(index))
     else:
         form = CategoryForm()
@@ -53,7 +55,7 @@ def edit_category(request, cat_pk):
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
-            set_success_msg(request, 'category_edited')
+            messages.success(request, _("The category was edited successfully."))
             return HttpResponseRedirect(reverse(index))
     else:
         form = CategoryForm(instance=category)
@@ -65,7 +67,7 @@ def remove_category(request, cat_pk):
     category = get_object_or_404(Category, pk=cat_pk)
     if request.method == 'POST':
         category.delete()
-        set_success_msg(request, 'category_remove')
+        messages.success(request, _("The category was removed successfully."))
         return HttpResponseRedirect(reverse(index))
     else:
         book_count = BookType.objects.filter(categories=category).count()

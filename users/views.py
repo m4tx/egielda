@@ -10,6 +10,7 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 import json
+from django.contrib import messages
 
 from django.core.urlresolvers import reverse
 from django.db.models import Sum, Q
@@ -22,7 +23,6 @@ from authentication.forms import UserDataForm
 from authentication.models import AppUser, AppUserIncorrectFields
 from books.models import Book
 from orders.models import Order
-from utils.alerts import set_success_msg
 from authentication.signals import user_needs_correction
 
 
@@ -64,7 +64,7 @@ def verify(request, user_pk):
                                 Q(pk=user_pk) & ~Q(groups__name__in=AppUser.get_verified_groups()))
     if request.POST:
         student.verify()
-        set_success_msg(request, 'user_verified')
+        messages.success(request, _("User was verified successfully."))
         return HttpResponseRedirect(reverse(unverified))
     else:
         return render(request, 'users/verify.html', {'student': student})
@@ -92,7 +92,7 @@ def needs_correction(request, user_pk):
         has_correct_data.save()
 
         user_needs_correction.send(sender=None, user=user, incorrect_fields=fields_to_save)
-        set_success_msg(request, 'incorrect_fields_saved')
+        messages.success(request, _("Information about incorrect data was sent to user."))
 
         return HttpResponseRedirect(reverse(unverified))
     else:
@@ -115,7 +115,7 @@ def profile(request, user_pk):
 
         if form.is_valid():
             form.save()
-            set_success_msg(request, 'user_profile_saved')
+            messages.success(request, _("User's profile data was successfully updated."))
             return HttpResponseRedirect(reverse(verified))
     else:
         form = UserDataForm(instance=user)
