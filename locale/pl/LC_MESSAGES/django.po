@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e-Giełda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-17 22:56+0200\n"
-"PO-Revision-Date: 2015-08-18 22:51+0200\n"
+"POT-Creation-Date: 2015-08-19 23:02+0200\n"
+"PO-Revision-Date: 2015-08-19 23:03+0200\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language: pl\n"
@@ -40,56 +40,63 @@ msgid "Alpha-numeric characters only"
 msgstr "Tylko znaki alfanumeryczne"
 
 #: authentication/forms.py:62
+#: common/templates/elements/user_profile_display_form.html:4
+#: egielda/templates/registration/login.html:32
+#: users/templates/users/user_list_base.html:7
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: authentication/forms.py:63
 #: common/templates/elements/user_profile_display_form.html:5
 #: users/templates/users/user_list_base.html:8
 msgid "First name"
 msgstr "Imię"
 
-#: authentication/forms.py:63
+#: authentication/forms.py:64
 #: common/templates/elements/user_profile_display_form.html:6
 #: users/templates/users/user_list_base.html:9
 msgid "Last name"
 msgstr "Nazwisko"
 
-#: authentication/forms.py:64
+#: authentication/forms.py:65
 #: common/templates/elements/user_profile_display_form.html:8
 msgid "School's beginning year"
 msgstr "Rok rozpoczęcia szkoły"
 
-#: authentication/forms.py:65
+#: authentication/forms.py:66
 #: common/templates/elements/user_profile_display_form.html:9
 msgid "Class letter"
 msgstr "Litera klasy"
 
-#: authentication/forms.py:66
+#: authentication/forms.py:67
 #: common/templates/elements/user_profile_display_form.html:13
 #: users/templates/users/user_list_base.html:11
 msgid "Phone number"
 msgstr "Numer telefonu"
 
-#: authentication/forms.py:67
+#: authentication/forms.py:68
 #: common/templates/elements/user_profile_display_form.html:14
 #: users/templates/users/user_list_base.html:12
 msgid "E-mail"
 msgstr "E-mail"
 
-#: authentication/forms.py:68
+#: authentication/forms.py:69
 msgid "School ID"
 msgstr "Legitymacja szkolna"
 
-#: authentication/forms.py:76
+#: authentication/forms.py:77
 msgid "Username contains illegal characters."
 msgstr "Nazwa użytkownika zawiera niedozwolone znaki."
 
-#: authentication/forms.py:91
+#: authentication/forms.py:92
 msgid "Invalid year."
 msgstr "Nieprawidłowy rok."
 
-#: authentication/forms.py:99
+#: authentication/forms.py:100
 msgid "Invalid class letter."
 msgstr "Nieprawidłowa litera klasy."
 
-#: authentication/forms.py:110
+#: authentication/forms.py:111
 msgid "File type is not supported. Valid extensions are: {}"
 msgstr "Nieobsługiwany typ pliku. Poprawne rozszerzenia: {}"
 
@@ -339,6 +346,10 @@ msgstr ""
 msgid "Continue"
 msgstr "Kontynuuj"
 
+#: authentication/views.py:105
+msgid "Your profile data was successfully updated."
+msgstr "Twoje dane zostały pomyślnie zaktualizowane."
+
 #: books/forms.py:24
 msgid "This ISBN is not valid."
 msgstr "Ten ISBN nie jest prawidłowy."
@@ -560,6 +571,33 @@ msgstr "Czy jesteś pewien, że chcesz usunąć tę książkę?"
 msgid "Are you sure you want to remove these books?"
 msgstr "Czy jesteś pewien, że chcesz usunąć te książki?"
 
+#: books/views.py:40
+msgid "The book was added successfully."
+msgstr "Książka została pomyślnie dodana."
+
+#: books/views.py:57
+msgid "The book was edited successfully."
+msgstr "Książka została pomyślnie zedytowana."
+
+#: books/views.py:71
+msgid "The book was removed successfully."
+msgid_plural "The books were removed successfully."
+msgstr[0] "Książka została pomyślnie usunięta."
+msgstr[1] "Książki zostały pomyślnie usunięte."
+msgstr[2] "Książki zostały pomyślnie usunięte."
+
+#: books/views.py:106
+msgid "No books were chosen. Merged nothing."
+msgstr "Nie wybrano książek. Nic nie połączono."
+
+#: books/views.py:109
+msgid "You haven't chosen the book to merge to!"
+msgstr "Nie wybrałeś docelowej książki do połączenia!"
+
+#: books/views.py:118
+msgid "The books were merged successfully."
+msgstr "Książki zostały pomyślnie połączone."
+
 #: categories/forms.py:23 categories/templates/categories/index.html:23
 msgid "Name"
 msgstr "Nazwa"
@@ -612,6 +650,29 @@ msgstr[2] ""
 #: categories/templates/categories/remove.html:18
 msgid "This category does not contain any books."
 msgstr "W tej kategorii nie ma żadnych książek."
+
+#: categories/views.py:44
+msgid "The category was added successfully."
+msgstr "Kategoria została pomyślnie dodana."
+
+#: categories/views.py:58
+msgid "The category was edited successfully."
+msgstr "Kategoria została pomyślnie zedytowana."
+
+#: categories/views.py:70
+msgid "The category was removed successfully."
+msgstr "Kategoria została pomyślnie usunięta."
+
+#: common/bookchooserwizard.py:177
+msgid ""
+"An error occurred while processing your query. It was most likely the result "
+"of someone else who just bought the last copies of books you've chosen. Your "
+"order was modified thus; review it and click Accept again afterwards."
+msgstr ""
+"Wystąpił błąd podczas przetwarzania Twojego żądania. Prawdopodobnie było to "
+"spowodowane przez osobę, która właśnie kupiła ostatnie egzemplarze wybranych "
+"przez Ciebie książek. Twoje zamówienie zostało zmodyfikowane – przejrzyj je, "
+"a następnie kliknij przycisk Akceptuj ponownie."
 
 #: common/templates/book_chooser_wizard/books.html:21
 msgid "Step 1 of 2: choose the books"
@@ -728,11 +789,11 @@ msgstr "Zarejestruj się"
 msgid "Sign in"
 msgstr "Zaloguj się"
 
-#: common/templates/common/base.html:75
+#: common/templates/common/base.html:82
 msgid "Your account is now awaiting verification."
 msgstr "Twoje konto oczekuje teraz na weryfikację."
 
-#: common/templates/common/base.html:79
+#: common/templates/common/base.html:86
 msgid ""
 "Your verification request was rejected. Following fields are filled in "
 "incorrectly:"
@@ -740,7 +801,7 @@ msgstr ""
 "Twoja prośba o weryfikację została odrzucona. Następujące pola zostały "
 "wypełnione nieprawidłowo:"
 
-#: common/templates/common/base.html:89
+#: common/templates/common/base.html:96
 msgid ""
 "You don't seem to have JavaScript enabled. This website <strong>does not "
 "work properly</strong> without JavaScript, so please enable it in your "
@@ -750,12 +811,6 @@ msgstr ""
 "internetowa <strong>nie działa poprawnie</strong> bez niej, zalecamy więc, "
 "abyś włączył ją w swojej przeglądarce."
 
-#: common/templates/elements/user_profile_display_form.html:4
-#: egielda/templates/registration/login.html:32
-#: users/templates/users/user_list_base.html:7
-msgid "Username"
-msgstr "Nazwa użytkownika"
-
 #: common/templates/elements/user_profile_display_form.html:11
 #: orders/templates/orders/fulfilled.html:26
 #: orders/templates/orders/not_fulfilled.html:26
@@ -763,120 +818,6 @@ msgstr "Nazwa użytkownika"
 #: users/templates/users/user_list_base.html:10
 msgid "Class"
 msgstr "Klasa"
-
-#: common/templatetags/base.py:52
-msgid "The order was removed."
-msgstr "Zamówienie zostało usunięte."
-
-#: common/templatetags/base.py:53
-msgid "No books were chosen. Merged nothing."
-msgstr "Nie wybrano książek. Nic nie połączono."
-
-#: common/templatetags/base.py:59
-msgid "The book was added successfully."
-msgstr "Książka została pomyślnie dodana."
-
-#: common/templatetags/base.py:60
-msgid "The book was edited successfully."
-msgstr "Książka została pomyślnie zedytowana."
-
-#: common/templatetags/base.py:61
-msgid "The book was removed successfully."
-msgstr "Książka została pomyślnie usunięta."
-
-#: common/templatetags/base.py:62
-msgid "The books were removed successfully."
-msgstr "Książki zostały pomyślnie usunięte."
-
-#: common/templatetags/base.py:63
-msgid "The books were merged successfully."
-msgstr "Książki zostały pomyślnie połączone."
-
-#: common/templatetags/base.py:64
-msgid "The category was added successfully."
-msgstr "Kategoria została pomyślnie dodana."
-
-#: common/templatetags/base.py:65
-msgid "The category was edited successfully."
-msgstr "Kategoria została pomyślnie zedytowana."
-
-#: common/templatetags/base.py:66
-msgid "The category was removed successfully."
-msgstr "Kategoria została pomyślnie usunięta."
-
-#: common/templatetags/base.py:67
-msgid "Settings were updated successfully."
-msgstr "Ustawienia zostały pomyślnie zapisane."
-
-#: common/templatetags/base.py:68
-msgid "The order was fulfilled successfully."
-msgstr "Zamówienie zostało pomyślnie zrealizowane."
-
-#: common/templatetags/base.py:69
-msgid "The order was removed successfully."
-msgstr "Zamówienie zostało pomyślnie usunięte."
-
-#: common/templatetags/base.py:70
-msgid "The orders were removed successfully."
-msgstr "Zamówienia zostały pomyślnie usunięte."
-
-#: common/templatetags/base.py:71
-msgid "The seller's books were removed successfully."
-msgstr "Książki sprzedającego zostały pomyślnie usunięte."
-
-#: common/templatetags/base.py:72
-msgid "The sellers' books were removed successfully."
-msgstr "Książki sprzedających zostały pomyślnie usunięte."
-
-#: common/templatetags/base.py:73
-msgid "Your profile data was successfully updated."
-msgstr "Twoje dane zostały pomyślnie zaktualizowane."
-
-#: common/templatetags/base.py:74
-msgid "User's profile data was successfully updated."
-msgstr "Dane użytkownika zostały pomyślnie zaktualizowane."
-
-#: common/templatetags/base.py:75
-msgid "User was verified successfully."
-msgstr "Użytkownik został pomyślnie zweryfikowany."
-
-#: common/templatetags/base.py:76
-msgid "Information about incorrect data was sent to user."
-msgstr "Informacja o niepoprawnych danych została wysłana do użytkownika."
-
-#: common/templatetags/base.py:82
-msgid ""
-"An error occurred while processing your query. It was most likely the result "
-"of someone else who just bought the last copies of books you've chosen. Your "
-"order was modified thus; review it and click Accept again afterwards."
-msgstr ""
-"Wystąpił błąd podczas przetwarzania Twojego żądania. Prawdopodobnie było to "
-"spowodowane przez osobę, która właśnie kupiła ostatnie egzemplarze wybranych "
-"przez Ciebie książek. Twoje zamówienie zostało zmodyfikowane – przejrzyj je, "
-"a następnie kliknij przycisk Akceptuj ponownie."
-
-#: common/templatetags/base.py:90
-msgid "You haven't chosen the book to merge to!"
-msgstr "Nie wybrałeś docelowej książki do połączenia!"
-
-#: common/templatetags/base.py:91
-msgid ""
-"Amount of books being purchased and count of provided books' owners are not "
-"equal. You'll need to fill in the form again."
-msgstr ""
-"Ilość kupowanych książek nie jest równa liczbie podanych właścicieli. Musisz "
-"wypełnić formularz ponownie."
-
-#: common/templatetags/base.py:93
-msgid ""
-"Some of the users you have provided don't have enough books in the database."
-msgstr ""
-"Niektórzy z podanych użytkowników nie posiadają wystarczającej ilości "
-"książek w bazie danych."
-
-#: common/templatetags/base.py:95
-msgid "Invalid amount."
-msgstr "Nieprawidłowa ilość."
 
 #: common/templatetags/manage_header.py:28
 msgid "Book list"
@@ -1213,6 +1154,40 @@ msgstr "Czy jesteś pewien, że chcesz usunąć to zamówienie?"
 msgid "Are you sure you want to remove these orders?"
 msgstr "Czy jesteś pewien, że chcesz usunąć te zamówienia?"
 
+#: orders/views.py:105
+msgid "Invalid amount."
+msgstr "Nieprawidłowa ilość."
+
+#: orders/views.py:130
+msgid ""
+"Amount of books being purchased and count of provided books' owners are not "
+"equal. You'll need to fill in the form again."
+msgstr ""
+"Ilość kupowanych książek nie jest równa liczbie podanych właścicieli. Musisz "
+"wypełnić formularz ponownie."
+
+#: orders/views.py:163
+msgid ""
+"Some of the users you have provided don't have enough books in the database."
+msgstr ""
+"Niektórzy z podanych użytkowników nie posiadają wystarczającej ilości "
+"książek w bazie danych."
+
+#: orders/views.py:193
+msgid "The order was removed."
+msgstr "Zamówienie zostało usunięte."
+
+#: orders/views.py:204
+msgid "The order was fulfilled successfully."
+msgstr "Zamówienie zostało pomyślnie zrealizowane."
+
+#: orders/views.py:232
+msgid "The order was removed successfully."
+msgid_plural "The orders were removed successfully."
+msgstr[0] "Zamówienie zostało pomyślnie usunięte."
+msgstr[1] "Zamówienia zostały pomyślnie usunięte."
+msgstr[2] "Zamówienia zostały pomyślnie usunięte."
+
 #: purchase/templates/purchase/success.html:4 purchase/views.py:25
 msgid "Purchase books"
 msgstr "Kup książki"
@@ -1289,6 +1264,13 @@ msgstr "Czy jesteś pewien, że chcesz usunąć książki tych sprzedających?"
 msgid "The books were accepted successfully."
 msgstr "Książki zostały pomyślnie zaakceptowane."
 
+#: sellers/views.py:134
+msgid "The seller's books were removed successfully."
+msgid_plural "The sellers' books were removed successfully."
+msgstr[0] "Książki sprzedającego zostały pomyślnie usunięte."
+msgstr[1] "Książki sprzedających zostały pomyślnie usunięte."
+msgstr[2] "Książki sprzedających zostały pomyślnie usunięte."
+
 #: settings/forms.py:19
 msgid "Selling start date"
 msgstr "Początek sprzedaży"
@@ -1322,6 +1304,10 @@ msgstr "Informacja na stronie głównej"
 #, python-format
 msgid "%(name)s: %(value)s"
 msgstr "%(name)s: %(value)s"
+
+#: settings/views.py:37
+msgid "Settings were updated successfully."
+msgstr "Ustawienia zostały pomyślnie zapisane."
 
 #: stats/templates/stats/books.html:25 stats/templates/stats/books.html:27
 #: stats/templates/stats/books_sold.html:61
@@ -1409,3 +1395,15 @@ msgstr "Ten użytkownik nie ma przypisanego dokumentu tożsamości."
 #: users/templates/users/verify.html:44
 msgid "Needs correction"
 msgstr "Wymaga poprawy"
+
+#: users/views.py:67
+msgid "User was verified successfully."
+msgstr "Użytkownik został pomyślnie zweryfikowany."
+
+#: users/views.py:95
+msgid "Information about incorrect data was sent to user."
+msgstr "Informacja o niepoprawnych danych została wysłana do użytkownika."
+
+#: users/views.py:118
+msgid "User's profile data was successfully updated."
+msgstr "Dane użytkownika zostały pomyślnie zaktualizowane."
