@@ -20,6 +20,7 @@ from django.db import transaction
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponse, HttpRequest
 from django.shortcuts import render
 from django.views.generic import RedirectView
+from django.utils.translation import ugettext as _
 from authentication.decorators import permission_required
 
 from books.forms import BookForm
