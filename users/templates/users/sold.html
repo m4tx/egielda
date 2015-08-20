@@ -56,12 +56,12 @@
     {% manage_header "users/sold" %}
 
     <div class="ui tabular menu">
-        {% if perms.common.view_stats_user_profile %}
+        {% if perms.common.view_users_profile %}
             <a href="{% url 'users.views.profile' student.pk %}" class="item">{% trans "Profile data" %}</a>
         {% else %}
             <div class="item disabled">{% trans "Profile data" %}</div>
         {% endif %}
-        {% if perms.common.view_stats_user_profile_purchased %}
+        {% if perms.common.view_users_profile_purchased %}
             <a href="{% url 'users.views.profile_purchased' student.pk %}" class="item">{% trans "Purchased books" %}</a>
         {% else %}
             <div class="item disabled">{% trans "Purchased books" %}</div>

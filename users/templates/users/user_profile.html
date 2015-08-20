@@ -56,12 +56,12 @@
 
     <div class="ui tabular menu">
         <div class="active item">{% trans "Profile data" %}</div>
-        {% if perms.common.view_stats_user_profile_purchased %}
+        {% if perms.common.view_users_profile_purchased %}
             <a href="{% url 'users.views.profile_purchased' student.pk %}" class="item">{% trans "Purchased books" %}</a>
         {% else %}
             <div class="item disabled">{% trans "Purchased books" %}</div>
         {% endif %}
-        {% if perms.common.view_stats_user_profile_sold %}
+        {% if perms.common.view_users_profile_sold %}
             <a href="{% url 'users.views.profile_sold' student.pk %}" class="item">{% trans "Sold books" %}</a>
         {% else %}
             <div class="item disabled">{% trans "Sold books" %}</div>

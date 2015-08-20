@@ -107,11 +107,16 @@ def create_groups(verbosity, **kwargs):
             'view_orders_remove_order',
 
             'view_stats_books_sold',
-            'view_stats_users',
-            'view_stats_user_profile',
-            'view_stats_user_profile_purchased',
-            'view_stats_user_profile_sold',
             'view_stats_books',
+
+            'view_users_index',
+            'view_users_verified',
+            'view_users_unverified',
+            'view_users_needing_data_correction',
+            'view_users_verify',
+            'view_users_profile',
+            'view_users_profile_purchased',
+            'view_users_profile_sold',
         ]
 
         admin_group.permissions.clear()
