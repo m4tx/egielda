@@ -9,9 +9,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf import settings
+from django import template
+from django.forms import TextInput
+
+register = template.Library()
 
 
-class CacheLastURLMiddleware:
-    def process_request(self, request):
-        settings.CURRENT_URL = request.build_absolute_uri()
+@register.simple_tag
+def antibot_field():
+    field = TextInput(attrs={
+        'hidden': ''
+    })
+
+    return field.render("antibot_field", "")

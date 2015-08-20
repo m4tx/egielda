@@ -1,5 +1,6 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load antibot %}
 
 {% block title %}{% trans "Register new account" %}{% endblock %}
 
@@ -20,6 +21,7 @@
             </div>
         {% endif %}
         {% csrf_token %}
+        {% antibot_field %}
         <button class="ui icon labeled primary button right floated" type="submit">
             <i class="icon plus"></i>{% trans "Register" %}
         </button>

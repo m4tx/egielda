@@ -9,9 +9,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf import settings
+from django.core.exceptions import PermissionDenied
 
 
-class CacheLastURLMiddleware:
+class AntiBotMiddleware:
     def process_request(self, request):
-        settings.CURRENT_URL = request.build_absolute_uri()
+        if request.method == "POST":
+            antibot_field_value = request.POST.get('antibot_field', "")
+
+            if antibot_field_value != "":
+                raise PermissionDenied
+
