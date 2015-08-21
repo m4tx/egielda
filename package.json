@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "egielda =======",
   "scripts": {
-    "postinstall": "npm run gulp build",
+    "postinstall": "npm run gulp-build",
     "gulp": "gulp",
+    "gulp-build": "gulp build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
