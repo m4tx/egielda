@@ -101,12 +101,16 @@ def profile(request):
 
         if form.is_valid():
             user = form.save()
-            if 'document' in request.FILES and user.awaiting_verification is False and user.verified is False:
-                user.awaiting_verification = True
-                AppUserIncorrectFields.objects.filter(user=user).delete()
-            elif 'document-clear' in request.POST and user.awaiting_verification is True:
-                user.awaiting_verification = False
-            user.save()
+
+            if settings.USE_LDAP_VERIFICATION and user.verified is False and check_user_existence(user):
+                user.verify()
+            else:
+                if 'document' in request.FILES and user.awaiting_verification is False and user.verified is False:
+                    user.awaiting_verification = True
+                    AppUserIncorrectFields.objects.filter(user=user).delete()
+                elif 'document-clear' in request.POST and user.awaiting_verification is True:
+                    user.awaiting_verification = False
+                user.save()
             messages.success(request, _("Your profile data was successfully updated."))
             return HttpResponseRedirect(reverse(profile))
 
