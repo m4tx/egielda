@@ -92,11 +92,16 @@ def profile(request):
             request.POST[field] = getattr(request.user, field)
         for field in disabled_fields_files:
             request.FILES[field] = getattr(request.user, field)
+
+        # document can't be removed by just not sending a file, in which case we set the previous value stored in db
+        if request.user.document and 'document' not in request.FILES and 'document-clear' not in request.POST:
+            request.FILES['document'] = request.user.document
+
         form = UserDataForm(request.POST, request.FILES, instance=request.user)
 
         if form.is_valid():
             user = form.save()
-            if 'document' in form.cleaned_data and user.awaiting_verification is False and user.verified is False:
+            if 'document' in request.FILES and user.awaiting_verification is False and user.verified is False:
                 user.awaiting_verification = True
                 AppUserIncorrectFields.objects.filter(user=user).delete()
             elif 'document-clear' in request.POST and user.awaiting_verification is True:
