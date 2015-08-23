@@ -13,11 +13,11 @@
     </div>
 
     <div class="btn-toolbar">
-        <a href="{% url 'home' %}" class="ui primary button" role="button">
-            <span class="glyphicon glyphicon-home"></span> {% trans "Homepage" %}
+        <a href="{% url 'home' %}" class="ui primary icon labeled button" role="button">
+            <i class="icon home"></i> {% trans "Homepage" %}
         </a>
-        <a href="{% url 'login' %}" class="ui button" role="button">
-            <span class="glyphicon glyphicon-log-in"></span> {% trans "Sign in again" %}
+        <a href="{% url 'login' %}" class="ui icon labeled button right floated" role="button">
+            <i class="icon sign in"></i> {% trans "Sign in again" %}
         </a>
     </div>
 {% endblock %}
