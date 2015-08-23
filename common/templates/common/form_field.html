@@ -2,3 +2,11 @@
     <label{% if id %} for="{{ id }}"{% endif %}>{{ label }}:</label>
     <div class="field{% if has_errors %} error{% endif %}">{{ field }}</div>
 </div>
+{% if field.help_text %}
+    <div class="inline fields">
+        <div class="label"></div>
+        <div class="ui info message help-text">
+            {{ field.help_text }}
+        </div>
+    </div>
+{% endif %}
