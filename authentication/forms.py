@@ -103,7 +103,12 @@ class UserDataForm(ModelForm):
 
     def clean_document(self):
         document = self.cleaned_data['document']
-        if document is None or isinstance(document, bool):
+
+        # Don't try to process the file if:
+        # - it was not sent (is None)
+        # - "Clear" checkbox was checked (is bool)
+        # - It was already processed and is saved (and therefore, has an URL)
+        if document is None or isinstance(document, bool) or getattr(document, 'url', None):
             return document
 
         extension = document.name.split('.')[-1].upper()
