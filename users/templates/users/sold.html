@@ -3,52 +3,6 @@
 {% load manage_header %}
 {% load price %}
 
-{% block head %}
-    <style>
-        .panel-info h5 a {
-            color: #333;
-        }
-
-        .panel-info > .panel-heading {
-            color: #3A505B;
-            background-image: linear-gradient(to bottom, #E6F1F6 0%, #E6F1F6 100%);
-            background-color: #E6F1F6;
-            padding: 5px 13px;
-            line-height: 1.1;
-            font-size: 13px;
-        }
-
-        .list-group {
-            background-color: #F7FBFC;
-        }
-
-        .list-group-item {
-            background: inherit;
-        }
-
-        .list-group-item:nth-child(2n+1) {
-            background-color: #FFF;
-        }
-
-        tbody > tr.list-group-item:hover > td {
-            background-color: #FCFCE2;
-        }
-
-        .text-muted {
-            font-size: 12px;
-        }
-
-        h5 {
-            font-weight: bold;
-            margin: 7px 0;
-        }
-
-        .nav-tabs {
-            margin-bottom: 10px;
-        }
-    </style>
-{% endblock %}
-
 {% block title %}{% trans "Sold books" %}{% endblock %}
 
 {% block content %}

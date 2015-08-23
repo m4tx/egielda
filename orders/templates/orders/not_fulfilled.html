@@ -4,14 +4,6 @@
 
 {% block title %}{% trans "Orders" %} – {% trans "Not fulfilled" %}{% endblock %}
 
-{% block head %}
-    <style>
-        .nav.nav-tabs {
-            margin-bottom: 10px;
-        }
-    </style>
-{% endblock %}
-
 {% block content %}
     <h1>{% trans "Orders" %}</h1>
     {% manage_header "orders/not_fulfilled" %}

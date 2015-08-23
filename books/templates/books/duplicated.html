@@ -4,31 +4,6 @@
 
 {% block title %}{% trans "Manage books" %}{% endblock %}
 
-{% block head %}
-    <style>
-        .ui.table th.isbn {
-            text-align: center;
-        }
-
-        .ui.table td.merge {
-            padding: 0;
-        }
-
-        .ui.table td.merge > button {
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-
-        form {
-            margin-bottom: 1em;
-        }
-
-        form:last-child {
-            margin-bottom: 0;
-        }
-    </style>
-{% endblock %}
-
 {% block content %}
     <h1>
         {% trans "Books" %}
@@ -37,7 +12,7 @@
     {% manage_header "books/duplicated" %}
 
     {% if duplicated %}
-        <form method="post" action="{{ request.path }}">
+        <form method="post" action="{{ request.path }}" class="duplicated-books">
             {% csrf_token %}
             {% for isbn, l in duplicated.items %}
                 {% include "books/duplicated_book_list.html" with book_list=l hide_actions=True %}

@@ -12,17 +12,27 @@
  */
 
 //
-// User profile pages
+// Responsive utilities
 //
 
-// Register
-div#terms-of-service-notice {
-  font-size: 12px;
-  text-align: center;
-  margin-bottom: 1em;
+// Responsive elements (images) with specified aspect ratio
+.responsive-16by9 {
+  display: block;
+  width: 100%;
+  position: relative;
+  height: 0;
+  padding: 56.25% 0 0 0;
+  overflow: hidden;
 }
 
-// Profile
-h4.user-verification {
-  margin-top: -.5em;
+.responsive-item {
+  position: absolute;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }

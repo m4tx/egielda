@@ -12,23 +12,23 @@
                 </th>
             </tr>
             <tr>
-                <th>{% trans "ISBN" %}</th>
-                <th>{% trans "Publisher" %}</th>
-                <th style="width: 40%;">{% trans "Title" %}</th>
-                <th>{% trans "Publication" %}</th>
-                <th>{% trans "Price" %}</th>
-                <th>{% trans "Amount" %}</th>
+                <th class="collapsing">{% trans "ISBN" %}</th>
+                <th class="collapsing">{% trans "Publisher" %}</th>
+                <th>{% trans "Title" %}</th>
+                <th class="collapsing">{% trans "Publication" %}</th>
+                <th class="collapsing">{% trans "Price" %}</th>
+                <th class="collapsing">{% trans "Amount" %}</th>
                 <th class="collapsing">{% trans "Fulfilled" %}</th>
             </tr>
             </thead>
             {% for book in value %}
                 <tr>
-                    <td>{{ book.0.isbn }}</td>
-                    <td>{{ book.0.publisher }}</td>
+                    <td class="collapsing">{{ book.0.isbn }}</td>
+                    <td class="collapsing">{{ book.0.publisher }}</td>
                     <td>{{ book.0.title }}</td>
-                    <td>{{ book.0.publication_year }}</td>
-                    <td>{{ book.0.price | price }}</td>
-                    <td>{{ book.1 }}</td>
+                    <td class="collapsing">{{ book.0.publication_year }}</td>
+                    <td class="collapsing">{{ book.0.price | price }}</td>
+                    <td class="collapsing">{{ book.1 }}</td>
                     <td>
                         {% if book.2 %}
                             ✔

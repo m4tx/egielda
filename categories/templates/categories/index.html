@@ -4,14 +4,6 @@
 
 {% block title %}{% trans "Manage categories" %}{% endblock %}
 
-{% block head %}
-    <style>
-        table th:first-child {
-            width: 80%;
-        }
-    </style>
-{% endblock %}
-
 {% block content %}
     <h1>{% trans "Categories" %}</h1>
     {% manage_header "categories" %}
@@ -21,14 +13,14 @@
             <thead>
             <tr>
                 <th>{% trans "Name" %}</th>
-                <th>{% trans "Books" %}</th>
+                <th class="collapsing">{% trans "Books" %}</th>
                 <th>{% trans "Actions" %}</th>
             </tr>
             </thead>
             {% for item, book_count in category_list %}
                 <tr>
                     <td>{{ item.name }}</td>
-                    <td>
+                    <td class="collapsing">
                         {% if book_count and perms.common.view_categories_list_books %}
                             <a href="{% url 'categories.views.list_books' item.pk %}">
                                 {{ book_count }}

@@ -4,14 +4,6 @@
 
 {% block title %}{% trans "Sellers with unaccepted books - Accept books" %}{% endblock %}
 
-{% block head %}
-    <style>
-        .input-group-addon, .input-group-btn {
-            width: auto;
-        }
-    </style>
-{% endblock %}
-
 {% block content %}
     <h1>{% trans "Sellers with unaccepted books" %}
         <small>{% blocktrans %}Accept {{ user_name }}'s books{% endblocktrans %}</small>

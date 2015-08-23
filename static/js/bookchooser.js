@@ -166,7 +166,7 @@ function addBookTr(tr) {
     });
     tr.append($('<td class="collapsing"/>').append(button));
 
-    $('#chosen-book-list-div').removeClass('hidden');
+    $('#chosen-book-list-div').show();
     var chosenTable = $('#chosen-book-list');
     $('button[name=btn-next]').removeAttr('disabled');
 
@@ -192,7 +192,7 @@ function removeBook(id) {
         chosenBooks.splice(id, 1);
 
         if (chosenBooks.length == 0) {
-            $('#chosen-book-list-div').addClass('hidden');
+            $('#chosen-book-list-div').hide();
             $('button[name="btn-next"]').attr('disabled', 'disabled');
         }
     }

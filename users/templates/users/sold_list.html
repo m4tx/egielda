@@ -11,26 +11,26 @@
             </th>
         </tr>
         <tr>
-            <th>{% trans "ISBN" %}</th>
-            <th>{% trans "Publisher" %}</th>
-            <th style="width: 40%;">{% trans "Title" %}</th>
-            <th>{% trans "Publication" %}</th>
-            <th>{% trans "Price" %}</th>
-            <th>{% trans "Declared" %}</th>
-            <th>{% trans "Brought" %}</th>
-            <th>{% trans "Sold" context "count" %}</th>
+            <th class="collapsing">{% trans "ISBN" %}</th>
+            <th class="collapsing">{% trans "Publisher" %}</th>
+            <th>{% trans "Title" %}</th>
+            <th class="collapsing">{% trans "Publication" %}</th>
+            <th class="collapsing">{% trans "Price" %}</th>
+            <th class="collapsing">{% trans "Declared" %}</th>
+            <th class="collapsing">{% trans "Brought" %}</th>
+            <th class="collapsing">{% trans "Sold" context "count" %}</th>
         </tr>
         </thead>
         {% for key, value in stats.items %}
             <tr>
-                <td>{{ value.0.book_type.isbn }}</td>
-                <td>{{ value.0.book_type.publisher }}</td>
+                <td class="collapsing">{{ value.0.book_type.isbn }}</td>
+                <td class="collapsing">{{ value.0.book_type.publisher }}</td>
                 <td>{{ value.0.book_type.title }}</td>
-                <td>{{ value.0.book_type.publication_year }}</td>
-                <td>{{ value.0.book_type.price | price }}</td>
-                <td>{{ value.1 }}</td>
-                <td>{{ value.2 }}</td>
-                <td>{{ value.3 }}</td>
+                <td class="collapsing">{{ value.0.book_type.publication_year }}</td>
+                <td class="collapsing">{{ value.0.book_type.price | price }}</td>
+                <td class="collapsing">{{ value.1 }}</td>
+                <td class="collapsing">{{ value.2 }}</td>
+                <td class="collapsing">{{ value.3 }}</td>
             </tr>
         {% endfor %}
     </table>

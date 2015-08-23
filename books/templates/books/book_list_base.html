@@ -6,11 +6,11 @@
     {% block thead_tr %}{% endblock %}
     <tr>
         {% block thead_header %}{% endblock %}
-        <th>{% trans "ISBN" %}</th>
-        <th>{% trans "Publisher" %}</th>
-        <th style="width: 40%;">{% trans "Title" %}</th>
-        <th>{% trans "Publication" %}</th>
-        <th>{% trans "Price" %}</th>
+        <th class="collapsing">{% trans "ISBN" %}</th>
+        <th class="collapsing">{% trans "Publisher" %}</th>
+        <th>{% trans "Title" %}</th>
+        <th class="collapsing">{% trans "Publication" %}</th>
+        <th class="collapsing">{% trans "Price" %}</th>
         {% block thead_footer %}{% endblock %}
         {% if not hide_actions %}
             <th>{% trans "Actions" %}</th>
@@ -22,8 +22,8 @@
         {% block preceding_rows %}{% endblock %}
         <tr{% block tr_attributes %}{% endblock %}>
             {% block tr_header %}{% endblock %}
-            <td>{{ book.isbn }}</td>
-            <td>{{ book.publisher }}</td>
+            <td class="collapsing">{{ book.isbn }}</td>
+            <td class="collapsing">{{ book.publisher }}</td>
             <td>
                 {% if book.pk and perms.common.view_books_book_details %}
                     <a href="{% url 'books.views.book_details' book.pk %}">{{ book.title }}</a>
@@ -31,8 +31,8 @@
                     {{ book.title }}
                 {% endif %}
             </td>
-            <td>{{ book.publication_year }}</td>
-            <td>{% block book_price %}{{ book.price|price }}{% endblock %}</td>
+            <td class="collapsing">{{ book.publication_year }}</td>
+            <td class="collapsing">{% block book_price %}{{ book.price|price }}{% endblock %}</td>
             {% block tr_footer %}{% endblock %}
             {% if not hide_actions %}
                 <td class="collapsing">

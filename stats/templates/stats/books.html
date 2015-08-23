@@ -2,18 +2,6 @@
 {% load i18n %}
 {% load manage_header %}
 
-{% block head %}
-    <style>
-        table th:first-child {
-            width: 80%;
-        }
-
-        .nav-tabs {
-            margin-bottom: 10px;
-        }
-    </style>
-{% endblock %}
-
 {% block title %}{% trans "Books" %}{% endblock %}
 
 {% block content %}
@@ -39,8 +27,8 @@
             <thead>
                 <tr>
                     <th>{% trans "Book" %}</th>
-                    <th>{% trans "Received" %}</th>
-                    <th>{% trans "Sold" context "count" %}</th>
+                    <th class="collapsing">{% trans "Received" %}</th>
+                    <th class="collapsing">{% trans "Sold" context "count" %}</th>
                 </tr>
             </thead>
             {% for book in book_list %}
@@ -52,8 +40,8 @@
                             {{ book.title }}
                         {% endif %}
                     </td>
-                    <td>{{ book.received }}</td>
-                    <td>{{ book.sold }}</td>
+                    <td class="collapsing">{{ book.received }}</td>
+                    <td class="collapsing">{{ book.sold }}</td>
                 </tr>
             {% endfor %}
         </table>

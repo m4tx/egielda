@@ -8,13 +8,13 @@
 
 {% block thead_footer %}
     {% if feature_books_in_stock %}
-        <th>{% trans "In stock" %}</th>
+        <th class="collapsing">{% trans "In stock" %}</th>
     {% endif %}
 {% endblock %}
 
 {% block tr_footer %}
     {% if feature_books_in_stock %}
-        <td class="in-stock">{{ book.amount }}</td>
+        <td class="in-stock collapsing">{{ book.amount }}</td>
     {% endif %}
 {% endblock %}
 
