@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^verified/$', views.verified),
     url(r'^unverified/$', views.unverified),
     url(r'^needingcorrection/$', views.needing_data_correction),
-    url(r'^/$', views.index)
+    url(r'^$', views.index)
 ]
