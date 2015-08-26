@@ -18,6 +18,8 @@
 var egielda = egielda || {};
 
 egielda.bookChooser = function() {
+    'use strict';
+
     $('.btn-add-book').on('click', function() {
         var tr = $(this).closest($('tr'));
         var inStockTd = $('td.in-stock', tr);

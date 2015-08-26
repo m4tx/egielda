@@ -18,6 +18,8 @@
 var egielda = egielda || {};
 
 egielda.Cache = (function() {
+    'use strict';
+
     function Cache() {
         this._cache = {};
     }

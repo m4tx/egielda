@@ -18,6 +18,8 @@
 var egielda = egielda || {};
 
 egielda.userChooser = function() {
+    'use strict';
+
     var cache = new egielda.Cache();
 
     $('input.tokenfield').each(function() {

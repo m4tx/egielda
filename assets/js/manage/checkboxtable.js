@@ -18,6 +18,8 @@
 var egielda = egielda || {};
 
 egielda.checkboxTable = function() {
+    'use strict';
+
     window.addEventListener('load', function() {
         $('.ui.checkbox').checkbox('set enabled');
         $('.table .master.checkbox').checkbox({

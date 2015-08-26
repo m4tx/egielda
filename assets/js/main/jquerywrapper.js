@@ -18,6 +18,8 @@
 var egielda = egielda || {};
 
 egielda.jQ = (function() {
+    'use strict';
+
     function Button(predecessor) {
         // extends jQuery's button object
         for (var property in predecessor) {

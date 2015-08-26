@@ -18,6 +18,8 @@
 var egielda = egielda || {};
 
 egielda.isbnFinder = function() {
+    'use strict';
+
     var INVALID_ISBN = gettext('This ISBN is invalid.'),
         BOOK_NOT_FOUND =
             gettext('The book wasn\'t found. Please check the ISBN or fill out the form manually.');

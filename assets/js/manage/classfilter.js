@@ -18,6 +18,8 @@
 var egielda = egielda || {};
 
 egielda.classFilter = function() {
+    'use strict';
+
     $('#class-filter').dropdown({
         onChange: function(studentClass) {
             $('table > tbody > tr').each(function() {

@@ -18,6 +18,8 @@
 var egielda = egielda || {};
 
 egielda.datetimePolyfill = function(lang) {
+    'use strict';
+
     window.addEventListener('load', function() {
         var input = document.createElement('input');
         input.setAttribute('type', 'datetime-local');
