@@ -20,6 +20,7 @@ var concat = require('gulp-concat'),
     path = require('path'),
     es = require('event-stream'),
     jshint = require('gulp-jshint'),
+    jscs = require('gulp-jscs'),
     uglify = require('gulp-uglify'),
 
     less = require('gulp-less'),
@@ -29,9 +30,10 @@ var concat = require('gulp-concat'),
  * JavaScript
  */
 gulp.task('lint', function () {
-    return gulp.src('assets/js/*.js')
+    return gulp.src('assets/js/**/*.js')
         .pipe(jshint())
-        .pipe(jshint.reporter('default'));
+        .pipe(jshint.reporter('default')
+        .pipe(jscs()));
 });
 
 function getFolders(dir){
@@ -49,7 +51,7 @@ function getJsTask(func) {
 
 gulp.task('js', function() {
     return getJsTask(function(folder) {
-        return gulp.src(path.join('assets/js', folder, '/*.js'))
+        return gulp.src(path.join('assets/js', folder, '*.js'))
             .pipe(sourcemaps.init())
             .pipe(concat(folder + '.js'))
             .pipe(sourcemaps.write())
@@ -59,7 +61,7 @@ gulp.task('js', function() {
 
 gulp.task('js-minified', function() {
     return getJsTask(function(folder) {
-        return gulp.src(path.join('assets/js', folder, '/*.js'))
+        return gulp.src(path.join('assets/js', folder, '*.js'))
             .pipe(concat(folder + '.js'))
             .pipe(uglify())
             .pipe(gulp.dest('dist/js'));
@@ -116,7 +118,7 @@ gulp.task('assets', function () {
 gulp.task('watch', function () {
     var semanticPath = 'vendor/Semantic-UI/src/**/';
 
-    gulp.watch('assets/js/*/*.js', ['lint', 'js']);
+    gulp.watch(['.jscsrc', '.jshintrc', 'assets/js/**/*.js'], ['lint', 'js']);
     gulp.watch(['assets/less/**/*.less',
         semanticPath + '*.less', semanticPath + '*.variables', semanticPath + '*.overrides'],
         ['less']);
