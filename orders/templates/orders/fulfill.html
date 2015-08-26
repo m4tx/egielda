@@ -40,19 +40,13 @@
 
 {% block footer %}
     <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
-    <script type="text/javascript">
-        window.addEventListener("load", function(){
-            $(".table-responsive table").tablesorter();
-        });
-    </script>
-    <script type="text/javascript" src="{% static "js/cache.js" %}"></script>
-    <script type="text/javascript">
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="{% static "js/semantic-tokenfield.min.js" %}"></script>
+    <script>
         var users = new Array();
         {% for user in users %}
             users[{{ user.0 }}] = "{{ user.1 }}";
         {% endfor %}
+        egielda.userChooser();
     </script>
-    <script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{% static "js/semantic-tokenfield.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/userchooser.js" %}"></script>
 {% endblock %}

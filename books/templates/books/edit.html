@@ -25,6 +25,5 @@
 {% block footer %}
     {% load staticfiles %}
     <script src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
-    <script src="{% static "js/jquery_wrapper.js" %}"></script>
-    <script src="{% static "js/isbnfinder.js" %}"></script>
+    <script>egielda.isbnFinder();</script>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load price %}
 
-<table class="ui selectable table"{% block table_attributes %}{% endblock %}>
+<table class="ui selectable table{% block table_classes %}{% endblock %}"{% block table_attributes %}{% endblock %}>
     <thead>
     {% block thead_tr %}{% endblock %}
     <tr>

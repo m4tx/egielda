@@ -68,14 +68,11 @@
 
 {% block footer %}
     {% load staticfiles %}
-    <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
+    <script src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
     <script>
         var chosenBooks = {% if chosen_books %}{{ chosen_books|safe }}{% else %}[]{% endif %};
         var currency = '{{ currency|safe }}';
+        egielda.bookChooser();
+        {% if feature_add_new %}egielda.isbnFinder();{% endif %}
     </script>
-    {% if feature_add_new %}
-        <script src="{% static "js/jquery_wrapper.js" %}"></script>
-        <script src="{% static "js/isbnfinder.js" %}"></script>
-    {% endif %}
-    <script src="{% static "js/bookchooser.js" %}"></script>
 {% endblock %}

@@ -23,7 +23,7 @@
     </div>
 
     {% if book_list %}
-        <table class="ui selectable table">
+        <table class="ui selectable sortable table">
             <thead>
                 <tr>
                     <th>{% trans "Book" %}</th>
@@ -53,9 +53,4 @@
 {% block footer %}
     {% load staticfiles %}
     <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
-    <script type="text/javascript">
-        window.addEventListener("load", function(){
-            $(".table-responsive table").tablesorter();
-        });
-    </script>
 {% endblock %}

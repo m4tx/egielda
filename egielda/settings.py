@@ -117,7 +117,6 @@ LOCALE_PATHS = (
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "dist"),
-    os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "upload"),
 )
 

@@ -59,15 +59,14 @@
 {% block footer %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <script src="{% static "js/nv.d3.min.js" %}"></script>
-    <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
-    <script src="{% static 'js/statscharts.js' %}"></script>
+    <script src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
     <script>
         {% load l10n %}
         function soldBookAmountsData() {
             return  [
                 {
                     values: [
-                        {% for date, count in sold_book_counts %}{"label":"{{ date|date:"d E" }}","value":{{ count }}},{% endfor %}
+                        {% for date, count in sold_book_counts %}{label:"{{ date|date:"d E" }}",value:{{ count }}},{% endfor %}
                     ]
                 }
             ]
@@ -76,7 +75,7 @@
             return  [
                 {
                     values: [
-                        {% for date, count in given_book_counts %}{"label":"{{ date|date:"d E" }}","value":{{ count }}},{% endfor %}
+                        {% for date, count in given_book_counts %}{label:"{{ date|date:"d E" }}",value:{{ count }}},{% endfor %}
                     ]
                 }
             ]
@@ -85,15 +84,16 @@
             return  [
                 {
                     values: [
-                        {% for date, price in sold_book_prices %}{"label":"{{ date|date:"d E" }}","value":{{ price|unlocalize }}},{% endfor %}
+                        {% for date, price in sold_book_prices %}{label:"{{ date|date:"d E" }}",value:{{ price|unlocalize }}},{% endfor %}
                     ]
                 }
             ]
         }
         function soldBookCategoriesData() {
             return  [
-                {% for category, count in sold_book_categories %}{"label": "{{ category.name }}","value":{{ count }}},{% endfor %}
+                {% for category, count in sold_book_categories %}{label: "{{ category.name }}",value:{{ count }}},{% endfor %}
             ]
         }
+        egielda.statsCharts();
     </script>
 {% endblock %}

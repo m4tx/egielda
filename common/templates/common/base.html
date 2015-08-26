@@ -103,17 +103,11 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.1/semantic.min.js"></script>
 
-        <script>
-            $('.ui.dropdown,.ui.form select').dropdown();
-            $('.ui.dropdown select').each(function() {
-                if($(this).prop("disabled")) {
-                    $(this).parent().addClass("disabled");
-                }
-            });
-            $('.message .close').on('click', function () {
-                $(this).closest('.message').transition('fade');
-            });
-        </script>
+        <script src="{% static 'js/main.js' %}"></script>
+        {% if IS_MANAGE %}
+            <script src="{% static 'js/manage.js' %}"></script>
+        {% endif %}
+
         {% block footer %}{% endblock %}
 
         </body>

@@ -1,6 +1,8 @@
 {% extends "books/book_list_base.html" %}
 {% load i18n %}
 
+{% block table_classes %} sortable{% endblock %}
+
 {% block actions %}
     {% if perms.common.view_books_edit_book %}
         <a href="{% url 'books.views.edit_book' book.pk %}"><i class="icon edit"></i>{% trans "Edit" %}</a>

@@ -58,9 +58,4 @@
 {% block footer %}
     {% load staticfiles %}
     <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
-    <script type="text/javascript">
-        window.addEventListener("load", function(){
-            $("table.sortable").tablesorter();
-        });
-    </script>
 {% endblock %}

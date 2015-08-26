@@ -27,10 +27,5 @@
     {% load staticfiles %}
     <script src="{% static "js/moment.min.js" %}"></script>
     <script src="{% static "js/jquery.tablesorter.min.js" %}"></script>
-    <script type="text/javascript">
-        window.addEventListener("load", function(){
-            $("table.sortable").tablesorter();
-        });
-    </script>
-    <script src="{% static "js/classfilter.js" %}"></script>
+    <script>egielda.classFilter();</script>
 {% endblock %}

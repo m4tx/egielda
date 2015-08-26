@@ -11,15 +11,28 @@
  * along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$('#class-filter').dropdown({
-        onChange: function (studentClass) {
-            $("table > tbody > tr").each(function () {
-                if ($(this).data('class') !== studentClass && studentClass !== 0) {
-                    $(this).css('display', 'none');
-                } else {
-                    $(this).css('display', 'table-row');
-                }
-            });
-        }
+/**
+ * Simple key-value store.
+ */
+
+var egielda = egielda || {};
+
+egielda.Cache = (function() {
+    function Cache() {
+        this._cache = {};
     }
-);
+
+    Cache.prototype = {
+        get: function(key) {
+            return this._cache[key] || undefined;
+        },
+
+        set: function(key, value) {
+            this._cache[key] = value;
+            return value;
+        }
+    };
+
+    return Cache;
+})();
+
