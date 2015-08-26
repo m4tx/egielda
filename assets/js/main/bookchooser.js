@@ -42,8 +42,9 @@ egielda.bookChooser = function() {
     $('#btn-add-new-book').on('click', function() {
         // remove all chars which are not allowed in ISBN
         var isbn = $('input[name="isbn"]').val().toUpperCase().replace(/[^\dX]/g, '');
-        if (!isIsbnValid(isbn)) {
-            setSearchIsbnStatus(false, gettext('This ISBN is invalid.'), false);
+        if (!egielda.isbnFinderUtils.isIsbnValid(isbn)) {
+            egielda.isbnFinderUtils.setSearchIsbnStatus(
+                false, gettext('This ISBN is invalid.'), false);
             return;
         }
 

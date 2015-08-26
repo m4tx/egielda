@@ -194,4 +194,10 @@ egielda.isbnFinder = function() {
 
     // append controls to document
     isbnInput.wrap('<div class="ui action input"/>').parent().append(searchIsbnButton);
+
+    // Add some util functions to egielda namespace
+    egielda.isbnFinderUtils = {
+        isIsbnValid: isIsbnValid,
+        setSearchIsbnStatus: setSearchIsbnStatus
+    };
 };
