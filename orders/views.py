@@ -160,8 +160,6 @@ def fulfill(request, order_pk):
                 for book_type, owners in owners_by_book.items():
                     for owner, amount in owners.items():
                         if len(books_dict[book_type.pk].get(owner, [])) < amount:
-                            messages.error(request, _("Some of the users you have provided don't "
-                                                      "have enough books in the database."))
                             book_type.error = True
                             error = True
                             continue
@@ -169,6 +167,8 @@ def fulfill(request, order_pk):
                         books_to_purchase += books_dict[book_type.pk][owner][:amount]
 
                 if error:
+                    messages.error(request, _("Some of the users you have provided don't "
+                                              "have enough books in the database."))
                     for el in book_types_to_delete:
                         book_types.pop(el)
                     return render(request, 'orders/fulfill.html', {'order': order, 'book_list': book_types.keys(),
