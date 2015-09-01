@@ -69,7 +69,7 @@ class UserDataForm(ModelForm):
             'document': _("School ID"),
         }
 
-    retype_password = CharField(label=_("Retype password"), widget=PasswordInput)
+    retype_password = CharField(label=_("Password confirmation"), widget=PasswordInput)
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -85,7 +85,7 @@ class UserDataForm(ModelForm):
         retype_password = self.cleaned_data.get('retype_password')
 
         if password and password != retype_password:
-            raise ValidationError(_("Passwords do not match."))
+            raise ValidationError(_("The two password fields didn't match."))
 
         return self.cleaned_data
 

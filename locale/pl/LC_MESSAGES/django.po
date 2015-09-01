@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e-Giełda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-01 17:44+0200\n"
-"PO-Revision-Date: 2015-09-01 17:50+0200\n"
+"POT-Creation-Date: 2015-09-01 18:06+0200\n"
+"PO-Revision-Date: 2015-09-01 18:06+0200\n"
 "Last-Translator: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language-Team: Mateusz Maćkowski <m4tx@m4tx.pl>\n"
 "Language: pl\n"
@@ -85,16 +85,16 @@ msgid "School ID"
 msgstr "Legitymacja szkolna"
 
 #: authentication/forms.py:72
-msgid "Retype password"
-msgstr "Przepisz hasło"
+msgid "Password confirmation"
+msgstr "Hasło (powtórz)"
 
 #: authentication/forms.py:79
 msgid "Username contains illegal characters."
 msgstr "Nazwa użytkownika zawiera niedozwolone znaki."
 
 #: authentication/forms.py:88
-msgid "Passwords do not match."
-msgstr "Hasła nie pasują."
+msgid "The two password fields didn't match."
+msgstr "Hasła się nie zgadzają."
 
 #: authentication/forms.py:103
 msgid "Invalid year."
