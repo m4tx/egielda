@@ -108,7 +108,10 @@ def profile(request, user_pk):
 
     if request.POST:
         for field in disabled_fields_post:
-            request.POST[field] = getattr(user, field)
+            if field == 'retype_password':
+                request.POST[field] = user.password
+            else:
+                request.POST[field] = getattr(user, field)
         for field in disabled_fields_files:
             request.FILES[field] = getattr(user, field)
         form = UserDataForm(request.POST, request.FILES, instance=user)
