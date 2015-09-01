@@ -10,6 +10,7 @@
 # along with e-Giełda.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.db import models
+from django.core.validators import MinValueValidator
 from django.utils.translation import ugettext as _
 
 from categories.models import Category
@@ -22,7 +23,8 @@ class BookType(models.Model):
     publisher = models.CharField(max_length=150, blank=True)
     title = models.CharField(max_length=250, blank=True)
     publication_year = models.IntegerField()
-    price = models.DecimalField(max_digits=5, decimal_places=2)
+    price = models.DecimalField(max_digits=5, decimal_places=2,
+                                validators=[MinValueValidator(0)])
     visible = models.BooleanField(default=False)
     categories = models.ManyToManyField(Category, blank=True)
 
