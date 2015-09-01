@@ -80,7 +80,7 @@ def register_supplement(request):
 
 @permission_required('common.view_authentication_profile')
 def profile(request):
-    disabled_fields_post = ['username', 'password']
+    disabled_fields_post = ['username', 'password', 'retype_password']
     disabled_fields_files = []
 
     if request.user.verified:
@@ -128,6 +128,7 @@ def profile(request):
         form.fields[field].widget.attrs['disabled'] = True
 
     del form.fields['password']
+    del form.fields['retype_password']
 
     return render(request, 'authentication/profile.html', {'form': form})
 

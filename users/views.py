@@ -103,7 +103,7 @@ def needs_correction(request, user_pk):
 def profile(request, user_pk):
     user = get_object_or_404(AppUser, id=user_pk)
 
-    disabled_fields_post = ['password']
+    disabled_fields_post = ['password', 'retype_password']
     disabled_fields_files = ['document']
 
     if request.POST:
@@ -125,6 +125,7 @@ def profile(request, user_pk):
         form.fields[field].widget.attrs['disabled'] = True
 
     del form.fields['password']
+    del form.fields['retype_password']
 
     return render(request, 'users/user_profile.html', {'form': form, 'student': user})
 

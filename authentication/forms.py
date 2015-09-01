@@ -13,7 +13,7 @@ import re
 
 from PIL import Image
 import datetime
-from django.forms import ModelForm, Select
+from django.forms import ModelForm, Select, CharField
 from django.forms import PasswordInput, TextInput
 from django.forms import ValidationError
 from django.utils.translation import ugettext as _
@@ -39,8 +39,8 @@ def get_available_years():
 class UserDataForm(ModelForm):
     class Meta:
         model = AppUser
-        fields = ['username', 'password', 'first_name', 'last_name', 'year', 'class_letter', 'phone_number', 'email',
-                  'document']
+        fields = ['username', 'password', 'retype_password', 'first_name', 'last_name', 'year',
+                  'class_letter', 'phone_number', 'email', 'document']
         exclude = ['awaiting_verification', 'is_superuser', 'groups', 'user_permissions', 'last_login']
 
         widgets = {
@@ -69,6 +69,8 @@ class UserDataForm(ModelForm):
             'document': _("School ID"),
         }
 
+    retype_password = CharField(label=_("Retype password"), widget=PasswordInput)
+
     def clean_username(self):
         username = self.cleaned_data['username']
 
@@ -77,6 +79,15 @@ class UserDataForm(ModelForm):
                 _("Username contains illegal characters."))
 
         return username
+
+    def clean_retype_password(self):
+        password = self.cleaned_data.get('password')
+        retype_password = self.cleaned_data.get('retype_password')
+
+        if password and password != retype_password:
+            raise ValidationError(_("Passwords do not match."))
+
+        return self.cleaned_data
 
     def clean_first_name(self):
         return self.cleaned_data['first_name'].strip()
