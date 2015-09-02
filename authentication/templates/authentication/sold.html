@@ -23,5 +23,5 @@
         <div class="active item">{% trans "Sold books" %}</div>
     </div>
 
-    {% include "users/sold_list.html" %}
+    {% include "users/sold_list.html" with student=user %}
 {% endblock %}
