@@ -20,6 +20,11 @@
 }
 
 @media print {
+  // Firefox one-page printing fix
+  * {
+    overflow: visible !important;
+  }
+
   .hidden-print {
     display: none !important;
   }
