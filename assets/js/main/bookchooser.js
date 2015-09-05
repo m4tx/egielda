@@ -39,6 +39,15 @@ egielda.bookChooser = function() {
             chosenBooks.push(book);
             addExistingBook(tr, book.amount);
         }
+
+        $(this).popup({
+            title: gettext('Book added!'),
+            position: 'right center',
+            delay: {
+                hide: 1000
+            }
+        });
+        $(this).popup('show');
     });
 
     $('#btn-add-new-book').on('click', function() {
