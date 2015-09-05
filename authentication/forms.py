@@ -158,3 +158,4 @@ class RegistrationForm(UserDataForm):
 class SupplementForm(UserDataForm):
     class Meta(UserDataForm.Meta):
         fields = ['document']
+        exclude = ['retype_password']
