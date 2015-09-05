@@ -107,6 +107,9 @@ egielda.isbnFinder = function() {
                 searchIsbnButton.popup({
                     content: text,
                     position: 'top right',
+                    delay: {
+                        hide: 1500
+                    },
                     onHidden: function() {
                         searchIsbnButton.popup('destroy');
                     }
