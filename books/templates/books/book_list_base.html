@@ -7,7 +7,7 @@
     <tr>
         {% block thead_header %}{% endblock %}
         <th class="collapsing">{% trans "ISBN" %}</th>
-        <th class="collapsing">{% trans "Publisher" %}</th>
+        <th>{% trans "Publisher" %}</th>
         <th>{% trans "Title" %}</th>
         <th class="collapsing">{% trans "Publication" %}</th>
         <th class="collapsing">{% trans "Price" %}</th>
@@ -23,7 +23,7 @@
         <tr{% block tr_attributes %}{% endblock %}>
             {% block tr_header %}{% endblock %}
             <td class="collapsing">{{ book.isbn }}</td>
-            <td class="collapsing">{{ book.publisher }}</td>
+            <td>{{ book.publisher }}</td>
             <td>
                 {% if book.pk and perms.common.view_books_book_details %}
                     <a href="{% url 'books.views.book_details' book.pk %}">{{ book.title }}</a>
