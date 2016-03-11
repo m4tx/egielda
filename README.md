@@ -79,7 +79,7 @@ Remember that you shouldn't use default `settings.py` on production. Also, bear 
 
 Please note that our migration script automatically creates three groups (moderator, admin, sysadmin) and gives them some permissions. If you change anything and want to restore default permissions for these groups, you have to remove **all** permissions from at least one group, then run `migrate`.
 
-e-Giełda uses gulp tool to build CSS and JS files. `postinstall` script in npm calls `gulp build` automatically (actually, `npm run gulp build`, in case that gulp is not installed globally).
+e-Giełda uses gulp tool to build CSS and JS files. `postinstall` script in npm calls `gulp build` automatically (actually, `npm run gulp-build`, in case that gulp is not installed globally).
 
 ## LDAP Support
 LDAP support can be enabled in `settings.py` file by setting `USE_LDAP_VERIFICATION` value to True and filling out the rest of `LDAP_*` settings below.
