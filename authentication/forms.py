@@ -159,3 +159,7 @@ class SupplementForm(UserDataForm):
     class Meta(UserDataForm.Meta):
         fields = ['document']
         exclude = ['retype_password']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields.pop('retype_password', None)
